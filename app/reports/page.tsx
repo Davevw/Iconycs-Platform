@@ -215,6 +215,24 @@ export default function ReportsPage() {
   const [search, setSearch] = useState('');
   const [modal, setModal] = useState<string | null>(null);
   const [drillCity, setDrillCity] = useState<string | null>(null);
+  const [citySearch, setCitySearch] = useState('');
+  const [citySearchResults, setCitySearchResults] = useState<{state:string;stateName:string;city:string;props:number;avg:number}[]>([]);
+
+  const handleCitySearch = (val: string) => {
+    setCitySearch(val);
+    if (val.length < 2) { setCitySearchResults([]); return; }
+    const q = val.toLowerCase();
+    const results: {state:string;stateName:string;city:string;props:number;avg:number}[] = [];
+    Object.entries(GEO_DATA).forEach(([state, data]) => {
+      const stateName = ALL_STATES.find(s => s.code === state)?.name || state;
+      data.cities.forEach(city => {
+        if (city.name.toLowerCase().includes(q) && results.length < 12) {
+          results.push({state, stateName, city: city.name, props: city.props, avg: city.avg});
+        }
+      });
+    });
+    setCitySearchResults(results);
+  };
 
   const toggleState = (code: string) => {
     if (code === 'ALL') { setSelected(['ALL']); setDrillCity(null); return; }
@@ -279,6 +297,53 @@ export default function ReportsPage() {
           </div>
         </div>
       </nav>
+
+      {/* City / County Search Bar */}
+      <div style={{ background: C.bgCard, borderBottom: `1px solid ${C.border}`, padding: '10px 20px', position: 'sticky', top: 52, zIndex: 40 }}>
+        <div style={{ maxWidth: 1500, margin: '0 auto', position: 'relative' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <span style={{ fontSize: 13, color: C.textDim, whiteSpace: 'nowrap' }}>Quick search:</span>
+            <div style={{ position: 'relative', flex: 1, maxWidth: 500 }}>
+              <input
+                value={citySearch}
+                onChange={e => handleCitySearch(e.target.value)}
+                placeholder="Search any city — e.g. Watsonville, Monterey, Santa Cruz..."
+                style={{ width: '100%', padding: '9px 14px 9px 36px', borderRadius: 8, border: `1.5px solid ${citySearch ? C.terra : C.border}`, fontSize: 13, fontFamily: C.font, outline: 'none', background: C.bgWarm }}
+              />
+              <span style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', fontSize: 14, color: C.textDim }}>&#x1F50D;</span>
+              {citySearch && (
+                <button onClick={() => { setCitySearch(''); setCitySearchResults([]); }} style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: C.textDim, fontSize: 16 }}>x</button>
+              )}
+              {citySearchResults.length > 0 && (
+                <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 8, boxShadow: '0 8px 24px rgba(0,0,0,0.12)', zIndex: 100, marginTop: 4, overflow: 'hidden' }}>
+                  {citySearchResults.map((r, i) => (
+                    <div key={i} onClick={() => {
+                      setSelected([r.state]);
+                      setDrillCity(r.city);
+                      setCitySearch('');
+                      setCitySearchResults([]);
+                    }} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 14px', borderBottom: i < citySearchResults.length - 1 ? `1px solid ${C.borderLight}` : 'none', cursor: 'pointer', transition: 'background 0.15s' }}
+                      onMouseEnter={(e: React.MouseEvent<HTMLDivElement>) => (e.currentTarget.style.background = C.bgWarm)}
+                      onMouseLeave={(e: React.MouseEvent<HTMLDivElement>) => (e.currentTarget.style.background = 'transparent')}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                        <span style={{ fontSize: 11, fontWeight: 700, color: C.navy, padding: '2px 8px', borderRadius: 10, background: C.navySoft || '#EEF1F6' }}>{r.state}</span>
+                        <span style={{ fontSize: 13, fontWeight: 600, color: C.text }}>{r.city}</span>
+                        <span style={{ fontSize: 11, color: C.textMuted }}>{r.stateName}</span>
+                      </div>
+                      <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+                        <span style={{ fontSize: 12, color: C.text, fontFamily: C.fontMono }}>{r.props.toLocaleString()} props</span>
+                        <span style={{ fontSize: 12, color: C.sage, fontFamily: C.fontMono, fontWeight: 600 }}>${(r.avg / 1000).toFixed(0)}K avg</span>
+                        <span style={{ fontSize: 11, color: C.terra, fontWeight: 600 }}>View &gt;</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+            <span style={{ fontSize: 11, color: C.textDim }}>502 cities across 51 states</span>
+          </div>
+        </div>
+      </div>
 
       <div style={{ maxWidth: 1500, margin: '0 auto', padding: 16, display: 'grid', gridTemplateColumns: '240px 1fr', gap: 16, minHeight: 'calc(100vh - 52px)' }}>
 
