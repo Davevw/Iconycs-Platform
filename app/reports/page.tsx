@@ -117,6 +117,60 @@ function HBarChart({ title, data }: { title: string; data: PanelData[] }) {
   );
 }
 
+function PieChart({ title, data }: { title: string; data: PanelData[] }) {
+  const total = data.reduce((s, d) => s + d.count, 0);
+  let cumAngle = -90; // start at top
+  const cx = 80, cy = 80, r = 65, inner = 38;
+
+  const slices = data.filter(d => d.count > 0).map((d, i) => {
+    const angle = (d.count / total) * 360;
+    const start = cumAngle;
+    cumAngle += angle;
+    return { ...d, start, angle, color: C.chart[i % C.chart.length] };
+  });
+
+  const toRad = (a: number) => a * Math.PI / 180;
+  const arcPath = (start: number, end: number) => {
+    const x1 = cx + r * Math.cos(toRad(start));
+    const y1 = cy + r * Math.sin(toRad(start));
+    const x2 = cx + r * Math.cos(toRad(end - 0.5));
+    const y2 = cy + r * Math.sin(toRad(end - 0.5));
+    const ix1 = cx + inner * Math.cos(toRad(end - 0.5));
+    const iy1 = cy + inner * Math.sin(toRad(end - 0.5));
+    const ix2 = cx + inner * Math.cos(toRad(start));
+    const iy2 = cy + inner * Math.sin(toRad(start));
+    const large = (end - start) > 180 ? 1 : 0;
+    return `M ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2} L ${ix1} ${iy1} A ${inner} ${inner} 0 ${large} 0 ${ix2} ${iy2} Z`;
+  };
+
+  return (
+    <div style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, overflow: 'hidden' }}>
+      <div style={{ padding: '10px 16px', background: C.navy, color: '#fff', fontSize: 12, fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase' }}>{title}</div>
+      <div style={{ padding: '16px', display: 'flex', alignItems: 'center', gap: 16 }}>
+        <svg width={160} height={160} viewBox="0 0 160 160" style={{ flexShrink: 0 }}>
+          {slices.map((s, i) => (
+            <path key={i} d={arcPath(s.start, s.start + s.angle)} fill={s.color}
+              style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.12))', transition: 'opacity 0.2s' }} />
+          ))}
+          <text x={cx} y={cy - 6} textAnchor="middle" fontSize="15" fontWeight="700" fill={C.text} fontFamily={C.fontMono}>
+            {total >= 1e9 ? (total/1e9).toFixed(1)+'B' : total >= 1e6 ? (total/1e6).toFixed(1)+'M' : total.toLocaleString()}
+          </text>
+          <text x={cx} y={cy + 10} textAnchor="middle" fontSize="8" fill={C.textDim}>TOTAL</text>
+        </svg>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 7, flex: 1 }}>
+          {slices.map((d, i) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <div style={{ width: 12, height: 12, borderRadius: 3, background: d.color, flexShrink: 0, boxShadow: `0 1px 3px ${d.color}60` }} />
+              <span style={{ fontSize: 11, color: C.textBody, flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{d.label}</span>
+              <span style={{ fontSize: 11, fontWeight: 700, color: d.color, fontFamily: C.fontMono, flexShrink: 0 }}>{(d.count/total*100).toFixed(1)}%</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ParcelModal({ filter, onClose }: { filter: string; onClose: () => void }) {
   const [code, setCode] = useState('');
   const [authed, setAuthed] = useState(false);
@@ -169,7 +223,7 @@ function ParcelModal({ filter, onClose }: { filter: string; onClose: () => void 
 }
 
 
-// Geographic drill-down data (sample — will query Snowflake live)
+// Geographic drill-down data (sample ï¿½ will query Snowflake live)
 const DRILL_DATA: Record<string, {cities: {name:string,props:number,avg:number}[], zips: {zip:string,city:string,props:number,avg:number}[]}> = {
   CA: {
     cities: [{name:'Los Angeles',props:1245000,avg:812000},{name:'San Diego',props:412000,avg:742000},{name:'San Jose',props:312000,avg:1124000},{name:'San Francisco',props:285000,avg:1485000},{name:'Sacramento',props:412000,avg:485000},{name:'Fresno',props:185000,avg:312000},{name:'Long Beach',props:198000,avg:685000},{name:'Oakland',props:212000,avg:812000}],
@@ -382,7 +436,16 @@ export default function ReportsPage() {
               </div>
             ))}
           </div>
-
+          {/* Pie Charts Row */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12, marginBottom: 16 }}>
+            <PieChart title="Homeowner Status" data={[
+              {label:'Confirmed Homeowner',count:Math.round(agg.totalProps*0.506),pct:50.6},
+              {label:'Status Unknown',count:Math.round(agg.totalProps*0.485),pct:48.5},
+              {label:'Renter',count:Math.round(agg.totalProps*0.008),pct:0.8},
+            ]} />
+            <PieChart title="Property Category" data={propertyType} />
+            <PieChart title="Loan Program" data={loanType.slice(0,4)} />
+          </div>
           {/* Row 1 */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, marginBottom: 6 }}>
             <FreqTable title="Owner Ethnicity" data={ethnicity} color={C.sage} />
@@ -433,9 +496,9 @@ export default function ReportsPage() {
                 <span>Geographic Drill-Down</span>
                 <div style={{ display: 'flex', gap: 8, fontSize: 11 }}>
                   <span style={{ opacity: 0.7 }}>State</span>
-                  <span style={{ opacity: 0.4 }}>›</span>
+                  <span style={{ opacity: 0.4 }}>ï¿½</span>
                   <span style={{ opacity: drillCity ? 0.7 : 1, fontWeight: drillCity ? 400 : 700, cursor: drillCity ? 'pointer' : 'default' }} onClick={() => setDrillCity(null)}>City</span>
-                  {drillCity && <><span style={{ opacity: 0.4 }}>›</span><span style={{ fontWeight: 700 }}>ZIP Code</span></>}
+                  {drillCity && <><span style={{ opacity: 0.4 }}>ï¿½</span><span style={{ fontWeight: 700 }}>ZIP Code</span></>}
                 </div>
               </div>
               {!drillCity ? (
@@ -468,7 +531,7 @@ export default function ReportsPage() {
               ) : (
                 <div>
                   <div style={{ padding: '8px 14px', background: C.terraSoft, borderBottom: 1px solid , fontSize: 12, fontWeight: 600, color: C.terra, display: 'flex', justifyContent: 'space-between' }}>
-                    <span>{drillCity} — ZIP Code Analysis</span>
+                    <span>{drillCity} ï¿½ ZIP Code Analysis</span>
                     <span style={{ cursor: 'pointer', fontWeight: 400, color: C.textMuted }} onClick={() => setDrillCity(null)}>? Back to Cities</span>
                   </div>
                   <div style={{ fontSize: 11, fontWeight: 700, color: C.textDim, display: 'grid', gridTemplateColumns: '80px 1fr 90px 90px', padding: '6px 14px', background: C.bgWarm }}>
