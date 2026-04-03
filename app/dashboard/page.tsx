@@ -124,7 +124,7 @@ export default function DashboardPage() {
         <div style={{ maxWidth: 1400, margin: '0 auto', padding: '0 24px', display: 'flex', alignItems: 'center', height: 56, gap: 24 }}>
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
             
-            <span style={{ fontSize: 15, fontWeight: 700, color: C.text }}>ICONYCS</span>
+            <span style={{ fontSize: 19, fontWeight: 700, color: C.text }}>ICONYCS</span>
           </Link>
           <span style={{ fontSize: 14, fontWeight: 600, color: C.terra }}>AI Query Lab</span>
           <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 12 }}>

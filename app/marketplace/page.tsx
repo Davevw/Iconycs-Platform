@@ -47,7 +47,7 @@ export default function MarketplacePage() {
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 72 }}>
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
             
-            <span style={{ fontSize: 20, fontWeight: 700, color: 'var(--text)' }}>ICONYCS</span>
+            <span style={{ fontSize: 25, fontWeight: 700, color: 'var(--text)' }}>ICONYCS</span>
           </Link>
           <div style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
             {['About', 'Analytics', 'MarketPlace', 'Partners', 'Blog'].map(item => (

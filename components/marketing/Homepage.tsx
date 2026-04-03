@@ -330,8 +330,8 @@ export default function Homepage() {
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
             
             <div>
-              <div style={{ fontSize: 17, fontWeight: 700, color: C.text, letterSpacing: '-0.01em' }}>ICONYCS</div>
-              <div style={{ fontSize: 9, color: C.textDim, letterSpacing: '0.14em', textTransform: 'uppercase', marginTop: -1 }}>Housing Analytics</div>
+              <div style={{ fontSize: 21, fontWeight: 700, color: C.text, letterSpacing: '-0.01em' }}>ICONYCS</div>
+              <div style={{ fontSize: 11, color: C.textDim, letterSpacing: '0.14em', textTransform: 'uppercase', marginTop: -1 }}>Housing Analytics</div>
             </div>
           </Link>
           <div style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
@@ -632,7 +632,7 @@ export default function Homepage() {
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
               
-              <span style={{ fontWeight: 700, fontSize: 16, color: C.text }}>ICONYCS</span>
+              <span style={{ fontWeight: 700, fontSize: 20, color: C.text }}>ICONYCS</span>
             </div>
             <p style={{ fontSize: 13, color: C.textMuted, maxWidth: 260, lineHeight: 1.7 }}>
               Housing Analytics & Owner Demographics.
