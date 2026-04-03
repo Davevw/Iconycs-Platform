@@ -12,7 +12,7 @@ export default function AboutPage() {
       {/* Nav — reused across pages (would be a shared component in production) */}
       <nav style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
-        background: 'rgba(11,14,17,0.85)', backdropFilter: 'blur(20px)',
+        background: 'rgba(250,250,247,0.92)', backdropFilter: 'blur(20px)',
         borderBottom: '1px solid var(--border)',
       }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 72 }}>
@@ -24,7 +24,7 @@ export default function AboutPage() {
             {['About', 'Analytics', 'MarketPlace', 'Partners', 'Blog'].map(item => (
               <Link key={item} href={`/${item.toLowerCase()}`} style={{ fontSize: 14, color: item === 'About' ? 'var(--accent)' : 'var(--text-muted)', textDecoration: 'none', fontWeight: 500 }}>{item}</Link>
             ))}
-            <Link href="/dashboard" style={{ padding: '8px 24px', borderRadius: 8, fontSize: 14, fontWeight: 600, background: 'var(--accent)', color: 'var(--bg)', textDecoration: 'none' }}>Launch Dashboard</Link>
+            <Link href="/dashboard" style={{ padding: '8px 24px', borderRadius: 8, fontSize: 14, fontWeight: 600, background: '#C4653A', color: '#fff', textDecoration: 'none' }}>Launch Dashboard</Link>
           </div>
         </div>
       </nav>
@@ -92,7 +92,7 @@ export default function AboutPage() {
           <p style={{ fontSize: 16, color: 'var(--text-muted)', marginBottom: 32 }}>
             (760) 599-1261 · <Link href="/contact" style={{ color: 'var(--accent)', textDecoration: 'none' }}>Contact David Van Waldick</Link>
           </p>
-          <Link href="/contact" style={{ padding: '14px 32px', borderRadius: 10, fontSize: 16, fontWeight: 600, background: 'var(--accent)', color: 'var(--bg)', textDecoration: 'none' }}>
+          <Link href="/contact" style={{ padding: '14px 32px', borderRadius: 10, fontSize: 16, fontWeight: 600, background: '#C4653A', color: '#fff', textDecoration: 'none' }}>
             Schedule a Call
           </Link>
         </div>

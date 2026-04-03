@@ -30,7 +30,7 @@ const PROPERTY_FIELDS = [
 export default function AnalyticsPage() {
   return (
     <main style={{ paddingTop: 72 }}>
-      <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, background: 'rgba(11,14,17,0.85)', backdropFilter: 'blur(20px)', borderBottom: '1px solid var(--border)' }}>
+      <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, background: 'rgba(250,250,247,0.92)', backdropFilter: 'blur(20px)', borderBottom: '1px solid var(--border)' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 72 }}>
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
             
@@ -40,7 +40,7 @@ export default function AnalyticsPage() {
             {['About', 'Analytics', 'MarketPlace', 'Partners', 'Blog'].map(item => (
               <Link key={item} href={`/${item.toLowerCase()}`} style={{ fontSize: 14, color: item === 'Analytics' ? 'var(--accent)' : 'var(--text-muted)', textDecoration: 'none', fontWeight: 500 }}>{item}</Link>
             ))}
-            <Link href="/dashboard" style={{ padding: '8px 24px', borderRadius: 8, fontSize: 14, fontWeight: 600, background: 'var(--accent)', color: 'var(--bg)', textDecoration: 'none' }}>Launch Dashboard</Link>
+            <Link href="/dashboard" style={{ padding: '8px 24px', borderRadius: 8, fontSize: 14, fontWeight: 600, background: '#C4653A', color: '#fff', textDecoration: 'none' }}>Launch Dashboard</Link>
           </div>
         </div>
       </nav>
@@ -56,7 +56,7 @@ export default function AnalyticsPage() {
           SQL-backed answers with visualizations — powered by Claude Opus 4.6 and a Snowflake
           database of 130M+ properties.
         </p>
-        <Link href="/dashboard" style={{ padding: '14px 32px', borderRadius: 10, fontSize: 16, fontWeight: 600, background: 'var(--accent)', color: 'var(--bg)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+        <Link href="/dashboard" style={{ padding: '14px 32px', borderRadius: 10, fontSize: 16, fontWeight: 600, background: '#C4653A', color: '#fff', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8 }}>
           Try the AI Query Lab →
         </Link>
       </section>
@@ -119,7 +119,7 @@ export default function AnalyticsPage() {
       <section style={{ padding: '80px 32px', textAlign: 'center', borderTop: '1px solid var(--border)', background: 'radial-gradient(ellipse at 50% 50%, rgba(0,212,126,0.08), transparent 70%)' }}>
         <h2 style={{ fontSize: 32, fontWeight: 700, fontFamily: 'var(--font-display)', marginBottom: 16 }}>Ready to query?</h2>
         <p style={{ fontSize: 16, color: 'var(--text-muted)', marginBottom: 32 }}>Launch the AI Query Lab and start exploring 130M+ records in seconds.</p>
-        <Link href="/dashboard" style={{ padding: '14px 32px', borderRadius: 10, fontSize: 16, fontWeight: 600, background: 'var(--accent)', color: 'var(--bg)', textDecoration: 'none' }}>Launch Dashboard</Link>
+        <Link href="/dashboard" style={{ padding: '14px 32px', borderRadius: 10, fontSize: 16, fontWeight: 600, background: '#C4653A', color: '#fff', textDecoration: 'none' }}>Launch Dashboard</Link>
       </section>
 
       <footer style={{ padding: '32px', borderTop: '1px solid var(--border)', textAlign: 'center', fontSize: 12, color: 'var(--text-dim)' }}>

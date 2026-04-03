@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <main style={{ paddingTop: 72 }}>
-      <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, background: 'rgba(11,14,17,0.85)', backdropFilter: 'blur(20px)', borderBottom: '1px solid var(--border)' }}>
+      <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, background: 'rgba(250,250,247,0.92)', backdropFilter: 'blur(20px)', borderBottom: '1px solid var(--border)' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 72 }}>
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
             
@@ -19,7 +19,7 @@ export default function ContactPage() {
             {['About', 'Analytics', 'MarketPlace', 'Partners', 'Blog'].map(item => (
               <Link key={item} href={`/${item.toLowerCase()}`} style={{ fontSize: 14, color: 'var(--text-muted)', textDecoration: 'none', fontWeight: 500 }}>{item}</Link>
             ))}
-            <Link href="/dashboard" style={{ padding: '8px 24px', borderRadius: 8, fontSize: 14, fontWeight: 600, background: 'var(--accent)', color: 'var(--bg)', textDecoration: 'none' }}>Launch Dashboard</Link>
+            <Link href="/dashboard" style={{ padding: '8px 24px', borderRadius: 8, fontSize: 14, fontWeight: 600, background: '#C4653A', color: '#fff', textDecoration: 'none' }}>Launch Dashboard</Link>
           </div>
         </div>
       </nav>
@@ -77,7 +77,7 @@ export default function ContactPage() {
               </div>
               <button style={{
                 padding: '12px 24px', borderRadius: 8, border: 'none',
-                background: 'var(--accent)', color: 'var(--bg)',
+                background: '#C4653A', color: '#fff',
                 fontSize: 14, fontWeight: 600, cursor: 'pointer',
               }}>Send Message</button>
             </div>

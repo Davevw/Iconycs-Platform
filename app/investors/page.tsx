@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function InvestorsPage() {
   return (
     <main style={{ paddingTop: 72 }}>
-      <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, background: 'rgba(11,14,17,0.85)', backdropFilter: 'blur(20px)', borderBottom: '1px solid var(--border)' }}>
+      <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, background: 'rgba(250,250,247,0.92)', backdropFilter: 'blur(20px)', borderBottom: '1px solid var(--border)' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 72 }}>
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
             
@@ -19,7 +19,7 @@ export default function InvestorsPage() {
             {['About', 'Analytics', 'MarketPlace', 'Partners', 'Blog'].map(item => (
               <Link key={item} href={`/${item.toLowerCase()}`} style={{ fontSize: 14, color: 'var(--text-muted)', textDecoration: 'none', fontWeight: 500 }}>{item}</Link>
             ))}
-            <Link href="/dashboard" style={{ padding: '8px 24px', borderRadius: 8, fontSize: 14, fontWeight: 600, background: 'var(--accent)', color: 'var(--bg)', textDecoration: 'none' }}>Launch Dashboard</Link>
+            <Link href="/dashboard" style={{ padding: '8px 24px', borderRadius: 8, fontSize: 14, fontWeight: 600, background: '#C4653A', color: '#fff', textDecoration: 'none' }}>Launch Dashboard</Link>
           </div>
         </div>
       </nav>
@@ -54,7 +54,7 @@ export default function InvestorsPage() {
           <p style={{ fontSize: 14, color: 'var(--text-muted)', marginBottom: 20, lineHeight: 1.7 }}>
             Contact David Van Waldick to discuss investment opportunities and partnership.
           </p>
-          <Link href="/contact" style={{ padding: '12px 28px', borderRadius: 10, fontSize: 14, fontWeight: 600, background: 'var(--accent)', color: 'var(--bg)', textDecoration: 'none' }}>
+          <Link href="/contact" style={{ padding: '12px 28px', borderRadius: 10, fontSize: 14, fontWeight: 600, background: '#C4653A', color: '#fff', textDecoration: 'none' }}>
             Get in Touch
           </Link>
         </div>
