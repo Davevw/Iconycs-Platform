@@ -23,7 +23,7 @@ export default function PartnersPage() {
       <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, background: 'rgba(11,14,17,0.85)', backdropFilter: 'blur(20px)', borderBottom: '1px solid var(--border)' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 72 }}>
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
-            <img src="https://img1.wsimg.com/isteam/ip/e8c68af0-b86d-4dc7-b39a-77c07572bad7/ICONYCS_S5.jpg" alt="ICONYCS" width={40} height={40} style={{ borderRadius: 8, objectFit: 'contain', background: '#fff' }} />
+            
             <span style={{ fontSize: 20, fontWeight: 700, color: 'var(--text)' }}>ICONYCS</span>
           </Link>
           <div style={{ display: 'flex', alignItems: 'center', gap: 32 }}>

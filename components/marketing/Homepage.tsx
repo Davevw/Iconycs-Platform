@@ -328,7 +328,7 @@ export default function Homepage() {
       }}>
         <div style={{ maxWidth: 1180, margin: '0 auto', padding: '0 40px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 72 }}>
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-            <img src="https://img1.wsimg.com/isteam/ip/e8c68af0-b86d-4dc7-b39a-77c07572bad7/ICONYCS_S5.jpg" alt="ICONYCS" width={40} height={40} style={{ borderRadius: C.rs, objectFit: 'contain' }} />
+            
             <div>
               <div style={{ fontSize: 17, fontWeight: 700, color: C.text, letterSpacing: '-0.01em' }}>ICONYCS</div>
               <div style={{ fontSize: 9, color: C.textDim, letterSpacing: '0.14em', textTransform: 'uppercase', marginTop: -1 }}>Housing Analytics</div>
@@ -631,7 +631,7 @@ export default function Homepage() {
         <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
-              <img src="https://img1.wsimg.com/isteam/ip/e8c68af0-b86d-4dc7-b39a-77c07572bad7/ICONYCS_S5.jpg" alt="ICONYCS" width={32} height={32} style={{ borderRadius: 8, objectFit: 'contain' }} />
+              
               <span style={{ fontWeight: 700, fontSize: 16, color: C.text }}>ICONYCS</span>
             </div>
             <p style={{ fontSize: 13, color: C.textMuted, maxWidth: 260, lineHeight: 1.7 }}>

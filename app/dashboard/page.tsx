@@ -123,7 +123,7 @@ export default function DashboardPage() {
       <nav style={{ background: C.bgCard, borderBottom: `1px solid ${C.border}`, position: 'sticky', top: 0, zIndex: 50 }}>
         <div style={{ maxWidth: 1400, margin: '0 auto', padding: '0 24px', display: 'flex', alignItems: 'center', height: 56, gap: 24 }}>
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
-            <img src="https://img1.wsimg.com/isteam/ip/e8c68af0-b86d-4dc7-b39a-77c07572bad7/ICONYCS_S5.jpg" alt="" width={28} height={28} style={{ borderRadius: 6 }} />
+            
             <span style={{ fontSize: 15, fontWeight: 700, color: C.text }}>ICONYCS</span>
           </Link>
           <span style={{ fontSize: 14, fontWeight: 600, color: C.terra }}>AI Query Lab</span>
