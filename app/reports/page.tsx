@@ -448,59 +448,97 @@ export default function ReportsPage() {
             ))}
           </div>
 
-          {/* Geographic Drill-Down - only for single state selection */}
+          {/* Geographic Drill-Down */}
           {!isAll && selected.length === 1 && (
-            <div style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, overflow: 'hidden', marginBottom: 16 }}>
-              <div style={{ padding: '10px 16px', background: C.navy, color: '#fff', fontSize: 12, fontWeight: 700, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span>GEOGRAPHIC DRILL-DOWN</span>
-                <div style={{ display: 'flex', gap: 8, fontSize: 11 }}>
-                  <span style={{ opacity: 0.6 }}>State</span>
-                  <span style={{ opacity: 0.4 }}>{'>'}</span>
-                  <span style={{ fontWeight: drillCity ? 400 : 700, cursor: drillCity ? 'pointer' : 'default', opacity: drillCity ? 0.7 : 1 }} onClick={() => setDrillCity(null)}>City</span>
-                  {drillCity && <><span style={{ opacity: 0.4 }}>{'>'}</span><span style={{ fontWeight: 700 }}>ZIP Code</span></>}
-                </div>
+            <div style={{ marginBottom: 16 }}>
+              {/* Breadcrumb nav */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12, padding: '10px 16px', background: C.navy, borderRadius: 10, color: '#fff' }}>
+                <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase' }}>Geographic Drill-Down</span>
+                <span style={{ opacity: 0.3, margin: '0 4px' }}>|</span>
+                <button onClick={() => setDrillCity(null)} style={{
+                  background: !drillCity ? 'rgba(255,255,255,0.2)' : 'transparent',
+                  border: 'none', color: '#fff', padding: '4px 12px', borderRadius: 20,
+                  fontSize: 12, cursor: 'pointer', fontFamily: C.font, fontWeight: drillCity ? 400 : 600,
+                }}>
+                  {drillCity ? '^ ' : ''}{ALL_STATES.find(s => s.code === selected[0])?.name || selected[0]}
+                </button>
+                {drillCity && (
+                  <>
+                    <span style={{ opacity: 0.4 }}>{'>'}</span>
+                    <span style={{ background: 'rgba(255,255,255,0.2)', padding: '4px 12px', borderRadius: 20, fontSize: 12, fontWeight: 600 }}>{drillCity}</span>
+                  </>
+                )}
               </div>
+
               {!drillCity ? (
-                <div>
-                  <div style={{ fontSize: 11, fontWeight: 700, color: C.textDim, display: 'grid', gridTemplateColumns: '1fr 90px 90px', padding: '6px 14px', background: C.bgWarm }}>
-                    <span>CITY</span><span style={{ textAlign: 'right' }}>PROPERTIES</span><span style={{ textAlign: 'right' }}>AVG VALUE</span>
-                  </div>
-                  {DRILL_DATA[selected[0]] ? (
-                    DRILL_DATA[selected[0]].cities.map((city, i) => (
-                      <div key={i} onClick={() => setDrillCity(city.name)}
-                        style={{ display: 'grid', gridTemplateColumns: '1fr 90px 90px', padding: '8px 14px', borderBottom: `1px solid ${C.borderLight}`, fontSize: 12, cursor: 'pointer', alignItems: 'center' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                          <div style={{ width: 7, height: 7, borderRadius: 2, background: C.chart[i % C.chart.length] }} />
-                          <span style={{ color: C.terra, fontWeight: 500 }}>{city.name} {'>'}</span>
+                /* CITY CARDS — each city gets its own mini chart */
+                DRILL_DATA[selected[0]] ? (
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12 }}>
+                    {DRILL_DATA[selected[0]].cities.map((city, i) => {
+                      const maxProps = Math.max(...DRILL_DATA[selected[0]].cities.map(c => c.props));
+                      const barPct = (city.props / maxProps) * 100;
+                      return (
+                        <div key={i} onClick={() => setDrillCity(city.name)} style={{
+                          background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`,
+                          overflow: 'hidden', cursor: 'pointer', transition: 'all 0.2s',
+                        }}
+                          onMouseEnter={(e: React.MouseEvent<HTMLDivElement>) => (e.currentTarget.style.borderColor = C.terra)}
+                          onMouseLeave={(e: React.MouseEvent<HTMLDivElement>) => (e.currentTarget.style.borderColor = C.border)}>
+                          <div style={{ padding: '8px 12px', background: C.chart[i % C.chart.length], color: '#fff', fontSize: 11, fontWeight: 700 }}>
+                            {city.name}
+                          </div>
+                          <div style={{ padding: '10px 12px' }}>
+                            <div style={{ fontSize: 18, fontWeight: 300, color: C.chart[i % C.chart.length], fontFamily: C.fontSerif, marginBottom: 2 }}>
+                              {(city.props / 1000).toFixed(0)}K
+                            </div>
+                            <div style={{ fontSize: 10, color: C.textDim, marginBottom: 8 }}>properties</div>
+                            <div style={{ height: 6, background: C.bgWarm, borderRadius: 3, overflow: 'hidden', marginBottom: 6 }}>
+                              <div style={{ width: `${barPct}%`, height: '100%', background: C.chart[i % C.chart.length], borderRadius: 3 }} />
+                            </div>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                              <span style={{ fontSize: 11, color: C.sage, fontFamily: C.fontMono, fontWeight: 600 }}>${(city.avg / 1000).toFixed(0)}K avg</span>
+                              <span style={{ fontSize: 11, color: C.terra, fontWeight: 600 }}>View ZIPs &gt;</span>
+                            </div>
+                          </div>
                         </div>
-                        <span style={{ textAlign: 'right', fontFamily: C.fontMono, color: C.text, fontWeight: 600 }}>{city.props.toLocaleString()}</span>
-                        <span style={{ textAlign: 'right', fontFamily: C.fontMono, color: C.sage }}>${(city.avg / 1000).toFixed(0)}K</span>
-                      </div>
-                    ))
-                  ) : (
-                    <div style={{ padding: '20px', textAlign: 'center', color: C.textDim, fontSize: 13 }}>Select CA, TX, or FL to see city drill-down</div>
-                  )}
-                </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div style={{ padding: '20px', textAlign: 'center', color: C.textDim, fontSize: 13, background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}` }}>
+                    City drill-down available for CA, TX, and FL. More states coming soon.
+                  </div>
+                )
               ) : (
-                <div>
-                  <div style={{ padding: '8px 14px', background: '#FFF0E9', borderBottom: `1px solid ${C.border}`, fontSize: 12, fontWeight: 600, color: C.terra, display: 'flex', justifyContent: 'space-between' }}>
-                    <span>{drillCity} - ZIP Code Analysis</span>
-                    <span style={{ cursor: 'pointer', fontWeight: 400, color: C.textMuted }} onClick={() => setDrillCity(null)}>Back to Cities</span>
+                /* ZIP CODE VIEW */
+                <div style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, overflow: 'hidden' }}>
+                  <div style={{ padding: '10px 16px', background: C.bgWarm, borderBottom: `1px solid ${C.border}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: 13, fontWeight: 700, color: C.text }}>{drillCity} — ZIP Code Analysis</span>
+                    <button onClick={() => setDrillCity(null)} style={{ background: C.bgWarm, border: `1px solid ${C.border}`, borderRadius: 20, padding: '4px 14px', fontSize: 12, color: C.terra, cursor: 'pointer', fontFamily: C.font, fontWeight: 600 }}>
+                      ^ Back to Cities
+                    </button>
                   </div>
-                  <div style={{ fontSize: 11, fontWeight: 700, color: C.textDim, display: 'grid', gridTemplateColumns: '80px 1fr 90px 90px', padding: '6px 14px', background: C.bgWarm }}>
-                    <span>ZIP</span><span>CITY</span><span style={{ textAlign: 'right' }}>PROPERTIES</span><span style={{ textAlign: 'right' }}>AVG VALUE</span>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 12, padding: 16 }}>
+                    {DRILL_DATA[selected[0]]?.zips.map((z, i) => (
+                      <div key={i} style={{ background: C.bgWarm, borderRadius: 8, padding: '12px 14px', border: `1px solid ${C.borderLight}` }}>
+                        <div style={{ fontSize: 16, fontWeight: 800, color: C.navy, fontFamily: C.fontMono, marginBottom: 4 }}>{z.zip}</div>
+                        <div style={{ fontSize: 11, color: C.textMuted, marginBottom: 8 }}>{z.city}</div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <div>
+                            <div style={{ fontSize: 13, fontWeight: 700, color: C.text }}>{z.props.toLocaleString()}</div>
+                            <div style={{ fontSize: 9, color: C.textDim }}>parcels</div>
+                          </div>
+                          <div style={{ textAlign: 'right' }}>
+                            <div style={{ fontSize: 13, fontWeight: 700, color: C.sage }}>${(z.avg / 1000).toFixed(0)}K</div>
+                            <div style={{ fontSize: 9, color: C.textDim }}>avg value</div>
+                          </div>
+                        </div>
+                        <button onClick={() => setModal(`ZIP ${z.zip} - ${z.city}`)} style={{ width: '100%', marginTop: 8, padding: '4px', background: 'transparent', border: `1px dashed ${C.border}`, borderRadius: 4, fontSize: 10, color: C.textDim, cursor: 'pointer', fontFamily: C.font }}>
+                          View Parcels
+                        </button>
+                      </div>
+                    ))}
                   </div>
-                  {DRILL_DATA[selected[0]]?.zips.map((z, i) => (
-                    <div key={i} style={{ display: 'grid', gridTemplateColumns: '80px 1fr 90px 90px', padding: '8px 14px', borderBottom: `1px solid ${C.borderLight}`, fontSize: 12, alignItems: 'center' }}>
-                      <span style={{ fontFamily: C.fontMono, fontWeight: 700, color: C.navy }}>{z.zip}</span>
-                      <span style={{ color: C.textBody }}>{z.city}</span>
-                      <span style={{ textAlign: 'right', fontFamily: C.fontMono, color: C.text, fontWeight: 600 }}>{z.props.toLocaleString()}</span>
-                      <span style={{ textAlign: 'right', fontFamily: C.fontMono, color: C.sage }}>${(z.avg / 1000).toFixed(0)}K</span>
-                    </div>
-                  ))}
-                  <button onClick={() => setModal('ZIP ' + drillCity)} style={{ width: '100%', padding: '8px', border: 'none', background: 'transparent', borderTop: `1px dashed ${C.border}`, fontSize: 11, color: C.textDim, cursor: 'pointer', fontFamily: C.font }}>
-                    View Parcel Records for {drillCity}
-                  </button>
                 </div>
               )}
             </div>
