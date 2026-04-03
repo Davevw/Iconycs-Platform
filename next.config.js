@@ -7,16 +7,8 @@ const nextConfig = {
     ],
   },
   // Redirect www to apex
-  async redirects() {
-    return [
-      {
-        source: '/:path*',
-        has: [{ type: 'host', value: 'www.iconycs.com' }],
-        destination: 'https://iconycs.com/:path*',
-        permanent: true,
-      },
-    ];
-  },
+  // Redirect handled by Vercel domain config — no Next.js redirect needed
+  // (was causing redirect loop: Vercel sends apex→www, Next.js sent www→apex)
   // SEO-friendly headers
   async headers() {
     return [
