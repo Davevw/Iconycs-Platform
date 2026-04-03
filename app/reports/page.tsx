@@ -230,7 +230,16 @@ export default function ReportsPage() {
     {label:'Private Party', count: Math.round(agg.totalProps * 0.049 * 0.40), pct: 4.9},
     {label:'Other / Unknown', count: Math.round(agg.totalProps * 0.065 * 0.40), pct: 6.5},
   ];
-  const topLenders: PanelData[] = [
+  const titleCompanies: PanelData[] = [
+    {label:'First American Title', count: Math.round(agg.totalProps * 0.0395), pct: 10.7},
+    {label:'Chicago Title', count: Math.round(agg.totalProps * 0.027), pct: 7.4},
+    {label:'Stewart Title', count: Math.round(agg.totalProps * 0.015), pct: 4.1},
+    {label:'Fidelity National Title', count: Math.round(agg.totalProps * 0.013), pct: 3.5},
+    {label:'Old Republic Title', count: Math.round(agg.totalProps * 0.011), pct: 2.9},
+    {label:'North American Title', count: Math.round(agg.totalProps * 0.008), pct: 2.2},
+    {label:'Lawyers Title', count: Math.round(agg.totalProps * 0.007), pct: 2.0},
+  ];
+    const topLenders: PanelData[] = [
     {label:'Wells Fargo Bank NA', count: Math.round(agg.totalProps * 0.021), pct: 5.8},
     {label:'Bank of America', count: Math.round(agg.totalProps * 0.013), pct: 3.5},
     {label:'Quicken Loans Inc', count: Math.round(agg.totalProps * 0.006), pct: 1.7},
@@ -390,7 +399,7 @@ export default function ReportsPage() {
             </div>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 16 }}>
-            {['Lender Data','State Data'].map((f,i) => (
+            {['Lender Data','Title Company Data','State Data'].map((f,i) => (
               <button key={i} onClick={() => setModal(f)} style={{ padding: '6px', borderRadius: 6, background: 'transparent', border: `1px dashed ${C.border}`, fontSize: 11, color: C.textDim, cursor: 'pointer', fontFamily: C.font }}>
                 🔍 View Underlying Parcels →
               </button>
