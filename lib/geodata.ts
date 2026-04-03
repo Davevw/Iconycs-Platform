@@ -106,7 +106,14 @@ export const GEO_DATA: Record<string, {cities: {name:string;props:number;avg:num
     {name:"Fresno",props:143180,avg:197373},
     {name:"Long Beach",props:94314,avg:365881},
     {name:"Stockton",props:91286,avg:208559},
-    {name:"Oakland",props:89062,avg:360313}
+    {name:"Oakland",props:89062,avg:360313},
+    {name:"Santa Cruz",props:26053,avg:476286},
+    {name:"Salinas",props:36074,avg:314784},
+    {name:"Watsonville",props:14362,avg:376497},
+    {name:"Aptos",props:10565,avg:562755},
+    {name:"Monterey",props:8535,avg:457898},
+    {name:"Scotts Valley",props:5112,avg:492680},
+    {name:"Capitola",props:3737,avg:458013}
     ],
     zips: [
     {zip:"95747",city:"Roseville",props:25936,avg:416670},
@@ -116,7 +123,15 @@ export const GEO_DATA: Record<string, {cities: {name:string;props:number;avg:num
     {zip:"91709",city:"Chino Hills",props:22386,avg:423705},
     {zip:"92345",city:"Hesperia",props:22368,avg:189493},
     {zip:"92677",city:"Laguna Niguel",props:22106,avg:518973},
-    {zip:"90650",city:"Norwalk",props:21560,avg:286299}
+    {zip:"90650",city:"Norwalk",props:21560,avg:286299},
+    {zip:"95076",city:"Watsonville",props:14354,avg:376516},
+    {zip:"95060",city:"Santa Cruz",props:12560,avg:497436},
+    {zip:"95062",city:"Santa Cruz",props:10885,avg:471964},
+    {zip:"95003",city:"Aptos",props:10565,avg:562755},
+    {zip:"93940",city:"Monterey",props:8525,avg:454115},
+    {zip:"93906",city:"Salinas",props:12049,avg:275835},
+    {zip:"93905",city:"Salinas",props:7821,avg:239946},
+    {zip:"95066",city:"Scotts Valley",props:5111,avg:492642}
     ],
   },
   "CO": {
