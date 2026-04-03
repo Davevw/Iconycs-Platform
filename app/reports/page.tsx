@@ -326,7 +326,7 @@ export default function ReportsPage() {
                       onMouseEnter={(e: React.MouseEvent<HTMLDivElement>) => (e.currentTarget.style.background = C.bgWarm)}
                       onMouseLeave={(e: React.MouseEvent<HTMLDivElement>) => (e.currentTarget.style.background = 'transparent')}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                        <span style={{ fontSize: 11, fontWeight: 700, color: C.navy, padding: '2px 8px', borderRadius: 10, background: C.navySoft || '#EEF1F6' }}>{r.state}</span>
+                        <span style={{ fontSize: 11, fontWeight: 700, color: C.navy, padding: '2px 8px', borderRadius: 10, background: '#EEF1F6' }}>{r.state}</span>
                         <span style={{ fontSize: 13, fontWeight: 600, color: C.text }}>{r.city}</span>
                         <span style={{ fontSize: 11, color: C.textMuted }}>{r.stateName}</span>
                       </div>
