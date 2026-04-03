@@ -262,9 +262,7 @@ export default function ReportsPage() {
   const [selected, setSelected] = useState<string[]>(['ALL']);
   const [search, setSearch] = useState('');
   const [modal, setModal] = useState<string | null>(null);
-  const [drillState, setDrillState] = useState<string | null>(null);
   const [drillCity, setDrillCity] = useState<string | null>(null);
-  const drillData = drillState ? (DRILL_DATA[drillState] || null) : null;
 
   const toggleState = (code: string) => {
     if (code === 'ALL') { setSelected(['ALL']); return; }
@@ -408,7 +406,7 @@ export default function ReportsPage() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
             <div>
               <h1 style={{ fontSize: 20, fontWeight: 700, color: C.text, fontFamily: C.fontSerif, margin: 0 }}>
-                {agg.label} Housing Analytics
+                {agg.label} Housing Demographics
               </h1>
               <p style={{ fontSize: 12, color: C.textMuted, marginTop: 3 }}>
                 {agg.totalProps.toLocaleString()} properties · Avg value ${agg.avgValue.toLocaleString()} · {agg.stateCount} state{agg.stateCount > 1 ? 's' : ''}
