@@ -334,15 +334,31 @@ export default function Homepage() {
               <div style={{ fontSize: 11, color: C.textDim, letterSpacing: '0.14em', textTransform: 'uppercase', marginTop: -1 }}>Housing Analytics</div>
             </div>
           </Link>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
             {['About', 'Analytics', 'MarketPlace', 'Partners', 'Blog'].map(item => (
-              <Link key={item} href={`/${item.toLowerCase()}`} style={{ fontSize: 14, color: C.textMuted, fontWeight: 500 }}>{item}</Link>
+              <Link key={item} href={`/${item.toLowerCase()}`} style={{
+                fontSize: 13, color: C.textBody, fontWeight: 500,
+                padding: '8px 16px', borderRadius: 8,
+                background: 'transparent',
+                transition: 'all 0.2s',
+                letterSpacing: '0.01em',
+              }}
+              onMouseEnter={(e: any) => { e.target.style.background = C.terraSoft; e.target.style.color = C.terra; }}
+              onMouseLeave={(e: any) => { e.target.style.background = 'transparent'; e.target.style.color = C.textBody; }}
+              >{item}</Link>
             ))}
+            <div style={{ width: 1, height: 24, background: C.border, margin: '0 8px' }} />
+            <Link href="/reports" style={{
+              fontSize: 13, fontWeight: 500, color: C.sage,
+              padding: '8px 16px', borderRadius: 8,
+              background: C.sageSoft,
+              transition: 'all 0.2s',
+            }}>📊 Reports</Link>
             <Link href="/dashboard" style={{
-              padding: '10px 24px', borderRadius: C.rs, fontSize: 14, fontWeight: 600,
+              padding: '10px 22px', borderRadius: 8, fontSize: 13, fontWeight: 600,
               background: C.terra, color: '#fff',
               boxShadow: '0 1px 2px rgba(196,101,58,0.3), 0 4px 12px rgba(196,101,58,0.15)',
-            }}>Launch Dashboard</Link>
+            }}>AI Query Lab</Link>
           </div>
         </div>
       </nav>

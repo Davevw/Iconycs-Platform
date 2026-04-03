@@ -49,11 +49,11 @@ export default function MarketplacePage() {
             
             <span style={{ fontSize: 25, fontWeight: 700, color: 'var(--text)' }}>ICONYCS</span>
           </Link>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
             {['About', 'Analytics', 'MarketPlace', 'Partners', 'Blog'].map(item => (
-              <Link key={item} href={`/${item.toLowerCase()}`} style={{ fontSize: 14, color: item === 'MarketPlace' ? 'var(--accent)' : 'var(--text-muted)', textDecoration: 'none', fontWeight: 500 }}>{item}</Link>
+              <Link key={item} href={`/${item.toLowerCase()}`} style={{ fontSize: 13, color: 'var(--text-body)', textDecoration: 'none', fontWeight: 500, padding: '8px 16px', borderRadius: '8px', transition: 'all 0.2s' }}>{item}</Link>
             ))}
-            <Link href="/dashboard" style={{ padding: '8px 24px', borderRadius: 8, fontSize: 14, fontWeight: 600, background: '#C4653A', color: '#fff', textDecoration: 'none' }}>Launch Dashboard</Link>
+            <Link href="/dashboard" style={{ padding: '10px 22px', borderRadius: 8, fontSize: 13, fontWeight: 600, background: '#C4653A', color: '#fff', textDecoration: 'none', boxShadow: '0 1px 2px rgba(196,101,58,0.3)' }}>Launch Dashboard</Link>
           </div>
         </div>
       </nav>
