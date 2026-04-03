@@ -168,6 +168,23 @@ function ParcelModal({ filter, onClose }: { filter: string; onClose: () => void 
   );
 }
 
+
+// Geographic drill-down data (sample � will query Snowflake live)
+const DRILL_DATA: Record<string, {cities: {name:string,props:number,avg:number}[], zips: {zip:string,city:string,props:number,avg:number}[]}> = {
+  CA: {
+    cities: [{name:'Los Angeles',props:1245000,avg:812000},{name:'San Diego',props:412000,avg:742000},{name:'San Jose',props:312000,avg:1124000},{name:'San Francisco',props:285000,avg:1485000},{name:'Sacramento',props:412000,avg:485000},{name:'Fresno',props:185000,avg:312000},{name:'Long Beach',props:198000,avg:685000},{name:'Oakland',props:212000,avg:812000}],
+    zips: [{zip:'90001',city:'Los Angeles',props:8420,avg:485000},{zip:'90002',city:'Los Angeles',props:7812,avg:412000},{zip:'90210',city:'Beverly Hills',props:4215,avg:4200000},{zip:'92101',city:'San Diego',props:6540,avg:812000},{zip:'94102',city:'San Francisco',props:3845,avg:1485000}],
+  },
+  TX: {
+    cities: [{name:'Houston',props:1124000,avg:295000},{name:'San Antonio',props:712000,avg:248000},{name:'Dallas',props:842000,avg:385000},{name:'Austin',props:612000,avg:542000},{name:'Fort Worth',props:412000,avg:312000},{name:'El Paso',props:285000,avg:195000},{name:'Arlington',props:212000,avg:285000},{name:'Corpus Christi',props:185000,avg:212000}],
+    zips: [{zip:'77001',city:'Houston',props:5420,avg:285000},{zip:'77002',city:'Houston',props:4812,avg:412000},{zip:'78201',city:'San Antonio',props:6540,avg:248000},{zip:'75201',city:'Dallas',props:3845,avg:485000},{zip:'78701',city:'Austin',props:4215,avg:612000}],
+  },
+  FL: {
+    cities: [{name:'Jacksonville',props:542000,avg:285000},{name:'Miami',props:712000,avg:542000},{name:'Tampa',props:485000,avg:385000},{name:'Orlando',props:412000,avg:342000},{name:'St. Petersburg',props:312000,avg:312000},{name:'Hialeah',props:198000,avg:412000},{name:'Tallahassee',props:185000,avg:248000},{name:'Fort Lauderdale',props:242000,avg:485000}],
+    zips: [{zip:'33101',city:'Miami',props:4520,avg:542000},{zip:'33125',city:'Miami',props:5812,avg:385000},{zip:'33601',city:'Tampa',props:3540,avg:385000},{zip:'32801',city:'Orlando',props:4215,avg:342000},{zip:'32301',city:'Tallahassee',props:3845,avg:248000}],
+  },
+};
+
 // Aggregate data across selected states
 function buildAggregated(selected: string[]) {
   if (selected.length === 0 || selected.includes('ALL')) {
@@ -191,6 +208,9 @@ export default function ReportsPage() {
   const [selected, setSelected] = useState<string[]>(['ALL']);
   const [search, setSearch] = useState('');
   const [modal, setModal] = useState<string | null>(null);
+  const [drillState, setDrillState] = useState<string | null>(null);
+  const [drillCity, setDrillCity] = useState<string | null>(null);
+  const drillData = drillState ? (DRILL_DATA[drillState] || null) : null;
 
   const toggleState = (code: string) => {
     if (code === 'ALL') { setSelected(['ALL']); return; }
@@ -405,6 +425,76 @@ export default function ReportsPage() {
               </button>
             ))}
           </div>
+
+          {/* Geographic Drill-Down */}
+          {!isAll && selected.length === 1 && (
+            <div style={{ background: C.bgCard, borderRadius: 10, border: 1px solid , overflow: 'hidden', marginBottom: 16 }}>
+              <div style={{ padding: '10px 16px', background: C.navy, color: '#fff', fontSize: 12, fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span>Geographic Drill-Down</span>
+                <div style={{ display: 'flex', gap: 8, fontSize: 11 }}>
+                  <span style={{ opacity: 0.7 }}>State</span>
+                  <span style={{ opacity: 0.4 }}>�</span>
+                  <span style={{ opacity: drillCity ? 0.7 : 1, fontWeight: drillCity ? 400 : 700, cursor: drillCity ? 'pointer' : 'default' }} onClick={() => setDrillCity(null)}>City</span>
+                  {drillCity && <><span style={{ opacity: 0.4 }}>�</span><span style={{ fontWeight: 700 }}>ZIP Code</span></>}
+                </div>
+              </div>
+              {!drillCity ? (
+                <div>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: C.textDim, display: 'grid', gridTemplateColumns: '1fr 90px 90px', padding: '6px 14px', background: C.bgWarm }}>
+                    <span>CITY</span><span style={{textAlign:'right'}}>PROPERTIES</span><span style={{textAlign:'right'}}>AVG VALUE</span>
+                  </div>
+                  {(DRILL_DATA[selected[0]]?.cities || []).map((city, i) => (
+                    <div key={i} onClick={() => setDrillCity(city.name)} style={{ display: 'grid', gridTemplateColumns: '1fr 90px 90px', padding: '8px 14px', borderBottom: 1px solid , fontSize: 12, cursor: 'pointer', alignItems: 'center' }}
+                      onMouseEnter={(e:any) => e.currentTarget.style.background = C.bgWarm}
+                      onMouseLeave={(e:any) => e.currentTarget.style.background = 'transparent'}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <div style={{ width: 7, height: 7, borderRadius: 2, background: C.chart[i % C.chart.length] }} />
+                        <span style={{ color: C.terra, fontWeight: 500 }}>{city.name} ?</span>
+                      </div>
+                      <span style={{ textAlign: 'right', fontFamily: C.fontMono, color: C.text, fontWeight: 600 }}>{city.props.toLocaleString()}</span>
+                      <span style={{ textAlign: 'right', fontFamily: C.fontMono, color: C.sage }}>{'
+            ICONYCS · Live Snowflake · 109.8M residential properties · April 2026
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
++(city.avg/1000).toFixed(0)+'K'}</span>
+                    </div>
+                  ))}
+                  {!DRILL_DATA[selected[0]] && <div style={{ padding: '20px', textAlign: 'center', color: C.textDim, fontSize: 13 }}>Select CA, TX, or FL to see city drill-down</div>}
+                </div>
+              ) : (
+                <div>
+                  <div style={{ padding: '8px 14px', background: C.terraSoft, borderBottom: 1px solid , fontSize: 12, fontWeight: 600, color: C.terra, display: 'flex', justifyContent: 'space-between' }}>
+                    <span>{drillCity} � ZIP Code Analysis</span>
+                    <span style={{ cursor: 'pointer', fontWeight: 400, color: C.textMuted }} onClick={() => setDrillCity(null)}>? Back to Cities</span>
+                  </div>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: C.textDim, display: 'grid', gridTemplateColumns: '80px 1fr 90px 90px', padding: '6px 14px', background: C.bgWarm }}>
+                    <span>ZIP</span><span>CITY</span><span style={{textAlign:'right'}}>PROPERTIES</span><span style={{textAlign:'right'}}>AVG VALUE</span>
+                  </div>
+                  {(DRILL_DATA[selected[0]]?.zips || []).map((z, i) => (
+                    <div key={i} style={{ display: 'grid', gridTemplateColumns: '80px 1fr 90px 90px', padding: '8px 14px', borderBottom: 1px solid , fontSize: 12, alignItems: 'center' }}>
+                      <span style={{ fontFamily: C.fontMono, fontWeight: 700, color: C.navy }}>{z.zip}</span>
+                      <span style={{ color: C.textBody }}>{z.city}</span>
+                      <span style={{ textAlign: 'right', fontFamily: C.fontMono, color: C.text, fontWeight: 600 }}>{z.props.toLocaleString()}</span>
+                      <span style={{ textAlign: 'right', fontFamily: C.fontMono, color: C.sage }}>{'
+            ICONYCS · Live Snowflake · 109.8M residential properties · April 2026
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
++(z.avg/1000).toFixed(0)+'K'}</span>
+                    </div>
+                  ))}
+                  <button onClick={() => setModal('ZIP '+drillCity)} style={{ width: '100%', padding: '8px', border: 'none', background: 'transparent', borderTop: 1px dashed , fontSize: 11, color: C.textDim, cursor: 'pointer', fontFamily: C.font }}>?? View Underlying Parcels for {drillCity} ?</button>
+                </div>
+              )}
+            </div>
+          )}
 
           <div style={{ textAlign: 'center', padding: '12px 0', fontSize: 11, color: C.textDim }}>
             ICONYCS · Live Snowflake · 109.8M residential properties · April 2026
