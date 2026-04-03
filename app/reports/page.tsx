@@ -1,7 +1,8 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { GEO_DATA } from '@/lib/geodata';
 
 const C = {
   bg: '#FAFAF7', bgCard: '#FFFFFF', bgWarm: '#F5F0E8',
@@ -43,47 +44,7 @@ const ALL_STATES = [
   {code:'DC',name:'Washington DC',props:248000,avg:742000},
 ];
 
-const DRILL_DATA: Record<string, {cities: {name:string,props:number,avg:number}[], zips: {zip:string,city:string,props:number,avg:number}[]}> = {
-  CA: {
-    cities: [
-      {name:'Los Angeles',props:1245000,avg:812000},{name:'San Diego',props:412000,avg:742000},
-      {name:'San Jose',props:312000,avg:1124000},{name:'San Francisco',props:285000,avg:1485000},
-      {name:'Sacramento',props:412000,avg:485000},{name:'Fresno',props:185000,avg:312000},
-      {name:'Long Beach',props:198000,avg:685000},{name:'Oakland',props:212000,avg:812000},
-    ],
-    zips: [
-      {zip:'90001',city:'Los Angeles',props:8420,avg:485000},{zip:'90002',city:'Los Angeles',props:7812,avg:412000},
-      {zip:'90210',city:'Beverly Hills',props:4215,avg:4200000},{zip:'92101',city:'San Diego',props:6540,avg:812000},
-      {zip:'94102',city:'San Francisco',props:3845,avg:1485000},
-    ],
-  },
-  TX: {
-    cities: [
-      {name:'Houston',props:1124000,avg:295000},{name:'San Antonio',props:712000,avg:248000},
-      {name:'Dallas',props:842000,avg:385000},{name:'Austin',props:612000,avg:542000},
-      {name:'Fort Worth',props:412000,avg:312000},{name:'El Paso',props:285000,avg:195000},
-      {name:'Arlington',props:212000,avg:285000},{name:'Corpus Christi',props:185000,avg:212000},
-    ],
-    zips: [
-      {zip:'77001',city:'Houston',props:5420,avg:285000},{zip:'77002',city:'Houston',props:4812,avg:412000},
-      {zip:'78201',city:'San Antonio',props:6540,avg:248000},{zip:'75201',city:'Dallas',props:3845,avg:485000},
-      {zip:'78701',city:'Austin',props:4215,avg:612000},
-    ],
-  },
-  FL: {
-    cities: [
-      {name:'Jacksonville',props:542000,avg:285000},{name:'Miami',props:712000,avg:542000},
-      {name:'Tampa',props:485000,avg:385000},{name:'Orlando',props:412000,avg:342000},
-      {name:'St. Petersburg',props:312000,avg:312000},{name:'Hialeah',props:198000,avg:412000},
-      {name:'Tallahassee',props:185000,avg:248000},{name:'Fort Lauderdale',props:242000,avg:485000},
-    ],
-    zips: [
-      {zip:'33101',city:'Miami',props:4520,avg:542000},{zip:'33125',city:'Miami',props:5812,avg:385000},
-      {zip:'33601',city:'Tampa',props:3540,avg:385000},{zip:'32801',city:'Orlando',props:4215,avg:342000},
-      {zip:'32301',city:'Tallahassee',props:3845,avg:248000},
-    ],
-  },
-};
+// GEO_DATA imported from lib/geodata.ts â€” 51 states, 502 cities, 408 ZIPs (live Snowflake data)
 
 interface PanelData { label: string; count: number; pct: number; }
 
@@ -471,11 +432,11 @@ export default function ReportsPage() {
               </div>
 
               {!drillCity ? (
-                /* CITY CARDS — each city gets its own mini chart */
-                DRILL_DATA[selected[0]] ? (
+                /* CITY CARDS â€” each city gets its own mini chart */
+                GEO_DATA[selected[0]] ? (
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12 }}>
-                    {DRILL_DATA[selected[0]].cities.map((city, i) => {
-                      const maxProps = Math.max(...DRILL_DATA[selected[0]].cities.map(c => c.props));
+                    {GEO_DATA[selected[0]].cities.map((city, i) => {
+                      const maxProps = Math.max(...GEO_DATA[selected[0]].cities.map(c => c.props));
                       const barPct = (city.props / maxProps) * 100;
                       return (
                         <div key={i} onClick={() => setDrillCity(city.name)} style={{
@@ -506,20 +467,20 @@ export default function ReportsPage() {
                   </div>
                 ) : (
                   <div style={{ padding: '20px', textAlign: 'center', color: C.textDim, fontSize: 13, background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}` }}>
-                    City drill-down available for CA, TX, and FL. More states coming soon.
+                    Select a single state to see city-level drill-down.
                   </div>
                 )
               ) : (
                 /* ZIP CODE VIEW */
                 <div style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, overflow: 'hidden' }}>
                   <div style={{ padding: '10px 16px', background: C.bgWarm, borderBottom: `1px solid ${C.border}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span style={{ fontSize: 13, fontWeight: 700, color: C.text }}>{drillCity} — ZIP Code Analysis</span>
+                    <span style={{ fontSize: 13, fontWeight: 700, color: C.text }}>{drillCity} â€” ZIP Code Analysis</span>
                     <button onClick={() => setDrillCity(null)} style={{ background: C.bgWarm, border: `1px solid ${C.border}`, borderRadius: 20, padding: '4px 14px', fontSize: 12, color: C.terra, cursor: 'pointer', fontFamily: C.font, fontWeight: 600 }}>
                       ^ Back to Cities
                     </button>
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 12, padding: 16 }}>
-                    {DRILL_DATA[selected[0]]?.zips.map((z, i) => (
+                    {GEO_DATA[selected[0]]?.zips.map((z, i) => (
                       <div key={i} style={{ background: C.bgWarm, borderRadius: 8, padding: '12px 14px', border: `1px solid ${C.borderLight}` }}>
                         <div style={{ fontSize: 16, fontWeight: 800, color: C.navy, fontFamily: C.fontMono, marginBottom: 4 }}>{z.zip}</div>
                         <div style={{ fontSize: 11, color: C.textMuted, marginBottom: 8 }}>{z.city}</div>
