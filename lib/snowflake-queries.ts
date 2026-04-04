@@ -88,6 +88,27 @@ export function queryState(filters: GeoFilters): string {
   `.trim();
 }
 
+/**
+ * Returns a dimension breakdown for a single state from VW_DASHBOARD_NATIONAL.
+ * The national view has STATE column — use it when a specific state is selected.
+ */
+export function queryStateBreakdown(
+  state: string,
+  dimension: 'ETHNICITY' | 'PROPERTY_CATEGORY' | 'MTG1_LOAN_CATEGORY'
+): string {
+  return `
+    SELECT
+      ${dimension} AS LABEL,
+      SUM(RECORD_COUNT) AS RECORD_COUNT
+    FROM VW_DASHBOARD_NATIONAL
+    WHERE STATE = '${state.toUpperCase()}'
+      AND ${dimension} IS NOT NULL AND ${dimension} != 'Unknown'
+    GROUP BY ${dimension}
+    ORDER BY RECORD_COUNT DESC
+    LIMIT 10
+  `.trim();
+}
+
 // ─── County ───────────────────────────────────────────────────────────────
 
 export function queryCounty(filters: GeoFilters): string {

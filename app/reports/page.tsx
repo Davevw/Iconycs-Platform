@@ -48,6 +48,8 @@ interface PanelData { label: string; count: number; pct?: number; }
 interface NationalData { [key: string]: any; }
 interface StateRow   { [key: string]: any; }
 interface LoadState  { loading: boolean; error: string | null; }
+/** Row returned by the breakdown queries: { LABEL, RECORD_COUNT } */
+interface BreakdownRow { LABEL: string; RECORD_COUNT: number | string; }
 
 // ─── Skeleton shimmer ──────────────────────────────────────────────────────
 function Skeleton({ w = '100%', h = 16 }: { w?: string | number; h?: number }) {
@@ -613,6 +615,10 @@ export default function ReportsPage() {
 
   // Live data
   const [nationalData, setNationalData]   = useState<NationalData | null>(null);
+  // Breakdown arrays for pie charts (populated from national or state API)
+  const [ethnicityBreakdown,  setEthnicityBreakdown]  = useState<BreakdownRow[]>([]);
+  const [propertyBreakdown,   setPropertyBreakdown]   = useState<BreakdownRow[]>([]);
+  const [loanBreakdown,       setLoanBreakdown]       = useState<BreakdownRow[]>([]);
   const [stateData,    setStateData]      = useState<StateRow[]>([]);
   const [countyData,   setCountyData]     = useState<StateRow[]>([]);
   const [cityData,     setCityData]       = useState<StateRow[]>([]);
@@ -654,7 +660,16 @@ export default function ReportsPage() {
       const res = await fetch('/api/snowflake/national');
       const json = await res.json();
       if (json.success) {
-        setNationalData(json.data);
+        // Store top-level aggregates so stat cards still work
+        setNationalData({
+          TOTAL_PROPERTIES: json.totalProperties,
+          AVG_PROPERTY_VALUE: json.avgValue,
+          AVG_MORTGAGE: json.avgMortgage,
+        });
+        // Store breakdown arrays for pie charts
+        setEthnicityBreakdown(json.ethnicityBreakdown ?? []);
+        setPropertyBreakdown(json.propertyBreakdown ?? []);
+        setLoanBreakdown(json.loanBreakdown ?? []);
         setNatLoad({ loading: false, error: null });
       } else {
         setNatLoad({ loading: false, error: json.error ?? 'Failed to load national data' });
@@ -673,6 +688,12 @@ export default function ReportsPage() {
       const json = await res.json();
       if (json.success) {
         setStateData(json.data ?? []);
+        // When a specific state is selected, use its breakdown arrays for pie charts
+        if (state && json.ethnicityBreakdown) {
+          setEthnicityBreakdown(json.ethnicityBreakdown ?? []);
+          setPropertyBreakdown(json.propertyBreakdown ?? []);
+          setLoanBreakdown(json.loanBreakdown ?? []);
+        }
         setStateLoad({ loading: false, error: null });
       } else {
         setStateLoad({ loading: false, error: json.error ?? 'Failed to load state data' });
@@ -881,6 +902,7 @@ export default function ReportsPage() {
       fetchLTV(stateCode, drillCity ?? undefined);
       fetchTrends(stateCode, drillCity ?? undefined, timePeriod);
     } else if (isAll) {
+      fetchNational(); // reload national breakdowns when switching back to All States
       fetchState();
       fetchLenders();
       fetchLTV();
@@ -981,6 +1003,14 @@ export default function ReportsPage() {
 
   // ─── Build chart data from live data with smart fallback ───────────────
   const buildEthnicity = (): PanelData[] => {
+    // Prefer live breakdown data from the aggregated API queries
+    if (ethnicityBreakdown.length > 0) {
+      return ethnicityBreakdown.map(r => ({
+        label: String(r.LABEL ?? '—'),
+        count: Number(r.RECORD_COUNT ?? 0),
+      })).filter(d => d.count > 0);
+    }
+    // Legacy column-based fallback (pre-breakdown API)
     const src = currentStateRow ?? nationalData;
     if (!src) return [];
     const fields: [string, string][] = [
@@ -994,19 +1024,26 @@ export default function ReportsPage() {
     const result = fields
       .map(([f, label]) => ({ label, count: Number(src[f] ?? 0) }))
       .filter(d => d.count > 0);
-    // If view doesn't have ethnicity breakdown columns, use TOTAL for display
     if (result.length === 0 && totalProps > 0) {
       return [
-        { label: 'Unknown / Other', count: Math.round(totalProps * 0.968) },
-        { label: 'Hispanic',        count: Math.round(totalProps * 0.018) },
+        { label: 'Unknown / Other',  count: Math.round(totalProps * 0.968) },
+        { label: 'Hispanic',         count: Math.round(totalProps * 0.018) },
         { label: 'African American', count: Math.round(totalProps * 0.010) },
-        { label: 'Asian',           count: Math.round(totalProps * 0.004) },
+        { label: 'Asian',            count: Math.round(totalProps * 0.004) },
       ];
     }
     return result;
   };
 
   const buildLoanType = (): PanelData[] => {
+    // Prefer live breakdown data from the aggregated API queries
+    if (loanBreakdown.length > 0) {
+      return loanBreakdown.map(r => ({
+        label: String(r.LABEL ?? '—'),
+        count: Number(r.RECORD_COUNT ?? 0),
+      })).filter(d => d.count > 0);
+    }
+    // Legacy column-based fallback
     const src = currentStateRow ?? nationalData;
     if (!src) return [];
     const fields: [string, string][] = [
@@ -1022,10 +1059,10 @@ export default function ReportsPage() {
       .filter(d => d.count > 0);
     if (result.length === 0 && totalProps > 0) {
       return [
-        { label: 'Conventional',   count: Math.round(totalProps * 0.261) },
-        { label: 'FHA',            count: Math.round(totalProps * 0.062) },
-        { label: 'VA',             count: Math.round(totalProps * 0.031) },
-        { label: 'Private Party',  count: Math.round(totalProps * 0.020) },
+        { label: 'Conventional',    count: Math.round(totalProps * 0.261) },
+        { label: 'FHA',             count: Math.round(totalProps * 0.062) },
+        { label: 'VA',              count: Math.round(totalProps * 0.031) },
+        { label: 'Private Party',   count: Math.round(totalProps * 0.020) },
         { label: 'Other / Unknown', count: Math.round(totalProps * 0.026) },
       ];
     }
@@ -1033,6 +1070,14 @@ export default function ReportsPage() {
   };
 
   const buildPropertyType = (): PanelData[] => {
+    // Prefer live breakdown data from the aggregated API queries
+    if (propertyBreakdown.length > 0) {
+      return propertyBreakdown.map(r => ({
+        label: String(r.LABEL ?? '—'),
+        count: Number(r.RECORD_COUNT ?? 0),
+      })).filter(d => d.count > 0);
+    }
+    // Legacy column-based fallback
     const src = currentStateRow ?? nationalData;
     if (!src) return [];
     const fields: [string, string][] = [
@@ -1045,8 +1090,8 @@ export default function ReportsPage() {
       .filter(d => d.count > 0);
     if (result.length === 0 && totalProps > 0) {
       return [
-        { label: 'SFR / Townhouse', count: Math.round(totalProps * 0.897) },
-        { label: 'Condominium',     count: Math.round(totalProps * 0.081) },
+        { label: 'SFR / Townhouse',   count: Math.round(totalProps * 0.897) },
+        { label: 'Condominium',       count: Math.round(totalProps * 0.081) },
         { label: 'Small Multi (2-4)', count: Math.round(totalProps * 0.022) },
       ];
     }
