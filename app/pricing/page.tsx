@@ -115,7 +115,7 @@ const TIERS = [
     id: 'enterprise',
     name: 'ENTERPRISE',
     tagline: 'Full Access',
-    price: '$999',
+    price: '$5,000–$10,000',
     period: 'per month',
     color: C.text,
     bg: '#FFFBF2',
