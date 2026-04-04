@@ -484,6 +484,35 @@ export function queryDemographics(filters: CascadeFilters): string {
   `.trim();
 }
 
+// ─── Social Housing Score (single-query composite) ────────────────────────
+
+export function querySocialHousingScore(filters: GeoFilters): string {
+  const conditions: string[] = [];
+  if (filters.state)  conditions.push(`STATE = '${filters.state.toUpperCase()}'`);
+  if (filters.county) conditions.push(`COUNTY = '${filters.county.toUpperCase()}'`);
+  if (filters.city)   conditions.push(`CITY = '${filters.city.toUpperCase()}'`);
+  if (filters.zip)    conditions.push(`ZIP = '${filters.zip}'`);
+  const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
+
+  return `
+    SELECT
+      SUM(RECORD_COUNT) AS TOTAL_RECORDS,
+      -- Ethnic diversity (Shannon entropy component)
+      SUM(CASE WHEN ETHNICITYCD = 'Y' THEN RECORD_COUNT ELSE 0 END) AS HISPANIC_COUNT,
+      SUM(CASE WHEN ETHNICITYCD = 'F' THEN RECORD_COUNT ELSE 0 END) AS BLACK_COUNT,
+      SUM(CASE WHEN ETHNICITYCD = 'A' THEN RECORD_COUNT ELSE 0 END) AS ASIAN_COUNT,
+      -- LTV distribution
+      SUM(CASE WHEN LTV_TIER = '0-60%' THEN RECORD_COUNT ELSE 0 END) AS LTV_LOW,
+      SUM(CASE WHEN LTV_TIER IN ('60-70%','70-80%') THEN RECORD_COUNT ELSE 0 END) AS LTV_MID,
+      SUM(CASE WHEN LTV_TIER IN ('80-90%','90-95%','95%+') THEN RECORD_COUNT ELSE 0 END) AS LTV_HIGH,
+      -- Owner occupancy
+      SUM(CASE WHEN OCCUPANCY = 'Owner Occupied' THEN RECORD_COUNT ELSE 0 END) AS OWNER_OCC_COUNT,
+      AVG(AVG_MARKET_VALUE) AS AVG_MARKET_VALUE
+    FROM VW_CASCADE_PROPERTY
+    ${where}
+  `.trim();
+}
+
 // ─── Social Housing Score Components ──────────────────────────────────────
 
 export function querySocialHousingComponents(filters: GeoFilters): string {

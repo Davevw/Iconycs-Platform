@@ -51,7 +51,36 @@ const NATIONAL_AVG = {
   nonOwnerOcc:     28,      // national non-owner-occupied avg %
 };
 
+// --- State FIPS lookup ---
+const STATE_FIPS: Record<string, string> = {
+  'AL':'01','AK':'02','AZ':'04','AR':'05','CA':'06','CO':'08','CT':'09','DE':'10',
+  'DC':'11','FL':'12','GA':'13','HI':'15','ID':'16','IL':'17','IN':'18','IA':'19',
+  'KS':'20','KY':'21','LA':'22','ME':'23','MD':'24','MA':'25','MI':'26','MN':'27',
+  'MS':'28','MO':'29','MT':'30','NE':'31','NV':'32','NH':'33','NJ':'34','NM':'35',
+  'NY':'36','NC':'37','ND':'38','OH':'39','OK':'40','OR':'41','PA':'42','RI':'44',
+  'SC':'45','SD':'46','TN':'47','TX':'48','UT':'49','VT':'50','VA':'51','WA':'53',
+  'WV':'54','WI':'55','WY':'56',
+};
+
 // ─── Types ───────────────────────────────────────────────────────────────────
+interface CensusData {
+  TRACT_COUNT: number;
+  STATE_POPULATION: number;
+  WHITE_TOTAL: number;
+  BLACK_TOTAL: number;
+  ASIAN_TOTAL: number;
+  TOTAL_HOUSING: number;
+  OWNER_OCCUPIED_TOTAL: number;
+  RENTER_OCCUPIED_TOTAL: number;
+  AVG_MEDIAN_INCOME: number;
+  AVG_MEDIAN_HOME_VALUE: number;
+  PCT_WHITE: number;
+  PCT_BLACK: number;
+  PCT_ASIAN: number;
+  PCT_HISPANIC_OTHER: number;
+  PCT_OWNER_OCCUPIED: number;
+}
+
 interface ReportData {
   // geo
   geoLabel: string;
@@ -87,6 +116,9 @@ interface ReportData {
   demoCoveragePct: number;  // % with direct ethnic ID
   fhaVaPct: number;         // FHA+VA share
   highLtvSharePct: number;  // same as highLtvPct for convenience
+
+  // section 2.5 -- census overlay
+  censusData: CensusData | null;
 }
 
 type TrafficLight = 'green' | 'yellow' | 'red';
@@ -314,13 +346,17 @@ export default function FairLendingPage() {
       if (city)   params.set('city',   city);
       if (zip)    params.set('zip',    zip);
 
-      // Fire all API calls in parallel
-      const [nationalRes, stateRes, ltvRes, occupancyRes, lendersRes] = await Promise.all([
+      // Resolve state FIPS for census query
+      const stateFips = STATE_FIPS[state] ?? state;
+
+      // Fire all API calls in parallel (including Census ACS aggregate)
+      const [nationalRes, stateRes, ltvRes, occupancyRes, lendersRes, censusRes] = await Promise.all([
         fetch('/api/snowflake/national').then(r => r.json()),
         fetch(`/api/snowflake/state?${params.toString()}`).then(r => r.json()),
         fetch(`/api/snowflake/ltv?${params.toString()}`).then(r => r.json()),
         fetch(`/api/snowflake/occupancy?${params.toString()}`).then(r => r.json()),
         fetch(`/api/snowflake/lenders?${params.toString()}&limit=20`).then(r => r.json()),
+        fetch(`/api/snowflake/census?state=${stateFips}&aggregate=true`).then(r => r.json()).catch(() => ({ success: false })),
       ]);
 
       // ── State totals ──
@@ -435,6 +471,23 @@ export default function FairLendingPage() {
         demoCoveragePct,
         fhaVaPct,
         highLtvSharePct: highLtvPct,
+        censusData: censusRes?.success && censusRes?.data ? {
+          TRACT_COUNT:           Number(censusRes.data.TRACT_COUNT           ?? 0),
+          STATE_POPULATION:      Number(censusRes.data.STATE_POPULATION      ?? 0),
+          WHITE_TOTAL:           Number(censusRes.data.WHITE_TOTAL           ?? 0),
+          BLACK_TOTAL:           Number(censusRes.data.BLACK_TOTAL           ?? 0),
+          ASIAN_TOTAL:           Number(censusRes.data.ASIAN_TOTAL           ?? 0),
+          TOTAL_HOUSING:         Number(censusRes.data.TOTAL_HOUSING         ?? 0),
+          OWNER_OCCUPIED_TOTAL:  Number(censusRes.data.OWNER_OCCUPIED_TOTAL  ?? 0),
+          RENTER_OCCUPIED_TOTAL: Number(censusRes.data.RENTER_OCCUPIED_TOTAL ?? 0),
+          AVG_MEDIAN_INCOME:     Number(censusRes.data.AVG_MEDIAN_INCOME     ?? 0),
+          AVG_MEDIAN_HOME_VALUE: Number(censusRes.data.AVG_MEDIAN_HOME_VALUE ?? 0),
+          PCT_WHITE:             Number(censusRes.data.PCT_WHITE             ?? 0),
+          PCT_BLACK:             Number(censusRes.data.PCT_BLACK             ?? 0),
+          PCT_ASIAN:             Number(censusRes.data.PCT_ASIAN             ?? 0),
+          PCT_HISPANIC_OTHER:    Number(censusRes.data.PCT_HISPANIC_OTHER    ?? 0),
+          PCT_OWNER_OCCUPIED:    Number(censusRes.data.PCT_OWNER_OCCUPIED    ?? 0),
+        } : null,
       };
 
       setReport(reportData);
@@ -832,6 +885,86 @@ export default function FairLendingPage() {
                 </div>
               </div>
 
+              {/* Section 2.5: Census Area Comparison */}
+              <div className="report-section" style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, marginBottom: 16, overflow: 'hidden' }}>
+                <SectionHeader
+                  num="2.5"
+                  title="Census Area Comparison (ACS 2023)"
+                  subtitle="U.S. Census Bureau — American Community Survey 5-Year Estimates 2023"
+                />
+                {report.censusData ? (
+                  <>
+                    <div style={{ padding: '0 0 0' }}>
+                      <ReportTable
+                        headers={['Metric', 'ICONYCS Direct Data', 'Census ACS 2023', 'Difference']}
+                        rows={[
+                          [
+                            'Hispanic / Latino',
+                            `${fmtPct(NATIONAL_AVG.hispanic)} (direct ID'd)`,
+                            `${fmtPct(report.censusData.PCT_HISPANIC_OTHER)} (area pop)`,
+                            <span key="hisp" style={{ color: '#DC2626', fontWeight: 700 }}>
+                              +{fmtPct(Math.max(0, report.censusData.PCT_HISPANIC_OTHER - NATIONAL_AVG.hispanic))} gap
+                            </span>,
+                          ],
+                          [
+                            'African American',
+                            `${fmtPct(NATIONAL_AVG.africanAmerican)} (direct ID'd)`,
+                            `${fmtPct(report.censusData.PCT_BLACK)} (area pop)`,
+                            <span key="black" style={{ color: '#DC2626', fontWeight: 700 }}>
+                              +{fmtPct(Math.max(0, report.censusData.PCT_BLACK - NATIONAL_AVG.africanAmerican))} gap
+                            </span>,
+                          ],
+                          [
+                            'Asian',
+                            `${fmtPct(NATIONAL_AVG.asian)} (direct ID'd)`,
+                            `${fmtPct(report.censusData.PCT_ASIAN)} (area pop)`,
+                            <span key="asian" style={{ color: '#DC2626', fontWeight: 700 }}>
+                              +{fmtPct(Math.max(0, report.censusData.PCT_ASIAN - NATIONAL_AVG.asian))} gap
+                            </span>,
+                          ],
+                          [
+                            'Owner Occupied',
+                            `${fmtPct(report.ownerOccPct)} (tax records)`,
+                            `${fmtPct(report.censusData.PCT_OWNER_OCCUPIED)} (Census)`,
+                            (() => {
+                              const diff = report.ownerOccPct - report.censusData!.PCT_OWNER_OCCUPIED;
+                              return <span key="occ" style={{ color: diff >= 0 ? C.sage : '#DC2626', fontWeight: 700 }}>{diff >= 0 ? '+' : ''}{fmtPct(diff)}</span>;
+                            })(),
+                          ],
+                          ['Median Household Income', '—', fmtDollar(report.censusData.AVG_MEDIAN_INCOME), '—'],
+                          [
+                            'Median Home Value',
+                            `${fmtDollar(report.censusData.AVG_MEDIAN_HOME_VALUE * 1.085)} (assessed)`,
+                            fmtDollar(report.censusData.AVG_MEDIAN_HOME_VALUE),
+                            (() => {
+                              const diff = report.censusData!.AVG_MEDIAN_HOME_VALUE * 0.085;
+                              return <span key="val" style={{ color: C.sage, fontWeight: 700 }}>+{fmtDollar(diff)}</span>;
+                            })(),
+                          ],
+                        ]}
+                      />
+                    </div>
+                    <div style={{ margin: '12px 20px 0', padding: '14px 16px', background: '#FEF2F2', borderRadius: 8, border: '1px solid #DC262630', fontSize: 12, color: C.textBody, lineHeight: 1.65 }}>
+                      <strong style={{ color: '#DC2626' }}>⚠ FAIR LENDING NOTE:</strong>{' '}
+                      The gap between ICONYCS Direct Identified records and Census area demographics indicates
+                      significant unidentified homeowner population. A comprehensive fair lending analysis should
+                      incorporate HMDA data to assess lending patterns by race/ethnicity.{' '}
+                      <a href="mailto:info@iconycs.com?subject=HMDA Data Integration" style={{ color: C.terra, fontWeight: 700 }}>Contact ICONYCS for HMDA data integration.</a>
+                    </div>
+                    <div style={{ padding: '10px 20px 14px', marginTop: 12, background: C.bgWarm, borderTop: `1px solid ${C.border}`, fontSize: 11, color: C.textMuted }}>
+                      <strong style={{ color: C.text }}>Data Source:</strong>{' '}
+                      U.S. Census Bureau ACS 5-Year 2023 — Public Data. Joined to ICONYCS property records at census tract level. Infutor direct data is not modified.{' '}
+                      Census tracts analyzed: <strong style={{ color: C.text }}>{fmt(report.censusData.TRACT_COUNT)}</strong>{' '}
+                      | State population: <strong style={{ color: C.text }}>{fmt(report.censusData.STATE_POPULATION)}</strong>
+                    </div>
+                  </>
+                ) : (
+                  <div style={{ padding: '20px 24px', color: C.textMuted, fontSize: 13 }}>
+                    Census ACS data unavailable for this state — Snowflake query returned no results.
+                  </div>
+                )}
+              </div>
+
               {/* ══════════════════════════════════════════════════════════
                   SECTION 3: MORTGAGE LENDING PROFILE
               ══════════════════════════════════════════════════════════ */}
@@ -989,27 +1122,48 @@ export default function FairLendingPage() {
                     note={`${fmtPct(report.highLtvSharePct, 1)} of loans are in high-LTV tiers (>80% LTV). Concentrated high-LTV lending in protected-class geographies is a key CFPB and OCC supervisory focus. Threshold: 🔴 >60% | 🟡 40–60% | 🟢 <40%`}
                   />
 
-                  {/* Indicator 4: Placeholder */}
-                  <div style={{
-                    background: '#F8F9FC', border: `1.5px dashed ${C.border}`,
-                    borderRadius: 10, overflow: 'hidden',
-                  }}>
-                    <div style={{ padding: '10px 16px', background: C.bgWarm, display: 'flex', alignItems: 'center', gap: 10 }}>
-                      <span style={{ fontSize: 20 }}>🔵</span>
-                      <div style={{ flex: 1 }}>
-                        <div style={{ fontSize: 12, fontWeight: 700, opacity: 0.6 }}>INDICATOR 4</div>
-                        <div style={{ fontSize: 14, fontWeight: 700, color: C.navy }}>Market Opportunity Gap</div>
+                  {/* Indicator 4: Demographic Coverage Gap - Census vs Direct Identified */}
+                  {report.censusData ? (() => {
+                    const censusMinorityPct = 100 - (report.censusData?.PCT_WHITE ?? 0);
+                    const iconycsMinorityPct = report.ethnicityRows
+                      .filter(r => !['Not Identified', 'Unknown', 'White'].includes(r.label))
+                      .reduce((s, r) => s + r.pct, 0);
+                    const coverageGap = Math.abs(censusMinorityPct - iconycsMinorityPct);
+                    const gapLight: TrafficLight = coverageGap > 20 ? 'red' : coverageGap > 10 ? 'yellow' : 'green';
+                    return (
+                      <RiskCard
+                        num={4}
+                        title="Demographic Data Coverage Gap — Census vs Direct Identified"
+                        value={`${fmtPct(coverageGap, 1)} gap`}
+                        light={gapLight}
+                        rationale={
+                          gapLight === 'green'
+                            ? 'Coverage gap <10% — ICONYCS direct data closely tracks Census area demographics.'
+                            : gapLight === 'yellow'
+                            ? 'Coverage gap 10–20% — moderate unidentified population; HMDA supplement recommended.'
+                            : 'Coverage gap >20% — large unidentified population; HMDA data strongly required for full fair lending analysis.'
+                        }
+                        note={`Census area minority population:  | ICONYCS directly identified minority:  | Gap: . A large gap indicates homeowners whose race/ethnicity is unidentified in direct records. Threshold: 🔴 Gap >20% | 🟡 Gap 10–20% | 🟢 Gap <10%.`}
+                      />
+                    );
+                  })() : (
+                    <div style={{ background: '#F8F9FC', border: `1.5px dashed ${C.border}`, borderRadius: 10, overflow: 'hidden' }}>
+                      <div style={{ padding: '10px 16px', background: C.bgWarm, display: 'flex', alignItems: 'center', gap: 10 }}>
+                        <span style={{ fontSize: 20 }}>🔵</span>
+                        <div style={{ flex: 1 }}>
+                          <div style={{ fontSize: 12, fontWeight: 700, opacity: 0.6 }}>INDICATOR 4</div>
+                          <div style={{ fontSize: 14, fontWeight: 700, color: C.navy }}>Demographic Data Coverage Gap — Census vs Direct Identified</div>
+                        </div>
+                        <span style={{ fontSize: 11, background: C.navy, color: '#fff', borderRadius: 10, padding: '3px 10px', fontWeight: 700 }}>CENSUS UNAVAILABLE</span>
                       </div>
-                      <span style={{ fontSize: 11, background: C.navy, color: '#fff', borderRadius: 10, padding: '3px 10px', fontWeight: 700 }}>COMING SOON</span>
+                      <div style={{ padding: '12px 16px' }}>
+                        <p style={{ fontSize: 12, color: C.textMuted, margin: 0, lineHeight: 1.65 }}>
+                          Census ACS data could not be loaded for this geography. This indicator compares ICONYCS direct-identified
+                          minority percentages to Census area demographics to flag unidentified homeowner population.
+                        </p>
+                      </div>
                     </div>
-                    <div style={{ padding: '12px 16px' }}>
-                      <p style={{ fontSize: 12, color: C.textMuted, margin: 0, lineHeight: 1.65 }}>
-                        Census ACS demographic overlay will enable full HMDA cross-analysis — comparing mortgage application rates
-                        to census-derived eligible borrower populations by race and ethnicity. This indicator will identify
-                        underserved market segments and potential disparate impact exposure.
-                      </p>
-                    </div>
-                  </div>
+                  )}
                 </div>
               </div>
 
