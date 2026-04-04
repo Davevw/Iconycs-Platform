@@ -13,7 +13,7 @@ const connectionConfig = {
   account: process.env.SNOWFLAKE_ACCOUNT!,
   username: process.env.SNOWFLAKE_USER!,
   password: process.env.SNOWFLAKE_PASSWORD!,
-  warehouse: process.env.SNOWFLAKE_WAREHOUSE || 'COMPUTE_WH',
+  warehouse: process.env.SNOWFLAKE_WAREHOUSE || 'QRY_WAREHOUSE',
   database: process.env.SNOWFLAKE_DATABASE || 'PROPERTYANALYTICS',
   schema: process.env.SNOWFLAKE_SCHEMA || 'PUBLIC',
   role: process.env.SNOWFLAKE_ROLE || 'ACCOUNTADMIN',
@@ -34,6 +34,11 @@ const ALLOWED_OBJECTS = new Set([
   'VW_DASHBOARD_CITY',
   'VW_DASHBOARD_ZIP',
   'VW_LENDER_ANALYSIS',
+  'VW_LTV_TIERS',
+  'VW_BI_PROP',
+  'NARC3',
+  'NACR_MRKTHOMEVAL',
+  'PROP_MTGLOANCD',
 ]);
 
 // Basic SQL injection guard — blocks dangerous patterns
