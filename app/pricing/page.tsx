@@ -595,19 +595,21 @@ function TierCard({
             {tier.cta}
           </Link>
         ) : (
-          <button
-            onClick={() => onEarlyAccess(tier)}
+          <Link
+            href={`/signup?tier=${tier.id}`}
             style={{
+              display: 'block', textAlign: 'center',
               width: '100%', padding: '11px 0', borderRadius: 8,
               fontSize: 14, fontWeight: 700, fontFamily: C.font,
-              cursor: 'pointer',
+              cursor: 'pointer', textDecoration: 'none',
               background: isPro ? '#fff' : C.terra,
               color: isPro ? C.navy : '#fff',
               border: `2px solid ${isPro ? 'rgba(255,255,255,0.3)' : C.terra}`,
+              boxSizing: 'border-box',
             }}
           >
             {tier.cta} →
-          </button>
+          </Link>
         )}
       </div>
 
