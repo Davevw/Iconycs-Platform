@@ -24,12 +24,13 @@ export async function OPTIONS() {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { state: string } }
+  { params }: { params: Promise<{ state: string }> }
 ) {
   const authErr = checkApiKey(request);
   if (authErr) return authErr;
 
-  const state = params.state?.toUpperCase();
+  const { state: stateParam } = await params;
+  const state = stateParam?.toUpperCase();
 
   if (!state || state.length !== 2) {
     return errorResponse('Invalid state code. Use 2-letter abbreviation (e.g. CA, TX, FL)', 400);
