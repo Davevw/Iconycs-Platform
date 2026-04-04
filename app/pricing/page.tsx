@@ -765,7 +765,7 @@ export default function PricingPage() {
   const payPerReportTier = {
     id: 'pay_per_report',
     name: 'PAY-PER-REPORT',
-    price: '$9.99',
+    price: '$500',
   };
 
   // Tiers for the grid (first 3 use TierCard, enterprise uses EnterpriseCard)
@@ -922,8 +922,8 @@ export default function PricingPage() {
                 NEED JUST ONE REPORT?
               </div>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 6 }}>
-                <span style={{ fontSize: 32, fontWeight: 800, color: C.text, fontFamily: C.font }}>$9.99</span>
-                <span style={{ fontSize: 13, color: C.textMuted }}>one-time per report</span>
+                <span style={{ fontSize: 32, fontWeight: 800, color: C.text, fontFamily: C.font }}>$500</span>
+                <span style={{ fontSize: 13, color: C.textMuted }}>per report, one-time</span>
               </div>
               <p style={{ fontSize: 14, color: C.textMuted, margin: 0, lineHeight: 1.5 }}>
                 Full drill-down report for any geography  -  county, city, or ZIP.
