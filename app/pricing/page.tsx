@@ -45,9 +45,9 @@ const TIERS = [
     id: 'analyst',
     name: 'ANALYST',
     subtitle: 'Single State',
-    price: '$98',
+    price: '$1,500',
     period: '/month',
-    description: 'Full drill-down for one state. Add major states individually.',
+    description: 'Full drill-down for one state of your choice. Add major markets individually.',
     features: [
       'One state  -  full drill-down',
       'State → County → City → ZIP',
