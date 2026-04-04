@@ -939,7 +939,25 @@ export default function PricingPage() {
             flexWrap: 'wrap',
           }}>
             <div style={{ flex: 1, minWidth: 240 }}>
-              <div style={{
+                      {/* Free Test Report Offer */}
+        <div style={{ maxWidth: 700, margin: '0 auto 24px', padding: '0 24px' }}>
+          <div style={{ background: '#EDF4EB', border: '2px solid #5D7E52', borderRadius: 14, padding: '20px 28px', textAlign: 'center' }}>
+            <div style={{ fontSize: 13, fontWeight: 800, color: '#5D7E52', marginBottom: 6, letterSpacing: '0.05em' }}>FREE TRIAL REPORT</div>
+            <div style={{ fontSize: 16, fontWeight: 700, color: '#1C1917', marginBottom: 8 }}>
+              Get a Free Single-County Report to Test the Platform
+            </div>
+            <div style={{ fontSize: 13, color: '#3D3833', marginBottom: 16, lineHeight: 1.6 }}>
+              New to ICONYCS? Request a complimentary Fair Lending report for one county of your choice.
+              No credit card. No commitment. See the data quality firsthand.
+            </div>
+            <a href="mailto:info@iconycs.com?subject=Free Trial Report Request&body=Please send me a free single-county Fair Lending report for: [County, State]"
+              style={{ display: 'inline-block', padding: '12px 28px', background: '#5D7E52', color: '#fff', borderRadius: 10, fontSize: 13, fontWeight: 700, textDecoration: 'none' }}>
+              Request Free Trial Report
+            </a>
+          </div>
+        </div>
+
+<div style={{
                 fontSize: 11, fontWeight: 700, letterSpacing: '0.12em',
                 color: C.textDim, fontFamily: C.font, marginBottom: 6,
               }}>
