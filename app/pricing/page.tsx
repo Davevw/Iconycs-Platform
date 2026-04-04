@@ -875,6 +875,30 @@ export default function PricingPage() {
           </div>
         </div>
 
+        {/* ── Launch Promo Banners ── */}
+        <div style={{ maxWidth: 1100, margin: '0 auto 40px', padding: '0 24px', display: 'flex', gap: 16, flexWrap: 'wrap', justifyContent: 'center' }}>
+          <div style={{ flex: 1, minWidth: 280, background: 'linear-gradient(135deg, #C4653A 0%, #E8845C 100%)', borderRadius: 16, padding: '20px 28px', display: 'flex', alignItems: 'center', gap: 16, boxShadow: '0 8px 32px rgba(196,101,58,0.3)', position: 'relative', overflow: 'hidden' }}>
+            <div style={{ position: 'absolute', top: -12, right: -12, width: 80, height: 80, background: 'rgba(255,255,255,0.2)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', border: '2px solid rgba(255,255,255,0.4)' }}>
+              <div style={{ fontSize: 20, fontWeight: 900, color: '#fff', lineHeight: 1 }}>50%</div>
+              <div style={{ fontSize: 8, fontWeight: 700, color: '#fff' }}>OFF</div>
+            </div>
+            <div>
+              <div style={{ fontSize: 15, fontWeight: 800, color: '#fff', marginBottom: 4 }}>50% Off First Month</div>
+              <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.9)' }}>New subscribers save 50% on any monthly plan. Code: <strong>LAUNCH50</strong></div>
+            </div>
+          </div>
+          <div style={{ flex: 1, minWidth: 280, background: 'linear-gradient(135deg, #1B2A4A 0%, #2A4A7F 100%)', borderRadius: 16, padding: '20px 28px', display: 'flex', alignItems: 'center', gap: 16, boxShadow: '0 8px 32px rgba(27,42,74,0.3)', position: 'relative', overflow: 'hidden' }}>
+            <div style={{ position: 'absolute', top: -12, right: -12, width: 80, height: 80, background: 'rgba(255,255,255,0.15)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', border: '2px solid rgba(255,255,255,0.25)' }}>
+              <div style={{ fontSize: 20, fontWeight: 900, color: '#fff', lineHeight: 1 }}>30%</div>
+              <div style={{ fontSize: 8, fontWeight: 700, color: '#fff' }}>OFF</div>
+            </div>
+            <div>
+              <div style={{ fontSize: 15, fontWeight: 800, color: '#fff', marginBottom: 4 }}>30% Off First Report</div>
+              <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.75)' }}>First report $350 (reg. $500). Code: <strong>FIRSTREPORT</strong></div>
+            </div>
+          </div>
+        </div>
+
         {/* -- Pricing Grid -- */}
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '64px 24px' }}>
           <div
