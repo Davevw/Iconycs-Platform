@@ -6,7 +6,12 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { executeQuery } from '@/lib/snowflake';
-import { CREATE_LTV_VIEW_SQL } from '@/lib/snowflake-queries';
+import {
+  CREATE_LTV_VIEW_SQL,
+  CREATE_CASCADE_PROPERTY_VIEW_SQL,
+  CREATE_CASCADE_OWNERSHIP_VIEW_SQL,
+  CREATE_LOOKUP_TABLE_SQL,
+} from '@/lib/snowflake-queries';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -20,15 +25,24 @@ export async function POST(request: NextRequest) {
   try {
     const { migration } = await request.json();
 
-    let sql: string;
-    if (migration === 'ltv_view') {
-      sql = CREATE_LTV_VIEW_SQL;
-    } else {
-      return NextResponse.json({ success: false, error: `Unknown migration: ${migration}` }, { status: 400 });
+    const MIGRATIONS: Record<string, string | string[]> = {
+      ltv_view:      CREATE_LTV_VIEW_SQL,
+      cascade_views: [CREATE_CASCADE_PROPERTY_VIEW_SQL, CREATE_CASCADE_OWNERSHIP_VIEW_SQL],
+      lookup_tables: CREATE_LOOKUP_TABLE_SQL,
+    };
+
+    if (!(migration in MIGRATIONS)) {
+      return NextResponse.json(
+        { success: false, error: `Unknown migration: ${migration}. Valid: ${Object.keys(MIGRATIONS).join(', ')}` },
+        { status: 400 }
+      );
     }
 
-    // Allow CREATE statements in migrate route by bypassing the executeQuery guard
-    // We use the raw connection pattern since CREATE is blocked by the guard
+    const sqlStatements = Array.isArray(MIGRATIONS[migration])
+      ? (MIGRATIONS[migration] as string[])
+      : [MIGRATIONS[migration] as string];
+
+    // Allow CREATE/INSERT DDL by using raw snowflake-sdk connection
     const snowflake = (await import('snowflake-sdk')).default;
     const conn = snowflake.createConnection({
       account:   process.env.SNOWFLAKE_ACCOUNT!,
@@ -43,14 +57,27 @@ export async function POST(request: NextRequest) {
       (resolve) => {
         conn.connect((err) => {
           if (err) { resolve({ success: false, error: err.message }); return; }
-          conn.execute({
-            sqlText: sql,
-            complete: (execErr) => {
+
+          let idx = 0;
+          const runNext = () => {
+            if (idx >= sqlStatements.length) {
               conn.destroy(() => {});
-              if (execErr) resolve({ success: false, error: execErr.message });
-              else resolve({ success: true, message: `Migration "${migration}" applied successfully.` });
-            },
-          });
+              resolve({ success: true, message: `Migration "${migration}" applied successfully (${sqlStatements.length} statement(s)).` });
+              return;
+            }
+            conn.execute({
+              sqlText: sqlStatements[idx++],
+              complete: (execErr) => {
+                if (execErr) {
+                  conn.destroy(() => {});
+                  resolve({ success: false, error: execErr.message });
+                } else {
+                  runNext();
+                }
+              },
+            });
+          };
+          runNext();
         });
       }
     );

@@ -267,6 +267,358 @@ export function queryParcels(filters: GeoFilters): string {
   `.trim();
 }
 
+// ─── Cascade Filters ──────────────────────────────────────────────────────
+
+export interface CascadeFilters extends AnalyticsFilters {
+  value_tier?: string;
+  ethnicity?: string;
+  gender?: string;
+  marital_status?: string;
+  education?: string;
+  income_tier?: string;
+  occupancy?: string;
+  attached_detached?: string;
+  ownership_duration?: string;
+}
+
+// ─── Cascade Property Query ────────────────────────────────────────────────
+
+export function queryCascadeProperty(filters: CascadeFilters): string {
+  const conditions: string[] = [];
+  if (filters.state)             conditions.push(`STATE = '${filters.state.toUpperCase()}'`);
+  if (filters.county)            conditions.push(`COUNTY = '${filters.county.toUpperCase()}'`);
+  if (filters.city)              conditions.push(`CITY = '${filters.city.toUpperCase()}'`);
+  if (filters.zip)               conditions.push(`ZIP = '${filters.zip}'`);
+  if (filters.loan_type)         conditions.push(`LOAN_TYPE = '${filters.loan_type}'`);
+  if (filters.ltv_tier)          conditions.push(`LTV_TIER = '${filters.ltv_tier}'`);
+  if (filters.value_tier)        conditions.push(`MARKET_VALUE_TIER = '${filters.value_tier}'`);
+  if (filters.occupancy)         conditions.push(`OCCUPANCY = '${filters.occupancy}'`);
+  if (filters.attached_detached) conditions.push(`ATTACHED_DETACHED = '${filters.attached_detached}'`);
+  if (filters.ownership_duration) conditions.push(`OWNERSHIP_DURATION = '${filters.ownership_duration}'`);
+  const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
+  return `
+    SELECT
+      PURCHASE_VALUE_TIER,
+      MARKET_VALUE_TIER,
+      OWNERSHIP_DURATION,
+      LTV_TIER,
+      LOAN_TYPE,
+      OCCUPANCY,
+      ATTACHED_DETACHED,
+      SUM(RECORD_COUNT) AS RECORD_COUNT,
+      AVG(AVG_MARKET_VALUE) AS AVG_MARKET_VALUE,
+      AVG(AVG_LOAN_AMOUNT) AS AVG_LOAN_AMOUNT,
+      SUM(TOTAL_LIENS) AS TOTAL_LIENS
+    FROM VW_CASCADE_PROPERTY
+    ${where}
+    GROUP BY
+      PURCHASE_VALUE_TIER, MARKET_VALUE_TIER, OWNERSHIP_DURATION,
+      LTV_TIER, LOAN_TYPE, OCCUPANCY, ATTACHED_DETACHED
+    ORDER BY RECORD_COUNT DESC
+  `.trim();
+}
+
+// ─── Cascade Ownership Query ───────────────────────────────────────────────
+
+export function queryCascadeOwnership(filters: CascadeFilters): string {
+  const conditions: string[] = [];
+  if (filters.state)        conditions.push(`STATE = '${filters.state.toUpperCase()}'`);
+  if (filters.county)       conditions.push(`COUNTY = '${filters.county.toUpperCase()}'`);
+  if (filters.city)         conditions.push(`CITY = '${filters.city.toUpperCase()}'`);
+  if (filters.zip)          conditions.push(`ZIP = '${filters.zip}'`);
+  if (filters.ethnicity)    conditions.push(`ETHNICITYCD = '${filters.ethnicity}'`);
+  if (filters.gender)       conditions.push(`GENDER = '${filters.gender}'`);
+  if (filters.marital_status) conditions.push(`MARITALSTAT = '${filters.marital_status}'`);
+  if (filters.education)    conditions.push(`EDUCATION_LEVEL = '${filters.education}'`);
+  if (filters.income_tier)  conditions.push(`INCOME_TIER = '${filters.income_tier}'`);
+  const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
+  return `
+    SELECT
+      ETHNICITYCD,
+      ETHNICITY_DESC,
+      GENDER,
+      MARITALSTAT,
+      EDUCATION_LEVEL,
+      INCOME_TIER,
+      WEALTH_SCORE,
+      SUM(RECORD_COUNT) AS RECORD_COUNT
+    FROM VW_CASCADE_OWNERSHIP
+    ${where}
+    GROUP BY
+      ETHNICITYCD, ETHNICITY_DESC, GENDER, MARITALSTAT,
+      EDUCATION_LEVEL, INCOME_TIER, WEALTH_SCORE
+    ORDER BY RECORD_COUNT DESC
+  `.trim();
+}
+
+// ─── Cascade Lenders Query ─────────────────────────────────────────────────
+
+export function queryCascadeLenders(filters: CascadeFilters): string {
+  const conditions: string[] = [];
+  if (filters.state)     conditions.push(`STATE = '${filters.state.toUpperCase()}'`);
+  if (filters.county)    conditions.push(`COUNTY = '${filters.county.toUpperCase()}'`);
+  if (filters.city)      conditions.push(`CITY = '${filters.city.toUpperCase()}'`);
+  if (filters.zip)       conditions.push(`ZIP = '${filters.zip}'`);
+  if (filters.loan_type) conditions.push(`MTG1_LOAN_CATEGORY = '${filters.loan_type}'`);
+  if (filters.ethnicity) conditions.push(`ETHNICITY = '${filters.ethnicity}'`);
+  const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
+  return `
+    SELECT
+      LENDER_NAME,
+      MTG1_LOAN_CATEGORY AS LOAN_TYPE,
+      SUM(LOAN_COUNT) AS LOAN_COUNT,
+      AVG(AVG_LOAN_AMOUNT) AS AVG_LOAN_AMOUNT,
+      AVG(AVG_PROPERTY_VALUE) AS AVG_PROPERTY_VALUE
+    FROM VW_LENDER_ANALYSIS
+    ${where}
+    GROUP BY LENDER_NAME, MTG1_LOAN_CATEGORY
+    ORDER BY LOAN_COUNT DESC
+    LIMIT 10
+  `.trim();
+}
+
+// ─── Demographics Deep Dive Query ──────────────────────────────────────────
+
+export function queryDemographics(filters: CascadeFilters): string {
+  const conditions: string[] = [];
+  if (filters.state)  conditions.push(`p.STATE = '${filters.state.toUpperCase()}'`);
+  if (filters.county) conditions.push(`p.CNTYCD = '${filters.county.toUpperCase()}'`);
+  if (filters.city)   conditions.push(`p.CITY = '${filters.city.toUpperCase()}'`);
+  if (filters.zip)    conditions.push(`p.ZIP = '${filters.zip}'`);
+  const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
+  return `
+    SELECT
+      n.GENDER,
+      n.MARITALSTAT,
+      CASE n.EDUCATIONCD
+        WHEN 'A' THEN 'High School'
+        WHEN 'B' THEN 'College'
+        WHEN 'C' THEN 'Graduate'
+        WHEN 'D' THEN 'Other'
+        ELSE 'Unknown'
+      END AS EDUCATION_LEVEL,
+      CASE
+        WHEN n.EHI_CODE <= 3 THEN '$10K-$30K'
+        WHEN n.EHI_CODE <= 5 THEN '$30K-$50K'
+        WHEN n.EHI_CODE <= 8 THEN '$50K-$100K'
+        WHEN n.EHI_CODE <= 12 THEN '$100K-$250K'
+        WHEN n.EHI_CODE <= 15 THEN '$250K-$500K'
+        ELSE '$500K+'
+      END AS INCOME_TIER,
+      n.WEALTHSCR AS WEALTH_SCORE,
+      n.ETHNICITYCD,
+      CASE n.ETHNICITYCD
+        WHEN 'Y' THEN 'Hispanic'
+        WHEN 'F' THEN 'African American'
+        WHEN 'A' THEN 'Asian'
+        ELSE 'Not Identified'
+      END AS ETHNICITY_DESC,
+      COUNT(*) AS RECORD_COUNT
+    FROM VW_RESIDENTIAL_PROP p
+    JOIN NARC3 n ON p.PID = n.PID
+    ${where}
+    GROUP BY
+      n.GENDER, n.MARITALSTAT, n.EDUCATIONCD, n.EHI_CODE, n.WEALTHSCR, n.ETHNICITYCD
+    ORDER BY RECORD_COUNT DESC
+    LIMIT 500
+  `.trim();
+}
+
+// ─── Social Housing Score Components ──────────────────────────────────────
+
+export function querySocialHousingComponents(filters: GeoFilters): string {
+  const conditions: string[] = [];
+  if (filters.state)  conditions.push(`STATE = '${filters.state.toUpperCase()}'`);
+  if (filters.county) conditions.push(`COUNTY = '${filters.county.toUpperCase()}'`);
+  if (filters.city)   conditions.push(`CITY = '${filters.city.toUpperCase()}'`);
+  if (filters.zip)    conditions.push(`ZIP = '${filters.zip}'`);
+  const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
+  return `
+    SELECT
+      SUM(RECORD_COUNT) AS TOTAL_RECORDS,
+      -- LTV distribution
+      SUM(CASE WHEN LTV_TIER = '0-60%'  THEN RECORD_COUNT ELSE 0 END) AS LTV_LOW,
+      SUM(CASE WHEN LTV_TIER IN ('60-70%','70-80%') THEN RECORD_COUNT ELSE 0 END) AS LTV_MID,
+      SUM(CASE WHEN LTV_TIER IN ('80-90%','90-95%','95%+') THEN RECORD_COUNT ELSE 0 END) AS LTV_HIGH,
+      -- Owner occupancy
+      SUM(CASE WHEN OCCUPANCY = 'Y' THEN RECORD_COUNT ELSE 0 END) AS OWNER_OCC_COUNT,
+      -- Average market value (for context)
+      AVG(AVG_MARKET_VALUE) AS AVG_MARKET_VALUE
+    FROM VW_CASCADE_PROPERTY
+    ${where}
+  `.trim();
+}
+
+export function querySocialHousingEthnicity(filters: GeoFilters): string {
+  const conditions: string[] = [];
+  if (filters.state)  conditions.push(`STATE = '${filters.state.toUpperCase()}'`);
+  if (filters.county) conditions.push(`COUNTY = '${filters.county.toUpperCase()}'`);
+  if (filters.city)   conditions.push(`CITY = '${filters.city.toUpperCase()}'`);
+  if (filters.zip)    conditions.push(`ZIP = '${filters.zip}'`);
+  const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
+  return `
+    SELECT
+      ETHNICITYCD,
+      SUM(RECORD_COUNT) AS RECORD_COUNT
+    FROM VW_CASCADE_OWNERSHIP
+    ${where}
+    GROUP BY ETHNICITYCD
+  `.trim();
+}
+
+export function querySocialHousingIncome(filters: GeoFilters): string {
+  const conditions: string[] = [];
+  if (filters.state)  conditions.push(`STATE = '${filters.state.toUpperCase()}'`);
+  if (filters.county) conditions.push(`COUNTY = '${filters.county.toUpperCase()}'`);
+  if (filters.city)   conditions.push(`CITY = '${filters.city.toUpperCase()}'`);
+  if (filters.zip)    conditions.push(`ZIP = '${filters.zip}'`);
+  const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
+  return `
+    SELECT
+      INCOME_TIER,
+      SUM(RECORD_COUNT) AS RECORD_COUNT
+    FROM VW_CASCADE_OWNERSHIP
+    ${where}
+    GROUP BY INCOME_TIER
+    ORDER BY RECORD_COUNT DESC
+  `.trim();
+}
+
+// ─── Create Cascade Views SQL (Sprint 2 migration) ────────────────────────
+
+export const CREATE_CASCADE_PROPERTY_VIEW_SQL = `
+CREATE OR REPLACE VIEW VW_CASCADE_PROPERTY AS
+SELECT
+  p.STATE, p.CNTYCD AS COUNTY, p.CITY, p.ZIP,
+  p.MTG1_LOAN_CATEGORY AS LOAN_TYPE,
+  p.PROP_OWNEROCC AS OCCUPANCY,
+  CASE
+    WHEN p.PROPERTY_CATEGORY = 'SINGLE FAMILY' THEN 'Detached'
+    WHEN p.PROPERTY_CATEGORY LIKE '%CONDO%' THEN 'Attached'
+    ELSE 'Other'
+  END AS ATTACHED_DETACHED,
+  CASE
+    WHEN p.SALE_AMOUNT <= 100000 THEN '$25K-$100K'
+    WHEN p.SALE_AMOUNT <= 250000 THEN '$100K-$250K'
+    WHEN p.SALE_AMOUNT <= 400000 THEN '$250K-$400K'
+    WHEN p.SALE_AMOUNT <= 750000 THEN '$400K-$750K'
+    WHEN p.SALE_AMOUNT <= 1000000 THEN '$750K-$1M'
+    WHEN p.SALE_AMOUNT > 1000000 THEN '$1M+'
+    ELSE 'Unknown'
+  END AS PURCHASE_VALUE_TIER,
+  CASE
+    WHEN p.VALUE_MARKET <= 100000 THEN '$25K-$100K'
+    WHEN p.VALUE_MARKET <= 250000 THEN '$100K-$250K'
+    WHEN p.VALUE_MARKET <= 400000 THEN '$250K-$400K'
+    WHEN p.VALUE_MARKET <= 750000 THEN '$400K-$750K'
+    WHEN p.VALUE_MARKET <= 1000000 THEN '$750K-$1M'
+    WHEN p.VALUE_MARKET > 1000000 THEN '$1M+'
+    ELSE 'Unknown'
+  END AS MARKET_VALUE_TIER,
+  CASE
+    WHEN DATEDIFF('month', TRY_TO_DATE(p.RECORDING_DATE, 'YYYYMMDD'), CURRENT_DATE()) <= 12 THEN '0-1 Year'
+    WHEN DATEDIFF('month', TRY_TO_DATE(p.RECORDING_DATE, 'YYYYMMDD'), CURRENT_DATE()) <= 24 THEN '1-2 Years'
+    WHEN DATEDIFF('month', TRY_TO_DATE(p.RECORDING_DATE, 'YYYYMMDD'), CURRENT_DATE()) <= 60 THEN '2-5 Years'
+    WHEN DATEDIFF('month', TRY_TO_DATE(p.RECORDING_DATE, 'YYYYMMDD'), CURRENT_DATE()) <= 120 THEN '5-10 Years'
+    WHEN DATEDIFF('month', TRY_TO_DATE(p.RECORDING_DATE, 'YYYYMMDD'), CURRENT_DATE()) <= 240 THEN '10-20 Years'
+    WHEN DATEDIFF('month', TRY_TO_DATE(p.RECORDING_DATE, 'YYYYMMDD'), CURRENT_DATE()) > 240 THEN '20+ Years'
+    ELSE 'Unknown'
+  END AS OWNERSHIP_DURATION,
+  CASE
+    WHEN CAST(TRY_TO_DOUBLE(p.PROP_LOANTOVAL) AS FLOAT) <= 60 THEN '0-60%'
+    WHEN CAST(TRY_TO_DOUBLE(p.PROP_LOANTOVAL) AS FLOAT) <= 70 THEN '60-70%'
+    WHEN CAST(TRY_TO_DOUBLE(p.PROP_LOANTOVAL) AS FLOAT) <= 80 THEN '70-80%'
+    WHEN CAST(TRY_TO_DOUBLE(p.PROP_LOANTOVAL) AS FLOAT) <= 90 THEN '80-90%'
+    WHEN CAST(TRY_TO_DOUBLE(p.PROP_LOANTOVAL) AS FLOAT) <= 95 THEN '90-95%'
+    WHEN CAST(TRY_TO_DOUBLE(p.PROP_LOANTOVAL) AS FLOAT) > 95 THEN '95%+'
+    ELSE 'Unknown'
+  END AS LTV_TIER,
+  COUNT(*) AS RECORD_COUNT,
+  AVG(p.VALUE_MARKET) AS AVG_MARKET_VALUE,
+  AVG(p.MTG1_AMOUNT) AS AVG_LOAN_AMOUNT,
+  SUM(p.MTG1_AMOUNT) AS TOTAL_LIENS
+FROM VW_BI_PROP p
+GROUP BY 1,2,3,4,5,6,7,8,9,10,11
+`.trim();
+
+export const CREATE_CASCADE_OWNERSHIP_VIEW_SQL = `
+CREATE OR REPLACE VIEW VW_CASCADE_OWNERSHIP AS
+SELECT
+  p.STATE, p.CNTYCD AS COUNTY, p.CITY, p.ZIP,
+  n.ETHNICITYCD,
+  CASE n.ETHNICITYCD
+    WHEN 'Y' THEN 'Hispanic'
+    WHEN 'F' THEN 'African American'
+    WHEN 'A' THEN 'Asian'
+    ELSE 'Not Identified'
+  END AS ETHNICITY_DESC,
+  n.GENDER,
+  n.MARITALSTAT,
+  CASE n.EDUCATIONCD
+    WHEN 'A' THEN 'High School'
+    WHEN 'B' THEN 'College'
+    WHEN 'C' THEN 'Graduate'
+    WHEN 'D' THEN 'Other'
+    ELSE 'Unknown'
+  END AS EDUCATION_LEVEL,
+  CASE
+    WHEN n.EHI_CODE <= 3 THEN '$10K-$30K'
+    WHEN n.EHI_CODE <= 5 THEN '$30K-$50K'
+    WHEN n.EHI_CODE <= 8 THEN '$50K-$100K'
+    WHEN n.EHI_CODE <= 12 THEN '$100K-$250K'
+    WHEN n.EHI_CODE <= 15 THEN '$250K-$500K'
+    ELSE '$500K+'
+  END AS INCOME_TIER,
+  n.WEALTHSCR AS WEALTH_SCORE,
+  COUNT(*) AS RECORD_COUNT
+FROM VW_RESIDENTIAL_PROP p
+JOIN NARC3 n ON p.PID = n.PID
+GROUP BY 1,2,3,4,5,6,7,8,9,10,11
+`.trim();
+
+export const CREATE_LOOKUP_TABLE_SQL = `
+CREATE TABLE IF NOT EXISTS LOOKUP_VALUE_RANGES (
+  RANGE_TYPE  TEXT,
+  RANGE_LABEL TEXT,
+  MIN_VAL     NUMERIC,
+  MAX_VAL     NUMERIC,
+  SORT_ORDER  INTEGER
+);
+INSERT INTO LOOKUP_VALUE_RANGES
+  SELECT * FROM VALUES
+  ('purchase_value','$25K-$100K',25000,100000,1),
+  ('purchase_value','$100K-$250K',100001,250000,2),
+  ('purchase_value','$250K-$400K',250001,400000,3),
+  ('purchase_value','$400K-$750K',400001,750000,4),
+  ('purchase_value','$750K-$1M',750001,1000000,5),
+  ('purchase_value','$1M+',1000001,999999999,6),
+  ('market_value','$25K-$100K',25000,100000,1),
+  ('market_value','$100K-$250K',100001,250000,2),
+  ('market_value','$250K-$400K',250001,400000,3),
+  ('market_value','$400K-$750K',400001,750000,4),
+  ('market_value','$750K-$1M',750001,1000000,5),
+  ('market_value','$1M+',1000001,999999999,6),
+  ('ltv','0-60%',0,60,1),
+  ('ltv','60-70%',60,70,2),
+  ('ltv','70-80%',70,80,3),
+  ('ltv','80-90%',80,90,4),
+  ('ltv','90-95%',90,95,5),
+  ('ltv','95%+',95,100,6),
+  ('income','$10K-$30K',10000,30000,1),
+  ('income','$30K-$50K',30001,50000,2),
+  ('income','$50K-$100K',50001,100000,3),
+  ('income','$100K-$250K',100001,250000,4),
+  ('income','$250K-$500K',250001,500000,5),
+  ('income','$500K+',500001,999999,6),
+  ('credit_score','<500',0,499,1),
+  ('credit_score','501-600',501,600,2),
+  ('credit_score','601-660',601,660,3),
+  ('credit_score','661-700',661,700,4),
+  ('credit_score','701-800',701,800,5),
+  ('credit_score','801+',801,999,6)
+  AS t(RANGE_TYPE,RANGE_LABEL,MIN_VAL,MAX_VAL,SORT_ORDER)
+`.trim();
+
 // ─── Create LTV View SQL (run once as migration) ──────────────────────────
 
 export const CREATE_LTV_VIEW_SQL = `
