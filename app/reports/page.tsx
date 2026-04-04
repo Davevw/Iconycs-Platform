@@ -526,6 +526,11 @@ export default function ReportsPage() {
   const [demoLoad,   setDemoLoad]   = useState<LoadState>({ loading: false, error: null });
   const [showDemographics, setShowDemographics] = useState(false);
 
+  // Social Housing Score
+  const [shsData,  setShsData]  = useState<{ score: number; band: string; label: string; components: Record<string, number> } | null>(null);
+  const [shsLoad,  setShsLoad]  = useState<LoadState>({ loading: false, error: null });
+  const [showShs,  setShowShs]  = useState(false);
+
   // Load states
   const [natLoad,    setNatLoad]    = useState<LoadState>({ loading: true,  error: null });
   const [stateLoad,  setStateLoad]  = useState<LoadState>({ loading: false, error: null });
@@ -730,6 +735,28 @@ export default function ReportsPage() {
       }
     } catch (e: any) {
       setDemoLoad({ loading: false, error: e.message ?? 'Network error' });
+    }
+  }, []);
+
+  // ── Fetch Social Housing Score ──
+  const fetchSocialScore = useCallback(async (state?: string, county?: string, city?: string, zip?: string) => {
+    setShsLoad({ loading: true, error: null });
+    try {
+      const params = new URLSearchParams();
+      if (state)  params.set('state', state);
+      if (county) params.set('county', county);
+      if (city)   params.set('city', city);
+      if (zip)    params.set('zip', zip ?? '');
+      const res = await fetch(`/api/snowflake/social-score?${params.toString()}`);
+      const json = await res.json();
+      if (json.success) {
+        setShsData(json.data);
+        setShsLoad({ loading: false, error: null });
+      } else {
+        setShsLoad({ loading: false, error: json.error ?? 'Failed to compute score' });
+      }
+    } catch (e: any) {
+      setShsLoad({ loading: false, error: e.message ?? 'Network error' });
     }
   }, []);
 
@@ -1339,6 +1366,105 @@ export default function ReportsPage() {
                   View Underlying Parcels
                 </button>
               ))}
+            </div>
+
+            {/* ── Social Housing Score ── */}
+            <div style={{ marginBottom: 16, background: C.bgCard, borderRadius: 12, border: `1px solid ${C.border}`, overflow: 'hidden' }}>
+              <div
+                onClick={() => {
+                  const next = !showShs;
+                  setShowShs(next);
+                  if (next && !shsData && !shsLoad.loading) {
+                    fetchSocialScore(stateCode, selectedCounty ?? undefined, drillCity ?? undefined, drillZip ?? undefined);
+                  }
+                }}
+                style={{ padding: '12px 18px', background: `linear-gradient(135deg, ${C.navy} 0%, #2A3F6A 100%)`, color: '#fff', display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer', userSelect: 'none' }}
+              >
+                <span style={{ fontSize: 16 }}>🏘️</span>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.04em' }}>SOCIAL HOUSING SCORE</div>
+                  <div style={{ fontSize: 11, opacity: 0.7, marginTop: 1 }}>Diversity index: ethnicity · income · LTV · owner-occupancy</div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  {shsData && (
+                    <div style={{
+                      fontSize: 20, fontWeight: 800, color: shsData.band === 'green' ? '#4ADE80' : shsData.band === 'yellow' ? '#FCD34D' : '#F87171',
+                      fontFamily: "'IBM Plex Mono', monospace",
+                    }}>{shsData.score}</div>
+                  )}
+                  <span style={{ fontSize: 10, background: '#B8860B', color: '#fff', borderRadius: 10, padding: '2px 8px', fontWeight: 700 }}>ENTERPRISE</span>
+                  <span style={{ fontSize: 10, background: 'rgba(255,255,255,0.15)', color: '#fff', borderRadius: 10, padding: '2px 8px', fontWeight: 600 }}>🔒</span>
+                  <span style={{ fontSize: 14, opacity: 0.7 }}>{showShs ? '▲' : '▼'}</span>
+                </div>
+              </div>
+
+              {showShs && (
+                <div style={{ padding: 20, animation: 'fadeIn 0.3s ease' }}>
+                  {shsLoad.loading ? (
+                    <div style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
+                      <Skeleton w={120} h={120} />
+                      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                        <Skeleton h={16} /><Skeleton h={16} /><Skeleton h={16} /><Skeleton h={16} />
+                      </div>
+                    </div>
+                  ) : shsLoad.error ? (
+                    <ErrorMsg msg={shsLoad.error} onRetry={() => fetchSocialScore(stateCode, selectedCounty ?? undefined, drillCity ?? undefined, drillZip ?? undefined)} />
+                  ) : shsData ? (
+                    <div style={{ display: 'flex', gap: 24, alignItems: 'center' }}>
+                      {/* Circular gauge */}
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, flexShrink: 0 }}>
+                        <svg width={130} height={130} viewBox="0 0 130 130">
+                          <circle cx={65} cy={65} r={52} fill="none" stroke={C.bgWarm} strokeWidth={14} />
+                          <circle cx={65} cy={65} r={52} fill="none"
+                            stroke={shsData.band === 'green' ? '#22C55E' : shsData.band === 'yellow' ? '#EAB308' : '#EF4444'}
+                            strokeWidth={14}
+                            strokeDasharray={`${(shsData.score / 100) * 2 * Math.PI * 52} ${2 * Math.PI * 52}`}
+                            strokeDashoffset={2 * Math.PI * 52 * 0.25}
+                            strokeLinecap="round"
+                            transform="rotate(-90 65 65)"
+                          />
+                          <text x={65} y={60} textAnchor="middle" fontSize={28} fontWeight={800}
+                            fill={shsData.band === 'green' ? '#22C55E' : shsData.band === 'yellow' ? '#EAB308' : '#EF4444'}
+                            fontFamily="'IBM Plex Mono', monospace">
+                            {shsData.score}
+                          </text>
+                          <text x={65} y={78} textAnchor="middle" fontSize={9} fill={C.textDim}>out of 100</text>
+                        </svg>
+                        <div style={{ fontSize: 12, fontWeight: 700, color: shsData.band === 'green' ? '#22C55E' : shsData.band === 'yellow' ? '#EAB308' : '#EF4444' }}>
+                          {shsData.label}
+                        </div>
+                      </div>
+
+                      {/* Component breakdown */}
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontSize: 12, color: C.textMuted, marginBottom: 12 }}>Score components (each weighted 0–25):</div>
+                        {[
+                          { label: 'Ethnic Diversity Index', key: 'ethDiversity', color: C.terra },
+                          { label: 'Income Diversity',        key: 'incomeDiversity', color: C.sage },
+                          { label: 'LTV Distribution (Low LTV = Higher Score)', key: 'ltvScore', color: C.gold },
+                          { label: 'Owner Occupancy Rate',    key: 'ownerOccScore', color: C.navy },
+                        ].map(({ label, key, color }) => {
+                          const val = shsData.components[key] ?? 0;
+                          return (
+                            <div key={key} style={{ marginBottom: 10 }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
+                                <span style={{ fontSize: 12, color: C.textBody }}>{label}</span>
+                                <span style={{ fontSize: 12, fontWeight: 700, color, fontFamily: "'IBM Plex Mono', monospace" }}>{val}/25</span>
+                              </div>
+                              <div style={{ height: 6, background: C.bgWarm, borderRadius: 4, overflow: 'hidden' }}>
+                                <div style={{ width: `${(val / 25) * 100}%`, height: '100%', background: color, borderRadius: 4, transition: 'width 0.6s ease' }} />
+                              </div>
+                            </div>
+                          );
+                        })}
+                        <div style={{ marginTop: 12, fontSize: 10, color: C.textDim, padding: '8px 12px', background: C.bgWarm, borderRadius: 6, lineHeight: 1.6 }}>
+                          🔒 <strong>Enterprise feature.</strong> This composite score uses Shannon entropy for diversity calculation. Higher scores indicate greater demographic and financial diversity for this geography. Available for Pro/Enterprise subscribers.
+                        </div>
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
+              )}
             </div>
 
             {/* ── State Breakdown ── */}
