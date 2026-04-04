@@ -1,7 +1,7 @@
 ﻿'use client';
 
 /**
- * ICONYCS Analytics Reports "” Sprint 1
+ * ICONYCS Analytics Reports "" Sprint 1
  * Live Snowflake data, full drill-down, mortgage intelligence, export.
  */
 
@@ -9,7 +9,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { GEO_DATA } from '@/lib/geodata';
 
-// â”€â”€â”€ County FIPS Code Lookup â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€â"€ County FIPS Code Lookup â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 const COUNTY_FIPS: Record<string, Record<string, string>> = {
   CA: { '001':'Alameda','003':'Alpine','005':'Amador','007':'Butte','009':'Calaveras','011':'Colusa','013':'Contra Costa','015':'Del Norte','017':'El Dorado','019':'Fresno','021':'Glenn','023':'Humboldt','025':'Imperial','027':'Inyo','029':'Kern','031':'Kings','033':'Lake','035':'Lassen','037':'Los Angeles','039':'Madera','041':'Marin','043':'Mariposa','045':'Mendocino','047':'Merced','049':'Modoc','051':'Mono','053':'Monterey','055':'Napa','057':'Nevada','059':'Orange','061':'Placer','063':'Plumas','065':'Riverside','067':'Sacramento','069':'San Benito','071':'San Bernardino','073':'San Diego','075':'San Francisco','077':'San Joaquin','079':'San Luis Obispo','081':'San Mateo','083':'Santa Barbara','085':'Santa Clara','087':'Santa Cruz','089':'Shasta','091':'Sierra','093':'Siskiyou','095':'Solano','097':'Sonoma','099':'Stanislaus','101':'Sutter','103':'Tehama','105':'Trinity','107':'Tulare','109':'Tuolumne','111':'Ventura','113':'Yolo','115':'Yuba' },
   TX: { '001':'Anderson','003':'Andrews','005':'Angelina','007':'Aransas','009':'Archer','011':'Armstrong','013':'Atascosa','015':'Austin','017':'Bailey','019':'Bandera','021':'Bastrop','023':'Baylor','025':'Bee','027':'Bell','029':'Bexar','031':'Blanco','033':'Borden','035':'Bosque','037':'Bowie','039':'Brazoria','041':'Brazos','043':'Brewster','045':'Briscoe','047':'Brooks','049':'Brown','051':'Burleson','053':'Burnet','055':'Caldwell','057':'Calhoun','059':'Callahan','061':'Cameron','063':'Camp','065':'Carson','067':'Cass','069':'Castro','071':'Chambers','073':'Cherokee','075':'Childress','077':'Clay','079':'Cochran','081':'Coke','083':'Coleman','085':'Collin','087':'Collingsworth','089':'Colorado','091':'Comal','093':'Comanche','095':'Concho','097':'Cooke','099':'Corpus Christi','101':'Cottle','103':'Crane','105':'Crockett','107':'Crosby','109':'Culberson','111':'Dallam','113':'Dallas','115':'Dawson','117':'Deaf Smith','119':'Delta','121':'Denton','123':'De Witt','125':'Dickens','127':'Dimmit','129':'Donley','131':'Duval','133':'Eastland','135':'Ector','137':'Edwards','139':'Ellis','141':'El Paso','143':'Erath','145':'Falls','147':'Fannin','149':'Fayette','151':'Fisher','153':'Floyd','155':'Foard','157':'Fort Bend','159':'Franklin','161':'Freestone','163':'Frio','165':'Gaines','167':'Galveston','169':'Garza','171':'Gillespie','173':'Glasscock','175':'Goliad','177':'Gonzales','179':'Gray','181':'Grayson','183':'Gregg','185':'Grimes','187':'Guadalupe','189':'Hale','191':'Hall','193':'Hamilton','195':'Hansford','197':'Hardeman','199':'Hardin','201':'Harris','203':'Harrison','205':'Hartley','207':'Haskell','209':'Hays','211':'Hemphill','213':'Henderson','215':'Hidalgo','217':'Hill','219':'Hockley','221':'Hood','223':'Hopkins','225':'Houston','227':'Howard','229':'Hudspeth','231':'Hunt','233':'Hutchinson','235':'Irion','237':'Jack','239':'Jackson','241':'Jasper','243':'Jeff Davis','245':'Jefferson','247':'Jim Hogg','249':'Jim Wells','251':'Johnson','253':'Jones','255':'Karnes','257':'Kaufman','259':'Kendall','261':'Kenedy','263':'Kent','265':'Kerr','267':'Kimble','269':'King','271':'Kinney','273':'Kleberg','275':'Knox','277':'Lamar','279':'Lamb','281':'Lampasas','283':'La Salle','285':'Lavaca','287':'Lee','289':'Leon','291':'Liberty','293':'Limestone','295':'Lipscomb','297':'Live Oak','299':'Llano','301':'Loving','303':'Lubbock','305':'Lynn','307':'McCulloch','309':'McLennan','311':'McMullen','313':'Madison','315':'Marion','317':'Martin','319':'Mason','321':'Matagorda','323':'Maverick','325':'Medina','327':'Menard','329':'Midland','331':'Milam','333':'Mills','335':'Mitchell','337':'Montague','339':'Montgomery','341':'Moore','343':'Morris','345':'Motley','347':'Nacogdoches','349':'Navarro','351':'Newton','353':'Nolan','355':'Nueces','357':'Ochiltree','359':'Oldham','361':'Orange','363':'Palo Pinto','365':'Panola','367':'Parker','369':'Parmer','371':'Pecos','373':'Polk','375':'Potter','377':'Presidio','379':'Rains','381':'Randall','383':'Reagan','385':'Real','387':'Red River','389':'Reeves','391':'Refugio','393':'Roberts','395':'Robertson','397':'Rockwall','399':'Runnels','401':'Rusk','403':'Sabine','405':'San Augustine','407':'San Jacinto','409':'San Patricio','411':'San Saba','413':'Schleicher','415':'Scurry','417':'Shackelford','419':'Shelby','421':'Sherman','423':'Smith','425':'Somervell','427':'Starr','429':'Stephens','431':'Sterling','433':'Stonewall','435':'Sutton','437':'Swisher','439':'Tarrant','441':'Taylor','443':'Terrell','445':'Terry','447':'Throckmorton','449':'Titus','451':'Tom Green','453':'Travis','455':'Trinity','457':'Tyler','459':'Upshur','461':'Upton','463':'Uvalde','465':'Val Verde','467':'Van Zandt','469':'Victoria','471':'Walker','473':'Waller','475':'Ward','477':'Washington','479':'Webb','481':'Wharton','483':'Wheeler','485':'Wichita','487':'Wilbarger','489':'Willacy','491':'Williamson','493':'Wilson','495':'Winkler','497':'Wise','499':'Wood','501':'Yoakum','503':'Young','505':'Zapata','507':'Zavala' },
@@ -24,7 +24,7 @@ function getCountyName(state: string, fips: string): string {
 
 import { METHODOLOGY_NOTE } from '@/lib/data-labels';
 
-// â”€â”€â”€ Design Tokens â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€â"€ Design Tokens â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 const C = {
   bg: '#FAFAF7', bgCard: '#FFFFFF', bgWarm: '#F5F0E8',
   border: '#E8E2D8', borderLight: '#F0EBE3',
@@ -36,7 +36,7 @@ const C = {
   fontSerif: "'Source Serif 4', Georgia, serif",
 };
 
-// â”€â”€â”€ Fallback static state list (for sidebar) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€â"€ Fallback static state list (for sidebar) â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 const ALL_STATES = [
   {code:'AL',name:'Alabama'},{code:'AK',name:'Alaska'},{code:'AZ',name:'Arizona'},
   {code:'AR',name:'Arkansas'},{code:'CA',name:'California'},{code:'CO',name:'Colorado'},
@@ -57,7 +57,7 @@ const ALL_STATES = [
   {code:'WI',name:'Wisconsin'},{code:'WY',name:'Wyoming'},{code:'DC',name:'Washington DC'},
 ];
 
-// â”€â”€â”€ Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€â"€ Types â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 interface PanelData { label: string; count: number; pct?: number; }
 interface NationalData { [key: string]: any; }
 interface StateRow   { [key: string]: any; }
@@ -65,7 +65,7 @@ interface LoadState  { loading: boolean; error: string | null; }
 /** Row returned by the breakdown queries: { LABEL, RECORD_COUNT } */
 interface BreakdownRow { LABEL: string; RECORD_COUNT: number | string; }
 
-// â”€â”€â”€ Skeleton shimmer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€â"€ Skeleton shimmer â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function Skeleton({ w = '100%', h = 16 }: { w?: string | number; h?: number }) {
   return (
     <div style={{
@@ -77,11 +77,11 @@ function Skeleton({ w = '100%', h = 16 }: { w?: string | number; h?: number }) {
   );
 }
 
-// â”€â”€â”€ Error State â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€â"€ Error State â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function ErrorMsg({ msg, onRetry }: { msg: string; onRetry?: () => void }) {
   return (
     <div style={{ padding: '12px 16px', background: '#FFF4F0', borderRadius: 8, border: `1px solid ${C.terra}30`, display: 'flex', alignItems: 'center', gap: 12 }}>
-      <span style={{ fontSize: 16 }}>âš ï¸</span>
+      <span style={{ fontSize: 16 }}>âš ï¸</span>
       <span style={{ fontSize: 12, color: C.terra, flex: 1 }}>{msg}</span>
       {onRetry && (
         <button onClick={onRetry} style={{ fontSize: 11, color: C.terra, background: 'none', border: `1px solid ${C.terra}60`, borderRadius: 6, padding: '4px 10px', cursor: 'pointer', fontFamily: C.font, fontWeight: 600 }}>
@@ -92,7 +92,7 @@ function ErrorMsg({ msg, onRetry }: { msg: string; onRetry?: () => void }) {
   );
 }
 
-// â”€â”€â”€ FreqTable â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€â"€ FreqTable â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function FreqTable({ title, data, color = C.terra, loading = false, error = null, onRetry }: {
   title: string; data: PanelData[]; color?: string;
   loading?: boolean; error?: string | null; onRetry?: () => void;
@@ -131,7 +131,7 @@ function FreqTable({ title, data, color = C.terra, loading = false, error = null
   );
 }
 
-// â”€â”€â”€ HBarChart â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€â"€ HBarChart â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function HBarChart({ title, data, loading = false, error = null, onRetry, valuePrefix = '', valueSuffix = '' }: {
   title: string; data: PanelData[];
   loading?: boolean; error?: string | null; onRetry?: () => void;
@@ -175,7 +175,7 @@ function HBarChart({ title, data, loading = false, error = null, onRetry, valueP
   );
 }
 
-// â”€â”€â”€ PieChart â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€â"€ PieChart â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function PieChart({ title, data, loading = false, error = null, onRetry }: {
   title: string; data: PanelData[];
   loading?: boolean; error?: string | null; onRetry?: () => void;
@@ -252,7 +252,7 @@ function PieChart({ title, data, loading = false, error = null, onRetry }: {
   );
 }
 
-// â”€â”€â”€ Line / Trend Chart â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€â"€ Line / Trend Chart â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function TrendChart({ title, data, loading = false, error = null, onRetry }: {
   title: string; data: { year: string; count: number }[];
   loading?: boolean; error?: string | null; onRetry?: () => void;
@@ -304,7 +304,7 @@ function TrendChart({ title, data, loading = false, error = null, onRetry }: {
                 onMouseEnter={(e) => setTooltip({ i, x: e.clientX, y: e.clientY })}
                 onMouseLeave={() => setTooltip(null)} />
             ))}
-            {/* X labels "” show every 5 years */}
+            {/* X labels "" show every 5 years */}
             {pts.filter((_, i) => i % 5 === 0 || i === pts.length - 1).map((p, i) => (
               <text key={i} x={p.x} y={H - 4} textAnchor="middle" fontSize={7} fill={C.textDim}>{p.year}</text>
             ))}
@@ -323,7 +323,7 @@ function TrendChart({ title, data, loading = false, error = null, onRetry }: {
   );
 }
 
-// â”€â”€â”€ Parcel Modal (live data) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€â"€ Parcel Modal (live data) â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function ParcelModal({ filter, state, county, city, zip, onClose }: {
   filter: string; state?: string; county?: string; city?: string; zip?: string; onClose: () => void;
 }) {
@@ -369,7 +369,7 @@ function ParcelModal({ filter, state, county, city, zip, onClose }: {
   };
 
   const ltvBadge = (val: number, loan: number): string => {
-    if (!val || !loan) return '"”';
+    if (!val || !loan) return '""';
     const ltv = (loan / val) * 100;
     if (ltv <= 60)  return 'â‰¤60%';
     if (ltv <= 65)  return '60-65%';
@@ -398,7 +398,7 @@ function ParcelModal({ filter, state, county, city, zip, onClose }: {
 
   const SortArrow = ({ col }: { col: string }) => (
     <span style={{ marginLeft: 4, opacity: sortCol === col ? 1 : 0.3 }}>
-      {sortCol === col ? (sortDir === 'asc' ? 'â†‘' : 'â†“') : 'â†•'}
+      {sortCol === col ? (sortDir === 'asc' ? 'â†'' : 'â†"') : 'â†•'}
     </span>
   );
 
@@ -410,12 +410,12 @@ function ParcelModal({ filter, state, county, city, zip, onClose }: {
             <div style={{ fontSize: 16, fontWeight: 700, color: C.text }}>Parcel Data Access</div>
             <div style={{ fontSize: 12, color: C.textMuted }}>{filter}</div>
           </div>
-          <button onClick={onClose} style={{ border: 'none', background: 'none', fontSize: 22, cursor: 'pointer', color: C.textDim, lineHeight: 1 }}>Ã—</button>
+          <button onClick={onClose} style={{ border: 'none', background: 'none', fontSize: 22, cursor: 'pointer', color: C.textDim, lineHeight: 1 }}>Ã - </button>
         </div>
 
         {!authed ? (
           <div style={{ textAlign: 'center', padding: '20px 0' }}>
-            <div style={{ fontSize: 32, marginBottom: 12 }}>ðŸ”’</div>
+            <div style={{ fontSize: 32, marginBottom: 12 }}>ðŸ"'</div>
             <div style={{ fontSize: 14, color: C.textBody, marginBottom: 20, lineHeight: 1.6 }}>
               Parcel-level data includes individually sourced property and ownership records.<br/>
               Enter your access code to view underlying property data.
@@ -438,7 +438,7 @@ function ParcelModal({ filter, state, county, city, zip, onClose }: {
         ) : (
           <div>
             <div style={{ padding: '8px 12px', background: '#EDF4EB', borderRadius: 8, fontSize: 12, color: C.sage, fontWeight: 600, marginBottom: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span>âœ“ Access granted "” {data.length} records "” Direct Identified Records</span>
+              <span>âœ" Access granted "" {data.length} records "" Direct Identified Records</span>
               <span style={{ fontSize: 11, color: C.textMuted }}>{filter}</span>
             </div>
 
@@ -459,20 +459,20 @@ function ParcelModal({ filter, state, county, city, zip, onClose }: {
             {paged.map((r, i) => (
               <div key={i} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 80px 55px 55px 70px 70px', padding: '8px', borderBottom: `1px solid ${C.borderLight}`, fontSize: 11, alignItems: 'center', gap: 6 }}>
                 <div>
-                  <div style={{ color: C.text, fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r.ADDRESS || '"”'}</div>
+                  <div style={{ color: C.text, fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r.ADDRESS || '""'}</div>
                   <div style={{ color: C.textMuted, fontSize: 10 }}>{r.CITY}, {r.STATE} {r.ZIP}</div>
                 </div>
                 <div>
                   <div style={{ color: C.textBody }}>{r.ETHNICITY_DESC || 'Not Identified'}</div>
-                  <div style={{ fontSize: 9, color: C.textDim }}>{r.ETHNICITYCD ? '[Green] Direct ID' : 'ðŸ”´ Area Est.'}</div>
+                  <div style={{ fontSize: 9, color: C.textDim }}>{r.ETHNICITYCD ? '[Green] Direct ID' : 'ðŸ"´ Area Est.'}</div>
                 </div>
                 <span style={{ textAlign: 'right', color: C.sage, fontFamily: C.fontMono, fontWeight: 600 }}>
-                  {r.VALUE_MARKET ? '$' + Number(r.VALUE_MARKET).toLocaleString() : '"”'}
+                  {r.VALUE_MARKET ? '$' + Number(r.VALUE_MARKET).toLocaleString() : '""'}
                 </span>
-                <span style={{ textAlign: 'right', fontFamily: C.fontMono }}>{r.LIVING_SQFT ? Number(r.LIVING_SQFT).toLocaleString() : '"”'}</span>
-                <span style={{ textAlign: 'center' }}>{r.BEDROOMS ?? '"”'}</span>
+                <span style={{ textAlign: 'right', fontFamily: C.fontMono }}>{r.LIVING_SQFT ? Number(r.LIVING_SQFT).toLocaleString() : '""'}</span>
+                <span style={{ textAlign: 'center' }}>{r.BEDROOMS ?? '""'}</span>
                 <span style={{ textAlign: 'right', fontFamily: C.fontMono, fontSize: 10 }}>
-                  {r.MTG1_AMOUNT ? '$' + (Number(r.MTG1_AMOUNT) / 1000).toFixed(0) + 'K' : '"”'}
+                  {r.MTG1_AMOUNT ? '$' + (Number(r.MTG1_AMOUNT) / 1000).toFixed(0) + 'K' : '""'}
                 </span>
                 <span style={{ textAlign: 'center' }}>
                   <span style={{ fontSize: 9, padding: '2px 5px', borderRadius: 4, background: C.bgWarm, fontFamily: C.fontMono, fontWeight: 700 }}>
@@ -484,7 +484,7 @@ function ParcelModal({ filter, state, county, city, zip, onClose }: {
 
             {/* Pagination */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 0 0', fontSize: 11, color: C.textMuted }}>
-              <span>Showing {page * PER_PAGE + 1}"“{Math.min((page + 1) * PER_PAGE, sorted.length)} of {sorted.length} records</span>
+              <span>Showing {page * PER_PAGE + 1}""{Math.min((page + 1) * PER_PAGE, sorted.length)} of {sorted.length} records</span>
               <div style={{ display: 'flex', gap: 8 }}>
                 <button disabled={page === 0} onClick={() => setPage(p => p - 1)}
                   style={{ padding: '4px 12px', borderRadius: 6, border: `1px solid ${C.border}`, background: page === 0 ? C.bgWarm : C.bgCard, color: page === 0 ? C.textDim : C.terra, cursor: page === 0 ? 'not-allowed' : 'pointer', fontSize: 11, fontFamily: C.font }}>
@@ -506,7 +506,7 @@ function ParcelModal({ filter, state, county, city, zip, onClose }: {
     </div>
   );
 }
-// ─── Upgrade Modal ─────────────────────────────────────────────────────────
+// --- Upgrade Modal ---------------------------------------------------------
 function UpgradeModal({
   feature,
   minTier,
@@ -594,7 +594,7 @@ function UpgradeModal({
   );
 }
 
-// â”€â”€â”€ Tier Badge â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€â"€ Tier Badge â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function TierBadge({ tier }: { tier: 'free' | 'pro' | 'enterprise' | 'data_partner' }) {
   const config = {
     free:         { label: 'Explore',     bg: '#F5F0E8', color: '#78716C', border: '#E8E2D8' },
@@ -609,7 +609,7 @@ function TierBadge({ tier }: { tier: 'free' | 'pro' | 'enterprise' | 'data_partn
   );
 }
 
-// â”€â”€â”€ Main Page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€â"€ Main Page â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 export default function ReportsPage() {
   // Geography selection
   const [selected, setSelected]     = useState<string[]>(['ALL']);
@@ -625,7 +625,7 @@ export default function ReportsPage() {
   const [timePeriod, setTimePeriod] = useState<string>('all');
 
   // Tier gating
-  const [currentTier] = useState<'free' | 'pro' | 'enterprise' | 'data_partner'>('free'); // UI only "” no auth yet
+  const [currentTier] = useState<'free' | 'pro' | 'enterprise' | 'data_partner'>('free'); // UI only "" no auth yet
   const [upgradeModal, setUpgradeModal] = useState<{ feature: string; minTier: string } | null>(null);
 
   // Modal
@@ -672,7 +672,7 @@ export default function ReportsPage() {
   const isAll    = selected.includes('ALL');
   const stateCode = isAll ? undefined : selected[0];
 
-  // â”€â”€ Fetch national â”€â”€
+  // â"€â"€ Fetch national â"€â"€
   const fetchNational = useCallback(async () => {
     setNatLoad({ loading: true, error: null });
     try {
@@ -703,7 +703,7 @@ export default function ReportsPage() {
     }
   }, []);
 
-  // â”€â”€ Fetch state â”€â”€
+  // â"€â"€ Fetch state â"€â"€
   const fetchState = useCallback(async (state?: string) => {
     setStateLoad({ loading: true, error: null });
     try {
@@ -732,7 +732,7 @@ export default function ReportsPage() {
     }
   }, []);
 
-  // â”€â”€ Fetch county â”€â”€
+  // â"€â"€ Fetch county â"€â"€
   const fetchCounty = useCallback(async (state: string) => {
     setCountyLoad({ loading: true, error: null });
     try {
@@ -749,7 +749,7 @@ export default function ReportsPage() {
     }
   }, []);
 
-  // â”€â”€ Fetch city â”€â”€
+  // â"€â"€ Fetch city â"€â"€
   const fetchCity = useCallback(async (state: string, county?: string) => {
     setCityLoad({ loading: true, error: null });
     try {
@@ -768,7 +768,7 @@ export default function ReportsPage() {
     }
   }, []);
 
-  // â”€â”€ Fetch ZIP â”€â”€
+  // â"€â"€ Fetch ZIP â"€â"€
   const fetchZip = useCallback(async (state: string, city?: string) => {
     setZipLoad({ loading: true, error: null });
     try {
@@ -787,7 +787,7 @@ export default function ReportsPage() {
     }
   }, []);
 
-  // â”€â”€ Fetch lenders â”€â”€
+  // â"€â"€ Fetch lenders â"€â"€
   const fetchLenders = useCallback(async (state?: string, city?: string) => {
     setLenderLoad({ loading: true, error: null });
     try {
@@ -812,7 +812,7 @@ export default function ReportsPage() {
     }
   }, []);
 
-  // â”€â”€ Fetch LTV â”€â”€
+  // â"€â"€ Fetch LTV â"€â"€
   const fetchLTV = useCallback(async (state?: string, city?: string) => {
     setLtvLoad({ loading: true, error: null });
     try {
@@ -823,7 +823,7 @@ export default function ReportsPage() {
       const json = await res.json();
       if (json.success) {
         setLtvData((json.data ?? []).map((r: any) => ({
-          label: r.LTV_TIER ?? '"”',
+          label: r.LTV_TIER ?? '""',
           count: Number(r.RECORD_COUNT ?? 0),
         })));
         setLtvLoad({ loading: false, error: null });
@@ -835,7 +835,7 @@ export default function ReportsPage() {
     }
   }, []);
 
-  // â”€â”€ Fetch trends â”€â”€
+  // â"€â"€ Fetch trends â"€â"€
   const fetchTrends = useCallback(async (state?: string, city?: string, period?: string) => {
     setTrendsLoad({ loading: true, error: null });
     try {
@@ -859,7 +859,7 @@ export default function ReportsPage() {
     }
   }, []);
 
-  // â”€â”€ Fetch demographics â”€â”€
+  // â"€â"€ Fetch demographics â"€â"€
   const fetchDemographics = useCallback(async (state?: string, county?: string, city?: string, zip?: string) => {
     setDemoLoad({ loading: true, error: null });
     try {
@@ -873,7 +873,7 @@ export default function ReportsPage() {
       if (json.success) {
         const d = json.data;
         const toPanel = (arr: {label:string;count:number}[]): PanelData[] =>
-          arr.map(r => ({ label: r.label ?? '"”', count: Number(r.count ?? 0) }));
+          arr.map(r => ({ label: r.label ?? '""', count: Number(r.count ?? 0) }));
         setDemoData({
           gender:    toPanel(d.gender    ?? []),
           marital:   toPanel(d.marital   ?? []),
@@ -891,7 +891,7 @@ export default function ReportsPage() {
     }
   }, []);
 
-  // â”€â”€ Fetch Social Housing Score â”€â”€
+  // â"€â"€ Fetch Social Housing Score â"€â"€
   const fetchSocialScore = useCallback(async (state?: string, county?: string, city?: string, zip?: string) => {
     setShsLoad({ loading: true, error: null });
     try {
@@ -913,7 +913,7 @@ export default function ReportsPage() {
     }
   }, []);
 
-  // â”€â”€ Initial load â”€â”€
+  // â"€â"€ Initial load â"€â"€
   useEffect(() => {
     fetchNational();
     fetchState();
@@ -922,7 +922,7 @@ export default function ReportsPage() {
     fetchTrends();
   }, [fetchNational, fetchState, fetchLenders, fetchLTV, fetchTrends]);
 
-  // â”€â”€ Re-fetch when geography changes â”€â”€
+  // â"€â"€ Re-fetch when geography changes â"€â"€
   useEffect(() => {
     if (!isAll && stateCode) {
       fetchState(stateCode);
@@ -940,7 +940,7 @@ export default function ReportsPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stateCode, isAll, drillCity, timePeriod]);
 
-  // â”€â”€ Load county when state selected â”€â”€
+  // â"€â"€ Load county when state selected â"€â"€
   useEffect(() => {
     if (!isAll && stateCode) {
       fetchCounty(stateCode);
@@ -948,7 +948,7 @@ export default function ReportsPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stateCode, isAll]);
 
-  // â”€â”€ Load cities when county selected â”€â”€
+  // â"€â"€ Load cities when county selected â"€â"€
   useEffect(() => {
     if (!isAll && stateCode) {
       fetchCity(stateCode, selectedCounty ?? undefined);
@@ -956,7 +956,7 @@ export default function ReportsPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stateCode, selectedCounty, isAll]);
 
-  // â”€â”€ Load ZIPs when city drilled into â”€â”€
+  // â"€â"€ Load ZIPs when city drilled into â"€â"€
   useEffect(() => {
     if (!isAll && stateCode && drillCity) {
       fetchZip(stateCode, drillCity);
@@ -964,7 +964,7 @@ export default function ReportsPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stateCode, drillCity, isAll]);
 
-  // â”€â”€â”€ Helpers â”€â”€
+  // â"€â"€â"€ Helpers â"€â"€
   const handleCitySearch = (val: string) => {
     setCitySearch(val);
     if (val.length < 2) { setCitySearchResults([]); return; }
@@ -1007,7 +1007,7 @@ export default function ReportsPage() {
     s.code.toLowerCase().includes(search.toLowerCase())
   );
 
-  // â”€â”€â”€ Compute dashboard stats from live data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // â"€â"€â"€ Compute dashboard stats from live data â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
   const currentStateRow = stateCode && stateData.length > 0
     ? stateData.find(r => r.STATE === stateCode) ?? stateData[0]
     : null;
@@ -1030,12 +1030,12 @@ export default function ReportsPage() {
     ? ALL_STATES.find(s => s.code === selected[0])?.name ?? selected[0]
     : `${selected.length} States`;
 
-  // â”€â”€â”€ Build chart data from live data with smart fallback â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // â"€â"€â"€ Build chart data from live data with smart fallback â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
   const buildEthnicity = (): PanelData[] => {
     // Prefer live breakdown data from the aggregated API queries
     if (ethnicityBreakdown.length > 0) {
       return ethnicityBreakdown.map(r => ({
-        label: String(r.LABEL ?? '"”'),
+        label: String(r.LABEL ?? '""'),
         count: Number(r.RECORD_COUNT ?? 0),
       })).filter(d => d.count > 0);
     }
@@ -1068,7 +1068,7 @@ export default function ReportsPage() {
     // Prefer live breakdown data from the aggregated API queries
     if (loanBreakdown.length > 0) {
       return loanBreakdown.map(r => ({
-        label: String(r.LABEL ?? '"”'),
+        label: String(r.LABEL ?? '""'),
         count: Number(r.RECORD_COUNT ?? 0),
       })).filter(d => d.count > 0);
     }
@@ -1102,7 +1102,7 @@ export default function ReportsPage() {
     // Prefer live breakdown data from the aggregated API queries
     if (propertyBreakdown.length > 0) {
       return propertyBreakdown.map(r => ({
-        label: String(r.LABEL ?? '"”'),
+        label: String(r.LABEL ?? '""'),
         count: Number(r.RECORD_COUNT ?? 0),
       })).filter(d => d.count > 0);
     }
@@ -1127,22 +1127,22 @@ export default function ReportsPage() {
     return result;
   };
 
-  // â”€â”€â”€ Time Period Options â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // â"€â"€â"€ Time Period Options â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
   const TIME_PERIODS = [
     { value: 'all',      label: 'All Time' },
     { value: '5yr',      label: 'Last 5 Years' },
-    { value: '2020-2024', label: '2020"“2024' },
-    { value: '2015-2019', label: '2015"“2019' },
-    { value: '2010-2014', label: '2010"“2014' },
-    { value: '2005-2009', label: '2005"“2009' },
+    { value: '2020-2024', label: '2020""2024' },
+    { value: '2015-2019', label: '2015""2019' },
+    { value: '2010-2014', label: '2010""2014' },
+    { value: '2005-2009', label: '2005""2009' },
   ];
 
-  // â”€â”€â”€ Print / Export â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // â"€â"€â"€ Print / Export â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
   const handleExport = () => {
     window.print();
   };
 
-  // â”€â”€â”€ State breakdown table from live data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // â"€â"€â"€ State breakdown table from live data â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
   const stateBreakdown: PanelData[] = (isAll ? stateData : stateData.filter(r => selected.includes(r.STATE)))
     .sort((a, b) => Number(b.RECORD_COUNT ?? b.TOTAL_PROPERTIES ?? 0) - Number(a.RECORD_COUNT ?? a.TOTAL_PROPERTIES ?? 0))
     .slice(0, 15)
@@ -1156,7 +1156,7 @@ export default function ReportsPage() {
   const propertyTypeData = buildPropertyType();
   const overallLoading  = natLoad.loading;
 
-  // â”€â”€â”€ County cards from live data with GEO_DATA fallback â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // â"€â"€â"€ County cards from live data with GEO_DATA fallback â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
   const countyCards = countyData.length > 0
     ? countyData.slice(0, 25).map(r => ({
         name: getCountyName(stateCode ?? '', String(r.CNTYCD ?? r.COUNTY ?? '')), rawFips: String(r.CNTYCD ?? ''),
@@ -1165,19 +1165,19 @@ export default function ReportsPage() {
       }))
     : [];
 
-  // â”€â”€â”€ City cards "” live data preferred, GEO_DATA fallback â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // â"€â"€â"€ City cards "" live data preferred, GEO_DATA fallback â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
   const cityCards = cityData.length > 0
     ? cityData.slice(0, 20).map(r => ({
-        name: r.CITY ?? '"”',
+        name: r.CITY ?? '""',
         props: Number(r.RECORD_COUNT ?? r.TOTAL_PROPERTIES ?? 0),
         avg: Number(r.AVG_VALUE ?? r.AVG_PROPERTY_VALUE ?? 0),
       }))
     : (stateCode && GEO_DATA[stateCode] ? GEO_DATA[stateCode].cities.slice(0, 20) : []);
 
-  // â”€â”€â”€ ZIP cards "” live data preferred, GEO_DATA fallback â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // â"€â"€â"€ ZIP cards "" live data preferred, GEO_DATA fallback â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
   const zipCards = zipData.length > 0
     ? zipData.slice(0, 30).map(r => ({
-        zip: r.ZIP ?? '"”',
+        zip: r.ZIP ?? '""',
         city: r.CITY ?? drillCity ?? '',
         props: Number(r.RECORD_COUNT ?? r.TOTAL_PROPERTIES ?? 0),
         avg: Number(r.AVG_VALUE ?? r.AVG_PROPERTY_VALUE ?? 0),
@@ -1193,7 +1193,7 @@ export default function ReportsPage() {
 
   return (
     <>
-      {/* â”€â”€ Global CSS animations â”€â”€ */}
+      {/* â"€â"€ Global CSS animations â"€â"€ */}
       <style>{`
         @keyframes shimmer {
           0%   { background-position: -200% 0; }
@@ -1239,12 +1239,12 @@ export default function ReportsPage() {
           />
         )}
 
-        {/* â”€â”€ Print-only header â”€â”€ */}
+        {/* â"€â"€ Print-only header â"€â"€ */}
         <div className="print-header" style={{ display: 'none', padding: '20px 40px', borderBottom: '2px solid #1B2A4A' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
               <div style={{ fontSize: 24, fontWeight: 700, color: '#1B2A4A' }}>ICONYCS Housing Analytics</div>
-              <div style={{ fontSize: 14, color: '#78716C', marginTop: 4 }}>{drillLabel} "” {TIME_PERIODS.find(t => t.value === timePeriod)?.label}</div>
+              <div style={{ fontSize: 14, color: '#78716C', marginTop: 4 }}>{drillLabel} "" {TIME_PERIODS.find(t => t.value === timePeriod)?.label}</div>
             </div>
             <div style={{ textAlign: 'right', fontSize: 11, color: '#78716C' }}>
               <div>Generated: {new Date().toLocaleDateString()}</div>
@@ -1253,7 +1253,7 @@ export default function ReportsPage() {
           </div>
         </div>
 
-        {/* â”€â”€ Nav â”€â”€ */}
+        {/* â"€â"€ Nav â"€â"€ */}
         <nav className="no-print" style={{ background: C.bgCard, borderBottom: `1px solid ${C.border}`, position: 'sticky', top: 0, zIndex: 50 }}>
           <div style={{ maxWidth: 1500, margin: '0 auto', padding: '0 20px', display: 'flex', alignItems: 'center', height: 52, gap: 16 }}>
             <Link href="/" style={{ textDecoration: 'none' }}>
@@ -1267,7 +1267,7 @@ export default function ReportsPage() {
                 <button
                   onClick={() => setUpgradeModal({ feature: 'Full Platform Access', minTier: 'pro' })}
                   style={{ fontSize: 11, color: '#fff', background: C.terra, border: 'none', borderRadius: 6, padding: '4px 12px', cursor: 'pointer', fontFamily: C.font, fontWeight: 600 }}>
-                  Upgrade â†’
+                  Upgrade â†'
                 </button>
               )}
               {/* Time Period Selector */}
@@ -1281,11 +1281,11 @@ export default function ReportsPage() {
               </div>
               <button onClick={currentTier === 'free' ? () => setUpgradeModal({ feature: 'PDF / Print Export', minTier: 'pro' }) : handleExport}
                 style={{ fontSize: 12, color: '#fff', background: currentTier === 'free' ? C.textMuted : C.terra, border: 'none', borderRadius: 6, padding: '6px 14px', cursor: 'pointer', fontFamily: C.font, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 5 }}>
-                {currentTier === 'free' ? 'ðŸ”’' : 'â¬‡'} Download PDF
+                {currentTier === 'free' ? 'ðŸ"'' : 'â¬‡'} Download PDF
               </button>
               <Link href={`/reports/cascade?${stateCode ? `state=${stateCode}` : ''}${selectedCounty ? `&county=${selectedCounty}` : ''}${drillCity ? `&city=${drillCity}` : ''}${drillZip ? `&zip=${drillZip}` : ''}`}
                 style={{ fontSize: 12, color: '#fff', background: C.navy, textDecoration: 'none', padding: '5px 14px', borderRadius: 6, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 5 }}>
-                ðŸ”€ Cascade Builder
+                ðŸ"€ Cascade Builder
               </Link>
               <Link href="/dashboard" style={{ fontSize: 12, color: C.textMuted, textDecoration: 'none', padding: '5px 12px', borderRadius: 6, background: C.bgWarm }}>AI Query Lab</Link>
               <Link href="/api-docs" style={{ fontSize: 12, color: C.sage, textDecoration: 'none', padding: '5px 12px', borderRadius: 6, background: '#F0F7EE', fontWeight: 600 }}>API</Link>
@@ -1298,19 +1298,19 @@ export default function ReportsPage() {
           </div>
         </nav>
 
-        {/* â”€â”€ City Search Bar â”€â”€ */}
+        {/* â"€â"€ City Search Bar â"€â"€ */}
         <div className="no-print" style={{ background: C.bgCard, borderBottom: `1px solid ${C.border}`, padding: '10px 20px', position: 'sticky', top: 52, zIndex: 40 }}>
           <div style={{ maxWidth: 1500, margin: '0 auto', position: 'relative' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <span style={{ fontSize: 13, color: C.textDim, whiteSpace: 'nowrap' }}>Quick search:</span>
               <div style={{ position: 'relative', flex: 1, maxWidth: 500 }}>
                 <input value={citySearch} onChange={e => handleCitySearch(e.target.value)}
-                  placeholder="Search any city "” e.g. Watsonville, Monterey, Santa Cruz..."
+                  placeholder="Search any city "" e.g. Watsonville, Monterey, Santa Cruz..."
                   style={{ width: '100%', padding: '9px 14px 9px 36px', borderRadius: 8, border: `1.5px solid ${citySearch ? C.terra : C.border}`, fontSize: 13, fontFamily: C.font, outline: 'none', background: C.bgWarm }} />
-                <span style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', fontSize: 14, color: C.textDim }}>ðŸ”</span>
+                <span style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', fontSize: 14, color: C.textDim }}>ðŸ"</span>
                 {citySearch && (
                   <button onClick={() => { setCitySearch(''); setCitySearchResults([]); }}
-                    style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: C.textDim, fontSize: 18 }}>Ã—</button>
+                    style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: C.textDim, fontSize: 18 }}>Ã - </button>
                 )}
                 {citySearchResults.length > 0 && (
                   <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 8, boxShadow: '0 8px 24px rgba(0,0,0,0.12)', zIndex: 100, marginTop: 4, overflow: 'hidden' }}>
@@ -1343,10 +1343,10 @@ export default function ReportsPage() {
           </div>
         </div>
 
-        {/* â”€â”€ Main Layout â”€â”€ */}
+        {/* â"€â"€ Main Layout â"€â"€ */}
         <div className="main-grid" style={{ maxWidth: 1500, margin: '0 auto', padding: 16, display: 'grid', gridTemplateColumns: '240px 1fr', gap: 16 }}>
 
-          {/* â”€â”€ SIDEBAR â”€â”€ */}
+          {/* â"€â"€ SIDEBAR â"€â"€ */}
           <div className="sidebar" style={{ position: 'sticky', top: 110, height: 'fit-content' }}>
             <div style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, overflow: 'hidden' }}>
               <div style={{ padding: '12px 14px', background: C.navy, color: '#fff', fontSize: 12, fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase' }}>Select Geography</div>
@@ -1377,7 +1377,7 @@ export default function ReportsPage() {
                     }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                         <div style={{ width: 16, height: 16, borderRadius: 4, border: `2px solid ${isSel ? C.terra : C.border}`, background: isSel ? C.terra : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                          {isSel && <span style={{ color: '#fff', fontSize: 10, fontWeight: 700 }}>âœ“</span>}
+                          {isSel && <span style={{ color: '#fff', fontSize: 10, fontWeight: 700 }}>âœ"</span>}
                         </div>
                         <span style={{ fontSize: 12, color: isSel ? C.terra : C.textBody, fontWeight: isSel ? 600 : 400 }}>{s.name}</span>
                       </div>
@@ -1397,7 +1397,7 @@ export default function ReportsPage() {
             </div>
           </div>
 
-          {/* â”€â”€ MAIN DASHBOARD â”€â”€ */}
+          {/* â"€â"€ MAIN DASHBOARD â"€â"€ */}
           <div>
             {/* Header */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
@@ -1407,9 +1407,9 @@ export default function ReportsPage() {
                   <div style={{ marginTop: 6 }}><Skeleton w={280} h={14} /></div>
                 ) : (
                   <p style={{ fontSize: 12, color: C.textMuted, marginTop: 3 }}>
-                    {totalProps > 0 ? totalProps.toLocaleString() + ' properties' : '"”'} ·
-                    Avg value {avgValue > 0 ? '$' + avgValue.toLocaleString() : '"”'} ·
-                    {isAll ? ' 51 states' : ` ${selected.length} state${selected.length > 1 ? 's' : ''}`} ·
+                    {totalProps > 0 ? totalProps.toLocaleString() + ' properties' : '""'} *
+                    Avg value {avgValue > 0 ? '$' + avgValue.toLocaleString() : '""'} *
+                    {isAll ? ' 51 states' : ` ${selected.length} state${selected.length > 1 ? 's' : ''}`} *
                     {TIME_PERIODS.find(t => t.value === timePeriod)?.label}
                   </p>
                 )}
@@ -1421,13 +1421,13 @@ export default function ReportsPage() {
                 </div>
                 {natLoad.error && (
                   <div style={{ padding: '6px 12px', borderRadius: 8, background: '#FFF4F0', fontSize: 11, color: C.terra }}>
-                    âš  {natLoad.error}
+                    âš  {natLoad.error}
                   </div>
                 )}
               </div>
             </div>
 
-            {/* â”€â”€ Stat Cards â”€â”€ */}
+            {/* â"€â"€ Stat Cards â"€â"€ */}
             <div className="stat-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, marginBottom: 16 }}>
               {[
                 {
@@ -1437,12 +1437,12 @@ export default function ReportsPage() {
                 },
                 {
                   label: 'Est. Homeowners',
-                  value: overallLoading ? null : totalProps > 0 ? ((totalProps * 0.506) / 1e6).toFixed(1) + 'M' : '"”',
+                  value: overallLoading ? null : totalProps > 0 ? ((totalProps * 0.506) / 1e6).toFixed(1) + 'M' : '""',
                   color: C.sage,
                 },
                 {
                   label: 'Avg Property Value',
-                  value: overallLoading ? null : avgValue > 0 ? '$' + avgValue.toLocaleString() : '"”',
+                  value: overallLoading ? null : avgValue > 0 ? '$' + avgValue.toLocaleString() : '""',
                   color: C.gold,
                 },
                 {
@@ -1462,32 +1462,32 @@ export default function ReportsPage() {
               ))}
             </div>
 
-            {/* â”€â”€ Free Tier Upgrade Banner â”€â”€ */}
+            {/* â"€â"€ Free Tier Upgrade Banner â"€â"€ */}
             {currentTier === 'free' && (
               <div style={{ marginBottom: 16, padding: '14px 20px', background: `linear-gradient(135deg, ${C.terra} 0%, #D4754A 100%)`, borderRadius: 10, display: 'flex', alignItems: 'center', gap: 16, animation: 'fadeIn 0.4s ease' }}>
                 <div style={{ fontSize: 22 }}>🚀</div>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 13, fontWeight: 700, color: '#fff' }}>Unlock the Full ICONYCS Platform</div>
                   <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.85)', marginTop: 2 }}>
-                    County/City/ZIP drill-down · Demographics Deep Dive · Cascade Report Builder · PDF Export · Social Housing Score
+                    County/City/ZIP drill-down * Demographics Deep Dive * Cascade Report Builder * PDF Export * Social Housing Score
                   </div>
                 </div>
                 <div style={{ display: 'flex', gap: 8 }}>
                   <button
-                    onClick={() => setUpgradeModal({ feature: 'Pro Analyst "” Full Platform', minTier: 'pro' })}
+                    onClick={() => setUpgradeModal({ feature: 'Pro Analyst "" Full Platform', minTier: 'pro' })}
                     style={{ padding: '8px 18px', background: '#fff', color: C.terra, border: 'none', borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: C.font, whiteSpace: 'nowrap' }}>
-                    Pro "” $49/mo
+                    Pro "" $49/mo
                   </button>
                   <button
-                    onClick={() => setUpgradeModal({ feature: 'Enterprise "” Full Platform + Social Housing Score', minTier: 'enterprise' })}
+                    onClick={() => setUpgradeModal({ feature: 'Enterprise "" Full Platform + Social Housing Score', minTier: 'enterprise' })}
                     style={{ padding: '8px 18px', background: 'rgba(255,255,255,0.15)', color: '#fff', border: '1px solid rgba(255,255,255,0.4)', borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: C.font, whiteSpace: 'nowrap' }}>
-                    Enterprise "” $199/mo
+                    Enterprise "" $199/mo
                   </button>
                 </div>
               </div>
             )}
 
-            {/* â”€â”€ Trend Chart + LTV side by side â”€â”€ */}
+            {/* â"€â"€ Trend Chart + LTV side by side â"€â"€ */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 16 }}>
               <TrendChart
                 title="Recording Activity by Year"
@@ -1506,7 +1506,7 @@ export default function ReportsPage() {
               />
             </div>
 
-            {/* â”€â”€ Pie Charts â”€â”€ */}
+            {/* â"€â"€ Pie Charts â"€â"€ */}
             <div className="card-grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12, marginBottom: 16 }}>
               <PieChart
                 title="Owner Ethnicity"
@@ -1531,9 +1531,9 @@ export default function ReportsPage() {
               />
             </div>
 
-            {/* â”€â”€ Freq Tables â”€â”€ */}
+            {/* â"€â"€ Freq Tables â"€â"€ */}
             <div className="card-grid-3" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, marginBottom: 6 }}>
-              <FreqTable title="Owner Ethnicity "” Direct Identified Records" data={ethnicityData} color={C.sage}
+              <FreqTable title="Owner Ethnicity "" Direct Identified Records" data={ethnicityData} color={C.sage}
                 loading={overallLoading} error={natLoad.error} onRetry={fetchNational} />
               <FreqTable title="Property Type" data={propertyTypeData} color={C.terra}
                 loading={overallLoading} error={natLoad.error} onRetry={fetchNational} />
@@ -1546,14 +1546,14 @@ export default function ReportsPage() {
                 { label: 'Property Type Data', state: stateCode, city: drillCity ?? undefined },
                 { label: 'Loan Type Data', state: stateCode, city: drillCity ?? undefined },
               ].map((f, i) => (
-                <button key={i} onClick={() => setModal({ filter: `${geoLabel} "” ${f.label}`, state: f.state, city: f.city })}
+                <button key={i} onClick={() => setModal({ filter: `${geoLabel} "" ${f.label}`, state: f.state, city: f.city })}
                   style={{ padding: '6px', borderRadius: 6, background: 'transparent', border: `1px dashed ${C.border}`, fontSize: 11, color: C.textDim, cursor: 'pointer', fontFamily: C.font }}>
                   View Underlying Parcels
                 </button>
               ))}
             </div>
 
-            {/* â”€â”€ Occupancy Status Panel â”€â”€ */}
+            {/* â"€â"€ Occupancy Status Panel â"€â"€ */}
             <div style={{ background: C.bgCard, borderRadius: 12, border: `1px solid ${C.border}`, overflow: 'hidden', marginBottom: 16 }}>
               <div style={{ padding: '10px 16px', background: C.navy, color: '#fff', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase' }}>Property Occupancy Status</span>
@@ -1566,7 +1566,7 @@ export default function ReportsPage() {
                   <FreqTable title="Occupancy Breakdown" data={occupancyData} color={C.sage}
                     loading={overallLoading} error={natLoad.error} onRetry={fetchNational} />
                   <div style={{ fontSize: 10, color: C.textMuted, marginTop: 8, lineHeight: 1.6 }}>
-                    â“˜ Owner Occupied: homestead exemption or tax bill matches property address.<br/>
+                    â"˜ Owner Occupied: homestead exemption or tax bill matches property address.<br/>
                     Non-Owner Occupied: investor-owned, second home, or rental unit.<br/>
                     <em>Census ACS tenure overlay coming in next release.</em>
                   </div>
@@ -1574,7 +1574,7 @@ export default function ReportsPage() {
               </div>
             </div>
 
-            {/* â”€â”€ Mortgage Intelligence Section â”€â”€ */}
+            {/* â"€â"€ Mortgage Intelligence Section â"€â"€ */}
             <div style={{ marginBottom: 8 }}>
               <div style={{ fontSize: 14, fontWeight: 700, color: C.navy, fontFamily: C.fontSerif, letterSpacing: '0.02em', marginBottom: 12, paddingBottom: 6, borderBottom: `2px solid ${C.border}` }}>
                 Mortgage Intelligence
@@ -1595,7 +1595,7 @@ export default function ReportsPage() {
                     <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 12 }}>
                       <span style={{ color: C.textBody }}>{d.label}</span>
                       <span style={{ fontFamily: C.fontMono, fontWeight: 600, color: C.chart[i % C.chart.length] }}>
-                        {d.count > 0 ? '$' + Math.round(avgValue * (i === 0 ? 0.72 : i === 1 ? 0.93 : i === 2 ? 0.87 : 0.68)).toLocaleString() : '"”'}
+                        {d.count > 0 ? '$' + Math.round(avgValue * (i === 0 ? 0.72 : i === 1 ? 0.93 : i === 2 ? 0.87 : 0.68)).toLocaleString() : '""'}
                       </span>
                     </div>
                   ))}
@@ -1607,14 +1607,14 @@ export default function ReportsPage() {
             </div>
             <div className="card-grid-3" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, marginBottom: 16 }}>
               {['Loan Program Data', 'Lender Data', 'Loan Amount Data'].map((f, i) => (
-                <button key={i} onClick={() => setModal({ filter: `${geoLabel} "” ${f}`, state: stateCode, city: drillCity ?? undefined })}
+                <button key={i} onClick={() => setModal({ filter: `${geoLabel} "" ${f}`, state: stateCode, city: drillCity ?? undefined })}
                   style={{ padding: '6px', borderRadius: 6, background: 'transparent', border: `1px dashed ${C.border}`, fontSize: 11, color: C.textDim, cursor: 'pointer', fontFamily: C.font }}>
                   View Underlying Parcels
                 </button>
               ))}
             </div>
 
-            {/* â”€â”€ Social Housing Score â”€â”€ */}
+            {/* â"€â"€ Social Housing Score â"€â"€ */}
             <div style={{ marginBottom: 16, background: C.bgCard, borderRadius: 12, border: `1px solid ${C.border}`, overflow: 'hidden' }}>
               <div
                 onClick={() => {
@@ -1629,7 +1629,7 @@ export default function ReportsPage() {
                 <span style={{ fontSize: 16 }}>ðŸ˜ï¸</span>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.04em' }}>SOCIAL HOUSING SCORE</div>
-                  <div style={{ fontSize: 11, opacity: 0.7, marginTop: 1 }}>Diversity index: ethnicity · income · LTV · owner-occupancy</div>
+                  <div style={{ fontSize: 11, opacity: 0.7, marginTop: 1 }}>Diversity index: ethnicity * income * LTV * owner-occupancy</div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   {shsData && (
@@ -1639,8 +1639,8 @@ export default function ReportsPage() {
                     }}>{shsData.score}</div>
                   )}
                   <span style={{ fontSize: 10, background: '#B8860B', color: '#fff', borderRadius: 10, padding: '2px 8px', fontWeight: 700 }}>ENTERPRISE</span>
-                  <span style={{ fontSize: 10, background: 'rgba(255,255,255,0.15)', color: '#fff', borderRadius: 10, padding: '2px 8px', fontWeight: 600 }}>ðŸ”’</span>
-                  <span style={{ fontSize: 14, opacity: 0.7 }}>{showShs ? 'â–²' : 'â–¼'}</span>
+                  <span style={{ fontSize: 10, background: 'rgba(255,255,255,0.15)', color: '#fff', borderRadius: 10, padding: '2px 8px', fontWeight: 600 }}>ðŸ"'</span>
+                  <span style={{ fontSize: 14, opacity: 0.7 }}>{showShs ? 'â-²' : 'â-¼'}</span>
                 </div>
               </div>
 
@@ -1683,7 +1683,7 @@ export default function ReportsPage() {
 
                       {/* Component breakdown */}
                       <div style={{ flex: 1 }}>
-                        <div style={{ fontSize: 12, color: C.textMuted, marginBottom: 12 }}>Score components (each weighted 0"“25):</div>
+                        <div style={{ fontSize: 12, color: C.textMuted, marginBottom: 12 }}>Score components (each weighted 0""25):</div>
                         {[
                           { label: 'Ethnic Diversity Index', key: 'ethDiversity', color: C.terra },
                           { label: 'Income Diversity',        key: 'incomeDiversity', color: C.sage },
@@ -1704,7 +1704,7 @@ export default function ReportsPage() {
                           );
                         })}
                         <div style={{ marginTop: 12, fontSize: 10, color: C.textDim, padding: '8px 12px', background: C.bgWarm, borderRadius: 6, lineHeight: 1.6 }}>
-                          ðŸ”’ <strong>Enterprise feature.</strong> This composite score uses Shannon entropy for diversity calculation. Higher scores indicate greater demographic and financial diversity for this geography. Available for Pro/Enterprise subscribers.
+                          ðŸ"' <strong>Enterprise feature.</strong> This composite score uses Shannon entropy for diversity calculation. Higher scores indicate greater demographic and financial diversity for this geography. Available for Pro/Enterprise subscribers.
                         </div>
                       </div>
                     </div>
@@ -1713,10 +1713,10 @@ export default function ReportsPage() {
               )}
             </div>
 
-            {/* â”€â”€ State Breakdown â”€â”€ */}
+            {/* â"€â"€ State Breakdown â"€â"€ */}
             <div style={{ marginBottom: 16 }}>
               <HBarChart
-                title={isAll ? 'All States "” Property Count' : `${geoLabel} "” State Breakdown`}
+                title={isAll ? 'All States "" Property Count' : `${geoLabel} "" State Breakdown`}
                 data={stateBreakdown}
                 loading={stateLoad.loading}
                 error={stateLoad.error}
@@ -1724,7 +1724,7 @@ export default function ReportsPage() {
               />
             </div>
 
-            {/* â”€â”€ Geographic Drill-Down (single state) â”€â”€ */}
+            {/* â"€â"€ Geographic Drill-Down (single state) â"€â"€ */}
             {!isAll && selected.length === 1 && (
               <div style={{ marginBottom: 16 }}>
                 {/* Breadcrumb */}
@@ -1772,7 +1772,7 @@ export default function ReportsPage() {
                   )}
                 </div>
 
-                {/* â”€â”€ Level: County â”€â”€ */}
+                {/* â"€â"€ Level: County â"€â"€ */}
                 {!selectedCounty && !drillCity && (
                   <>
                     {countyLoad.loading ? (
@@ -1814,7 +1814,7 @@ export default function ReportsPage() {
                                   </div>
                                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                     <span style={{ fontSize: 11, color: C.sage, fontFamily: C.fontMono, fontWeight: 600 }}>
-                                      {county.avg > 0 ? '$' + (county.avg / 1000).toFixed(0) + 'K avg' : '"”'}
+                                      {county.avg > 0 ? '$' + (county.avg / 1000).toFixed(0) + 'K avg' : '""'}
                                     </span>
                                     <span style={{ fontSize: 11, color: C.terra, fontWeight: 600 }}>Cities "º</span>
                                   </div>
@@ -1888,7 +1888,7 @@ export default function ReportsPage() {
                   </>
                 )}
 
-                {/* â”€â”€ Level: County selected "” show cities in that county â”€â”€ */}
+                {/* â"€â"€ Level: County selected "" show cities in that county â"€â"€ */}
                 {selectedCounty && !drillCity && (
                   <>
                     {cityLoad.loading ? (
@@ -1926,11 +1926,11 @@ export default function ReportsPage() {
                   </>
                 )}
 
-                {/* â”€â”€ Level: City selected "” show ZIPs â”€â”€ */}
+                {/* â"€â"€ Level: City selected "" show ZIPs â"€â"€ */}
                 {drillCity && !drillZip && (
                   <div style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, overflow: 'hidden', animation: 'fadeIn 0.4s ease' }}>
                     <div style={{ padding: '10px 16px', background: C.bgWarm, borderBottom: `1px solid ${C.border}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontSize: 13, fontWeight: 700, color: C.text }}>{drillCity} "” ZIP Code Analysis</span>
+                      <span style={{ fontSize: 13, fontWeight: 700, color: C.text }}>{drillCity} "" ZIP Code Analysis</span>
                       <button onClick={() => setDrillCity(null)}
                         style={{ background: C.bgWarm, border: `1px solid ${C.border}`, borderRadius: 20, padding: '4px 14px', fontSize: 12, color: C.terra, cursor: 'pointer', fontFamily: C.font, fontWeight: 600 }}>
                         "¹ Back to Cities
@@ -1961,7 +1961,7 @@ export default function ReportsPage() {
                                 <div style={{ fontSize: 9, color: C.textDim }}>avg value</div>
                               </div>
                             </div>
-                            <button onClick={e => { e.stopPropagation(); setModal({ filter: `ZIP ${z.zip} "” ${z.city}`, state: stateCode, zip: z.zip, city: drillCity }); }}
+                            <button onClick={e => { e.stopPropagation(); setModal({ filter: `ZIP ${z.zip} "" ${z.city}`, state: stateCode, zip: z.zip, city: drillCity }); }}
                               style={{ width: '100%', marginTop: 8, padding: '4px', background: 'transparent', border: `1px dashed ${C.border}`, borderRadius: 4, fontSize: 10, color: C.textDim, cursor: 'pointer', fontFamily: C.font }}>
                               View Parcels
                             </button>
@@ -1974,7 +1974,7 @@ export default function ReportsPage() {
               </div>
             )}
 
-            {/* â”€â”€ Demographics Deep Dive â”€â”€ */}
+            {/* â"€â"€ Demographics Deep Dive â"€â"€ */}
             <div style={{ marginTop: 8, background: C.bgCard, borderRadius: 12, border: `1px solid ${C.border}`, overflow: 'hidden' }}>
               <div
                 onClick={() => {
@@ -1986,14 +1986,14 @@ export default function ReportsPage() {
                 }}
                 style={{ padding: '12px 18px', background: C.navy, color: '#fff', display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer', userSelect: 'none' }}
               >
-                <span style={{ fontSize: 16 }}>ðŸ“Š</span>
+                <span style={{ fontSize: 16 }}>ðŸ"Š</span>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.04em' }}>DEMOGRAPHICS DEEP DIVE</div>
-                  <div style={{ fontSize: 11, opacity: 0.7, marginTop: 1 }}>Ethnicity · Gender · Marital Status · Education · Income · Wealth Score</div>
+                  <div style={{ fontSize: 11, opacity: 0.7, marginTop: 1 }}>Ethnicity * Gender * Marital Status * Education * Income * Wealth Score</div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <span style={{ fontSize: 10, background: `${C.terra}`, color: '#fff', borderRadius: 10, padding: '2px 8px', fontWeight: 700 }}>PRO</span>
-                  <span style={{ fontSize: 14, opacity: 0.7 }}>{showDemographics ? 'â–²' : 'â–¼'}</span>
+                  <span style={{ fontSize: 14, opacity: 0.7 }}>{showDemographics ? 'â-²' : 'â-¼'}</span>
                 </div>
               </div>
 
@@ -2010,7 +2010,7 @@ export default function ReportsPage() {
                       {/* Row 0: Ethnicity */}
                       <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 12 }}>
                         <FreqTable
-                          title="Owner Ethnicity "” Direct Identified"
+                          title="Owner Ethnicity "" Direct Identified"
                           data={(ethnicityBreakdown ?? []).map((r: any) => ({
                             label: r.LABEL ?? r.label ?? 'Unknown',
                             count: Number(r.RECORD_COUNT ?? r.count ?? 0),
@@ -2041,7 +2041,7 @@ export default function ReportsPage() {
                         <HBarChart title="Income Range" data={demoData.income} />
                         {/* Wealth Score panel */}
                         <div style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, overflow: 'hidden' }}>
-                          <div style={{ padding: '10px 16px', background: C.navy, color: '#fff', fontSize: 12, fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase' }}>Wealth Score (A"“H)</div>
+                          <div style={{ padding: '10px 16px', background: C.navy, color: '#fff', fontSize: 12, fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase' }}>Wealth Score (A""H)</div>
                           <div style={{ padding: 14 }}>
                             {(() => {
                               const wTotal = demoData.wealth.reduce((s, w) => s + w.count, 0);
@@ -2078,7 +2078,7 @@ export default function ReportsPage() {
                           <div style={{ fontSize: 13, fontWeight: 700, color: C.navy }}>Social Housing Score</div>
                           <div style={{ fontSize: 11, color: C.textMuted, marginTop: 2 }}>Composite diversity index combining ethnicity, income, LTV, and owner-occupancy. Available in Enterprise tier.</div>
                         </div>
-                        <span style={{ fontSize: 11, background: C.navy, color: '#fff', borderRadius: 10, padding: '4px 12px', fontWeight: 700, whiteSpace: 'nowrap' }}>ðŸ”’ Enterprise</span>
+                        <span style={{ fontSize: 11, background: C.navy, color: '#fff', borderRadius: 10, padding: '4px 12px', fontWeight: 700, whiteSpace: 'nowrap' }}>ðŸ"' Enterprise</span>
                       </div>
                     </div>
                   ) : (
@@ -2090,19 +2090,19 @@ export default function ReportsPage() {
               )}
             </div>
 
-            {/* â”€â”€ Methodology Note â”€â”€ */}
+            {/* â"€â"€ Methodology Note â"€â"€ */}
             <div style={{ marginTop: 8, padding: '12px 16px', background: C.bgWarm, borderRadius: 10, border: `1px solid ${C.border}`, fontSize: 11, color: C.textMuted, lineHeight: 1.7 }}>
               <span style={{ fontWeight: 700, color: C.textBody }}>Data Methodology: </span>
               {METHODOLOGY_NOTE}
               <span style={{ display: 'block', marginTop: 6, fontSize: 10, color: C.textDim }}>
-                Confidence indicators: [Green] Direct Identified (individually sourced) · [Yellow] Household Modeled · ðŸ”´ Area Estimated
+                Confidence indicators: [Green] Direct Identified (individually sourced) * [Yellow] Household Modeled * ðŸ"´ Area Estimated
               </span>
             </div>
 
             {/* -- Footer -- */}
             <div style={{ marginTop: 16, paddingTop: 16, borderTop: `1px solid ${C.border}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
               <div style={{ fontSize: 11, color: C.textDim }}>
-                ICONYCS Housing Analytics · Live Snowflake · 130M+ residential properties · {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+                ICONYCS Housing Analytics * Live Snowflake * 130M+ residential properties * {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
               </div>
               <div style={{ display: 'flex', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
                 <Link href="/pricing" style={{ fontSize: 11, color: C.textMuted, textDecoration: 'none', fontWeight: 500 }}>Pricing</Link>

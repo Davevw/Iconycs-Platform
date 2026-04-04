@@ -1,5 +1,5 @@
 /**
- * ICONYCS Data Labels — Single Source of Truth
+ * ICONYCS Data Labels  -  Single Source of Truth
  * Never use "Infutor" anywhere. Use the terms defined here.
  */
 
@@ -39,14 +39,14 @@ export const LOAN_CATEGORY_LABELS: Record<string, string> = {
 };
 
 export const LTV_TIER_ORDER = [
-  '≤60% — Tier 1',
-  '60-65% — Tier 2',
-  '65-70% — Tier 3',
-  '70-75% — Tier 4',
-  '75-80% — Tier 5',
-  '80-85% — Tier 6',
-  '85-90% — Tier 7',
-  '90-95% — Tier 8',
-  '95-97% — Tier 9',
+  '≤60%  -  Tier 1',
+  '60-65%  -  Tier 2',
+  '65-70%  -  Tier 3',
+  '70-75%  -  Tier 4',
+  '75-80%  -  Tier 5',
+  '80-85%  -  Tier 6',
+  '85-90%  -  Tier 7',
+  '90-95%  -  Tier 8',
+  '95-97%  -  Tier 9',
   'Over 97%',
 ];

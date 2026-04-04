@@ -161,7 +161,7 @@ export default function DashboardPage() {
                     <span style={{ fontSize: 12, fontWeight: 600, color: C.sage }}>✓ SQL Generated</span>
                     {msg.tables?.map((t: string) => <span key={t} style={{ fontSize: 10, padding: '2px 8px', borderRadius: 10, background: C.sageSoft, color: C.sage }}>{t}</span>)}
                     <span style={{ marginLeft: 'auto', fontSize: 11, color: msg.execution?.rowCount > 0 ? C.sage : C.gold }}>
-                      {msg.execution?.connected ? (msg.execution.rowCount > 0 ? `${msg.execution.rowCount} rows · ${msg.execution.executionTime}ms` : 'Connected · AI-estimated') : 'Snowflake not configured'}
+                      {msg.execution?.connected ? (msg.execution.rowCount > 0 ? `${msg.execution.rowCount} rows * ${msg.execution.executionTime}ms` : 'Connected * AI-estimated') : 'Snowflake not configured'}
                     </span>
                   </div>
                   {msg.description && <div style={{ padding: '8px 16px', fontSize: 12, color: C.textMuted, borderBottom: `1px solid ${C.borderLight}` }}>{msg.description}</div>}

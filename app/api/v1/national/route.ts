@@ -1,6 +1,6 @@
 /**
  * GET /api/v1/national
- * Public API — National housing summary
+ * Public API  -  National housing summary
  */
 
 import { NextRequest, NextResponse } from 'next/server';

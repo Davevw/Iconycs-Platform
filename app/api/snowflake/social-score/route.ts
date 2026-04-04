@@ -3,10 +3,10 @@
  * Computes the Social Housing Score (0-100) for any geography.
  *
  * Formula (each component 0-25):
- *   ltv_score       = (ltv_low / total) * 25            — low-LTV owners
- *   owner_score     = (owner_occ / total) * 25           — owner occupancy
- *   diversity_score = min((ethnic_pct * 2), 25)          — ethnic diversity
- *   market_score    = 25                                  — placeholder (Census overlay TBD)
+ *   ltv_score       = (ltv_low / total) * 25             -  low-LTV owners
+ *   owner_score     = (owner_occ / total) * 25            -  owner occupancy
+ *   diversity_score = min((ethnic_pct * 2), 25)           -  ethnic diversity
+ *   market_score    = 25                                   -  placeholder (Census overlay TBD)
  *   total_shs       = ltv + owner + diversity + market
  *
  * Accepts: state, county, city, zip

@@ -7,7 +7,7 @@
 
 import Link from 'next/link';
 
-// ─── Design Tokens ───────────────────────────────────────────────────────────
+// --- Design Tokens -----------------------------------------------------------
 const C = {
   bg: '#FAFAF7', bgCard: '#FFFFFF', bgWarm: '#F5F0E8',
   border: '#E8E2D8', borderLight: '#F0EBE3',
@@ -19,7 +19,7 @@ const C = {
   fontSerif: "'Source Serif 4', Georgia, serif",
 };
 
-// ─── Agent Data ───────────────────────────────────────────────────────────────
+// --- Agent Data ---------------------------------------------------------------
 const AGENTS = [
   {
     icon: '⚖️',
@@ -35,7 +35,7 @@ const AGENTS = [
       'Regulatory examination preparation',
     ],
     status: 'AVAILABLE',
-    statusLabel: 'AVAILABLE — Deploy in 48 hours',
+    statusLabel: 'AVAILABLE  -  Deploy in 48 hours',
     statusColor: C.sage,
     statusBg: '#F0F7EE',
     ctaLabel: 'Request Deployment',
@@ -56,7 +56,7 @@ const AGENTS = [
       'Trend alerting',
     ],
     status: 'AVAILABLE',
-    statusLabel: 'AVAILABLE — Deploy in 48 hours',
+    statusLabel: 'AVAILABLE  -  Deploy in 48 hours',
     statusColor: C.sage,
     statusBg: '#F0F7EE',
     ctaLabel: 'Request Deployment',
@@ -77,7 +77,7 @@ const AGENTS = [
       'Investment memo generation',
     ],
     status: 'BETA',
-    statusLabel: 'BETA — Available Q2 2026',
+    statusLabel: 'BETA  -  Available Q2 2026',
     statusColor: C.gold,
     statusBg: '#FEFBF0',
     ctaLabel: 'Join Waitlist',
@@ -86,12 +86,12 @@ const AGENTS = [
   },
 ];
 
-// ─── Component ────────────────────────────────────────────────────────────────
+// --- Component ----------------------------------------------------------------
 export default function AgentsPage() {
   return (
     <div style={{ fontFamily: C.font, background: C.bg, minHeight: '100vh', color: C.text }}>
 
-      {/* ── Nav ── */}
+      {/* -- Nav -- */}
       <nav style={{ background: C.bgCard, borderBottom: `1px solid ${C.border}`, position: 'sticky', top: 0, zIndex: 50 }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 20px', height: 52, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <Link href="/" style={{ fontFamily: C.fontSerif, fontSize: 18, fontWeight: 700, color: C.navy, textDecoration: 'none', letterSpacing: '-0.02em' }}>
@@ -109,7 +109,7 @@ export default function AgentsPage() {
         </div>
       </nav>
 
-      {/* ── Hero ── */}
+      {/* -- Hero -- */}
       <section style={{
         background: `linear-gradient(135deg, ${C.navyDark} 0%, ${C.navy} 60%, ${C.navyLight} 100%)`,
         padding: '80px 20px 90px',
@@ -200,7 +200,7 @@ export default function AgentsPage() {
         </div>
       </section>
 
-      {/* ── Agent Cards ── */}
+      {/* -- Agent Cards -- */}
       <section style={{ background: C.bgWarm, padding: '72px 20px' }}>
         <div style={{ maxWidth: 1160, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 48 }}>
@@ -294,7 +294,7 @@ export default function AgentsPage() {
         </div>
       </section>
 
-      {/* ── How It Works ── */}
+      {/* -- How It Works -- */}
       <section style={{ background: C.bgCard, padding: '72px 20px', borderTop: `1px solid ${C.border}` }}>
         <div style={{ maxWidth: 900, margin: '0 auto', textAlign: 'center' }}>
           <h2 style={{ fontFamily: C.fontSerif, fontSize: 28, fontWeight: 700, color: C.navy, margin: '0 0 12px' }}>
@@ -322,7 +322,7 @@ export default function AgentsPage() {
         </div>
       </section>
 
-      {/* ── Custom Agent Development ── */}
+      {/* -- Custom Agent Development -- */}
       <section style={{
         background: `linear-gradient(135deg, ${C.navyDark} 0%, ${C.navy} 100%)`,
         padding: '72px 20px',
@@ -345,7 +345,7 @@ export default function AgentsPage() {
             Need a bespoke AI agent for your specific workflow? Our team builds custom agents on the ICONYCS data platform.
           </p>
           <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)', marginBottom: 36, fontFamily: C.fontMono }}>
-            Typical engagement: $25,000–$75,000 setup + $2,000–$5,000/month hosting
+            Typical engagement: $25,000-$75,000 setup + $2,000-$5,000/month hosting
           </p>
           <a href="mailto:info@iconycs.com?subject=Custom Agent Consultation"
             style={{
@@ -372,7 +372,7 @@ export default function AgentsPage() {
         </div>
       </section>
 
-      {/* ── Footer ── */}
+      {/* -- Footer -- */}
       <footer style={{ background: C.bgCard, borderTop: `1px solid ${C.border}`, padding: '32px 20px', textAlign: 'center' }}>
         <div style={{ maxWidth: 1160, margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
           <div style={{ fontFamily: C.fontSerif, fontSize: 16, fontWeight: 700, color: C.navy }}>ICONYCS</div>

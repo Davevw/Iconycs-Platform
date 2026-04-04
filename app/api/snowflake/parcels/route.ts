@@ -15,7 +15,7 @@ export const maxDuration = 60; // 60 second timeout for Snowflake queries
 const ACCESS_CODE = 'Iconycs01';
 
 export async function GET(request: NextRequest) {
-  // Auth check — require access code header or query param
+  // Auth check  -  require access code header or query param
   const accessCode =
     request.headers.get('x-access-code') ??
     new URL(request.url).searchParams.get('access_code');

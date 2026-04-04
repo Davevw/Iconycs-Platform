@@ -14,7 +14,7 @@ export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 export const maxDuration = 60; // 60 second timeout for Snowflake queries
 
-// ─── Aggregation helpers ───────────────────────────────────────────────────
+// --- Aggregation helpers ---------------------------------------------------
 
 interface RawRow {
   GENDER?: string;

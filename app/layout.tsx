@@ -4,7 +4,7 @@ import './globals.css';
 export const metadata: Metadata = {
   metadataBase: new URL('https://iconycs.com'),
   title: {
-    default: 'ICONYCS — Housing Analytics & Homeowner Demographics',
+    default: 'ICONYCS  -  Housing Analytics & Homeowner Demographics',
     template: '%s | ICONYCS',
   },
   description:
@@ -20,13 +20,13 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://iconycs.com',
     siteName: 'ICONYCS',
-    title: 'ICONYCS — Housing Analytics & Homeowner Demographics',
+    title: 'ICONYCS  -  Housing Analytics & Homeowner Demographics',
     description: '130M+ property records. 187M+ owner profiles. The socio-economics of home ownership.',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ICONYCS — Housing Analytics',
+    title: 'ICONYCS  -  Housing Analytics',
     description: '130M+ properties. 187M+ owner profiles. The socio-economics of home ownership.',
   },
   robots: { index: true, follow: true },

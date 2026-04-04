@@ -35,8 +35,8 @@ export async function POST(request: Request) {
       console.error('[waitlist] Supabase error:', err);
       // If table doesn't exist yet, still return success to not block UX
       if (res.status === 404 || res.status === 422 || err.includes('does not exist')) {
-        console.warn('[waitlist] Table may not exist yet — logging signup locally:', { email, tier, company });
-        return Response.json({ success: true, note: 'Logged locally — run SQL migration to enable Supabase persistence' });
+        console.warn('[waitlist] Table may not exist yet  -  logging signup locally:', { email, tier, company });
+        return Response.json({ success: true, note: 'Logged locally  -  run SQL migration to enable Supabase persistence' });
       }
       return Response.json({ error: 'Failed to save signup' }, { status: 500 });
     }

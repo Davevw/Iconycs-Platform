@@ -1,6 +1,6 @@
 /**
  * ICONYCS Claude AI Integration
- * Server-side only — handles all Anthropic API calls
+ * Server-side only  -  handles all Anthropic API calls
  * 
  * Tiered model strategy:
  *   - Opus 4.6 → SQL generation (complex reasoning, schema mapping)
@@ -17,10 +17,10 @@ const anthropic = new Anthropic({
 });
 
 // ═══════════════════════════════════════════════
-// SNOWFLAKE SCHEMA — cached across API calls
+// SNOWFLAKE SCHEMA  -  cached across API calls
 // ═══════════════════════════════════════════════
 const SNOWFLAKE_SCHEMA = `
-### VW_PROP_SAMPLE (Property Records — 130M+ rows nationally)
+### VW_PROP_SAMPLE (Property Records  -  130M+ rows nationally)
 Columns:
 - PID (VARCHAR): Primary property identifier
 - PID2 (VARCHAR): Secondary property identifier  
@@ -52,7 +52,7 @@ Columns:
 - PROP_MTGTERM (NUMBER): Mortgage term
 - PROP_MTGDUEDATE (DATE): Mortgage due date
 
-### VW_NARC3_SAMPLE (Owner Demographics — 187M+ profiles)
+### VW_NARC3_SAMPLE (Owner Demographics  -  187M+ profiles)
 Columns:
 - PID (VARCHAR): Property ID (joins to VW_PROP_SAMPLE.PID)
 - STATE (VARCHAR): State
@@ -78,7 +78,7 @@ RULES:
 `.trim();
 
 // ═══════════════════════════════════════════════
-// SQL GENERATION — Uses Opus 4.6 for maximum accuracy
+// SQL GENERATION  -  Uses Opus 4.6 for maximum accuracy
 // ═══════════════════════════════════════════════
 export async function generateSQL(userQuestion: string): Promise<{
   sql: string;
@@ -98,7 +98,7 @@ Given a natural language question, generate a valid Snowflake SQL query using ON
 ${SNOWFLAKE_SCHEMA}
 
 Respond ONLY with JSON: {"sql": "QUERY", "tables_used": ["TABLE"], "description": "What this does"}`,
-        // Enable prompt caching on the schema — saves 90% on input costs
+        // Enable prompt caching on the schema  -  saves 90% on input costs
         cache_control: { type: 'ephemeral' },
       },
     ],
@@ -117,7 +117,7 @@ Respond ONLY with JSON: {"sql": "QUERY", "tables_used": ["TABLE"], "description"
 }
 
 // ═══════════════════════════════════════════════
-// RESULT INTERPRETATION — Uses Sonnet 4.6 (cheaper, still excellent)
+// RESULT INTERPRETATION  -  Uses Sonnet 4.6 (cheaper, still excellent)
 // ═══════════════════════════════════════════════
 export async function interpretResults(
   userQuestion: string,
@@ -179,7 +179,7 @@ Results: ${resultsText}`,
 }
 
 // ═══════════════════════════════════════════════
-// LINKEDIN POST GENERATION — Uses Sonnet 4.6
+// LINKEDIN POST GENERATION  -  Uses Sonnet 4.6
 // ═══════════════════════════════════════════════
 export async function generateLinkedInPost(
   topic: string,

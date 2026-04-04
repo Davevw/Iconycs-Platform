@@ -113,10 +113,10 @@ export default function TermsPage() {
               Terms of Service &amp; Data Use Agreement
             </h1>
             <p style={{ fontSize: 14, color: C.textMuted }}>
-              <strong>Effective Date:</strong> April 2026 &nbsp;·&nbsp; <strong>Version:</strong> 1.0
+              <strong>Effective Date:</strong> April 2026 &nbsp;*&nbsp; <strong>Version:</strong> 1.0
             </p>
             <div style={{ marginTop: 20, padding: '14px 18px', background: '#FFF9F0', border: `1px solid ${C.terra}40`, borderRadius: 10, fontSize: 13, color: C.textBody, lineHeight: 1.7 }}>
-              <strong>Summary:</strong> By using ICONYCS, you agree to these terms. Our data is for analytics and compliance purposes only — not for discriminatory uses. Subscriptions renew monthly. All fees are governed by California law.
+              <strong>Summary:</strong> By using ICONYCS, you agree to these terms. Our data is for analytics and compliance purposes only  -  not for discriminatory uses. Subscriptions renew monthly. All fees are governed by California law.
             </div>
           </div>
 
@@ -207,7 +207,7 @@ export default function TermsPage() {
                 ))}
               </div>
 
-              <SubSection title="4.5 Pay-Per-Report — $9.99/report">
+              <SubSection title="4.5 Pay-Per-Report  -  $9.99/report">
                 Single report download at any tier level. No subscription required.
               </SubSection>
 

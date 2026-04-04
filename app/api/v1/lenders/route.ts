@@ -1,6 +1,6 @@
 /**
  * GET /api/v1/lenders
- * Public API — Top lenders by volume
+ * Public API  -  Top lenders by volume
  * Query params: state, city, limit (default 10)
  */
 

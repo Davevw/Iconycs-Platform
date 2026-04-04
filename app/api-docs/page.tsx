@@ -2,11 +2,11 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'ICONYCS Data API v1.0 — Developer Documentation',
+  title: 'ICONYCS Data API v1.0  -  Developer Documentation',
   description: 'Public REST API for ICONYCS housing intelligence data. Access national, state, and local demographics, LTV, lenders, and occupancy data.',
 };
 
-// ── Design tokens ──────────────────────────────────────────────────────────
+// -- Design tokens ----------------------------------------------------------
 const C = {
   bg: '#FAFAF7',
   bgWarm: '#F5F0E8',
@@ -35,19 +35,19 @@ const ENDPOINTS = [
   {
     method: 'GET',
     path: '/api/v1/national',
-    description: 'National housing summary — totals, averages, ethnicity/property/loan breakdowns',
+    description: 'National housing summary  -  totals, averages, ethnicity/property/loan breakdowns',
     params: [],
   },
   {
     method: 'GET',
     path: '/api/v1/state/:state',
     description: 'State-level housing data with full breakdowns',
-    params: [{ name: ':state', type: 'path', desc: '2-letter state code (CA, TX, FL…)' }],
+    params: [{ name: ':state', type: 'path', desc: '2-letter state code (CA, TX, FL...)' }],
   },
   {
     method: 'GET',
     path: '/api/v1/demographics',
-    description: 'Demographic breakdown — gender, marital, education, income, wealth, ethnicity',
+    description: 'Demographic breakdown  -  gender, marital, education, income, wealth, ethnicity',
     params: [
       { name: 'state', type: 'query', desc: '2-letter state code' },
       { name: 'city', type: 'query', desc: 'City name' },
@@ -57,7 +57,7 @@ const ENDPOINTS = [
   {
     method: 'GET',
     path: '/api/v1/ltv',
-    description: 'LTV tier distribution (FNMA buckets: ≤60%, 60–80%, 80–95%, 95–100%, 100%+)',
+    description: 'LTV tier distribution (FNMA buckets: ≤60%, 60-80%, 80-95%, 95-100%, 100%+)',
     params: [
       { name: 'state', type: 'query', desc: '2-letter state code' },
       { name: 'city', type: 'query', desc: 'City name' },
@@ -87,12 +87,12 @@ const ENDPOINTS = [
 ];
 
 const RATE_LIMITS = [
-  { tier: 'Free', limit: '—', note: 'No API access' },
+  { tier: 'Free', limit: ' - ', note: 'No API access' },
   { tier: 'Professional', limit: '100 req / day', note: 'Test key issued at launch' },
   { tier: 'Enterprise', limit: '1,000 req / day', note: 'Priority support + SLA' },
 ];
 
-// ── Code example snippets ──────────────────────────────────────────────────
+// -- Code example snippets --------------------------------------------------
 const CURL_EXAMPLE = `curl -X GET \\
   "https://iconycs.com/api/v1/national" \\
   -H "X-API-Key: YOUR_API_KEY"`;
@@ -221,7 +221,7 @@ function ParamBadge({ type }: { type: string }) {
 export default function ApiDocsPage() {
   return (
     <div style={{ minHeight: '100vh', background: C.bg, fontFamily: C.font, color: C.text }}>
-      {/* ── Nav ── */}
+      {/* -- Nav -- */}
       <nav style={{ background: C.bgCard, borderBottom: `1px solid ${C.border}`, position: 'sticky', top: 0, zIndex: 50 }}>
         <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 24px', display: 'flex', alignItems: 'center', height: 52, gap: 16 }}>
           <Link href="/" style={{ textDecoration: 'none' }}>
@@ -239,7 +239,7 @@ export default function ApiDocsPage() {
         </div>
       </nav>
 
-      {/* ── Hero ── */}
+      {/* -- Hero -- */}
       <div style={{ background: `linear-gradient(135deg, ${C.navy} 0%, #2A3F6A 100%)`, color: '#fff', padding: '60px 24px' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <div style={{
@@ -255,7 +255,7 @@ export default function ApiDocsPage() {
             <span style={{ display: 'block', fontSize: 28, fontWeight: 400, opacity: 0.7, marginTop: 6 }}>v1.0</span>
           </h1>
           <p style={{ fontSize: 18, opacity: 0.8, maxWidth: 600, lineHeight: 1.6, margin: '0 0 32px' }}>
-            Programmatic access to 109M+ U.S. residential properties — demographics, LTV, lender intelligence, and occupancy data at national, state, and local levels.
+            Programmatic access to 109M+ U.S. residential properties  -  demographics, LTV, lender intelligence, and occupancy data at national, state, and local levels.
           </p>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' as const }}>
             <div style={{ background: 'rgba(255,255,255,0.1)', borderRadius: 8, padding: '10px 18px', fontSize: 13 }}>
@@ -276,7 +276,7 @@ export default function ApiDocsPage() {
 
       <div style={{ maxWidth: 1100, margin: '0 auto', padding: '48px 24px', display: 'grid', gridTemplateColumns: '220px 1fr', gap: 40, alignItems: 'start' }}>
 
-        {/* ── Sidebar TOC ── */}
+        {/* -- Sidebar TOC -- */}
         <aside style={{ position: 'sticky', top: 72 }}>
           <nav>
             {[
@@ -298,7 +298,7 @@ export default function ApiDocsPage() {
           </nav>
         </aside>
 
-        {/* ── Main content ── */}
+        {/* -- Main content -- */}
         <main style={{ minWidth: 0 }}>
 
           {/* Early Access Banner */}
@@ -313,7 +313,7 @@ export default function ApiDocsPage() {
                 <span style={{ fontSize: 28 }}>🚀</span>
                 <div>
                   <h2 style={{ fontSize: 20, fontWeight: 700, color: C.terra, margin: '0 0 8px' }}>
-                    Early Access — Professional & Enterprise
+                    Early Access  -  Professional & Enterprise
                   </h2>
                   <p style={{ margin: '0 0 12px', color: C.textBody, lineHeight: 1.6 }}>
                     The ICONYCS Data API is available to <strong>Professional</strong> and <strong>Enterprise</strong> subscribers.
@@ -384,7 +384,7 @@ X-API-Key: ick_live_your_api_key_here`} />
                       </td>
                       <td style={{ padding: '14px 16px', verticalAlign: 'top' as const }}>
                         {ep.params.length === 0 ? (
-                          <span style={{ fontSize: 12, color: C.textMuted }}>—</span>
+                          <span style={{ fontSize: 12, color: C.textMuted }}> - </span>
                         ) : (
                           <div style={{ display: 'flex', flexDirection: 'column' as const, gap: 6 }}>
                             {ep.params.map(p => (
@@ -438,7 +438,7 @@ X-API-Key: ick_live_your_api_key_here`} />
               ))}
             </div>
 
-            <h3 style={{ fontSize: 16, fontWeight: 600, margin: '0 0 12px', color: C.textBody }}>Example Response — /api/v1/national</h3>
+            <h3 style={{ fontSize: 16, fontWeight: 600, margin: '0 0 12px', color: C.textBody }}>Example Response  -  /api/v1/national</h3>
             <CodeBlock lang="json" code={RESPONSE_EXAMPLE} />
 
             <h3 style={{ fontSize: 16, fontWeight: 600, margin: '24px 0 12px', color: C.textBody }}>Response Headers</h3>
@@ -481,7 +481,7 @@ X-API-Key: ick_live_your_api_key_here`} />
                   {RATE_LIMITS.map((r, i) => (
                     <tr key={r.tier} style={{ borderTop: i > 0 ? `1px solid ${C.border}` : 'none' }}>
                       <td style={{ padding: '13px 16px', fontWeight: 600, color: C.text }}>{r.tier}</td>
-                      <td style={{ padding: '13px 16px', fontFamily: C.fontMono, fontSize: 13, color: r.limit === '—' ? C.textMuted : C.navy }}>{r.limit}</td>
+                      <td style={{ padding: '13px 16px', fontFamily: C.fontMono, fontSize: 13, color: r.limit === ' - ' ? C.textMuted : C.navy }}>{r.limit}</td>
                       <td style={{ padding: '13px 16px', fontSize: 13, color: C.textMuted }}>{r.note}</td>
                     </tr>
                   ))}
@@ -497,7 +497,7 @@ X-API-Key: ick_live_your_api_key_here`} />
               {[
                 { code: '401', name: 'Unauthorized', desc: 'Missing or invalid X-API-Key header' },
                 { code: '400', name: 'Bad Request', desc: 'Invalid parameters (e.g. state code not 2 letters)' },
-                { code: '500', name: 'Internal Server Error', desc: 'Data query failed — try again or contact support' },
+                { code: '500', name: 'Internal Server Error', desc: 'Data query failed  -  try again or contact support' },
               ].map((e, i) => (
                 <div key={e.code} style={{
                   display: 'grid', gridTemplateColumns: '60px 160px 1fr',
@@ -561,7 +561,7 @@ X-API-Key: ick_live_your_api_key_here`} />
 
       {/* Footer */}
       <footer style={{ borderTop: `1px solid ${C.border}`, padding: '24px', textAlign: 'center' as const, fontSize: 12, color: C.textMuted }}>
-        ICONYCS Data API v1.0 · © {new Date().getFullYear()} ICONYCS · <a href="mailto:info@iconycs.com" style={{ color: C.terra }}>info@iconycs.com</a>
+        ICONYCS Data API v1.0 * © {new Date().getFullYear()} ICONYCS * <a href="mailto:info@iconycs.com" style={{ color: C.terra }}>info@iconycs.com</a>
       </footer>
     </div>
   );

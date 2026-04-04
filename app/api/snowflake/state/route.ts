@@ -53,7 +53,7 @@ export async function GET(request: NextRequest) {
       response.headers.set('Cache-Control', 's-maxage=300, stale-while-revalidate=600');
       return response;
     } else {
-      // National all-states list — no breakdown needed
+      // National all-states list  -  no breakdown needed
       const result = await executeQueryCached(sql);
 
       if (!result.success) {

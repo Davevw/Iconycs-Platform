@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
           executionTime: execution.executionTime,
         };
       } else {
-        // SQL execution failed — still send to interpreter with error context
+        // SQL execution failed  -  still send to interpreter with error context
         queryResult = null;
       }
     }
@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
             }
           : {
               connected: false,
-              message: 'Snowflake not configured — using AI-estimated results',
+              message: 'Snowflake not configured  -  using AI-estimated results',
             },
         analysis: {
           interpretation: interpretation.interpretation,

@@ -1,6 +1,6 @@
 /**
  * GET /api/v1/occupancy
- * Public API — Owner/non-owner occupancy split
+ * Public API  -  Owner/non-owner occupancy split
  * Query params: state, city, zip
  */
 

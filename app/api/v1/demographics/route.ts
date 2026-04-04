@@ -1,6 +1,6 @@
 /**
  * GET /api/v1/demographics
- * Public API — Demographic breakdown for geography
+ * Public API  -  Demographic breakdown for geography
  * Query params: state, city, zip
  */
 

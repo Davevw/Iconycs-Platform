@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
-// ─── Design Tokens (matches reports page) ────────────────────────────────────
+// --- Design Tokens (matches reports page) ------------------------------------
 const C = {
   bg: '#FAFAF7',
   bgCard: '#FFFFFF',
@@ -22,7 +22,7 @@ const C = {
   fontSerif: "'Source Serif 4', Georgia, serif",
 };
 
-// ─── Tier Definitions ────────────────────────────────────────────────────────
+// --- Tier Definitions --------------------------------------------------------
 const TIERS = [
   {
     id: 'free',
@@ -49,7 +49,7 @@ const TIERS = [
     period: '/month',
     description: 'Full drill-down for one state. Add major states individually.',
     features: [
-      'One state — full drill-down',
+      'One state  -  full drill-down',
       'State → County → City → ZIP',
       'All demographic breakdowns',
       'LTV tier analysis (FNMA tiers)',
@@ -107,7 +107,7 @@ const TIERS = [
 
 type Tier = (typeof TIERS)[number];
 
-// ─── Enterprise Geographic Pricing Modal ─────────────────────────────────────
+// --- Enterprise Geographic Pricing Modal -------------------------------------
 function EnterpriseGeoModal({ onClose }: { onClose: () => void }) {
   return (
     <div
@@ -185,7 +185,7 @@ function EnterpriseGeoModal({ onClose }: { onClose: () => void }) {
 
           {/* Multi-State Programs */}
           <Section label="Multi-State Programs">
-            <PriceRow label="5–25 states" value="$10,000/mo" />
+            <PriceRow label="5-25 states" value="$10,000/mo" />
             <PriceRow label="All 50 states + DC" value="$20,000/mo" highlight />
           </Section>
 
@@ -233,7 +233,7 @@ function EnterpriseGeoModal({ onClose }: { onClose: () => void }) {
             <span style={{ fontSize: 15 }}>📬</span>
             <span style={{ fontSize: 13, color: C.textMuted, fontFamily: C.font }}>
               <strong style={{ color: C.textBody }}>info@iconycs.com</strong>
-              {' · '}
+              {' * '}
               <strong style={{ color: C.textBody }}>760-672-0145</strong>
             </span>
           </div>
@@ -318,7 +318,7 @@ function PriceRow({ label, value, highlight }: { label: string; value: string; h
   );
 }
 
-// ─── Waitlist Modal ───────────────────────────────────────────────────────────
+// --- Waitlist Modal -----------------------------------------------------------
 function WaitlistModal({
   tier,
   onClose,
@@ -428,7 +428,7 @@ function WaitlistModal({
                   type="text"
                   value={company}
                   onChange={e => setCompany(e.target.value)}
-                  placeholder="Acme Bank, City of San Diego…"
+                  placeholder="Acme Bank, City of San Diego..."
                   style={{
                     width: '100%', padding: '10px 14px',
                     border: `1.5px solid ${C.border}`,
@@ -464,7 +464,7 @@ function WaitlistModal({
                     opacity: loading ? 0.7 : 1,
                   }}
                 >
-                  {loading ? 'Submitting…' : "I'm In →"}
+                  {loading ? 'Submitting...' : "I'm In →"}
                 </button>
               </div>
             </form>
@@ -500,7 +500,7 @@ function WaitlistModal({
   );
 }
 
-// ─── Check / Lock icons ───────────────────────────────────────────────────────
+// --- Check / Lock icons -------------------------------------------------------
 function Check({ dark }: { dark?: boolean }) {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0, marginTop: 1 }}>
@@ -510,7 +510,7 @@ function Check({ dark }: { dark?: boolean }) {
   );
 }
 
-// ─── Standard Tier Card ───────────────────────────────────────────────────────
+// --- Standard Tier Card -------------------------------------------------------
 function TierCard({
   tier,
   onEarlyAccess,
@@ -640,7 +640,7 @@ function TierCard({
   );
 }
 
-// ─── Enterprise Card ──────────────────────────────────────────────────────────
+// --- Enterprise Card ----------------------------------------------------------
 function EnterpriseCard({ onViewPricing }: { onViewPricing: () => void }) {
   const tier = TIERS[3]; // enterprise
 
@@ -757,7 +757,7 @@ function EnterpriseCard({ onViewPricing }: { onViewPricing: () => void }) {
   );
 }
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
+// --- Page ---------------------------------------------------------------------
 export default function PricingPage() {
   const [waitlistTier, setWaitlistTier] = useState<{ id: string; name: string; price: string } | null>(null);
   const [showEnterpriseModal, setShowEnterpriseModal] = useState(false);
@@ -794,7 +794,7 @@ export default function PricingPage() {
       `}</style>
 
       <div style={{ background: C.bg, minHeight: '100vh', fontFamily: C.font }}>
-        {/* ── Nav ── */}
+        {/* -- Nav -- */}
         <nav style={{
           background: C.bgCard, borderBottom: `1px solid ${C.border}`,
           position: 'sticky', top: 0, zIndex: 50,
@@ -832,7 +832,7 @@ export default function PricingPage() {
           </div>
         </nav>
 
-        {/* ── Hero ── */}
+        {/* -- Hero -- */}
         <div style={{
           background: `linear-gradient(160deg, #FFF8F5 0%, ${C.bgWarm} 50%, #F0EBE3 100%)`,
           borderBottom: `1px solid ${C.border}`,
@@ -875,7 +875,7 @@ export default function PricingPage() {
           </div>
         </div>
 
-        {/* ── Pricing Grid ── */}
+        {/* -- Pricing Grid -- */}
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '64px 24px' }}>
           <div
             className="pricing-grid"
@@ -896,13 +896,13 @@ export default function PricingPage() {
               </div>
             ))}
 
-            {/* Enterprise card — custom layout */}
+            {/* Enterprise card  -  custom layout */}
             <div className="pricing-card">
               <EnterpriseCard onViewPricing={() => setShowEnterpriseModal(true)} />
             </div>
           </div>
 
-          {/* ── Pay-per-report Banner ── */}
+          {/* -- Pay-per-report Banner -- */}
           <div style={{
             marginTop: 48,
             background: C.bgCard,
@@ -926,7 +926,7 @@ export default function PricingPage() {
                 <span style={{ fontSize: 13, color: C.textMuted }}>one-time per report</span>
               </div>
               <p style={{ fontSize: 14, color: C.textMuted, margin: 0, lineHeight: 1.5 }}>
-                Full drill-down report for any geography — county, city, or ZIP.
+                Full drill-down report for any geography  -  county, city, or ZIP.
                 Perfect for one-off projects, due diligence, or feasibility studies.
               </p>
             </div>
@@ -952,7 +952,7 @@ export default function PricingPage() {
             </div>
           </div>
 
-          {/* ── FAQ Strip ── */}
+          {/* -- FAQ Strip -- */}
           <div style={{
             marginTop: 64, paddingTop: 48,
             borderTop: `1px solid ${C.border}`,
@@ -975,7 +975,7 @@ export default function PricingPage() {
                 },
                 {
                   q: "What's included in the free tier?",
-                  a: 'National and state-level housing data, basic demographic breakdowns, and 3 report views per day — no credit card required.',
+                  a: 'National and state-level housing data, basic demographic breakdowns, and 3 report views per day  -  no credit card required.',
                 },
                 {
                   q: 'Can I switch tiers?',
@@ -987,7 +987,7 @@ export default function PricingPage() {
                 },
                 {
                   q: 'Is there an annual plan?',
-                  a: 'Yes — annual subscribers save 20%. Contact us after joining the waitlist to lock in annual pricing.',
+                  a: 'Yes  -  annual subscribers save 20%. Contact us after joining the waitlist to lock in annual pricing.',
                 },
                 {
                   q: 'Do you offer custom data feeds?',
@@ -1009,7 +1009,7 @@ export default function PricingPage() {
             </div>
           </div>
 
-          {/* ── Bottom CTA ── */}
+          {/* -- Bottom CTA -- */}
           <div style={{
             marginTop: 64,
             background: `linear-gradient(135deg, ${C.navy} 0%, #2A4A7F 100%)`,
@@ -1053,7 +1053,7 @@ export default function PricingPage() {
           </div>
         </div>
 
-        {/* ── Footer ── */}
+        {/* -- Footer -- */}
         <div style={{
           borderTop: `1px solid ${C.border}`,
           padding: '24px',
@@ -1061,19 +1061,19 @@ export default function PricingPage() {
           fontSize: 12, color: C.textDim,
           fontFamily: C.font,
         }}>
-          © {new Date().getFullYear()} ICONYCS Housing Analytics · All prices in USD ·{' '}
+          © {new Date().getFullYear()} ICONYCS Housing Analytics * All prices in USD *{' '}
           <Link href="/" style={{ color: C.textDim, textDecoration: 'none' }}>Home</Link>
-          {' · '}
+          {' * '}
           <Link href="/reports" style={{ color: C.textDim, textDecoration: 'none' }}>Analytics</Link>
         </div>
       </div>
 
-      {/* ── Enterprise Geo Pricing Modal ── */}
+      {/* -- Enterprise Geo Pricing Modal -- */}
       {showEnterpriseModal && (
         <EnterpriseGeoModal onClose={() => setShowEnterpriseModal(false)} />
       )}
 
-      {/* ── Waitlist Modal ── */}
+      {/* -- Waitlist Modal -- */}
       {waitlistTier && (
         <WaitlistModal
           tier={waitlistTier}

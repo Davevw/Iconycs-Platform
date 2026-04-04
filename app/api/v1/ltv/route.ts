@@ -1,6 +1,6 @@
 /**
  * GET /api/v1/ltv
- * Public API — LTV tier distribution
+ * Public API  -  LTV tier distribution
  * Query params: state, city, zip
  */
 

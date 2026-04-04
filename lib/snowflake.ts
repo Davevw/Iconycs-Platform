@@ -1,6 +1,6 @@
 /**
  * ICONYCS Snowflake Connection Module
- * Server-side only — never imported in client components
+ * Server-side only  -  never imported in client components
  */
 
 import snowflake from 'snowflake-sdk';

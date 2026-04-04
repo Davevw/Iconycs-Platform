@@ -1,7 +1,7 @@
 'use client';
 
 /**
- * ICONYCS Cascade Report Builder — Sprint 2
+ * ICONYCS Cascade Report Builder  -  Sprint 2
  * Matrix drill-down across Property, Ownership, Social, Media, and Lender cascades.
  */
 
@@ -17,7 +17,7 @@ import {
   type CascadeType,
 } from '@/lib/tiers';
 
-// ─── Design Tokens ─────────────────────────────────────────────────────────
+// --- Design Tokens ---------------------------------------------------------
 const C = {
   bg: '#F5F0E8',       // slightly darker to differentiate cascade
   bgCard: '#FFFFFF',
@@ -35,7 +35,7 @@ const C = {
   font: "'Outfit', sans-serif",
 };
 
-// ─── Types ─────────────────────────────────────────────────────────────────
+// --- Types -----------------------------------------------------------------
 
 interface FreqRow { label: string; count: number; pct?: number; extra?: string }
 
@@ -57,15 +57,15 @@ interface LendersData {
   error: string | null;
 }
 
-// ─── Helpers ───────────────────────────────────────────────────────────────
+// --- Helpers ---------------------------------------------------------------
 
 function fmt(n: number | null | undefined, decimals = 0): string {
-  if (n == null || isNaN(n)) return '—';
+  if (n == null || isNaN(n)) return ' - ';
   return n.toLocaleString('en-US', { maximumFractionDigits: decimals });
 }
 
 function fmtDollar(n: number | null | undefined): string {
-  if (n == null || isNaN(n)) return '—';
+  if (n == null || isNaN(n)) return ' - ';
   if (n >= 1_000_000) return `$${(n / 1_000_000).toFixed(1)}M`;
   if (n >= 1_000)     return `$${(n / 1_000).toFixed(0)}K`;
   return `$${n.toFixed(0)}`;
@@ -95,7 +95,7 @@ function buildCascadeUrl(params: Record<string, string | undefined>): string {
   return `/reports/cascade?${sp.toString()}`;
 }
 
-// ─── Sub-components ─────────────────────────────────────────────────────────
+// --- Sub-components ---------------------------------------------------------
 
 function Skeleton({ h = 18, w = '100%' }: { h?: number; w?: string | number }) {
   return (
@@ -249,7 +249,7 @@ function StatCard({ label, value, sub }: { label: string; value: string; sub?: s
   );
 }
 
-// ─── Property Cascade View ──────────────────────────────────────────────────
+// --- Property Cascade View --------------------------------------------------
 
 function PropertyCascade({
   propData,
@@ -339,9 +339,9 @@ function PropertyCascade({
             {lendersData.rows.map((r, i) => (
               <div key={i} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', padding: '6px 14px', borderBottom: `1px solid ${C.border}`, alignItems: 'center' }}>
                 <span style={{ fontSize: 12, color: C.textBody, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                  {i + 1}. {r.LENDER_NAME ?? '—'}
+                  {i + 1}. {r.LENDER_NAME ?? ' - '}
                 </span>
-                <span style={{ fontSize: 11, color: C.textMuted, textAlign: 'right' }}>{r.LOAN_TYPE ?? '—'}</span>
+                <span style={{ fontSize: 11, color: C.textMuted, textAlign: 'right' }}>{r.LOAN_TYPE ?? ' - '}</span>
                 <span style={{ fontSize: 12, color: C.textBody, textAlign: 'right', fontFamily: "'IBM Plex Mono', monospace" }}>{fmt(r.LOAN_COUNT)}</span>
                 <span style={{ fontSize: 12, color: C.terra, textAlign: 'right', fontFamily: "'IBM Plex Mono', monospace" }}>{fmtDollar(r.AVG_LOAN_AMOUNT)}</span>
               </div>
@@ -353,7 +353,7 @@ function PropertyCascade({
   );
 }
 
-// ─── Ownership Cascade View ─────────────────────────────────────────────────
+// --- Ownership Cascade View -------------------------------------------------
 
 function OwnershipCascade({
   ownData,
@@ -394,7 +394,7 @@ function OwnershipCascade({
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
         {/* Ethnicity with confidence badges */}
         <div style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, overflow: 'hidden' }}>
-          <div style={{ padding: '9px 14px', background: C.navy, color: '#fff', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Ethnicity — Direct Identified Records</div>
+          <div style={{ padding: '9px 14px', background: C.navy, color: '#fff', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Ethnicity  -  Direct Identified Records</div>
           {ownData.loading ? (
             <div style={{ padding: 14, display: 'flex', flexDirection: 'column', gap: 8 }}>{[1,2,3].map(i => <Skeleton key={i} />)}</div>
           ) : (
@@ -443,7 +443,7 @@ function OwnershipCascade({
 
       {/* Wealth Score */}
       <div style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, overflow: 'hidden' }}>
-        <div style={{ padding: '9px 14px', background: C.navy, color: '#fff', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Wealth Score Distribution (A–H)</div>
+        <div style={{ padding: '9px 14px', background: C.navy, color: '#fff', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Wealth Score Distribution (A-H)</div>
         {ownData.loading ? (
           <div style={{ padding: 14, display: 'flex', flexDirection: 'column', gap: 8 }}>{[1,2,3].map(i => <Skeleton key={i} />)}</div>
         ) : (
@@ -471,7 +471,7 @@ function OwnershipCascade({
   );
 }
 
-// ─── Placeholder cascades ────────────────────────────────────────────────────
+// --- Placeholder cascades ----------------------------------------------------
 
 function PlaceholderCascade({ label, icon }: { label: string; icon: string }) {
   return (
@@ -488,7 +488,7 @@ function PlaceholderCascade({ label, icon }: { label: string; icon: string }) {
   );
 }
 
-// ─── Main Component (inner — reads search params) ───────────────────────────
+// --- Main Component (inner  -  reads search params) ---------------------------
 
 function CascadeInner() {
   const searchParams = useSearchParams();
@@ -629,7 +629,7 @@ function CascadeInner() {
       </div>
 
       <div style={{ display: 'flex', height: 'calc(100vh - 50px)' }}>
-        {/* Left sidebar — cascade type selector */}
+        {/* Left sidebar  -  cascade type selector */}
         <div style={{ width: 220, background: '#fff', borderRight: `1px solid ${C.border}`, display: 'flex', flexDirection: 'column', flexShrink: 0, overflowY: 'auto' }}>
           <div style={{ padding: '14px 16px', fontSize: 10, fontWeight: 700, color: C.textDim, letterSpacing: '0.08em', textTransform: 'uppercase', borderBottom: `1px solid ${C.border}` }}>
             Start Point
@@ -715,7 +715,7 @@ function CascadeInner() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
                   <StatCard label="Total Lenders" value={fmt(lendersData.rows.length)} />
-                  <StatCard label="Top Lender" value={lendersData.rows[0]?.LENDER_NAME ?? '—'} sub="By loan count" />
+                  <StatCard label="Top Lender" value={lendersData.rows[0]?.LENDER_NAME ?? ' - '} sub="By loan count" />
                   <StatCard label="Avg Loan (Top 10)" value={fmtDollar(lendersData.rows.slice(0, 10).reduce((s, r) => s + Number(r.AVG_LOAN_AMOUNT ?? 0), 0) / Math.max(lendersData.rows.slice(0, 10).length, 1))} />
                 </div>
                 <div style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, overflow: 'hidden' }}>
@@ -732,7 +732,7 @@ function CascadeInner() {
                       {lendersData.rows.map((r, i) => (
                         <div key={i} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr', padding: '7px 14px', borderBottom: `1px solid ${C.border}`, alignItems: 'center' }}>
                           <span style={{ fontSize: 12, color: C.textBody }}>
-                            <span style={{ color: C.textDim, marginRight: 8 }}>{i + 1}.</span>{r.LENDER_NAME ?? '—'}
+                            <span style={{ color: C.textDim, marginRight: 8 }}>{i + 1}.</span>{r.LENDER_NAME ?? ' - '}
                           </span>
                           <span style={{ fontSize: 11, color: C.textMuted, textAlign: 'right' }}>{loanTypeLabel(r.LOAN_TYPE)}</span>
                           <span style={{ fontSize: 12, color: C.textBody, textAlign: 'right', fontFamily: "'IBM Plex Mono', monospace" }}>{fmt(r.LOAN_COUNT)}</span>
@@ -780,13 +780,13 @@ function CascadeInner() {
   );
 }
 
-// ─── Page export (wraps in Suspense for useSearchParams) ────────────────────
+// --- Page export (wraps in Suspense for useSearchParams) --------------------
 
 export default function CascadePage() {
   return (
     <Suspense fallback={
       <div style={{ fontFamily: "'Outfit', sans-serif", background: '#F5F0E8', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#78716C' }}>
-        Loading Cascade Builder…
+        Loading Cascade Builder...
       </div>
     }>
       <CascadeInner />

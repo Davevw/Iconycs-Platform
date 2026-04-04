@@ -1,7 +1,7 @@
 // GET /api/snowflake/census?state=CA&tract=4001.01
 // GET /api/snowflake/census?state=CA&aggregate=true  ← state-level aggregation
 // Returns Census ACS 5-Year 2023 data for a geography
-// Source: PUBLIC_DATA.CENSUS_ACS_TRACT (public data — no Infutor contamination)
+// Source: PUBLIC_DATA.CENSUS_ACS_TRACT (public data  -  no Infutor contamination)
 
 import { NextRequest, NextResponse } from 'next/server';
 import { executeQuery } from '@/lib/snowflake';
@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
   const zip       = p.get('zip');       // future use
   const aggregate = p.get('aggregate'); // "true" → state-level aggregation
 
-  // ── State-level aggregate query ─────────────────────────────────────────────
+  // -- State-level aggregate query ---------------------------------------------
   if (aggregate === 'true' && state) {
     const sanitizedState = state.replace(/[^a-zA-Z0-9]/g, '').substring(0, 2);
     const fips = resolveStateFips(sanitizedState);
@@ -91,7 +91,7 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  // ── Tract / county-level query (existing behavior) ──────────────────────────
+  // -- Tract / county-level query (existing behavior) --------------------------
   const conditions: string[] = [];
 
   if (state) {

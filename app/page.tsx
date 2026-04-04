@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Homepage from '@/components/marketing/Homepage';
 
 export const metadata: Metadata = {
-  title: 'ICONYCS — The Socio-Economics of Home Ownership',
+  title: 'ICONYCS  -  The Socio-Economics of Home Ownership',
   description:
     'ICONYCS Housing Analytics combines 130M+ property records with 187M+ owner demographic profiles. AI-powered analytics by ethnicity, income, education, and more. When Housing Markets Shift, Iconycs Knows.',
   keywords: [

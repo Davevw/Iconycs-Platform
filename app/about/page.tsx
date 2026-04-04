@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <main style={{ paddingTop: 72 }}>
-      {/* Nav — reused across pages (would be a shared component in production) */}
+      {/* Nav  -  reused across pages (would be a shared component in production) */}
       <nav style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
         background: 'rgba(250,250,247,0.92)', backdropFilter: 'blur(20px)',
@@ -68,7 +68,7 @@ export default function AboutPage() {
           <h2 style={{ fontSize: 32, fontWeight: 700, fontFamily: 'var(--font-display)', marginBottom: 48 }}>Our Technology</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 20 }}>
             {[
-              { name: 'Snowflake', role: 'Cloud data platform — 130M+ property records' },
+              { name: 'Snowflake', role: 'Cloud data platform  -  130M+ property records' },
               { name: 'Claude Opus 4.6', role: 'AI-powered SQL generation and reasoning' },
               { name: 'Microsoft Power BI', role: 'Mapping and analytical dashboards' },
               { name: 'Next.js + Vercel', role: 'Modern web platform with SSR for SEO' },
@@ -90,7 +90,7 @@ export default function AboutPage() {
             300 Spectrum Center Drive, Ste 400, Irvine, California 92618
           </p>
           <p style={{ fontSize: 16, color: 'var(--text-muted)', marginBottom: 32 }}>
-            (760) 599-1261 · <Link href="/contact" style={{ color: 'var(--accent)', textDecoration: 'none' }}>Contact David Van Waldick</Link>
+            (760) 599-1261 * <Link href="/contact" style={{ color: 'var(--accent)', textDecoration: 'none' }}>Contact David Van Waldick</Link>
           </p>
           <Link href="/contact" style={{ padding: '14px 32px', borderRadius: 10, fontSize: 16, fontWeight: 600, background: '#C4653A', color: '#fff', textDecoration: 'none' }}>
             Schedule a Call
@@ -100,7 +100,7 @@ export default function AboutPage() {
 
       {/* Footer */}
       <footer style={{ padding: '32px', borderTop: '1px solid var(--border)', textAlign: 'center', fontSize: 12, color: 'var(--text-dim)' }}>
-        © {new Date().getFullYear()} ICONYCS. All Rights Reserved. · Powered by Next.js · Claude AI · Snowflake
+        © {new Date().getFullYear()} ICONYCS. All Rights Reserved. * Powered by Next.js * Claude AI * Snowflake
       </footer>
     </main>
   );

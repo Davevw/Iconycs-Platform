@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
-// ── Design Tokens ─────────────────────────────────────────────────────────────
+// -- Design Tokens -------------------------------------------------------------
 const C = {
   bg: '#FAFAF7',
   bgWarm: '#F5F0E8',
@@ -28,7 +28,7 @@ const C = {
   fontMono: "'IBM Plex Mono', monospace",
 };
 
-// ── Mock user data ─────────────────────────────────────────────────────────────
+// -- Mock user data -------------------------------------------------------------
 const mockUser = {
   name: 'David Van Waldick',
   email: 'dave@wrfco.com',
@@ -37,7 +37,7 @@ const mockUser = {
   memberSince: 'April 2026',
 };
 
-// ── Tier config ────────────────────────────────────────────────────────────────
+// -- Tier config ----------------------------------------------------------------
 const TIER_CONFIG = {
   free: {
     label: 'FREE',
@@ -81,7 +81,7 @@ const TIER_CONFIG = {
   },
 };
 
-// ── Feature access matrix ──────────────────────────────────────────────────────
+// -- Feature access matrix ------------------------------------------------------
 const FEATURES = [
   {
     name: 'National & State Reports',
@@ -120,14 +120,14 @@ const FEATURES = [
   },
 ];
 
-// ── Recent activity (placeholder) ─────────────────────────────────────────────
+// -- Recent activity (placeholder) ---------------------------------------------
 const RECENT_ACTIVITY = [
   { icon: '📊', label: 'California Housing Report', date: 'Apr 4, 2026' },
-  { icon: '⚖️', label: 'Fair Lending Report — Los Angeles', date: 'Apr 4, 2026' },
-  { icon: '🔌', label: 'API Query — /api/v1/national', date: 'Apr 4, 2026' },
+  { icon: '⚖️', label: 'Fair Lending Report  -  Los Angeles', date: 'Apr 4, 2026' },
+  { icon: '🔌', label: 'API Query  -  /api/v1/national', date: 'Apr 4, 2026' },
 ];
 
-// ── Quick links ────────────────────────────────────────────────────────────────
+// -- Quick links ----------------------------------------------------------------
 const QUICK_LINKS = [
   { label: 'Analytics Reports', href: '/reports', icon: '📈', color: C.terra },
   { label: 'Cascade Builder', href: '/reports/cascade', icon: '🔀', color: C.navy },
@@ -136,7 +136,7 @@ const QUICK_LINKS = [
   { label: 'Pricing', href: '/pricing', icon: '💳', color: C.textMuted },
 ];
 
-// ── Helper: initials circle ────────────────────────────────────────────────────
+// -- Helper: initials circle ----------------------------------------------------
 function Avatar({ name }: { name: string }) {
   const initials = name.split(' ').map(p => p[0]).join('').slice(0, 2).toUpperCase();
   return (
@@ -152,7 +152,7 @@ function Avatar({ name }: { name: string }) {
   );
 }
 
-// ── Helper: tier badge ─────────────────────────────────────────────────────────
+// -- Helper: tier badge ---------------------------------------------------------
 function TierBadge({ tier }: { tier: keyof typeof TIER_CONFIG }) {
   const cfg = TIER_CONFIG[tier];
   return (
@@ -167,7 +167,7 @@ function TierBadge({ tier }: { tier: keyof typeof TIER_CONFIG }) {
   );
 }
 
-// ── Helper: usage bar ──────────────────────────────────────────────────────────
+// -- Helper: usage bar ----------------------------------------------------------
 function UsageBar({ used, limit, label }: { used: number; limit: number; label: string }) {
   const unlimited = limit <= 0;
   const pct = unlimited ? 0 : Math.min((used / limit) * 100, 100);
@@ -195,7 +195,7 @@ function UsageBar({ used, limit, label }: { used: number; limit: number; label: 
   );
 }
 
-// ── Main component ─────────────────────────────────────────────────────────────
+// -- Main component -------------------------------------------------------------
 export default function UserDashboardPage() {
   const user = mockUser;
   const tier = user.tier;
@@ -214,7 +214,7 @@ export default function UserDashboardPage() {
   return (
     <div style={{ background: C.bg, minHeight: '100vh', fontFamily: C.font }}>
 
-      {/* ── Nav ── */}
+      {/* -- Nav -- */}
       <nav style={{ background: C.bgCard, borderBottom: `1px solid ${C.border}`, position: 'sticky', top: 0, zIndex: 50 }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px', display: 'flex', alignItems: 'center', height: 56, gap: 24 }}>
           <Link href="/" style={{ textDecoration: 'none' }}>
@@ -229,7 +229,7 @@ export default function UserDashboardPage() {
         </div>
       </nav>
 
-      {/* ── Demo Banner ── */}
+      {/* -- Demo Banner -- */}
       <div style={{
         background: `linear-gradient(135deg, ${C.navy} 0%, #243556 100%)`,
         color: '#fff', padding: '12px 24px', textAlign: 'center',
@@ -245,10 +245,10 @@ export default function UserDashboardPage() {
 
       <div style={{ maxWidth: 1200, margin: '0 auto', padding: '32px 24px' }}>
 
-        {/* ── Grid layout ── */}
+        {/* -- Grid layout -- */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: 24, alignItems: 'start' }}>
 
-          {/* ── LEFT COLUMN ── */}
+          {/* -- LEFT COLUMN -- */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
 
             {/* 1. Account Overview */}
@@ -346,7 +346,7 @@ export default function UserDashboardPage() {
                 </span>
               </div>
               <div style={{ marginTop: 14, padding: '10px 14px', background: C.bgWarm, borderRadius: 8, fontSize: 11, color: C.textDim }}>
-                📅 Usage resets on May 1, 2026 · Placeholder values — live tracking coming soon
+                📅 Usage resets on May 1, 2026 * Placeholder values  -  live tracking coming soon
               </div>
             </div>
 
@@ -371,13 +371,13 @@ export default function UserDashboardPage() {
                 ))}
               </div>
               <div style={{ marginTop: 14, fontSize: 12, color: C.textDim, fontStyle: 'italic' }}>
-                Placeholder activity — real history coming soon.
+                Placeholder activity  -  real history coming soon.
               </div>
             </div>
 
           </div>
 
-          {/* ── RIGHT COLUMN ── */}
+          {/* -- RIGHT COLUMN -- */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
 
             {/* 3. Feature Access */}

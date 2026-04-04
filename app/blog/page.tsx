@@ -2,14 +2,14 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Blog — Housing Market Insights',
+  title: 'Blog  -  Housing Market Insights',
   description: 'Housing market news, demographic analysis, and data-driven insights from ICONYCS Housing Analytics.',
 };
 
 const POSTS = [
   { slug: 'homeownership-ethnicity-gap-2026', title: 'The Homeownership Gap by Ethnicity in 2026', date: 'Mar 28, 2026', category: 'Demographics', excerpt: 'An analysis of 187M+ owner profiles reveals persistent gaps in homeownership rates across ethnic groups, with some encouraging signs of progress in key markets.' },
   { slug: 'ai-housing-analytics', title: 'How AI is Transforming Housing Analytics', date: 'Mar 21, 2026', category: 'Technology', excerpt: 'Claude Opus 4.6 now powers our AI Query Lab, enabling natural language queries across 130M+ property records with instant visualization.' },
-  { slug: 'dc-market-update-q1', title: 'Washington DC Housing Market: Q1 2026 Update', date: 'Mar 14, 2026', category: 'Market Update', excerpt: 'DC continues to show unique ownership patterns with a 42.1% homeownership rate — the lowest among major markets. Here\'s what the data reveals.' },
+  { slug: 'dc-market-update-q1', title: 'Washington DC Housing Market: Q1 2026 Update', date: 'Mar 14, 2026', category: 'Market Update', excerpt: 'DC continues to show unique ownership patterns with a 42.1% homeownership rate  -  the lowest among major markets. Here\'s what the data reveals.' },
   { slug: 'education-homeownership-correlation', title: 'Education Level and Homeownership: What 187M Profiles Tell Us', date: 'Mar 7, 2026', category: 'Research', excerpt: 'Graduate degree holders have a 76% homeownership rate vs 52% for high school graduates. But the story is more nuanced than the headline numbers.' },
 ];
 

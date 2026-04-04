@@ -1,24 +1,24 @@
 /**
  * ICONYCS Snowflake Query Library
- * All Snowflake queries live here — never inline SQL in components or routes.
+ * All Snowflake queries live here  -  never inline SQL in components or routes.
  * 
  * Views available:
- *   VW_DASHBOARD_NATIONAL — national aggregates
- *   VW_DASHBOARD_STATE    — by STATE
- *   VW_DASHBOARD_COUNTY   — by STATE, COUNTY
- *   VW_DASHBOARD_CITY     — by STATE, CITY
- *   VW_DASHBOARD_ZIP      — by STATE, ZIP
- *   VW_LENDER_ANALYSIS    — lender/ethnicity/income breakdowns
- *   VW_RESIDENTIAL_PROP   — full property records (130M rows) — use WHERE + LIMIT
- *   VW_RESIDENTIAL_DEMO   — property + demographic
- *   VW_BI_PROP            — has PROP_LOANTOVAL
- *   VW_LTV_TIERS          — pre-computed LTV tier buckets (created in Sprint1 Task2)
- *   NARC3                 — ethnicity data (join on PID)
- *   NACR_MRKTHOMEVAL      — home value tier lookup
- *   PROP_MTGLOANCD        — mortgage loan code lookup
+ *   VW_DASHBOARD_NATIONAL  -  national aggregates
+ *   VW_DASHBOARD_STATE     -  by STATE
+ *   VW_DASHBOARD_COUNTY    -  by STATE, COUNTY
+ *   VW_DASHBOARD_CITY      -  by STATE, CITY
+ *   VW_DASHBOARD_ZIP       -  by STATE, ZIP
+ *   VW_LENDER_ANALYSIS     -  lender/ethnicity/income breakdowns
+ *   VW_RESIDENTIAL_PROP    -  full property records (130M rows)  -  use WHERE + LIMIT
+ *   VW_RESIDENTIAL_DEMO    -  property + demographic
+ *   VW_BI_PROP             -  has PROP_LOANTOVAL
+ *   VW_LTV_TIERS           -  pre-computed LTV tier buckets (created in Sprint1 Task2)
+ *   NARC3                  -  ethnicity data (join on PID)
+ *   NACR_MRKTHOMEVAL       -  home value tier lookup
+ *   PROP_MTGLOANCD         -  mortgage loan code lookup
  */
 
-// ─── Filter Parameter Types ────────────────────────────────────────────────
+// --- Filter Parameter Types ------------------------------------------------
 
 export interface GeoFilters {
   state?: string;
@@ -35,7 +35,7 @@ export interface AnalyticsFilters extends GeoFilters {
   limit?: number;
 }
 
-// ─── Time Period Helper ────────────────────────────────────────────────────
+// --- Time Period Helper ----------------------------------------------------
 
 function buildTimePeriodClause(time_period?: string, field = 'RECORDING_DATE'): string {
   if (!time_period || time_period === 'all') return '';
@@ -49,7 +49,7 @@ function buildTimePeriodClause(time_period?: string, field = 'RECORDING_DATE'): 
   return clauses[time_period] || '';
 }
 
-// ─── National ─────────────────────────────────────────────────────────────
+// --- National -------------------------------------------------------------
 
 export function queryNational(): string {
   return `
@@ -74,7 +74,7 @@ export function queryNationalBreakdown(dimension: 'ETHNICITY' | 'PROPERTY_CATEGO
   `.trim();
 }
 
-// ─── State ────────────────────────────────────────────────────────────────
+// --- State ----------------------------------------------------------------
 
 export function queryState(filters: GeoFilters): string {
   if (filters.state) {
@@ -99,7 +99,7 @@ export function queryState(filters: GeoFilters): string {
 
 /**
  * Returns a dimension breakdown for a single state from VW_DASHBOARD_NATIONAL.
- * The national view has STATE column — use it when a specific state is selected.
+ * The national view has STATE column  -  use it when a specific state is selected.
  */
 export function queryStateBreakdown(
   state: string,
@@ -118,7 +118,7 @@ export function queryStateBreakdown(
   `.trim();
 }
 
-// ─── County ───────────────────────────────────────────────────────────────
+// --- County ---------------------------------------------------------------
 
 export function queryCounty(filters: GeoFilters): string {
   const conditions: string[] = [];
@@ -138,7 +138,7 @@ export function queryCounty(filters: GeoFilters): string {
   `.trim();
 }
 
-// ─── City ─────────────────────────────────────────────────────────────────
+// --- City -----------------------------------------------------------------
 
 export function queryCity(filters: GeoFilters): string {
   const conditions: string[] = [];
@@ -159,7 +159,7 @@ export function queryCity(filters: GeoFilters): string {
   `.trim();
 }
 
-// ─── ZIP ──────────────────────────────────────────────────────────────────
+// --- ZIP ------------------------------------------------------------------
 
 export function queryZip(filters: GeoFilters): string {
   const conditions: string[] = [];
@@ -180,7 +180,7 @@ export function queryZip(filters: GeoFilters): string {
   `.trim();
 }
 
-// ─── Lender Analysis ─────────────────────────────────────────────────────
+// --- Lender Analysis -----------------------------------------------------
 
 export function queryLenders(filters: AnalyticsFilters): string {
   const conditions: string[] = [];
@@ -209,7 +209,7 @@ export function queryLenders(filters: AnalyticsFilters): string {
   `.trim();
 }
 
-// ─── Top Lenders (simple aggregation) ────────────────────────────────────
+// --- Top Lenders (simple aggregation) ------------------------------------
 
 export function queryTopLenders(filters: AnalyticsFilters): string {
   const conditions: string[] = [];
@@ -232,7 +232,7 @@ export function queryTopLenders(filters: AnalyticsFilters): string {
   `.trim();
 }
 
-// ─── LTV Tier Distribution ────────────────────────────────────────────────
+// --- LTV Tier Distribution ------------------------------------------------
 
 export function queryLTV(filters: AnalyticsFilters): string {
   const conditions: string[] = [];
@@ -240,7 +240,7 @@ export function queryLTV(filters: AnalyticsFilters): string {
   if (filters.city)     conditions.push(`CITY = '${filters.city.toUpperCase()}'`);
   if (filters.zip)      conditions.push(`ZIP = '${filters.zip}'`);
   if (filters.loan_type) conditions.push(`MTG1_LOAN_CATEGORY = '${filters.loan_type}'`);
-  // Note: VW_LTV_TIERS does not have ETHNICITYCD — skip that filter
+  // Note: VW_LTV_TIERS does not have ETHNICITYCD  -  skip that filter
   const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
   return `
     SELECT
@@ -253,21 +253,21 @@ export function queryLTV(filters: AnalyticsFilters): string {
     GROUP BY LTV_TIER
     ORDER BY
       CASE LTV_TIER
-        WHEN '≤60% — Tier 1'   THEN 1
-        WHEN '60-65% — Tier 2' THEN 2
-        WHEN '65-70% — Tier 3' THEN 3
-        WHEN '70-75% — Tier 4' THEN 4
-        WHEN '75-80% — Tier 5' THEN 5
-        WHEN '80-85% — Tier 6' THEN 6
-        WHEN '85-90% — Tier 7' THEN 7
-        WHEN '90-95% — Tier 8' THEN 8
-        WHEN '95-97% — Tier 9' THEN 9
+        WHEN '≤60%  -  Tier 1'   THEN 1
+        WHEN '60-65%  -  Tier 2' THEN 2
+        WHEN '65-70%  -  Tier 3' THEN 3
+        WHEN '70-75%  -  Tier 4' THEN 4
+        WHEN '75-80%  -  Tier 5' THEN 5
+        WHEN '80-85%  -  Tier 6' THEN 6
+        WHEN '85-90%  -  Tier 7' THEN 7
+        WHEN '90-95%  -  Tier 8' THEN 8
+        WHEN '95-97%  -  Tier 9' THEN 9
         ELSE 10
       END
   `.trim();
 }
 
-// ─── Recording Date Trends ────────────────────────────────────────────────
+// --- Recording Date Trends ------------------------------------------------
 
 export function queryTrends(filters: AnalyticsFilters): string {
   const conditions: string[] = [`RECORDING_DATE IS NOT NULL`, `LENGTH(RECORDING_DATE) >= 4`];
@@ -288,7 +288,7 @@ export function queryTrends(filters: AnalyticsFilters): string {
   `.trim();
 }
 
-// ─── Parcel Detail Query ──────────────────────────────────────────────────
+// --- Parcel Detail Query --------------------------------------------------
 
 export function queryParcels(filters: GeoFilters): string {
   const conditions: string[] = [];
@@ -327,7 +327,7 @@ export function queryParcels(filters: GeoFilters): string {
   `.trim();
 }
 
-// ─── Cascade Filters ──────────────────────────────────────────────────────
+// --- Cascade Filters ------------------------------------------------------
 
 export interface CascadeFilters extends AnalyticsFilters {
   value_tier?: string;
@@ -341,7 +341,7 @@ export interface CascadeFilters extends AnalyticsFilters {
   ownership_duration?: string;
 }
 
-// ─── Cascade Property Query ────────────────────────────────────────────────
+// --- Cascade Property Query ------------------------------------------------
 
 export function queryCascadeProperty(filters: CascadeFilters): string {
   const conditions: string[] = [];
@@ -378,7 +378,7 @@ export function queryCascadeProperty(filters: CascadeFilters): string {
   `.trim();
 }
 
-// ─── Cascade Ownership Query ───────────────────────────────────────────────
+// --- Cascade Ownership Query -----------------------------------------------
 
 export function queryCascadeOwnership(filters: CascadeFilters): string {
   const conditions: string[] = [];
@@ -411,7 +411,7 @@ export function queryCascadeOwnership(filters: CascadeFilters): string {
   `.trim();
 }
 
-// ─── Cascade Lenders Query ─────────────────────────────────────────────────
+// --- Cascade Lenders Query -------------------------------------------------
 
 export function queryCascadeLenders(filters: CascadeFilters): string {
   const conditions: string[] = [];
@@ -437,7 +437,7 @@ export function queryCascadeLenders(filters: CascadeFilters): string {
   `.trim();
 }
 
-// ─── Demographics Deep Dive Query ──────────────────────────────────────────
+// --- Demographics Deep Dive Query ------------------------------------------
 
 export function queryDemographics(filters: CascadeFilters): string {
   const conditions: string[] = [];
@@ -484,7 +484,7 @@ export function queryDemographics(filters: CascadeFilters): string {
   `.trim();
 }
 
-// ─── Social Housing Score (single-query composite) ────────────────────────
+// --- Social Housing Score (single-query composite) ------------------------
 
 export function querySocialHousingScore(filters: GeoFilters): string {
   const conditions: string[] = [];
@@ -513,7 +513,7 @@ export function querySocialHousingScore(filters: GeoFilters): string {
   `.trim();
 }
 
-// ─── Social Housing Score Components ──────────────────────────────────────
+// --- Social Housing Score Components --------------------------------------
 
 export function querySocialHousingComponents(filters: GeoFilters): string {
   const conditions: string[] = [];
@@ -573,7 +573,7 @@ export function querySocialHousingIncome(filters: GeoFilters): string {
   `.trim();
 }
 
-// ─── Create Cascade Views SQL (Sprint 2 migration) ────────────────────────
+// --- Create Cascade Views SQL (Sprint 2 migration) ------------------------
 
 export const CREATE_CASCADE_PROPERTY_VIEW_SQL = `
 CREATE OR REPLACE VIEW VW_CASCADE_PROPERTY AS
@@ -708,9 +708,9 @@ INSERT INTO LOOKUP_VALUE_RANGES
   AS t(RANGE_TYPE,RANGE_LABEL,MIN_VAL,MAX_VAL,SORT_ORDER)
 `.trim();
 
-// ─── Create LTV View SQL (run once as migration) ──────────────────────────
+// --- Create LTV View SQL (run once as migration) --------------------------
 
-// ─── Occupancy Status ─────────────────────────────────────────────────────
+// --- Occupancy Status -----------------------------------------------------
 
 export function queryOccupancy(filters: GeoFilters): string {
   const conditions: string[] = [];
@@ -729,7 +729,7 @@ export function queryOccupancy(filters: GeoFilters): string {
   `.trim();
 }
 
-// ─── Create LTV View SQL (run once as migration) ──────────────────────────
+// --- Create LTV View SQL (run once as migration) --------------------------
 
 export const CREATE_LTV_VIEW_SQL = `
 CREATE OR REPLACE VIEW VW_LTV_TIERS AS
@@ -738,15 +738,15 @@ SELECT
   ETHNICITYCD,
   MTG1_LOAN_CATEGORY,
   CASE
-    WHEN CAST(PROP_LOANTOVAL AS FLOAT) <= 60 THEN '≤60% — Tier 1'
-    WHEN CAST(PROP_LOANTOVAL AS FLOAT) <= 65 THEN '60-65% — Tier 2'
-    WHEN CAST(PROP_LOANTOVAL AS FLOAT) <= 70 THEN '65-70% — Tier 3'
-    WHEN CAST(PROP_LOANTOVAL AS FLOAT) <= 75 THEN '70-75% — Tier 4'
-    WHEN CAST(PROP_LOANTOVAL AS FLOAT) <= 80 THEN '75-80% — Tier 5'
-    WHEN CAST(PROP_LOANTOVAL AS FLOAT) <= 85 THEN '80-85% — Tier 6'
-    WHEN CAST(PROP_LOANTOVAL AS FLOAT) <= 90 THEN '85-90% — Tier 7'
-    WHEN CAST(PROP_LOANTOVAL AS FLOAT) <= 95 THEN '90-95% — Tier 8'
-    WHEN CAST(PROP_LOANTOVAL AS FLOAT) <= 97 THEN '95-97% — Tier 9'
+    WHEN CAST(PROP_LOANTOVAL AS FLOAT) <= 60 THEN '≤60%  -  Tier 1'
+    WHEN CAST(PROP_LOANTOVAL AS FLOAT) <= 65 THEN '60-65%  -  Tier 2'
+    WHEN CAST(PROP_LOANTOVAL AS FLOAT) <= 70 THEN '65-70%  -  Tier 3'
+    WHEN CAST(PROP_LOANTOVAL AS FLOAT) <= 75 THEN '70-75%  -  Tier 4'
+    WHEN CAST(PROP_LOANTOVAL AS FLOAT) <= 80 THEN '75-80%  -  Tier 5'
+    WHEN CAST(PROP_LOANTOVAL AS FLOAT) <= 85 THEN '80-85%  -  Tier 6'
+    WHEN CAST(PROP_LOANTOVAL AS FLOAT) <= 90 THEN '85-90%  -  Tier 7'
+    WHEN CAST(PROP_LOANTOVAL AS FLOAT) <= 95 THEN '90-95%  -  Tier 8'
+    WHEN CAST(PROP_LOANTOVAL AS FLOAT) <= 97 THEN '95-97%  -  Tier 9'
     ELSE 'Over 97%'
   END AS LTV_TIER,
   COUNT(*) AS RECORD_COUNT,

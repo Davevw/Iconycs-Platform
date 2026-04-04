@@ -1,6 +1,6 @@
 /**
  * GET /api/v1/state/:state
- * Public API — State-level housing data
+ * Public API  -  State-level housing data
  * Example: /api/v1/state/CA
  */
 

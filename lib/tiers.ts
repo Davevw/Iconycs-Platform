@@ -1,11 +1,11 @@
 /**
- * ICONYCS — Tier & Range Lookups (Single Source of Truth)
+ * ICONYCS  -  Tier & Range Lookups (Single Source of Truth)
  * All bucket definitions live here. Never hard-code ranges in components.
  *
- * Spec source: TOP_CASCADE_SPEC.md — David Van Waldick
+ * Spec source: TOP_CASCADE_SPEC.md  -  David Van Waldick
  */
 
-// ─── Types ─────────────────────────────────────────────────────────────────
+// --- Types -----------------------------------------------------------------
 
 export interface TierRange {
   label: string;
@@ -19,7 +19,7 @@ export interface TierGroup {
   ranges: TierRange[];
 }
 
-// ─── Purchase & Market Value Ranges ────────────────────────────────────────
+// --- Purchase & Market Value Ranges ----------------------------------------
 
 export const PURCHASE_VALUE_TIERS: TierRange[] = [
   { label: '$25K-$100K',  minVal: 25000,    maxVal: 100000,    sortOrder: 1 },
@@ -33,7 +33,7 @@ export const PURCHASE_VALUE_TIERS: TierRange[] = [
 
 export const MARKET_VALUE_TIERS: TierRange[] = [...PURCHASE_VALUE_TIERS];
 
-// ─── Ownership Duration (Purchase Date Range) ──────────────────────────────
+// --- Ownership Duration (Purchase Date Range) ------------------------------
 
 export interface DurationTier {
   label: string;
@@ -52,7 +52,7 @@ export const OWNERSHIP_DURATION_TIERS: DurationTier[] = [
   { label: 'Unknown',    minMonths: -1,  maxMonths: -1,  sortOrder: 7 },
 ];
 
-// ─── LTV (Loan-to-Value) Tiers — FNMA Standard ────────────────────────────
+// --- LTV (Loan-to-Value) Tiers  -  FNMA Standard ----------------------------
 
 export const LTV_TIERS: TierRange[] = [
   { label: '0-60%',  minVal: 0,  maxVal: 60,  sortOrder: 1 },
@@ -64,7 +64,7 @@ export const LTV_TIERS: TierRange[] = [
   { label: 'Unknown',minVal: -1, maxVal: -1,  sortOrder: 7 },
 ];
 
-// ─── Loan Type Codes ───────────────────────────────────────────────────────
+// --- Loan Type Codes -------------------------------------------------------
 
 export interface LoanTypeCode {
   code: string;
@@ -83,7 +83,7 @@ export function loanTypeLabel(code: string): string {
   return LOAN_TYPES.find(t => t.code === code)?.description ?? code;
 }
 
-// ─── Income Level Tiers (EHI Code mapping) ────────────────────────────────
+// --- Income Level Tiers (EHI Code mapping) --------------------------------
 
 export const INCOME_TIERS: TierRange[] = [
   { label: '$10K-$30K',   minVal: 10000,  maxVal: 30000,  sortOrder: 1 },
@@ -104,7 +104,7 @@ export function ehiCodeToIncomeTier(code: number): string {
   return '$500K+';
 }
 
-// ─── Credit Score Tiers ────────────────────────────────────────────────────
+// --- Credit Score Tiers ----------------------------------------------------
 
 export const CREDIT_SCORE_TIERS: TierRange[] = [
   { label: '<500',    minVal: 0,   maxVal: 499, sortOrder: 1 },
@@ -115,7 +115,7 @@ export const CREDIT_SCORE_TIERS: TierRange[] = [
   { label: '801+',    minVal: 801, maxVal: 999, sortOrder: 6 },
 ];
 
-// ─── Ethnicity Codes ────────────────────────────────────────────────────────
+// --- Ethnicity Codes --------------------------------------------------------
 
 export interface EthnicityCode {
   code: string;
@@ -139,7 +139,7 @@ export function ethnicityColor(code: string): string {
   return ETHNICITY_CODES.find(e => e.code === code)?.color ?? '#A8A29E';
 }
 
-// ─── Education Codes ────────────────────────────────────────────────────────
+// --- Education Codes --------------------------------------------------------
 
 export interface EducationCode {
   code: string;
@@ -158,7 +158,7 @@ export function educationLabel(code: string): string {
   return EDUCATION_CODES.find(e => e.code === code)?.label ?? 'Unknown';
 }
 
-// ─── Wealth Score Tiers (WEALTHSCR A-H) ────────────────────────────────────
+// --- Wealth Score Tiers (WEALTHSCR A-H) ------------------------------------
 
 export interface WealthScoreTier {
   score: string;
@@ -186,7 +186,7 @@ export function wealthScoreDescription(score: string): string {
   return WEALTH_SCORE_TIERS.find(w => w.score === score)?.description ?? `Score ${score}`;
 }
 
-// ─── Subscription Tiers ─────────────────────────────────────────────────────
+// --- Subscription Tiers -----------------------------------------------------
 
 export interface SubscriptionTier {
   id: 'free' | 'pro' | 'enterprise' | 'data_partner';
@@ -277,7 +277,7 @@ export const SUBSCRIPTION_TIERS: SubscriptionTier[] = [
   },
 ];
 
-// ─── Feature Access Map ──────────────────────────────────────────────────────
+// --- Feature Access Map ------------------------------------------------------
 
 export type FeatureKey =
   | 'geo_drilldown'
@@ -310,7 +310,7 @@ export function hasAccess(
   return TIER_ORDER.indexOf(userTier) >= TIER_ORDER.indexOf(minTier);
 }
 
-// ─── Top 10 Default Lenders ──────────────────────────────────────────────────
+// --- Top 10 Default Lenders --------------------------------------------------
 
 export const DEFAULT_TOP_LENDERS: string[] = [
   'Wells Fargo Bank',
@@ -325,7 +325,7 @@ export const DEFAULT_TOP_LENDERS: string[] = [
   'All Others',
 ];
 
-// ─── Cascade Start Points ───────────────────────────────────────────────────
+// --- Cascade Start Points ---------------------------------------------------
 
 export type CascadeType = 'property' | 'ownership' | 'social' | 'media' | 'lender';
 
@@ -351,7 +351,7 @@ export const CASCADE_START_POINTS: CascadeStartPoint[] = [
     id: 'ownership',
     label: 'Ownership',
     icon: '👥',
-    description: 'Direct Identified Records — ethnicity, income, education, wealth',
+    description: 'Direct Identified Records  -  ethnicity, income, education, wealth',
     minTier: 'pro',
     dimensions: ['Ethnicity', 'Gender', 'Marital Status', 'Education', 'Income', 'Wealth Score'],
   },

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 const PRODUCTS = [
   {
-    name: 'PDaaS — Property Data as a Service',
+    name: 'PDaaS  -  Property Data as a Service',
     desc: 'Cloud-based access to 130M+ property records with demographic overlays. Self-service queries or analyst-prepared reports.',
     price: 'Custom',
     features: ['Snowflake cloud access', 'Power BI dashboards', 'API integration', 'Custom geographic filters'],

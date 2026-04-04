@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy | ICONYCS',
-  description: 'ICONYCS Housing Analytics Privacy Policy — how we collect, use, and protect your data.',
+  description: 'ICONYCS Housing Analytics Privacy Policy  -  how we collect, use, and protect your data.',
 };
 
 const C = {
@@ -120,7 +120,7 @@ export default function PrivacyPage() {
               Privacy Policy
             </h1>
             <p style={{ fontSize: 14, color: C.textMuted }}>
-              <strong>Effective Date:</strong> April 2026 &nbsp;·&nbsp; <strong>Governing Law:</strong> California
+              <strong>Effective Date:</strong> April 2026 &nbsp;*&nbsp; <strong>Governing Law:</strong> California
             </p>
             <div style={{ marginTop: 20, padding: '14px 18px', background: '#EDF6EA', border: `1px solid ${C.sage}60`, borderRadius: 10, fontSize: 13, color: C.textBody, lineHeight: 1.7 }}>
               <strong>The short version:</strong> We collect only what we need to run the platform. We never sell your personal information. Your data is protected by reputable third-party services operating under strict data agreements.
@@ -136,7 +136,7 @@ export default function PrivacyPage() {
             </Callout>
 
             <Callout icon="📊" title="Usage Data">
-              We automatically collect information about how you use the platform — including pages viewed, report queries run, geographic selections made, and session timestamps. This data is aggregated and used to improve the service. We do not profile individual users for advertising purposes.
+              We automatically collect information about how you use the platform  -  including pages viewed, report queries run, geographic selections made, and session timestamps. This data is aggregated and used to improve the service. We do not profile individual users for advertising purposes.
             </Callout>
 
             <Callout icon="💳" title="Payment Information">
@@ -147,11 +147,11 @@ export default function PrivacyPage() {
           {/* Section 2 */}
           <Section number="2" title="How We Use Your Data">
             <BulletList items={[
-              'Service delivery — processing your queries, generating reports, and managing your subscription',
-              'Platform analytics — understanding usage patterns to improve features and performance',
-              'Communication — account notifications, billing receipts, and product updates (you can unsubscribe at any time)',
-              'Legal compliance — responding to lawful requests, enforcing our Terms of Service, and protecting platform integrity',
-              'Fraud prevention — detecting and preventing unauthorized access or abuse',
+              'Service delivery  -  processing your queries, generating reports, and managing your subscription',
+              'Platform analytics  -  understanding usage patterns to improve features and performance',
+              'Communication  -  account notifications, billing receipts, and product updates (you can unsubscribe at any time)',
+              'Legal compliance  -  responding to lawful requests, enforcing our Terms of Service, and protecting platform integrity',
+              'Fraud prevention  -  detecting and preventing unauthorized access or abuse',
             ]} />
           </Section>
 
