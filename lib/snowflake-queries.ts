@@ -84,7 +84,7 @@ export function queryState(filters: GeoFilters): string {
     SELECT *
     FROM VW_DASHBOARD_STATE
     ${where}
-    ORDER BY TOTAL_PROPERTIES DESC
+    ORDER BY RECORD_COUNT DESC
   `.trim();
 }
 
@@ -120,7 +120,7 @@ export function queryCounty(filters: GeoFilters): string {
     SELECT *
     FROM VW_DASHBOARD_COUNTY
     ${where}
-    ORDER BY TOTAL_PROPERTIES DESC
+    ORDER BY RECORD_COUNT DESC
   `.trim();
 }
 
@@ -136,7 +136,7 @@ export function queryCity(filters: GeoFilters): string {
     SELECT *
     FROM VW_DASHBOARD_CITY
     ${where}
-    ORDER BY TOTAL_PROPERTIES DESC
+    ORDER BY RECORD_COUNT DESC
   `.trim();
 }
 
@@ -152,7 +152,7 @@ export function queryZip(filters: GeoFilters): string {
     SELECT *
     FROM VW_DASHBOARD_ZIP
     ${where}
-    ORDER BY TOTAL_PROPERTIES DESC
+    ORDER BY RECORD_COUNT DESC
   `.trim();
 }
 
@@ -683,3 +683,4 @@ LEFT JOIN NARC3 n ON p.PID = n.PID
 WHERE PROP_LOANTOVAL IS NOT NULL AND PROP_LOANTOVAL != ''
 GROUP BY 1,2,3,4,5,6
 `.trim();
+
