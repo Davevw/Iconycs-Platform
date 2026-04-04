@@ -6,7 +6,7 @@
  * Calls existing Snowflake API endpoints to populate a printable compliance report.
  */
 
-import { useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import Link from 'next/link';
 
 // ─── Design Tokens (matching site theme) ────────────────────────────────────
