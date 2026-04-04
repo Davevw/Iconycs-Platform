@@ -984,13 +984,13 @@ export default function ReportsPage() {
     : null;
 
   const totalProps = currentStateRow
-    ? Number(currentStateRow.TOTAL_PROPERTIES ?? 0)
+    ? Number(currentStateRow.RECORD_COUNT ?? currentStateRow.TOTAL_PROPERTIES ?? 0)
     : nationalData
     ? Number(nationalData.TOTAL_PROPERTIES ?? 0)
     : 0;
 
   const avgValue = currentStateRow
-    ? Number(currentStateRow.AVG_PROPERTY_VALUE ?? 0)
+    ? Number(currentStateRow.AVG_VALUE ?? currentStateRow.AVG_PROPERTY_VALUE ?? 0)
     : nationalData
     ? Number(nationalData.AVG_PROPERTY_VALUE ?? 0)
     : 0;
@@ -1115,11 +1115,11 @@ export default function ReportsPage() {
 
   // ─── State breakdown table from live data ─────────────────────────────
   const stateBreakdown: PanelData[] = (isAll ? stateData : stateData.filter(r => selected.includes(r.STATE)))
-    .sort((a, b) => Number(b.TOTAL_PROPERTIES ?? 0) - Number(a.TOTAL_PROPERTIES ?? 0))
+    .sort((a, b) => Number(b.RECORD_COUNT ?? b.TOTAL_PROPERTIES ?? 0) - Number(a.RECORD_COUNT ?? a.TOTAL_PROPERTIES ?? 0))
     .slice(0, 15)
     .map(r => ({
       label: ALL_STATES.find(s => s.code === r.STATE)?.name ?? r.STATE,
-      count: Number(r.TOTAL_PROPERTIES ?? 0),
+      count: Number(r.RECORD_COUNT ?? r.TOTAL_PROPERTIES ?? 0),
     }));
 
   const ethnicityData   = buildEthnicity();
@@ -1130,9 +1130,9 @@ export default function ReportsPage() {
   // ─── County cards from live data with GEO_DATA fallback ───────────────
   const countyCards = countyData.length > 0
     ? countyData.slice(0, 12).map(r => ({
-        name: r.COUNTY ?? '—',
-        props: Number(r.TOTAL_PROPERTIES ?? 0),
-        avg: Number(r.AVG_PROPERTY_VALUE ?? 0),
+        name: r.CNTYCD ?? r.COUNTY ?? '—',
+        props: Number(r.RECORD_COUNT ?? r.TOTAL_PROPERTIES ?? 0),
+        avg: Number(r.AVG_VALUE ?? r.AVG_PROPERTY_VALUE ?? 0),
       }))
     : [];
 
@@ -1140,8 +1140,8 @@ export default function ReportsPage() {
   const cityCards = cityData.length > 0
     ? cityData.slice(0, 20).map(r => ({
         name: r.CITY ?? '—',
-        props: Number(r.TOTAL_PROPERTIES ?? 0),
-        avg: Number(r.AVG_PROPERTY_VALUE ?? 0),
+        props: Number(r.RECORD_COUNT ?? r.TOTAL_PROPERTIES ?? 0),
+        avg: Number(r.AVG_VALUE ?? r.AVG_PROPERTY_VALUE ?? 0),
       }))
     : (stateCode && GEO_DATA[stateCode] ? GEO_DATA[stateCode].cities.slice(0, 20) : []);
 
@@ -1150,8 +1150,8 @@ export default function ReportsPage() {
     ? zipData.slice(0, 30).map(r => ({
         zip: r.ZIP ?? '—',
         city: r.CITY ?? drillCity ?? '',
-        props: Number(r.TOTAL_PROPERTIES ?? 0),
-        avg: Number(r.AVG_PROPERTY_VALUE ?? 0),
+        props: Number(r.RECORD_COUNT ?? r.TOTAL_PROPERTIES ?? 0),
+        avg: Number(r.AVG_VALUE ?? r.AVG_PROPERTY_VALUE ?? 0),
       }))
     : (stateCode && GEO_DATA[stateCode] ? GEO_DATA[stateCode].zips.slice(0, 30) : []);
 
@@ -1333,7 +1333,7 @@ export default function ReportsPage() {
                 {filteredStates.map(s => {
                   const isSel = !isAll && selected.includes(s.code);
                   const stRow = stateData.find(r => r.STATE === s.code);
-                  const propCount = stRow ? Number(stRow.TOTAL_PROPERTIES ?? 0) : 0;
+                  const propCount = stRow ? Number(stRow.RECORD_COUNT ?? stRow.TOTAL_PROPERTIES ?? 0) : 0;
                   return (
                     <div key={s.code} onClick={() => toggleState(s.code)} style={{
                       display: 'flex', alignItems: 'center', justifyContent: 'space-between',

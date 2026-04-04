@@ -168,10 +168,15 @@ export function queryZip(filters: GeoFilters): string {
   if (filters.zip)    conditions.push(`ZIP = '${filters.zip}'`);
   const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
   return `
-    SELECT *
+    SELECT STATE, ZIP,
+           SUM(RECORD_COUNT) AS RECORD_COUNT,
+           AVG(AVG_VALUE) AS AVG_VALUE,
+           AVG(AVG_MORTGAGE) AS AVG_MORTGAGE
     FROM VW_DASHBOARD_ZIP
     ${where}
+    GROUP BY STATE, ZIP
     ORDER BY RECORD_COUNT DESC
+    LIMIT 100
   `.trim();
 }
 
