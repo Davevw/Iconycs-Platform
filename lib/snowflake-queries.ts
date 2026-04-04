@@ -77,14 +77,25 @@ export function queryNationalBreakdown(dimension: 'ETHNICITY' | 'PROPERTY_CATEGO
 // ─── State ────────────────────────────────────────────────────────────────
 
 export function queryState(filters: GeoFilters): string {
-  const where = filters.state
-    ? `WHERE STATE = '${filters.state.toUpperCase()}'`
-    : '';
+  if (filters.state) {
+    // Single state — return dimension breakdown
+    return `
+      SELECT GEO_VALUE AS STATE, SUM(RECORD_COUNT) AS RECORD_COUNT,
+             AVG(AVG_VALUE) AS AVG_VALUE, AVG(AVG_MORTGAGE) AS AVG_MORTGAGE
+      FROM VW_DASHBOARD_STATE
+      WHERE STATE = '${filters.state.toUpperCase()}'
+      GROUP BY GEO_VALUE
+      LIMIT 1
+    `.trim();
+  }
+  // All states summary — aggregate per state, fast
   return `
-    SELECT *
+    SELECT STATE, SUM(RECORD_COUNT) AS RECORD_COUNT,
+           AVG(AVG_VALUE) AS AVG_VALUE, AVG(AVG_MORTGAGE) AS AVG_MORTGAGE
     FROM VW_DASHBOARD_STATE
-    ${where}
+    GROUP BY STATE
     ORDER BY RECORD_COUNT DESC
+    LIMIT 51
   `.trim();
 }
 
