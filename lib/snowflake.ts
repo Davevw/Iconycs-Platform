@@ -9,7 +9,7 @@ const connectionConfig = {
   account: process.env.SNOWFLAKE_ACCOUNT!,
   username: process.env.SNOWFLAKE_USER!,
   password: process.env.SNOWFLAKE_PASSWORD!,
-  warehouse: process.env.SNOWFLAKE_WAREHOUSE || 'COMPUTE_WH',
+  warehouse: process.env.SNOWFLAKE_WAREHOUSE ?? 'COMPUTE_WH',
   database: process.env.SNOWFLAKE_DATABASE || 'PROPERTYANALYTICS',
   schema: process.env.SNOWFLAKE_SCHEMA || 'PUBLIC',
   role: process.env.SNOWFLAKE_ROLE || 'PUBLIC',
@@ -85,7 +85,7 @@ export async function testConnection(): Promise<{ success: boolean; message: str
     message: 'Connected successfully',
     details: {
       account: process.env.SNOWFLAKE_ACCOUNT || 'xp62895.west-us-2.azure',
-      warehouse: process.env.SNOWFLAKE_WAREHOUSE || 'COMPUTE_WH',
+      warehouse: process.env.SNOWFLAKE_WAREHOUSE ?? 'COMPUTE_WH',
       database: process.env.SNOWFLAKE_DATABASE || 'PROPERTYANALYTICS',
       schema: process.env.SNOWFLAKE_SCHEMA || 'PUBLIC',
     },
@@ -117,3 +117,4 @@ export async function fetchSchema(tableName: string): Promise<{ success: boolean
     });
   });
 }
+
