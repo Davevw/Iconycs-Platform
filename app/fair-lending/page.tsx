@@ -562,7 +562,7 @@ export default function FairLendingPage() {
             <Link href="/" style={{ textDecoration: 'none' }}>
               <div>
                 <span style={{ fontSize: 20, fontWeight: 800, color: '#1C1917', letterSpacing: '-0.02em' }}>ICONYCS</span>
-                <div style={{ fontSize: 9, fontWeight: 600, color: '#78716C', letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: -2 }}>Housing Demographics Intelligence</div>
+                <div style={{ fontSize: 9, fontWeight: 600, color: '#78716C', letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: -2 }}>Housing Intelligence</div>
               </div>
             </Link>
             <span style={{ fontSize: 14, fontWeight: 600, color: C.terra }}>Fair Lending</span>
@@ -1280,7 +1280,7 @@ export default function FairLendingPage() {
 
               {/* Print footer */}
               <div className="print-only" style={{ marginTop: 24, paddingTop: 16, borderTop: `2px solid ${C.navy}`, display: 'flex', justifyContent: 'space-between', fontSize: 10, color: C.textMuted }}>
-                <span>ICONYCS Housing Demographics Intelligence | iconycs.com | info@iconycs.com | 760-672-0145</span>
+                <span>ICONYCS Housing Intelligence | iconycs.com | info@iconycs.com | 760-672-0145</span>
                 <span>Confidential  -  Analytical Use Only | Generated {report.generatedAt}</span>
               </div>
 

@@ -1245,7 +1245,7 @@ export default function ReportsPage() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 0', borderBottom: '2px solid #1B2A4A', marginBottom: 24 }}>
             <div>
               <div style={{ fontSize: 24, fontWeight: 800, color: '#1B2A4A' }}>ICONYCS</div>
-              <div style={{ fontSize: 10, color: '#78716C', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Housing Demographics Intelligence</div>
+              <div style={{ fontSize: 10, color: '#78716C', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Housing Intelligence</div>
             </div>
             <div style={{ textAlign: 'right', fontSize: 11, color: '#78716C' }}>
               <div>iconycs.com</div>
@@ -1261,7 +1261,7 @@ export default function ReportsPage() {
             <Link href="/" style={{ textDecoration: 'none' }}>
               <div>
                 <span style={{ fontSize: 20, fontWeight: 800, color: '#1C1917', letterSpacing: '-0.02em' }}>ICONYCS</span>
-                <div style={{ fontSize: 9, fontWeight: 600, color: '#78716C', letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: -2 }}>Housing Demographics Intelligence</div>
+                <div style={{ fontSize: 9, fontWeight: 600, color: '#78716C', letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: -2 }}>Housing Intelligence</div>
               </div>
             </Link>
             <span style={{ fontSize: 14, fontWeight: 600, color: C.terra }}>Analytics Reports</span>
@@ -2107,7 +2107,7 @@ export default function ReportsPage() {
             {/* -- Footer -- */}
             <div style={{ marginTop: 16, paddingTop: 16, borderTop: `1px solid ${C.border}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
               <div style={{ fontSize: 11, color: C.textDim }}>
-                ICONYCS Housing Demographics Intelligence | iconycs.com | info@iconycs.com | 760-672-0145
+                ICONYCS Housing Intelligence | iconycs.com | info@iconycs.com | 760-672-0145
               </div>
               <div style={{ display: 'flex', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
                 <Link href="/pricing" style={{ fontSize: 11, color: C.textMuted, textDecoration: 'none', fontWeight: 500 }}>Pricing</Link>

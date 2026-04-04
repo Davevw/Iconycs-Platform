@@ -456,7 +456,7 @@ export default function SignupPage() {
               >
                 ICONYCS
               </div>
-              <div style={{ fontSize: 9, fontWeight: 600, color: 'rgba(255,255,255,0.65)', letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 2 }}>Housing Demographics Intelligence</div>
+              <div style={{ fontSize: 9, fontWeight: 600, color: 'rgba(255,255,255,0.65)', letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 2 }}>Housing Intelligence</div>
             </div>
           </Link>
         </div>

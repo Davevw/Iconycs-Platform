@@ -97,7 +97,7 @@ export default function AgentsPage() {
           <Link href="/" style={{ textDecoration: 'none' }}>
             <div>
               <span style={{ fontSize: 20, fontWeight: 800, color: '#1C1917', letterSpacing: '-0.02em' }}>ICONYCS</span>
-              <div style={{ fontSize: 9, fontWeight: 600, color: '#78716C', letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: -2 }}>Housing Demographics Intelligence</div>
+              <div style={{ fontSize: 9, fontWeight: 600, color: '#78716C', letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: -2 }}>Housing Intelligence</div>
             </div>
           </Link>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
