@@ -6,9 +6,9 @@
 import snowflake from 'snowflake-sdk';
 
 const connectionConfig = {
-  account: process.env.SNOWFLAKE_ACCOUNT || 'xp62895.west-us-2.azure',
-  username: process.env.SNOWFLAKE_USER || 'IconycsHA1234',
-  password: process.env.SNOWFLAKE_PASSWORD || '!Dave0145',
+  account: process.env.SNOWFLAKE_ACCOUNT!,
+  username: process.env.SNOWFLAKE_USER!,
+  password: process.env.SNOWFLAKE_PASSWORD!,
   warehouse: process.env.SNOWFLAKE_WAREHOUSE || 'COMPUTE_WH',
   database: process.env.SNOWFLAKE_DATABASE || 'PROPERTYANALYTICS',
   schema: process.env.SNOWFLAKE_SCHEMA || 'PUBLIC',
