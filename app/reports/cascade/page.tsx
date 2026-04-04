@@ -10,16 +10,9 @@ import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
 import {
   CASCADE_START_POINTS,
-  PURCHASE_VALUE_TIERS,
-  LTV_TIERS,
-  OWNERSHIP_DURATION_TIERS,
   LOAN_TYPES,
   ETHNICITY_CODES,
   WEALTH_SCORE_TIERS,
-  INCOME_TIERS,
-  EDUCATION_CODES,
-  ethnicityColor,
-  wealthScoreDescription,
   loanTypeLabel,
   type CascadeType,
 } from '@/lib/tiers';
