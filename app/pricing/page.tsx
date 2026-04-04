@@ -88,9 +88,9 @@ const TIERS = [
   {
     id: 'enterprise',
     name: 'ENTERPRISE',
-    subtitle: 'Full Platform Access',
-    price: '$20,000',
-    period: '/month',
+    subtitle: 'Enterprise Solutions',
+    price: 'Custom',
+    period: 'pricing',
     description: 'All 50 states + DC. White label. Snowflake direct access. Custom build.',
     features: [
       'All 50 states + DC',
