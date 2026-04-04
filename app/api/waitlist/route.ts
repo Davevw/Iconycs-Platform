@@ -1,3 +1,13 @@
+// API Key note for waitlist confirmation emails:
+// When a user signs up for the waitlist and selects Professional or Enterprise tier,
+// include in the confirmation email:
+//
+// "Your API key will be issued when ICONYCS launches.
+//  Check back at iconycs.com/api-docs"
+//
+// Professional tier → 100 req/day API access
+// Enterprise tier → 1,000 req/day API access + priority support
+
 export async function POST(request: Request) {
   try {
     const { email, tier, company } = await request.json();
