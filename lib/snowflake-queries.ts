@@ -472,7 +472,7 @@ export function queryDemographics(filters: CascadeFilters): string {
         WHEN 'F' THEN 'African American'
         WHEN 'A' THEN 'Asian'
         ELSE 'Not Identified'
-      END AS ETHNICITYCD,
+      END AS ETHNICITY_LABEL,
       COUNT(*) AS RECORD_COUNT
     FROM VW_RESIDENTIAL_PROP p
     JOIN NARC3 n ON p.PID = n.PID

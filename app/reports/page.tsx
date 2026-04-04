@@ -1943,10 +1943,33 @@ export default function ReportsPage() {
                     <ErrorMsg msg={demoLoad.error} onRetry={() => fetchDemographics(stateCode, selectedCounty ?? undefined, drillCity ?? undefined, drillZip ?? undefined)} />
                   ) : demoData ? (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                      {/* Row 0: Ethnicity */}
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 12 }}>
+                        <FreqTable
+                          title="Owner Ethnicity — Direct Identified"
+                          data={(ethnicityBreakdown ?? []).map((r: any) => ({
+                            label: r.LABEL ?? r.label ?? 'Unknown',
+                            count: Number(r.RECORD_COUNT ?? r.count ?? 0),
+                            pct: 0
+                          }))}
+                          color={C.terra}
+                        />
+                        <div style={{ fontSize: 11, color: C.textMuted ?? '#888', marginTop: -8, paddingLeft: 4 }}>
+                          🟢 Direct Identified records only. BISG modeled estimates coming in next release.
+                        </div>
+                      </div>
                       {/* Row 1: Gender + Marital + Education */}
                       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
                         <FreqTable title="Gender" data={demoData.gender.map(r => ({ ...r, label: r.label === 'M' ? 'Male' : r.label === 'F' ? 'Female' : r.label }))} color={C.terra} />
-                        <FreqTable title="Marital Status" data={demoData.marital.map(r => ({ ...r, label: r.label === 'M' ? 'Married' : r.label === 'S' ? 'Single' : r.label }))} color={C.sage} />
+                        <FreqTable title="Marital Status" data={demoData.marital.map(r => ({
+                          ...r,
+                          label: r.label === 'M' ? 'Married' :
+                                 r.label === 'S' ? 'Single' :
+                                 r.label === 'A' ? 'Married (Inferred)' :
+                                 r.label === 'B' ? 'Single (Inferred)' :
+                                 r.label === 'Y' ? 'Married' :
+                                 r.label === 'N' ? 'Single' : r.label
+                        }))} color={C.sage} />
                         <FreqTable title="Education Level" data={demoData.education} color={C.gold} />
                       </div>
                       {/* Row 2: Income + Wealth */}
