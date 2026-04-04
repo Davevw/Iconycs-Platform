@@ -1259,7 +1259,7 @@ export default function ReportsPage() {
             <Link href="/" style={{ textDecoration: 'none' }}>
               <div>
                 <span style={{ fontSize: 19, fontWeight: 700, color: C.text }}>ICONYCS</span>
-                <div style={{ fontSize: 9, fontWeight: 600, color: C.textMuted, letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: -2 }}>Housing Demographics Analysis</div>
+                <div style={{ fontSize: 9, fontWeight: 600, color: C.textMuted, letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: -2 }}>Housing Demographics Intelligence</div>
               </div>
             </Link>
             <span style={{ fontSize: 14, fontWeight: 600, color: C.terra }}>Analytics Reports</span>
