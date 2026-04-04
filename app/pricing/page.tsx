@@ -70,11 +70,11 @@ const TIERS = [
     subtitle: '5-25 States',
     price: '$10,000',
     period: '/month',
-    description: 'Multi-state coverage with advanced analytics and Fair Lending reporting.',
+    description: 'Coverage for 5 to 25 states. Full analytics suite including Fair Lending reporting and API access.',
     badge: 'POPULAR',
     features: [
       'Everything in Analyst',
-      '5 to 25 states included',
+      '5 to 25 states (your selection)',
       'Social Housing Score',
       'Fair Lending Report generator',
       'Time-series trend analysis',
