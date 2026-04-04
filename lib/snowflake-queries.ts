@@ -681,6 +681,27 @@ INSERT INTO LOOKUP_VALUE_RANGES
 
 // ─── Create LTV View SQL (run once as migration) ──────────────────────────
 
+// ─── Occupancy Status ─────────────────────────────────────────────────────
+
+export function queryOccupancy(filters: GeoFilters): string {
+  const conditions: string[] = [];
+  if (filters.state) conditions.push(`GEO_VALUE = '${filters.state.toUpperCase()}'`);
+  // VW_DASHBOARD_STATE/NATIONAL both have OCCUPANCY_STATUS column
+  const view = filters.state ? 'VW_DASHBOARD_STATE' : 'VW_DASHBOARD_NATIONAL';
+  const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
+  return `
+    SELECT
+      OCCUPANCY_STATUS,
+      SUM(RECORD_COUNT) AS RECORD_COUNT
+    FROM ${view}
+    ${where}
+    GROUP BY OCCUPANCY_STATUS
+    ORDER BY RECORD_COUNT DESC
+  `.trim();
+}
+
+// ─── Create LTV View SQL (run once as migration) ──────────────────────────
+
 export const CREATE_LTV_VIEW_SQL = `
 CREATE OR REPLACE VIEW VW_LTV_TIERS AS
 SELECT

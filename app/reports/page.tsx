@@ -639,6 +639,7 @@ export default function ReportsPage() {
   const [zipData,      setZipData]        = useState<StateRow[]>([]);
   const [lenderData,   setLenderData]     = useState<PanelData[]>([]);
   const [ltvData,      setLtvData]        = useState<PanelData[]>([]);
+  const [occupancyData, setOccupancyData] = useState<PanelData[]>([]);
   const [trendsData,   setTrendsData]     = useState<{year:string;count:number}[]>([]);
 
   // Demographics Deep Dive
@@ -688,6 +689,11 @@ export default function ReportsPage() {
       } else {
         setNatLoad({ loading: false, error: json.error ?? 'Failed to load national data' });
       }
+      // Fetch occupancy data (national, no state filter)
+      fetch('/api/snowflake/occupancy')
+        .then(r => r.json())
+        .then(d => { if (d.success) setOccupancyData(d.data); })
+        .catch(() => {});
     } catch (e: any) {
       setNatLoad({ loading: false, error: e.message ?? 'Network error' });
     }
@@ -712,6 +718,11 @@ export default function ReportsPage() {
       } else {
         setStateLoad({ loading: false, error: json.error ?? 'Failed to load state data' });
       }
+      // Fetch occupancy data (scoped to state if provided)
+      fetch('/api/snowflake/occupancy' + (state ? `?state=${state}` : ''))
+        .then(r => r.json())
+        .then(d => { if (d.success) setOccupancyData(d.data); })
+        .catch(() => {});
     } catch (e: any) {
       setStateLoad({ loading: false, error: e.message ?? 'Network error' });
     }
@@ -1531,6 +1542,27 @@ export default function ReportsPage() {
                   View Underlying Parcels
                 </button>
               ))}
+            </div>
+
+            {/* ── Occupancy Status Panel ── */}
+            <div style={{ background: C.bgCard, borderRadius: 12, border: `1px solid ${C.border}`, overflow: 'hidden', marginBottom: 16 }}>
+              <div style={{ padding: '10px 16px', background: C.navy, color: '#fff', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase' }}>Property Occupancy Status</span>
+                <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.6)' }}>Source: Tax Record / Homestead Filing</span>
+              </div>
+              <div style={{ padding: 16, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                <PieChart title="Occupancy Split" data={occupancyData}
+                  loading={overallLoading} error={natLoad.error} onRetry={fetchNational} />
+                <div>
+                  <FreqTable title="Occupancy Breakdown" data={occupancyData} color={C.sage}
+                    loading={overallLoading} error={natLoad.error} onRetry={fetchNational} />
+                  <div style={{ fontSize: 10, color: C.textMuted, marginTop: 8, lineHeight: 1.6 }}>
+                    ⓘ Owner Occupied: homestead exemption or tax bill matches property address.<br/>
+                    Non-Owner Occupied: investor-owned, second home, or rental unit.<br/>
+                    <em>Census ACS tenure overlay coming in next release.</em>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* ── Mortgage Intelligence Section ── */}
