@@ -47,7 +47,7 @@ const TIERS = [
     subtitle: 'Single State',
     price: '$1,500',
     period: '/month',
-    description: 'Full drill-down for one state of your choice. Add major markets individually.',
+    description: 'Single state, full drill-down. CA, FL, TX, NY: $2,500/mo. All other states: $1,500/mo.',
     features: [
       'One state  -  full drill-down',
       'State → County → City → ZIP',
@@ -58,8 +58,8 @@ const TIERS = [
       'Cascade report builder',
     ],
     addons: [
-      'Add CA, FL, TX, or NY: +$2,500/mo each',
-      'Add up to 4 more states: +$1,500/mo total',
+      'CA, FL, TX, NY: $2,500/mo each',
+      'All other states: $1,500/mo each',
     ],
     cta: 'Get Early Access',
     highlighted: false,
