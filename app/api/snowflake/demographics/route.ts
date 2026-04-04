@@ -23,7 +23,7 @@ interface RawRow {
   WEALTH_SCORE?: string;
   ETHNICITYCD?: string;
   ETHNICITY_DESC?: string;
-  RECORD_COUNT: number;
+  RECORD_COUNT?: number;
 }
 
 function aggregate(rows: RawRow[], key: keyof RawRow): { label: string; count: number }[] {
