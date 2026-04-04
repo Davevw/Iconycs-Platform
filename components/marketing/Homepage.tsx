@@ -331,7 +331,7 @@ export default function Homepage() {
             
             <div>
               <div style={{ fontSize: 21, fontWeight: 700, color: C.text, letterSpacing: '-0.01em' }}>ICONYCS</div>
-              <div style={{ fontSize: 11, color: C.textDim, letterSpacing: '0.14em', textTransform: 'uppercase', marginTop: -1 }}>Housing Analytics</div>
+              <div style={{ fontSize: 11, color: C.textDim, letterSpacing: '0.14em', textTransform: 'uppercase', marginTop: -1 }}>Housing Intelligence</div>
             </div>
           </Link>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -626,7 +626,7 @@ export default function Homepage() {
         <div style={{ maxWidth: 600, margin: '0 auto', textAlign: 'center' }}>
           <h2 style={{ fontSize: 34, fontWeight: 600, fontFamily: C.fontSerif, marginBottom: 16, color: C.text }}>Ready to explore your data?</h2>
           <p style={{ fontSize: 16, color: C.textBody, lineHeight: 1.8, marginBottom: 36 }}>
-            Try the AI Query Lab free, or schedule a call to discuss your housing analytics needs.
+            Try the AI Query Lab free, or schedule a call to discuss your housing intelligence needs.
           </p>
           <div style={{ display: 'flex', justifyContent: 'center', gap: 14 }}>
             <Link href="/dashboard" style={{
@@ -651,7 +651,7 @@ export default function Homepage() {
               <span style={{ fontWeight: 700, fontSize: 20, color: C.text }}>ICONYCS</span>
             </div>
             <p style={{ fontSize: 13, color: C.textMuted, maxWidth: 260, lineHeight: 1.7 }}>
-              Housing Analytics & Owner Demographics.
+              Housing Intelligence.
               300 Spectrum Center Drive, Ste 400, Irvine, CA 92618
             </p>
             <p style={{ fontSize: 13, color: C.textMuted, marginTop: 8 }}>(760) 599-1261 · info@iconycs.com</p>
