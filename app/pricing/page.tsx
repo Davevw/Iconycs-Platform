@@ -22,8 +22,7 @@ const C = {
   fontSerif: "'Source Serif 4', Georgia, serif",
 };
 
-// ─── Tier Definitions ─────────────────────────────────────────────────────────
-// ─── Pricing Tiers ────────────────────────────────────────────────────────
+// ─── Tier Definitions ────────────────────────────────────────────────────────
 const TIERS = [
   {
     id: 'free',
@@ -58,10 +57,6 @@ const TIERS = [
       'PDF export (branded)',
       'Cascade report builder',
     ],
-    addons: [
-      'CA, FL, TX, or NY: $2,500/mo each',
-      'Up to 4 additional states: $1,500/mo total',
-    ],
     cta: 'Get Early Access',
     highlighted: false,
   },
@@ -95,29 +90,236 @@ const TIERS = [
     description: 'All 50 states + DC. White label. Snowflake direct access. Custom build.',
     features: [
       'All 50 states + DC',
-      'Snowflake direct access key',
       'White label / co-branded',
-      'Fair Lending Agent (AI)',
-      'Custom Snowflake views',
-      'Team seats (unlimited)',
-      'Priority support & SLA',
-      'Quarterly data updates',
-      'Signed data use agreement',
+      'Snowflake direct access',
+      'Fair Lending AI Agent',
+      'Custom build to spec',
     ],
     cta: 'Contact Us',
     ctaLink: 'mailto:info@iconycs.com',
     highlighted: false,
   },
-];
+] as const;
 
-const PAY_PER_REPORT = { price: '$19.99', description: 'Single report download, any geography, no subscription required.' };
+type Tier = (typeof TIERS)[number];
+
+// ─── Enterprise Geographic Pricing Modal ─────────────────────────────────────
+function EnterpriseGeoModal({ onClose }: { onClose: () => void }) {
+  return (
+    <div
+      style={{
+        position: 'fixed', inset: 0, zIndex: 1000,
+        background: 'rgba(10,14,26,0.72)', backdropFilter: 'blur(5px)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        padding: 20,
+      }}
+      onClick={onClose}
+    >
+      <div
+        style={{
+          background: C.bgCard, borderRadius: 18, overflow: 'hidden',
+          maxWidth: 520, width: '100%',
+          boxShadow: '0 32px 80px rgba(10,14,26,0.35)',
+          border: `1px solid ${C.border}`,
+          maxHeight: '90vh', overflowY: 'auto',
+        }}
+        onClick={e => e.stopPropagation()}
+      >
+        {/* Modal Header */}
+        <div style={{
+          background: C.navy, padding: '22px 28px',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        }}>
+          <div>
+            <div style={{
+              fontSize: 11, fontWeight: 700, letterSpacing: '0.14em',
+              color: 'rgba(255,255,255,0.5)', fontFamily: C.font, marginBottom: 4,
+            }}>
+              PRICING BREAKDOWN
+            </div>
+            <h2 style={{
+              fontSize: 18, fontWeight: 800, color: '#fff',
+              fontFamily: C.font, margin: 0, letterSpacing: '-0.01em',
+            }}>
+              ENTERPRISE GEOGRAPHIC PRICING
+            </h2>
+          </div>
+          <button
+            onClick={onClose}
+            style={{
+              background: 'rgba(255,255,255,0.12)', border: 'none',
+              borderRadius: 8, width: 34, height: 34,
+              color: 'rgba(255,255,255,0.7)', fontSize: 18,
+              cursor: 'pointer', display: 'flex', alignItems: 'center',
+              justifyContent: 'center', fontWeight: 300, flexShrink: 0,
+            }}
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </div>
+
+        {/* Modal Body */}
+        <div style={{ padding: '28px 28px 0' }}>
+
+          {/* Major Markets */}
+          <Section label="Major Markets" sub="per state / month">
+            <PriceRow label="California" value="$2,500/mo" />
+            <PriceRow label="Florida" value="$2,500/mo" />
+            <PriceRow label="Texas" value="$2,500/mo" />
+            <PriceRow label="New York" value="$2,500/mo" />
+          </Section>
+
+          <Divider />
+
+          {/* Regional Expansion */}
+          <Section label="Regional Expansion">
+            <PriceRow label="Up to 4 additional states" value="$1,500/mo total" />
+          </Section>
+
+          <Divider />
+
+          {/* Multi-State Programs */}
+          <Section label="Multi-State Programs">
+            <PriceRow label="5–25 states" value="$10,000/mo" />
+            <PriceRow label="All 50 states + DC" value="$20,000/mo" highlight />
+          </Section>
+
+          {/* Includes List */}
+          <div style={{
+            margin: '24px 0 0',
+            padding: '20px',
+            background: C.bgWarm,
+            borderRadius: 10,
+            border: `1px solid ${C.border}`,
+          }}>
+            <div style={{
+              fontSize: 11, fontWeight: 700, letterSpacing: '0.1em',
+              color: C.textDim, fontFamily: C.font, marginBottom: 12,
+            }}>
+              ALL ENTERPRISE PLANS INCLUDE
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
+              {[
+                'Snowflake direct access key',
+                'Signed data use agreement',
+                'White label / co-branded option',
+                'Fair Lending AI Agent',
+                'Quarterly data updates',
+                'Priority support & SLA',
+                'Team seats (unlimited)',
+              ].map(item => (
+                <div key={item} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <span style={{ color: C.sage, fontWeight: 700, fontSize: 14, flexShrink: 0 }}>✓</span>
+                  <span style={{ fontSize: 13, color: C.textBody, fontFamily: C.font }}>{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Contact */}
+          <div style={{
+            margin: '16px 0',
+            padding: '14px 20px',
+            background: C.bgCard,
+            border: `1px solid ${C.border}`,
+            borderRadius: 9,
+            display: 'flex', alignItems: 'center', gap: 8,
+          }}>
+            <span style={{ fontSize: 15 }}>📬</span>
+            <span style={{ fontSize: 13, color: C.textMuted, fontFamily: C.font }}>
+              <strong style={{ color: C.textBody }}>info@iconycs.com</strong>
+              {' · '}
+              <strong style={{ color: C.textBody }}>760-672-0145</strong>
+            </span>
+          </div>
+        </div>
+
+        {/* Modal Footer */}
+        <div style={{
+          padding: '20px 28px 24px',
+          display: 'flex', gap: 10, justifyContent: 'flex-end',
+          borderTop: `1px solid ${C.borderLight}`,
+          marginTop: 8,
+        }}>
+          <button
+            onClick={onClose}
+            style={{
+              padding: '10px 20px', borderRadius: 8,
+              border: `1.5px solid ${C.border}`, background: 'transparent',
+              fontSize: 13, fontWeight: 600, fontFamily: C.font,
+              color: C.textMuted, cursor: 'pointer',
+            }}
+          >
+            Close
+          </button>
+          <a
+            href="mailto:info@iconycs.com?subject=Enterprise%20Demo%20Request"
+            style={{
+              padding: '10px 20px', borderRadius: 8,
+              border: 'none', background: C.terra,
+              fontSize: 13, fontWeight: 700, fontFamily: C.font,
+              color: '#fff', cursor: 'pointer', textDecoration: 'none',
+              display: 'inline-block',
+            }}
+          >
+            Request a Demo →
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Section({ label, sub, children }: { label: string; sub?: string; children: React.ReactNode }) {
+  return (
+    <div style={{ marginBottom: 4 }}>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 10 }}>
+        <span style={{ fontSize: 13, fontWeight: 700, color: C.text, fontFamily: C.font }}>{label}</span>
+        {sub && <span style={{ fontSize: 11, color: C.textDim, fontFamily: C.font }}>{sub}</span>}
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+function Divider() {
+  return <div style={{ height: 1, background: C.border, margin: '18px 0' }} />;
+}
+
+function PriceRow({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
+  return (
+    <div style={{
+      display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+      padding: '7px 10px', borderRadius: 7,
+      background: highlight ? 'rgba(196,101,58,0.07)' : 'transparent',
+      border: highlight ? `1px solid rgba(196,101,58,0.18)` : '1px solid transparent',
+    }}>
+      <span style={{
+        fontSize: 13, fontFamily: C.font,
+        color: highlight ? C.textBody : C.textMuted,
+        fontWeight: highlight ? 600 : 400,
+      }}>
+        {label}
+      </span>
+      <span style={{
+        fontSize: 14, fontWeight: 700, fontFamily: C.font,
+        color: C.terra,
+      }}>
+        {value}
+      </span>
+    </div>
+  );
+}
 
 // ─── Waitlist Modal ───────────────────────────────────────────────────────────
 function WaitlistModal({
   tier,
   onClose,
 }: {
-  tier: (typeof TIERS)[number];
+  tier: { id: string; name: string; price: string };
   onClose: () => void;
 }) {
   const [email, setEmail] = useState('');
@@ -181,7 +383,7 @@ function WaitlistModal({
                 borderRadius: 20, fontSize: 11, fontWeight: 700,
                 letterSpacing: '0.08em', marginBottom: 10, fontFamily: C.font,
               }}>
-                {tier.name} — {tier.tagline}
+                {tier.name}
               </div>
               <h2 style={{
                 fontSize: 22, fontWeight: 700, color: C.text,
@@ -294,7 +496,7 @@ function WaitlistModal({
   );
 }
 
-// ─── Check icon ───────────────────────────────────────────────────────────────
+// ─── Check / Lock icons ───────────────────────────────────────────────────────
 function Check({ dark }: { dark?: boolean }) {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0, marginTop: 1 }}>
@@ -304,44 +506,38 @@ function Check({ dark }: { dark?: boolean }) {
   );
 }
 
-function Lock({ dark }: { dark?: boolean }) {
-  return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ flexShrink: 0, marginTop: 2 }}>
-      <rect x="2" y="6" width="10" height="7" rx="2" stroke={dark ? 'rgba(255,255,255,0.3)' : C.textDim} strokeWidth="1.4" fill="none" />
-      <path d="M4.5 6V4.5a2.5 2.5 0 015 0V6" stroke={dark ? 'rgba(255,255,255,0.3)' : C.textDim} strokeWidth="1.4" fill="none" />
-    </svg>
-  );
-}
-
-// ─── Tier Card ────────────────────────────────────────────────────────────────
+// ─── Standard Tier Card ───────────────────────────────────────────────────────
 function TierCard({
   tier,
   onEarlyAccess,
 }: {
-  tier: (typeof TIERS)[number];
-  onEarlyAccess: (tier: (typeof TIERS)[number]) => void;
+  tier: Tier;
+  onEarlyAccess: (tier: Tier) => void;
 }) {
-  const isDark = tier.id === 'professional';
-  const textColor = isDark ? '#fff' : C.text;
-  const mutedColor = isDark ? 'rgba(255,255,255,0.65)' : C.textMuted;
+  const isPro = tier.id === 'professional';
+  const bgColor = isPro ? C.navy : C.bgCard;
+  const borderColor = isPro ? C.navy : (tier.highlighted ? C.terra : C.border);
+  const textColor = isPro ? '#fff' : C.text;
+  const mutedColor = isPro ? 'rgba(255,255,255,0.65)' : C.textMuted;
+  const bodyColor = isPro ? 'rgba(255,255,255,0.85)' : C.textBody;
 
   return (
     <div
       style={{
-        background: tier.bg,
-        border: `2px solid ${tier.popular ? C.terra : tier.border}`,
+        background: bgColor,
+        border: `2px solid ${borderColor}`,
         borderRadius: 16,
         padding: '28px 24px',
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
-        transition: 'transform 0.15s, box-shadow 0.15s',
-        boxShadow: tier.popular
-          ? '0 8px 40px rgba(196,101,58,0.18)'
+        boxShadow: isPro
+          ? '0 8px 40px rgba(27,42,74,0.25)'
           : '0 2px 12px rgba(28,25,23,0.06)',
+        height: '100%',
       }}
     >
-      {tier.popular && (
+      {'badge' in tier && tier.badge && (
         <div style={{
           position: 'absolute', top: -14, left: '50%', transform: 'translateX(-50%)',
           background: C.terra, color: '#fff',
@@ -357,43 +553,43 @@ function TierCard({
       <div style={{ marginBottom: 20 }}>
         <div style={{
           fontSize: 11, fontWeight: 700, letterSpacing: '0.12em',
-          color: isDark ? 'rgba(255,255,255,0.5)' : C.textDim,
+          color: isPro ? 'rgba(255,255,255,0.5)' : C.textDim,
           fontFamily: C.font, marginBottom: 4,
         }}>
           {tier.name}
         </div>
         <div style={{
-          fontSize: 17, fontWeight: 600, color: isDark ? 'rgba(255,255,255,0.85)' : C.terra,
-          fontFamily: C.fontSerif, marginBottom: 16, fontStyle: 'italic',
+          fontSize: 14, fontWeight: 500, color: mutedColor,
+          fontFamily: C.font, marginBottom: 14, fontStyle: 'italic',
         }}>
-          "{tier.tagline}"
+          {tier.subtitle}
         </div>
-        <div style={{ display: 'flex', alignItems: 'flex-end', gap: 6 }}>
-          <span style={{ fontSize: 42, fontWeight: 800, color: textColor, fontFamily: C.font, lineHeight: 1 }}>
+        <div style={{ display: 'flex', alignItems: 'flex-end', gap: 4 }}>
+          <span style={{ fontSize: 38, fontWeight: 800, color: textColor, fontFamily: C.font, lineHeight: 1 }}>
             {tier.price}
           </span>
-          {tier.period && (
-            <span style={{ fontSize: 13, color: mutedColor, fontFamily: C.font, paddingBottom: 6 }}>
-              /{tier.period}
-            </span>
-          )}
+          <span style={{ fontSize: 13, color: mutedColor, fontFamily: C.font, paddingBottom: 5 }}>
+            {tier.period}
+          </span>
         </div>
+        <p style={{ fontSize: 13, color: mutedColor, fontFamily: C.font, margin: '10px 0 0', lineHeight: 1.5 }}>
+          {tier.description}
+        </p>
       </div>
 
       {/* CTA */}
-      <div style={{ marginBottom: 24 }}>
-        {tier.ctaHref ? (
+      <div style={{ marginBottom: 20 }}>
+        {'ctaLink' in tier && tier.ctaLink ? (
           <Link
-            href={tier.ctaHref}
+            href={tier.ctaLink}
             style={{
               display: 'block', textAlign: 'center',
-              padding: '12px 0', borderRadius: 8,
+              padding: '11px 0', borderRadius: 8,
               fontSize: 14, fontWeight: 700, fontFamily: C.font,
               textDecoration: 'none',
               border: `2px solid ${C.border}`,
               background: 'transparent',
               color: C.textBody,
-              transition: 'all 0.15s',
             }}
           >
             {tier.cta}
@@ -402,14 +598,12 @@ function TierCard({
           <button
             onClick={() => onEarlyAccess(tier)}
             style={{
-              width: '100%', padding: '12px 0', borderRadius: 8,
+              width: '100%', padding: '11px 0', borderRadius: 8,
               fontSize: 14, fontWeight: 700, fontFamily: C.font,
-              cursor: 'pointer', transition: 'all 0.15s',
-              ...(tier.ctaStyle === 'inverse'
-                ? { background: '#fff', color: C.navy, border: '2px solid rgba(255,255,255,0.3)' }
-                : tier.ctaStyle === 'gold'
-                ? { background: C.gold, color: '#fff', border: `2px solid ${C.gold}` }
-                : { background: C.terra, color: '#fff', border: `2px solid ${C.terra}` }),
+              cursor: 'pointer',
+              background: isPro ? '#fff' : C.terra,
+              color: isPro ? C.navy : '#fff',
+              border: `2px solid ${isPro ? 'rgba(255,255,255,0.3)' : C.terra}`,
             }}
           >
             {tier.cta} →
@@ -425,39 +619,133 @@ function TierCard({
         }}>
           INCLUDES
         </div>
-        <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 16px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 8 }}>
           {tier.features.map(f => (
             <li key={f} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
-              <Check dark={isDark} />
-              <span style={{ fontSize: 13, color: isDark ? 'rgba(255,255,255,0.85)' : C.textBody, fontFamily: C.font, lineHeight: 1.4 }}>
+              <Check dark={isPro} />
+              <span style={{ fontSize: 13, color: bodyColor, fontFamily: C.font, lineHeight: 1.4 }}>
+                {f}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+// ─── Enterprise Card ──────────────────────────────────────────────────────────
+function EnterpriseCard({ onViewPricing }: { onViewPricing: () => void }) {
+  const tier = TIERS[3]; // enterprise
+
+  return (
+    <div
+      style={{
+        background: C.bgCard,
+        border: `2px solid ${C.border}`,
+        borderRadius: 16,
+        padding: '28px 24px',
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        boxShadow: '0 2px 12px rgba(28,25,23,0.06)',
+        height: '100%',
+      }}
+    >
+      {/* Header */}
+      <div style={{ marginBottom: 20 }}>
+        <div style={{
+          fontSize: 11, fontWeight: 700, letterSpacing: '0.12em',
+          color: C.textDim, fontFamily: C.font, marginBottom: 4,
+        }}>
+          {tier.name}
+        </div>
+        <div style={{
+          fontSize: 14, fontWeight: 500, color: C.textMuted,
+          fontFamily: C.font, marginBottom: 14, fontStyle: 'italic',
+        }}>
+          {tier.subtitle}
+        </div>
+        <div style={{ display: 'flex', alignItems: 'flex-end', gap: 4 }}>
+          <span style={{ fontSize: 38, fontWeight: 800, color: C.text, fontFamily: C.font, lineHeight: 1 }}>
+            {tier.price}
+          </span>
+          <span style={{ fontSize: 13, color: C.textMuted, fontFamily: C.font, paddingBottom: 5 }}>
+            {tier.period}
+          </span>
+        </div>
+        <p style={{ fontSize: 13, color: C.textMuted, fontFamily: C.font, margin: '10px 0 0', lineHeight: 1.5 }}>
+          {tier.description}
+        </p>
+      </div>
+
+      {/* Dual CTA Buttons */}
+      <div style={{ marginBottom: 20, display: 'flex', gap: 8 }}>
+        <button
+          onClick={onViewPricing}
+          style={{
+            flex: 1, padding: '10px 0', borderRadius: 8,
+            fontSize: 13, fontWeight: 700, fontFamily: C.font,
+            cursor: 'pointer',
+            background: 'transparent',
+            color: C.navy,
+            border: `2px solid ${C.navy}`,
+          }}
+        >
+          View Pricing
+        </button>
+        <a
+          href="mailto:info@iconycs.com"
+          style={{
+            flex: 1, padding: '10px 0', borderRadius: 8,
+            fontSize: 13, fontWeight: 700, fontFamily: C.font,
+            cursor: 'pointer',
+            background: C.terra,
+            color: '#fff',
+            border: `2px solid ${C.terra}`,
+            textDecoration: 'none',
+            textAlign: 'center',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}
+        >
+          Contact Us
+        </a>
+      </div>
+
+      {/* Features */}
+      <div style={{ flex: 1 }}>
+        <div style={{
+          fontSize: 11, fontWeight: 700, letterSpacing: '0.08em',
+          color: C.textMuted, fontFamily: C.font, marginBottom: 10,
+        }}>
+          INCLUDES
+        </div>
+        <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 8 }}>
+          {tier.features.map(f => (
+            <li key={f} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+              <Check />
+              <span style={{ fontSize: 13, color: C.textBody, fontFamily: C.font, lineHeight: 1.4 }}>
                 {f}
               </span>
             </li>
           ))}
         </ul>
 
-        {tier.locked.length > 0 && (
-          <>
-            <div style={{
-              fontSize: 11, fontWeight: 700, letterSpacing: '0.08em',
-              color: mutedColor, fontFamily: C.font, marginBottom: 10,
-              borderTop: `1px solid ${isDark ? 'rgba(255,255,255,0.1)' : C.borderLight}`,
-              paddingTop: 12,
-            }}>
-              REQUIRES UPGRADE
-            </div>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 7 }}>
-              {tier.locked.map(f => (
-                <li key={f} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
-                  <Lock dark={isDark} />
-                  <span style={{ fontSize: 12, color: mutedColor, fontFamily: C.font, lineHeight: 1.4 }}>
-                    {f}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
+        {/* View Geographic Pricing link */}
+        <button
+          onClick={onViewPricing}
+          style={{
+            marginTop: 18, width: '100%',
+            padding: '9px 0', borderRadius: 7,
+            background: 'rgba(196,101,58,0.08)',
+            border: `1px solid rgba(196,101,58,0.22)`,
+            fontSize: 12, fontWeight: 700, fontFamily: C.font,
+            color: C.terra, cursor: 'pointer',
+            letterSpacing: '0.04em',
+          }}
+        >
+          🗺 View Geographic Pricing
+        </button>
       </div>
     </div>
   );
@@ -465,25 +753,17 @@ function TierCard({
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function PricingPage() {
-  const [waitlistTier, setWaitlistTier] = useState<(typeof TIERS)[number] | null>(null);
-  const [payPerReportModal, setPayPerReportModal] = useState(false);
+  const [waitlistTier, setWaitlistTier] = useState<{ id: string; name: string; price: string } | null>(null);
+  const [showEnterpriseModal, setShowEnterpriseModal] = useState(false);
 
   const payPerReportTier = {
     id: 'pay_per_report',
     name: 'PAY-PER-REPORT',
-    tagline: 'One Report',
-    price: '$19.99',
-    period: 'one-time',
-    priceId: 'price_1TIbbJ9CvaSs0o4AkpHLrruj',
-    cta: 'Get Early Access',
-    ctaStyle: 'primary',
-    popular: false,
-    bg: C.bgCard,
-    border: C.border,
-    color: C.text,
-    features: [],
-    locked: [],
-  } as const;
+    price: '$9.99',
+  };
+
+  // Tiers for the grid (first 3 use TierCard, enterprise uses EnterpriseCard)
+  const regularTiers = TIERS.slice(0, 3);
 
   return (
     <>
@@ -581,15 +861,11 @@ export default function PricingPage() {
             a deeper layer of the socio-economics of home ownership.
           </p>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: C.textMuted }}>
-              <span style={{ color: C.sage, fontWeight: 700 }}>✓</span> No contracts
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: C.textMuted }}>
-              <span style={{ color: C.sage, fontWeight: 700 }}>✓</span> Cancel anytime
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: C.textMuted }}>
-              <span style={{ color: C.sage, fontWeight: 700 }}>✓</span> 14-day free trial
-            </div>
+            {['No contracts', 'Cancel anytime', '14-day free trial'].map(label => (
+              <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: C.textMuted }}>
+                <span style={{ color: C.sage, fontWeight: 700 }}>✓</span> {label}
+              </div>
+            ))}
           </div>
         </div>
 
@@ -604,11 +880,20 @@ export default function PricingPage() {
               alignItems: 'start',
             }}
           >
-            {TIERS.map((tier, i) => (
-              <div key={tier.id} className="pricing-card" style={{ paddingTop: tier.popular ? 14 : 0 }}>
+            {regularTiers.map((tier) => (
+              <div
+                key={tier.id}
+                className="pricing-card"
+                style={{ paddingTop: tier.highlighted ? 14 : 0 }}
+              >
                 <TierCard tier={tier} onEarlyAccess={setWaitlistTier} />
               </div>
             ))}
+
+            {/* Enterprise card — custom layout */}
+            <div className="pricing-card">
+              <EnterpriseCard onViewPricing={() => setShowEnterpriseModal(true)} />
+            </div>
           </div>
 
           {/* ── Pay-per-report Banner ── */}
@@ -648,7 +933,7 @@ export default function PricingPage() {
                 ))}
               </div>
               <button
-                onClick={() => setWaitlistTier(payPerReportTier as any)}
+                onClick={() => setWaitlistTier(payPerReportTier)}
                 style={{
                   padding: '13px 28px', borderRadius: 9,
                   border: 'none', background: C.terra,
@@ -680,10 +965,10 @@ export default function PricingPage() {
               {[
                 {
                   q: 'When does ICONYCS launch?',
-                  a: 'We\'re in private beta now. Early access waitlist members get first access and locked-in pricing.',
+                  a: "We're in private beta now. Early access waitlist members get first access and locked-in pricing.",
                 },
                 {
-                  q: 'What\'s included in the free tier?',
+                  q: "What's included in the free tier?",
                   a: 'National and state-level housing data, basic demographic breakdowns, and 3 report views per day — no credit card required.',
                 },
                 {
@@ -692,7 +977,7 @@ export default function PricingPage() {
                 },
                 {
                   q: 'What is the Social Housing Score?',
-                  a: 'The Social Housing Score™ is ICONYCS\'s proprietary index combining ethnicity, wealth, income, education, and loan data into a single community risk/opportunity score.',
+                  a: "The Social Housing Score™ is ICONYCS's proprietary index combining ethnicity, wealth, income, education, and loan data into a single community risk/opportunity score.",
                 },
                 {
                   q: 'Is there an annual plan?',
@@ -777,10 +1062,15 @@ export default function PricingPage() {
         </div>
       </div>
 
+      {/* ── Enterprise Geo Pricing Modal ── */}
+      {showEnterpriseModal && (
+        <EnterpriseGeoModal onClose={() => setShowEnterpriseModal(false)} />
+      )}
+
       {/* ── Waitlist Modal ── */}
       {waitlistTier && (
         <WaitlistModal
-          tier={waitlistTier as (typeof TIERS)[number]}
+          tier={waitlistTier}
           onClose={() => setWaitlistTier(null)}
         />
       )}
