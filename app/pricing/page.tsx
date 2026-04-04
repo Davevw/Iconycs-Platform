@@ -806,7 +806,7 @@ export default function PricingPage() {
             <Link href="/" style={{ textDecoration: 'none' }}>
               <div>
                 <span style={{ fontSize: 20, fontWeight: 800, color: C.text, letterSpacing: '-0.02em' }}>ICONYCS</span>
-                <div style={{ fontSize: 9, fontWeight: 600, color: C.textMuted, letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: -2 }}>Housing Demographics Intelligence</div>
+                <div style={{ fontSize: 9, fontWeight: 600, color: C.textMuted, letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: -2 }}>Housing Intelligence</div>
               </div>
             </Link>
             <div style={{ marginLeft: 'auto', display: 'flex', gap: 6, alignItems: 'center' }}>
@@ -859,7 +859,7 @@ export default function PricingPage() {
               lineHeight: 1.15, letterSpacing: '-0.02em',
             }}
           >
-            Housing Demographics Intelligence,<br />
+            Housing Intelligence,<br />
             <span style={{ color: C.terra }}>Priced to Perform</span>
           </h1>
           <p style={{
