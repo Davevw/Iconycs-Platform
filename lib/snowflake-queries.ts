@@ -53,9 +53,24 @@ function buildTimePeriodClause(time_period?: string, field = 'RECORDING_DATE'): 
 
 export function queryNational(): string {
   return `
-    SELECT *
+    SELECT
+      SUM(RECORD_COUNT) AS TOTAL_PROPERTIES,
+      AVG(AVG_VALUE) AS AVG_VALUE,
+      AVG(AVG_MORTGAGE) AS AVG_MORTGAGE
     FROM VW_DASHBOARD_NATIONAL
-    LIMIT 1
+  `.trim();
+}
+
+export function queryNationalBreakdown(dimension: 'ETHNICITY' | 'PROPERTY_CATEGORY' | 'MTG1_LOAN_CATEGORY'): string {
+  return `
+    SELECT
+      ${dimension} AS LABEL,
+      SUM(RECORD_COUNT) AS RECORD_COUNT
+    FROM VW_DASHBOARD_NATIONAL
+    WHERE ${dimension} IS NOT NULL AND ${dimension} != 'Unknown'
+    GROUP BY ${dimension}
+    ORDER BY RECORD_COUNT DESC
+    LIMIT 10
   `.trim();
 }
 
