@@ -1144,7 +1144,7 @@ export default function ReportsPage() {
   // ─── County cards from live data with GEO_DATA fallback ───────────────
   const countyCards = countyData.length > 0
     ? countyData.slice(0, 12).map(r => ({
-        name: getCountyName(selectedStates[0] ?? '', String(r.CNTYCD ?? r.COUNTY ?? '')), rawFips: String(r.CNTYCD ?? ''),
+        name: getCountyName(stateCode ?? '', String(r.CNTYCD ?? r.COUNTY ?? '')), rawFips: String(r.CNTYCD ?? ''),
         props: Number(r.RECORD_COUNT ?? r.TOTAL_PROPERTIES ?? 0),
         avg: Number(r.AVG_VALUE ?? r.AVG_PROPERTY_VALUE ?? 0),
       }))
