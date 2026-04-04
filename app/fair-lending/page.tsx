@@ -146,9 +146,9 @@ function trafficBg(light: TrafficLight): string {
 }
 
 function trafficDot(light: TrafficLight): string {
-  if (light === 'green')  return '🟢';
-  if (light === 'yellow') return '🟡';
-  return '🔴';
+  if (light === 'green')  return 'ðŸŸ¢';
+  if (light === 'yellow') return 'ðŸŸ¡';
+  return 'ðŸ”´';
 }
 
 // --- Risk indicator calculators ----------------------------------------------
@@ -256,7 +256,7 @@ function LtvBarChart({ rows }: { rows: { tier: string; count: number; pct: numbe
           <div key={i}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
               <span style={{ fontSize: 12, color: isHigh ? '#DC2626' : C.textBody, fontWeight: isHigh ? 700 : 400 }}>
-                {r.tier} {isHigh && <span style={{ fontSize: 10, color: '#DC2626' }}>⚠ High LTV</span>}
+                {r.tier} {isHigh && <span style={{ fontSize: 10, color: '#DC2626' }}>âš  High LTV</span>}
               </span>
               <span style={{ fontSize: 12, fontFamily: C.fontMono, fontWeight: 700, color: barColor }}>
                 {fmtPct(r.pct)} ({fmt(r.count)})
@@ -272,7 +272,7 @@ function LtvBarChart({ rows }: { rows: { tier: string; count: number; pct: numbe
         );
       })}
       <div style={{ marginTop: 8, fontSize: 11, color: C.textMuted, fontStyle: 'italic' }}>
-        * LTV tiers follow FNMA standard buckets. High-LTV (≥80%) loans carry elevated default risk.
+        * LTV tiers follow FNMA standard buckets. High-LTV (â‰¥80%) loans carry elevated default risk.
       </div>
     </div>
   );
@@ -560,7 +560,10 @@ export default function FairLendingPage() {
             display: 'flex', alignItems: 'center', height: 54, gap: 16,
           }}>
             <Link href="/" style={{ textDecoration: 'none' }}>
-              <span style={{ fontSize: 19, fontWeight: 700, color: C.text }}>ICONYCS</span>
+              <div>
+                <span style={{ fontSize: 20, fontWeight: 800, color: '#1C1917', letterSpacing: '-0.02em' }}>ICONYCS</span>
+                <div style={{ fontSize: 9, fontWeight: 600, color: '#78716C', letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: -2 }}>Housing Demographics Intelligence</div>
+              </div>
             </Link>
             <span style={{ fontSize: 14, fontWeight: 600, color: C.terra }}>Fair Lending</span>
             <div style={{ marginLeft: 'auto', display: 'flex', gap: 8, alignItems: 'center' }}>
@@ -583,7 +586,7 @@ export default function FairLendingPage() {
                   cursor: 'pointer', fontFamily: C.font, fontWeight: 600,
                   display: 'flex', alignItems: 'center', gap: 5,
                 }}>
-                  ⬇ Download PDF Report
+                  â¬‡ Download PDF Report
                 </button>
               )}
             </div>
@@ -722,7 +725,7 @@ export default function FairLendingPage() {
                     Fetching Data...
                   </>
                 ) : (
-                  '⚡ Generate Compliance Report'
+                  'âš¡ Generate Compliance Report'
                 )}
               </button>
               {state && !loading && (
@@ -734,7 +737,7 @@ export default function FairLendingPage() {
 
             {error && (
               <div style={{ marginTop: 12, padding: '10px 14px', background: '#FEF2F2', borderRadius: 8, border: `1px solid #DC262620`, fontSize: 12, color: '#DC2626' }}>
-                ⚠ {error}
+                âš  {error}
               </div>
             )}
           </div>
@@ -746,9 +749,9 @@ export default function FairLendingPage() {
             </div>
           )}
 
-          {/* ═══════════════════════════════════════════════════════════════════
+          {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
                THE REPORT
-          ═══════════════════════════════════════════════════════════════════ */}
+          â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
           {report && !loading && (
             <div className="report-wrapper" style={{ position: 'relative', animation: 'fadeIn 0.5s ease' }}>
 
@@ -818,16 +821,16 @@ export default function FairLendingPage() {
                         color: '#fff', fontSize: 12, fontWeight: 600, cursor: 'pointer',
                         fontFamily: C.font, display: 'flex', alignItems: 'center', gap: 6,
                       }}>
-                        ⬇ Download PDF
+                        â¬‡ Download PDF
                       </button>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* ══════════════════════════════════════════════════════════
+              {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
                   SECTION 1: MARKET OVERVIEW
-              ══════════════════════════════════════════════════════════ */}
+              â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
               <div className="report-section" style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, marginBottom: 16, overflow: 'hidden' }}>
                 <SectionHeader num="1" title="Market Overview" subtitle="Total properties and homeownership base" />
                 <div style={{ padding: '20px 24px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
@@ -848,9 +851,9 @@ export default function FairLendingPage() {
                 </div>
               </div>
 
-              {/* ══════════════════════════════════════════════════════════
+              {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
                   SECTION 2: DEMOGRAPHIC PROFILE  -  HOMEOWNERSHIP
-              ══════════════════════════════════════════════════════════ */}
+              â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
               <div className="report-section" style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, marginBottom: 16, overflow: 'hidden' }}>
                 <SectionHeader num="2" title="Demographic Profile  -  Homeownership" subtitle="Direct identified ethnic records vs. national averages" />
                 <div style={{ padding: '0 0 0' }}>
@@ -945,7 +948,7 @@ export default function FairLendingPage() {
                       />
                     </div>
                     <div style={{ margin: '12px 20px 0', padding: '14px 16px', background: '#FEF2F2', borderRadius: 8, border: '1px solid #DC262630', fontSize: 12, color: C.textBody, lineHeight: 1.65 }}>
-                      <strong style={{ color: '#DC2626' }}>⚠ FAIR LENDING NOTE:</strong>{' '}
+                      <strong style={{ color: '#DC2626' }}>âš  FAIR LENDING NOTE:</strong>{' '}
                       The gap between ICONYCS Direct Identified records and Census area demographics indicates
                       significant unidentified homeowner population. A comprehensive fair lending analysis should
                       incorporate HMDA data to assess lending patterns by race/ethnicity.{' '}
@@ -965,9 +968,9 @@ export default function FairLendingPage() {
                 )}
               </div>
 
-              {/* ══════════════════════════════════════════════════════════
+              {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
                   SECTION 3: MORTGAGE LENDING PROFILE
-              ══════════════════════════════════════════════════════════ */}
+              â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
               <div className="report-section" style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, marginBottom: 16, overflow: 'hidden' }}>
                 <SectionHeader num="3" title="Mortgage Lending Profile" subtitle="Loan program distribution and key metrics" />
                 {report.loanRows.length > 0 ? (
@@ -987,14 +990,14 @@ export default function FairLendingPage() {
                   </div>
                 )}
                 <div style={{ padding: '10px 20px 14px', fontSize: 11, color: C.textDim, lineHeight: 1.65 }}>
-                  Avg Loan Amount estimated from property value × LTV proxy. Rate data has ~9.5% coverage in ICONYCS records.
+                  Avg Loan Amount estimated from property value Ã— LTV proxy. Rate data has ~9.5% coverage in ICONYCS records.
                   LTV figures are approximated from FNMA tier distributions.
                 </div>
               </div>
 
-              {/* ══════════════════════════════════════════════════════════
+              {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
                   SECTION 4: LTV DISTRIBUTION (FNMA TIERS)
-              ══════════════════════════════════════════════════════════ */}
+              â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
               <div className="report-section" style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, marginBottom: 16, overflow: 'hidden' }}>
                 <SectionHeader num="4" title="LTV Distribution  -  FNMA Tiers" subtitle="Loan-to-value concentration by standard tier buckets" />
                 {report.ltvRows.length > 0 ? (
@@ -1022,9 +1025,9 @@ export default function FairLendingPage() {
                 )}
               </div>
 
-              {/* ══════════════════════════════════════════════════════════
+              {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
                   SECTION 5: OCCUPANCY STATUS
-              ══════════════════════════════════════════════════════════ */}
+              â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
               <div className="report-section" style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, marginBottom: 16, overflow: 'hidden' }}>
                 <SectionHeader num="5" title="Occupancy Status" subtitle="Owner-occupied vs. non-owner-occupied split" />
                 <div style={{ padding: '20px 24px' }}>
@@ -1063,16 +1066,16 @@ export default function FairLendingPage() {
                     {' '}&nbsp;|&nbsp; National Average: {fmtPct(NATIONAL_AVG.nonOwnerOcc, 1)}
                     {report.nonOwnerOccPct > NATIONAL_AVG.nonOwnerOcc * 1.2 && (
                       <span style={{ color: '#DC2626', fontWeight: 700, marginLeft: 8 }}>
-                        ⚠ Significantly above national average  -  potential investor concentration flag
+                        âš  Significantly above national average  -  potential investor concentration flag
                       </span>
                     )}
                   </div>
                 </div>
               </div>
 
-              {/* ══════════════════════════════════════════════════════════
+              {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
                   SECTION 6: FAIR LENDING RISK INDICATORS
-              ══════════════════════════════════════════════════════════ */}
+              â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
               <div className="report-section" style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, marginBottom: 16, overflow: 'hidden' }}>
                 <SectionHeader num="6" title="Fair Lending Risk Indicators" subtitle="Traffic-light scoring for compliance review" />
                 <div style={{ padding: '20px 24px', display: 'flex', flexDirection: 'column', gap: 14 }}>
@@ -1089,7 +1092,7 @@ export default function FairLendingPage() {
                         ? 'Coverage 3-10%  -  marginal for standalone analysis.'
                         : 'Coverage below 3%  -  HMDA supplement strongly recommended.'
                     }
-                    note={`${fmtPct(report.demoCoveragePct, 1)} of records have direct ethnic identification. Threshold: 🔴 <3% | 🟡 3-10% | 🟢 >10%. Limited demographic data  -  HMDA supplement recommended for full fair lending analysis.`}
+                    note={`${fmtPct(report.demoCoveragePct, 1)} of records have direct ethnic identification. Threshold: ðŸ”´ <3% | ðŸŸ¡ 3-10% | ðŸŸ¢ >10%. Limited demographic data  -  HMDA supplement recommended for full fair lending analysis.`}
                   />
 
                   <RiskCard
@@ -1101,10 +1104,10 @@ export default function FairLendingPage() {
                       loanConcentrationLight(report.fhaVaPct) === 'green'
                         ? 'FHA+VA concentration is within normal range relative to national average.'
                         : loanConcentrationLight(report.fhaVaPct) === 'yellow'
-                        ? 'FHA+VA concentration is 1.5-2× national average  -  warrants further review.'
-                        : 'FHA+VA concentration exceeds 2× national average  -  potential redlining indicator.'
+                        ? 'FHA+VA concentration is 1.5-2Ã— national average  -  warrants further review.'
+                        : 'FHA+VA concentration exceeds 2Ã— national average  -  potential redlining indicator.'
                     }
-                    note={`Geography FHA+VA: ${fmtPct(report.fhaVaPct, 1)} vs. National Average: ${fmtPct(NATIONAL_AVG.fhaVaPct, 1)}. Ratio: ${(report.fhaVaPct / NATIONAL_AVG.fhaVaPct).toFixed(2)}×. Higher FHA/VA concentration in minority-populated areas is a recognized HMDA fair lending risk indicator. Threshold: 🔴 >2× | 🟡 1.5-2× | 🟢 <1.5×`}
+                    note={`Geography FHA+VA: ${fmtPct(report.fhaVaPct, 1)} vs. National Average: ${fmtPct(NATIONAL_AVG.fhaVaPct, 1)}. Ratio: ${(report.fhaVaPct / NATIONAL_AVG.fhaVaPct).toFixed(2)}Ã—. Higher FHA/VA concentration in minority-populated areas is a recognized HMDA fair lending risk indicator. Threshold: ðŸ”´ >2Ã— | ðŸŸ¡ 1.5-2Ã— | ðŸŸ¢ <1.5Ã—`}
                   />
 
                   <RiskCard
@@ -1119,7 +1122,7 @@ export default function FairLendingPage() {
                         ? 'High-LTV concentration (40-60%) merits monitoring.'
                         : 'High-LTV concentration exceeds 60%  -  elevated credit risk concentration.'
                     }
-                    note={`${fmtPct(report.highLtvSharePct, 1)} of loans are in high-LTV tiers (>80% LTV). Concentrated high-LTV lending in protected-class geographies is a key CFPB and OCC supervisory focus. Threshold: 🔴 >60% | 🟡 40-60% | 🟢 <40%`}
+                    note={`${fmtPct(report.highLtvSharePct, 1)} of loans are in high-LTV tiers (>80% LTV). Concentrated high-LTV lending in protected-class geographies is a key CFPB and OCC supervisory focus. Threshold: ðŸ”´ >60% | ðŸŸ¡ 40-60% | ðŸŸ¢ <40%`}
                   />
 
                   {/* Indicator 4: Demographic Coverage Gap - Census vs Direct Identified */}
@@ -1143,13 +1146,13 @@ export default function FairLendingPage() {
                             ? 'Coverage gap 10-20%  -  moderate unidentified population; HMDA supplement recommended.'
                             : 'Coverage gap >20%  -  large unidentified population; HMDA data strongly required for full fair lending analysis.'
                         }
-                        note={`Census area minority population:  | ICONYCS directly identified minority:  | Gap: . A large gap indicates homeowners whose race/ethnicity is unidentified in direct records. Threshold: 🔴 Gap >20% | 🟡 Gap 10-20% | 🟢 Gap <10%.`}
+                        note={`Census area minority population:  | ICONYCS directly identified minority:  | Gap: . A large gap indicates homeowners whose race/ethnicity is unidentified in direct records. Threshold: ðŸ”´ Gap >20% | ðŸŸ¡ Gap 10-20% | ðŸŸ¢ Gap <10%.`}
                       />
                     );
                   })() : (
                     <div style={{ background: '#F8F9FC', border: `1.5px dashed ${C.border}`, borderRadius: 10, overflow: 'hidden' }}>
                       <div style={{ padding: '10px 16px', background: C.bgWarm, display: 'flex', alignItems: 'center', gap: 10 }}>
-                        <span style={{ fontSize: 20 }}>🔵</span>
+                        <span style={{ fontSize: 20 }}>ðŸ”µ</span>
                         <div style={{ flex: 1 }}>
                           <div style={{ fontSize: 12, fontWeight: 700, opacity: 0.6 }}>INDICATOR 4</div>
                           <div style={{ fontSize: 14, fontWeight: 700, color: C.navy }}>Demographic Data Coverage Gap  -  Census vs Direct Identified</div>
@@ -1167,9 +1170,9 @@ export default function FairLendingPage() {
                 </div>
               </div>
 
-              {/* ══════════════════════════════════════════════════════════
+              {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
                   SECTION 7: METHODOLOGY & DISCLAIMERS
-              ══════════════════════════════════════════════════════════ */}
+              â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
               <div className="report-section" style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, marginBottom: 16, overflow: 'hidden' }}>
                 <SectionHeader num="7" title="Methodology & Disclaimers" />
                 <div style={{ padding: '20px 24px' }}>
@@ -1179,7 +1182,7 @@ export default function FairLendingPage() {
                       <div style={{ fontSize: 12, color: C.textBody, lineHeight: 1.7 }}>
                         <p style={{ margin: '0 0 8px' }}>ICONYCS Housing Analytics aggregates 130M+ residential property records from county assessor records, deed transfers, mortgage assignments, and USPS address files.</p>
                         <p style={{ margin: '0 0 8px' }}>Ethnic identification is sourced from direct voter registration records and proprietary consumer databases. All demographic data is independently sourced  -  not modeled.</p>
-                        <p style={{ margin: 0 }}>LTV tiers follow FNMA standard tier definitions (≤60%, 60-65%, 65-70%, 70-75%, 75-80%, 80-85%, 85-90%, 90-95%, 95-97%, &gt;97%).</p>
+                        <p style={{ margin: 0 }}>LTV tiers follow FNMA standard tier definitions (â‰¤60%, 60-65%, 65-70%, 70-75%, 75-80%, 80-85%, 85-90%, 90-95%, 95-97%, &gt;97%).</p>
                       </div>
                     </div>
                     <div>
@@ -1195,7 +1198,7 @@ export default function FairLendingPage() {
                     <div>
                       <h4 style={{ fontSize: 12, fontWeight: 700, color: C.navy, textTransform: 'uppercase', letterSpacing: '0.06em', margin: '0 0 10px' }}>Fair Housing Act Compliance</h4>
                       <div style={{ fontSize: 12, color: C.textBody, lineHeight: 1.7 }}>
-                        This report is prepared in furtherance of compliance with the Fair Housing Act (42 U.S.C. § 3601 et seq.),
+                        This report is prepared in furtherance of compliance with the Fair Housing Act (42 U.S.C. Â§ 3601 et seq.),
                         the Equal Credit Opportunity Act (ECOA), the Community Reinvestment Act (CRA), and HMDA reporting requirements.
                         Data presented is for analytical and compliance planning purposes only.
                       </div>
@@ -1203,9 +1206,9 @@ export default function FairLendingPage() {
                     <div>
                       <h4 style={{ fontSize: 12, fontWeight: 700, color: C.navy, textTransform: 'uppercase', letterSpacing: '0.06em', margin: '0 0 10px' }}>Confidence Indicators</h4>
                       <div style={{ fontSize: 12, color: C.textBody, lineHeight: 1.7 }}>
-                        <div style={{ marginBottom: 4 }}>🟢 <strong>Direct Identified</strong>  -  individually sourced from voter/consumer records</div>
-                        <div style={{ marginBottom: 4 }}>🟡 <strong>Household Modeled</strong>  -  inferred from household composition</div>
-                        <div>🔴 <strong>Area Estimated</strong>  -  geographic proxy (census tract-level)</div>
+                        <div style={{ marginBottom: 4 }}>ðŸŸ¢ <strong>Direct Identified</strong>  -  individually sourced from voter/consumer records</div>
+                        <div style={{ marginBottom: 4 }}>ðŸŸ¡ <strong>Household Modeled</strong>  -  inferred from household composition</div>
+                        <div>ðŸ”´ <strong>Area Estimated</strong>  -  geographic proxy (census tract-level)</div>
                       </div>
                     </div>
                   </div>
@@ -1213,7 +1216,7 @@ export default function FairLendingPage() {
                     padding: '14px 16px', background: '#FFF8E7', borderRadius: 8,
                     border: '1px solid #D9770630', fontSize: 12, color: C.textBody, lineHeight: 1.65,
                   }}>
-                    <strong style={{ color: '#D97706' }}>⚠ Legal Disclaimer:</strong> This report is for analytical purposes only and does not constitute legal advice.
+                    <strong style={{ color: '#D97706' }}>âš  Legal Disclaimer:</strong> This report is for analytical purposes only and does not constitute legal advice.
                     Users should engage qualified fair lending counsel before making compliance determinations.
                     ICONYCS makes no warranty as to the accuracy or completeness of the data for any specific compliance purpose.
                     Contact: <a href="mailto:info@iconycs.com" style={{ color: C.terra }}>info@iconycs.com</a>
@@ -1221,9 +1224,9 @@ export default function FairLendingPage() {
                 </div>
               </div>
 
-              {/* ══════════════════════════════════════════════════════════
+              {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
                   SECTION 8: CALL TO ACTION
-              ══════════════════════════════════════════════════════════ */}
+              â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
               <div className="report-section no-print" style={{
                 background: `linear-gradient(135deg, ${C.navy} 0%, #2A3F6A 100%)`,
                 borderRadius: 12, padding: '28px 32px', marginBottom: 16, color: '#fff',
@@ -1246,7 +1249,7 @@ export default function FairLendingPage() {
                         borderRadius: 8, textDecoration: 'none', fontSize: 14, fontWeight: 700,
                         display: 'inline-flex', alignItems: 'center', gap: 6,
                       }}>
-                        Request Enterprise Demo →
+                        Request Enterprise Demo â†’
                       </a>
                       <Link href="/pricing" style={{
                         padding: '12px 24px', background: 'rgba(255,255,255,0.15)',
@@ -1268,7 +1271,7 @@ export default function FairLendingPage() {
                       'Dedicated Compliance Support',
                     ].map((f, i) => (
                       <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, opacity: 0.9 }}>
-                        <span style={{ color: C.terra, fontWeight: 700, fontSize: 14 }}>✓</span> {f}
+                        <span style={{ color: C.terra, fontWeight: 700, fontSize: 14 }}>âœ“</span> {f}
                       </div>
                     ))}
                   </div>
@@ -1277,7 +1280,7 @@ export default function FairLendingPage() {
 
               {/* Print footer */}
               <div className="print-only" style={{ marginTop: 24, paddingTop: 16, borderTop: `2px solid ${C.navy}`, display: 'flex', justifyContent: 'space-between', fontSize: 10, color: C.textMuted }}>
-                <span>Powered by ICONYCS Housing Analytics | iconycs.com | info@iconycs.com</span>
+                <span>ICONYCS Housing Demographics Intelligence | iconycs.com | info@iconycs.com | 760-672-0145</span>
                 <span>Confidential  -  Analytical Use Only | Generated {report.generatedAt}</span>
               </div>
 

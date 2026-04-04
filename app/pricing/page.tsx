@@ -50,7 +50,7 @@ const TIERS = [
     description: 'Single state, full drill-down. CA, FL, TX, NY: $2,500/mo. All other states: $1,500/mo.',
     features: [
       'One state  -  full drill-down',
-      'State → County → City → ZIP',
+      'State â†’ County â†’ City â†’ ZIP',
       'All demographic breakdowns',
       'LTV tier analysis (FNMA tiers)',
       'Mortgage intelligence panel',
@@ -159,7 +159,7 @@ function EnterpriseGeoModal({ onClose }: { onClose: () => void }) {
             }}
             aria-label="Close"
           >
-            ✕
+            âœ•
           </button>
         </div>
 
@@ -214,7 +214,7 @@ function EnterpriseGeoModal({ onClose }: { onClose: () => void }) {
                 'Team seats (unlimited)',
               ].map(item => (
                 <div key={item} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <span style={{ color: C.sage, fontWeight: 700, fontSize: 14, flexShrink: 0 }}>✓</span>
+                  <span style={{ color: C.sage, fontWeight: 700, fontSize: 14, flexShrink: 0 }}>âœ“</span>
                   <span style={{ fontSize: 13, color: C.textBody, fontFamily: C.font }}>{item}</span>
                 </div>
               ))}
@@ -230,7 +230,7 @@ function EnterpriseGeoModal({ onClose }: { onClose: () => void }) {
             borderRadius: 9,
             display: 'flex', alignItems: 'center', gap: 8,
           }}>
-            <span style={{ fontSize: 15 }}>📬</span>
+            <span style={{ fontSize: 15 }}>ðŸ“¬</span>
             <span style={{ fontSize: 13, color: C.textMuted, fontFamily: C.font }}>
               <strong style={{ color: C.textBody }}>info@iconycs.com</strong>
               {' * '}
@@ -267,7 +267,7 @@ function EnterpriseGeoModal({ onClose }: { onClose: () => void }) {
               display: 'inline-block',
             }}
           >
-            Request a Demo →
+            Request a Demo â†’
           </a>
         </div>
       </div>
@@ -464,14 +464,14 @@ function WaitlistModal({
                     opacity: loading ? 0.7 : 1,
                   }}
                 >
-                  {loading ? 'Submitting...' : "I'm In →"}
+                  {loading ? 'Submitting...' : "I'm In â†’"}
                 </button>
               </div>
             </form>
           </>
         ) : (
           <div style={{ textAlign: 'center', padding: '16px 0' }}>
-            <div style={{ fontSize: 48, marginBottom: 16 }}>🎉</div>
+            <div style={{ fontSize: 48, marginBottom: 16 }}>ðŸŽ‰</div>
             <h2 style={{
               fontSize: 24, fontWeight: 700, color: C.text,
               fontFamily: C.fontSerif, margin: '0 0 12px',
@@ -549,7 +549,7 @@ function TierCard({
           fontSize: 11, fontWeight: 700, letterSpacing: '0.08em',
           fontFamily: C.font, whiteSpace: 'nowrap',
         }}>
-          ⭐ MOST POPULAR
+          â­ MOST POPULAR
         </div>
       )}
 
@@ -612,7 +612,7 @@ function TierCard({
               boxSizing: 'border-box',
             }}
           >
-            {tier.cta} →
+            {tier.cta} â†’
           </Link>
         )}
       </div>
@@ -750,7 +750,7 @@ function EnterpriseCard({ onViewPricing }: { onViewPricing: () => void }) {
             letterSpacing: '0.04em',
           }}
         >
-          🗺 View Geographic Pricing
+          ðŸ—º View Geographic Pricing
         </button>
       </div>
     </div>
@@ -805,8 +805,8 @@ export default function PricingPage() {
           }}>
             <Link href="/" style={{ textDecoration: 'none' }}>
               <div>
-                <span style={{ fontSize: 20, fontWeight: 800, color: C.text, letterSpacing: '-0.02em' }}>ICONYCS</span>
-                <div style={{ fontSize: 9, fontWeight: 600, color: C.textMuted, letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: -2 }}>Housing Intelligence</div>
+                <span style={{ fontSize: 20, fontWeight: 800, color: '#1C1917', letterSpacing: '-0.02em' }}>ICONYCS</span>
+                <div style={{ fontSize: 9, fontWeight: 600, color: '#78716C', letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: -2 }}>Housing Demographics Intelligence</div>
               </div>
             </Link>
             <div style={{ marginLeft: 'auto', display: 'flex', gap: 6, alignItems: 'center' }}>
@@ -849,7 +849,7 @@ export default function PricingPage() {
             fontSize: 12, fontWeight: 600, color: C.terra,
             marginBottom: 24, letterSpacing: '0.06em',
           }}>
-            🚀 NOW IN EARLY ACCESS
+            ðŸš€ NOW IN EARLY ACCESS
           </div>
           <h1
             className="hero-title"
@@ -872,13 +872,13 @@ export default function PricingPage() {
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
             {['No contracts', 'Cancel anytime', '14-day free trial'].map(label => (
               <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: C.textMuted }}>
-                <span style={{ color: C.sage, fontWeight: 700 }}>✓</span> {label}
+                <span style={{ color: C.sage, fontWeight: 700 }}>âœ“</span> {label}
               </div>
             ))}
           </div>
         </div>
 
-        {/* ── Launch Promo Banners ── */}
+        {/* â”€â”€ Launch Promo Banners â”€â”€ */}
         <div style={{ maxWidth: 1100, margin: '0 auto 40px', padding: '0 24px', display: 'flex', gap: 16, flexWrap: 'wrap', justifyContent: 'center' }}>
           <div style={{ flex: 1, minWidth: 280, background: 'linear-gradient(135deg, #C4653A 0%, #E8845C 100%)', borderRadius: 16, padding: '20px 28px', display: 'flex', alignItems: 'center', gap: 16, boxShadow: '0 8px 32px rgba(196,101,58,0.3)', position: 'relative', overflow: 'hidden' }}>
             <div style={{ position: 'absolute', top: -12, right: -12, width: 80, height: 80, background: 'rgba(255,255,255,0.2)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', border: '2px solid rgba(255,255,255,0.4)' }}>
@@ -979,7 +979,7 @@ export default function PricingPage() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                 {['Instant download', 'PDF + data export', 'Full demographics', 'No subscription needed'].map(f => (
                   <div key={f} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: C.textBody }}>
-                    <span style={{ color: C.sage, fontWeight: 700, fontSize: 14 }}>✓</span> {f}
+                    <span style={{ color: C.sage, fontWeight: 700, fontSize: 14 }}>âœ“</span> {f}
                   </div>
                 ))}
               </div>
@@ -992,7 +992,7 @@ export default function PricingPage() {
                   color: '#fff', cursor: 'pointer', whiteSpace: 'nowrap',
                 }}
               >
-                Get Early Access →
+                Get Early Access â†’
               </button>
             </div>
           </div>
@@ -1028,7 +1028,7 @@ export default function PricingPage() {
                 },
                 {
                   q: 'What is the Social Housing Score?',
-                  a: "The Social Housing Score™ is ICONYCS's proprietary index combining ethnicity, wealth, income, education, and loan data into a single community risk/opportunity score.",
+                  a: "The Social Housing Scoreâ„¢ is ICONYCS's proprietary index combining ethnicity, wealth, income, education, and loan data into a single community risk/opportunity score.",
                 },
                 {
                   q: 'Is there an annual plan?',
@@ -1080,7 +1080,7 @@ export default function PricingPage() {
                   textDecoration: 'none', display: 'inline-block',
                 }}
               >
-                Start Free →
+                Start Free â†’
               </Link>
               <button
                 onClick={() => setWaitlistTier(TIERS[2])}
@@ -1106,7 +1106,7 @@ export default function PricingPage() {
           fontSize: 12, color: C.textDim,
           fontFamily: C.font,
         }}>
-          © {new Date().getFullYear()} ICONYCS Housing Analytics * All prices in USD *{' '}
+          Â© {new Date().getFullYear()} ICONYCS Housing Analytics * All prices in USD *{' '}
           <Link href="/" style={{ color: C.textDim, textDecoration: 'none' }}>Home</Link>
           {' * '}
           <Link href="/reports" style={{ color: C.textDim, textDecoration: 'none' }}>Analytics</Link>

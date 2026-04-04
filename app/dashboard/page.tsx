@@ -218,7 +218,10 @@ export default function UserDashboardPage() {
       <nav style={{ background: C.bgCard, borderBottom: `1px solid ${C.border}`, position: 'sticky', top: 0, zIndex: 50 }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px', display: 'flex', alignItems: 'center', height: 56, gap: 24 }}>
           <Link href="/" style={{ textDecoration: 'none' }}>
-            <span style={{ fontSize: 19, fontWeight: 700, color: C.text }}>ICONYCS</span>
+            <div>
+              <span style={{ fontSize: 20, fontWeight: 800, color: '#1C1917', letterSpacing: '-0.02em' }}>ICONYCS</span>
+              <div style={{ fontSize: 9, fontWeight: 600, color: '#78716C', letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: -2 }}>Housing Demographics Intelligence</div>
+            </div>
           </Link>
           <span style={{ fontSize: 14, fontWeight: 600, color: C.terra }}>My Dashboard</span>
           <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 10 }}>

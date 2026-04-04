@@ -225,7 +225,10 @@ export default function ApiDocsPage() {
       <nav style={{ background: C.bgCard, borderBottom: `1px solid ${C.border}`, position: 'sticky', top: 0, zIndex: 50 }}>
         <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 24px', display: 'flex', alignItems: 'center', height: 52, gap: 16 }}>
           <Link href="/" style={{ textDecoration: 'none' }}>
-            <span style={{ fontSize: 19, fontWeight: 700, color: C.text }}>ICONYCS</span>
+            <div>
+              <span style={{ fontSize: 20, fontWeight: 800, color: '#1C1917', letterSpacing: '-0.02em' }}>ICONYCS</span>
+              <div style={{ fontSize: 9, fontWeight: 600, color: '#78716C', letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: -2 }}>Housing Demographics Intelligence</div>
+            </div>
           </Link>
           <span style={{ fontSize: 13, color: C.textMuted }}>Developer Docs</span>
           <div style={{ marginLeft: 'auto', display: 'flex', gap: 12, alignItems: 'center' }}>

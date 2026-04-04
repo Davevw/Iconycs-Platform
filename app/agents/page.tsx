@@ -94,8 +94,11 @@ export default function AgentsPage() {
       {/* -- Nav -- */}
       <nav style={{ background: C.bgCard, borderBottom: `1px solid ${C.border}`, position: 'sticky', top: 0, zIndex: 50 }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 20px', height: 52, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Link href="/" style={{ fontFamily: C.fontSerif, fontSize: 18, fontWeight: 700, color: C.navy, textDecoration: 'none', letterSpacing: '-0.02em' }}>
-            ICONYCS
+          <Link href="/" style={{ textDecoration: 'none' }}>
+            <div>
+              <span style={{ fontSize: 20, fontWeight: 800, color: '#1C1917', letterSpacing: '-0.02em' }}>ICONYCS</span>
+              <div style={{ fontSize: 9, fontWeight: 600, color: '#78716C', letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: -2 }}>Housing Demographics Intelligence</div>
+            </div>
           </Link>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <Link href="/reports" style={{ fontSize: 12, color: C.textMuted, textDecoration: 'none', padding: '5px 12px', borderRadius: 6, background: C.bgWarm }}>Reports</Link>

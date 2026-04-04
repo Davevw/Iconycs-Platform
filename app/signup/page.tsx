@@ -152,7 +152,7 @@ function SignupForm() {
   if (success) {
     return (
       <div style={{ padding: '32px', textAlign: 'center' }}>
-        <div style={{ fontSize: 48, marginBottom: 16 }}>✉️</div>
+        <div style={{ fontSize: 48, marginBottom: 16 }}>Ã¢Å“â€°Ã¯Â¸Â</div>
         <h2 style={{ fontSize: 20, fontWeight: 700, color: C.text, marginBottom: 8 }}>
           Check your email
         </h2>
@@ -443,22 +443,22 @@ export default function SignupPage() {
             textAlign: 'center',
           }}
         >
-          <Link href="/" style={{ textDecoration: 'none' }}>
-            <div
-              style={{
-                fontSize: 26,
-                fontWeight: 800,
-                color: '#FFFFFF',
-                letterSpacing: '0.06em',
-                fontFamily: C.fontSerif,
-              }}
-            >
-              ICONYCS
+                    <Link href="/" style={{ textDecoration: 'none' }}>
+            <div>
+              <div
+                style={{
+                  fontSize: 26,
+                  fontWeight: 800,
+                  color: '#FFFFFF',
+                  letterSpacing: '0.06em',
+                  fontFamily: C.fontSerif,
+                }}
+              >
+                ICONYCS
+              </div>
+              <div style={{ fontSize: 9, fontWeight: 600, color: 'rgba(255,255,255,0.65)', letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 2 }}>Housing Demographics Intelligence</div>
             </div>
           </Link>
-          <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.65)', marginTop: 6 }}>
-            Housing Analytics Platform
-          </div>
         </div>
 
         <Suspense fallback={<div style={{ padding: '48px 32px', textAlign: 'center', color: C.textMuted, fontFamily: C.font }}>Loading...</div>}>

@@ -127,22 +127,22 @@ export default function LoginPage() {
             textAlign: 'center',
           }}
         >
-          <Link href="/" style={{ textDecoration: 'none' }}>
-            <div
-              style={{
-                fontSize: 26,
-                fontWeight: 800,
-                color: '#FFFFFF',
-                letterSpacing: '0.06em',
-                fontFamily: C.fontSerif,
-              }}
-            >
-              ICONYCS
+                    <Link href="/" style={{ textDecoration: 'none' }}>
+            <div>
+              <div
+                style={{
+                  fontSize: 26,
+                  fontWeight: 800,
+                  color: '#FFFFFF',
+                  letterSpacing: '0.06em',
+                  fontFamily: C.fontSerif,
+                }}
+              >
+                ICONYCS
+              </div>
+              <div style={{ fontSize: 9, fontWeight: 600, color: 'rgba(255,255,255,0.65)', letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 2 }}>Housing Demographics Intelligence</div>
             </div>
           </Link>
-          <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.65)', marginTop: 6 }}>
-            Housing Analytics Platform
-          </div>
         </div>
 
         <div style={{ padding: '28px 32px' }}>
@@ -189,7 +189,7 @@ export default function LoginPage() {
                 marginBottom: 16,
               }}
             >
-              ✓ Password reset email sent. Check your inbox.
+              Ã¢Å“â€œ Password reset email sent. Check your inbox.
             </div>
           )}
 
@@ -302,7 +302,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                placeholder="••••••••"
+                placeholder="Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢"
                 style={{
                   width: '100%',
                   padding: '10px 14px',
