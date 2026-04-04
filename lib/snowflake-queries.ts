@@ -78,22 +78,20 @@ export function queryNationalBreakdown(dimension: 'ETHNICITY' | 'PROPERTY_CATEGO
 
 export function queryState(filters: GeoFilters): string {
   if (filters.state) {
-    // Single state — return dimension breakdown
     return `
       SELECT GEO_VALUE AS STATE, SUM(RECORD_COUNT) AS RECORD_COUNT,
              AVG(AVG_VALUE) AS AVG_VALUE, AVG(AVG_MORTGAGE) AS AVG_MORTGAGE
       FROM VW_DASHBOARD_STATE
-      WHERE STATE = '${filters.state.toUpperCase()}'
+      WHERE GEO_VALUE = '${filters.state.toUpperCase()}'
       GROUP BY GEO_VALUE
       LIMIT 1
     `.trim();
   }
-  // All states summary — aggregate per state, fast
   return `
-    SELECT STATE, SUM(RECORD_COUNT) AS RECORD_COUNT,
+    SELECT GEO_VALUE AS STATE, SUM(RECORD_COUNT) AS RECORD_COUNT,
            AVG(AVG_VALUE) AS AVG_VALUE, AVG(AVG_MORTGAGE) AS AVG_MORTGAGE
     FROM VW_DASHBOARD_STATE
-    GROUP BY STATE
+    GROUP BY GEO_VALUE
     ORDER BY RECORD_COUNT DESC
     LIMIT 51
   `.trim();
@@ -111,8 +109,8 @@ export function queryStateBreakdown(
     SELECT
       ${dimension} AS LABEL,
       SUM(RECORD_COUNT) AS RECORD_COUNT
-    FROM VW_DASHBOARD_NATIONAL
-    WHERE STATE = '${state.toUpperCase()}'
+    FROM VW_DASHBOARD_STATE
+    WHERE GEO_VALUE = '${state.toUpperCase()}'
       AND ${dimension} IS NOT NULL AND ${dimension} != 'Unknown'
     GROUP BY ${dimension}
     ORDER BY RECORD_COUNT DESC
