@@ -1,3 +1,21 @@
+# ICONYCS Migrations
+
+## Supabase — iconycs_waitlist table
+
+Run once in Supabase SQL editor (https://supabase.com/dashboard/project/vdgxbfumlysatthimpcb/sql):
+
+```sql
+CREATE TABLE IF NOT EXISTS iconycs_waitlist (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  email TEXT NOT NULL,
+  tier TEXT,
+  company TEXT,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+```
+
+---
+
 # ICONYCS Snowflake Migrations
 
 ---
