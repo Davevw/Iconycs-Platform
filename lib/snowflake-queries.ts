@@ -123,13 +123,18 @@ export function queryStateBreakdown(
 export function queryCounty(filters: GeoFilters): string {
   const conditions: string[] = [];
   if (filters.state)  conditions.push(`STATE = '${filters.state.toUpperCase()}'`);
-  if (filters.county) conditions.push(`COUNTY = '${filters.county.toUpperCase()}'`);
-  const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
+  if (filters.county) conditions.push(`CNTYCD = '${filters.county.toUpperCase()}'`);
+  const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : 'WHERE 1=0';
   return `
-    SELECT *
+    SELECT STATE, CNTYCD,
+           SUM(RECORD_COUNT) AS RECORD_COUNT,
+           AVG(AVG_VALUE) AS AVG_VALUE,
+           AVG(AVG_MORTGAGE) AS AVG_MORTGAGE
     FROM VW_DASHBOARD_COUNTY
     ${where}
+    GROUP BY STATE, CNTYCD
     ORDER BY RECORD_COUNT DESC
+    LIMIT 100
   `.trim();
 }
 
@@ -138,14 +143,19 @@ export function queryCounty(filters: GeoFilters): string {
 export function queryCity(filters: GeoFilters): string {
   const conditions: string[] = [];
   if (filters.state)  conditions.push(`STATE = '${filters.state.toUpperCase()}'`);
-  if (filters.county) conditions.push(`COUNTY = '${filters.county.toUpperCase()}'`);
   if (filters.city)   conditions.push(`CITY = '${filters.city.toUpperCase()}'`);
-  const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
+  if (!filters.state && !filters.city) return `SELECT 1 AS DUMMY WHERE 1=0`;
+  const where = `WHERE ${conditions.join(' AND ')}`;
   return `
-    SELECT *
+    SELECT STATE, CITY,
+           SUM(RECORD_COUNT) AS RECORD_COUNT,
+           AVG(AVG_VALUE) AS AVG_VALUE,
+           AVG(AVG_MORTGAGE) AS AVG_MORTGAGE
     FROM VW_DASHBOARD_CITY
     ${where}
+    GROUP BY STATE, CITY
     ORDER BY RECORD_COUNT DESC
+    LIMIT 100
   `.trim();
 }
 
