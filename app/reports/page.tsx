@@ -1257,7 +1257,10 @@ export default function ReportsPage() {
         <nav className="no-print" style={{ background: C.bgCard, borderBottom: `1px solid ${C.border}`, position: 'sticky', top: 0, zIndex: 50 }}>
           <div style={{ maxWidth: 1500, margin: '0 auto', padding: '0 20px', display: 'flex', alignItems: 'center', height: 52, gap: 16 }}>
             <Link href="/" style={{ textDecoration: 'none' }}>
-              <span style={{ fontSize: 19, fontWeight: 700, color: C.text }}>ICONYCS</span>
+              <div>
+                <span style={{ fontSize: 19, fontWeight: 700, color: C.text }}>ICONYCS</span>
+                <div style={{ fontSize: 9, fontWeight: 600, color: C.textMuted, letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: -2 }}>Housing Demographics Analysis</div>
+              </div>
             </Link>
             <span style={{ fontSize: 14, fontWeight: 600, color: C.terra }}>Analytics Reports</span>
             <div style={{ marginLeft: 'auto', display: 'flex', gap: 8, alignItems: 'center' }}>
