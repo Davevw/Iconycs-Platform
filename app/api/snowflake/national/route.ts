@@ -35,14 +35,23 @@ export async function GET() {
 
     const totals = totalsResult.data?.[0] ?? {};
 
+    const totalProps = Number(totals.TOTAL_PROPERTIES ?? 0);
+    const avgVal = Number(totals.AVG_VALUE ?? 0);
+    const avgMtg = Number(totals.AVG_MORTGAGE ?? 0);
+
     return NextResponse.json({
       success: true,
-      totalProperties: totals.TOTAL_PROPERTIES ?? 0,
-      avgValue: totals.AVG_VALUE ?? 0,
-      avgMortgage: totals.AVG_MORTGAGE ?? 0,
+      // camelCase for new code
+      totalProperties: totalProps,
+      avgValue: avgVal,
+      avgMortgage: avgMtg,
       ethnicityBreakdown: ethnicityRows,
       propertyBreakdown: propertyRows,
       loanBreakdown: loanRows,
+      // UPPERCASE aliases for legacy frontend code
+      TOTAL_PROPERTIES: totalProps,
+      AVG_VALUE: avgVal,
+      AVG_MORTGAGE: avgMtg,
       executionTime: totalsResult.executionTime,
     });
   } catch (err: any) {
