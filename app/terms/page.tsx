@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Terms of Service | ICONYCS',
-  description: 'ICONYCS Housing Analytics Terms of Service & Data Use Agreement',
+  description: 'ICONYCS Housing Intelligence Terms of Service & Data Use Agreement',
 };
 
 const C = {
@@ -151,7 +151,7 @@ export default function TermsPage() {
           {/* Sections */}
           <div id="section-1">
             <Section number="1" title="Acceptance of Terms">
-              By accessing or using the ICONYCS Housing Analytics platform ("Service") operated by Western Realty Finance ("Company," "we," "us"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree, do not use the Service.
+              By accessing or using the ICONYCS Housing Intelligence platform ("Service") operated by Western Realty Finance ("Company," "we," "us"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree, do not use the Service.
             </Section>
           </div>
 
@@ -273,7 +273,7 @@ export default function TermsPage() {
           <div id="section-10">
             <Section number="10" title="Contact">
               <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 12, padding: '20px 24px' }}>
-                <div style={{ fontSize: 14, fontWeight: 700, color: C.navy, marginBottom: 12 }}>Western Realty Finance | ICONYCS Housing Analytics</div>
+                <div style={{ fontSize: 14, fontWeight: 700, color: C.navy, marginBottom: 12 }}>Western Realty Finance | ICONYCS Housing Intelligence</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                   <div style={{ fontSize: 13, color: C.textBody }}>
                     <span style={{ color: C.textMuted, marginRight: 8 }}>Address:</span>

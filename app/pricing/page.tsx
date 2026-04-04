@@ -1106,7 +1106,7 @@ export default function PricingPage() {
           fontSize: 12, color: C.textDim,
           fontFamily: C.font,
         }}>
-          Â© {new Date().getFullYear()} ICONYCS Housing Analytics * All prices in USD *{' '}
+          Â© {new Date().getFullYear()} ICONYCS Housing Intelligence * All prices in USD *{' '}
           <Link href="/" style={{ color: C.textDim, textDecoration: 'none' }}>Home</Link>
           {' * '}
           <Link href="/reports" style={{ color: C.textDim, textDecoration: 'none' }}>Analytics</Link>

@@ -605,7 +605,7 @@ export default function FairLendingPage() {
             </h1>
             <p style={{ fontSize: 14, color: C.textMuted, margin: 0, lineHeight: 1.6 }}>
               Professional-grade fair lending analysis for banks, mortgage lenders, and regulatory compliance.
-              Powered by ICONYCS Housing Analytics  -  130M+ residential records.
+              Powered by ICONYCS Housing Intelligence  -  130M+ residential records.
             </p>
           </div>
 
@@ -788,7 +788,7 @@ export default function FairLendingPage() {
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 12 }}>
                     <div>
                       <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', opacity: 0.6, textTransform: 'uppercase', marginBottom: 6 }}>
-                        ICONYCS Housing Analytics
+                        ICONYCS Housing Intelligence
                       </div>
                       <h2 style={{ fontSize: 28, fontWeight: 800, margin: '0 0 4px', fontFamily: C.fontSerif, letterSpacing: '-0.01em' }}>
                         Fair Lending Compliance Report
@@ -814,7 +814,7 @@ export default function FairLendingPage() {
                     <div style={{ textAlign: 'right' }}>
                       <div style={{ fontSize: 10, opacity: 0.5, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 4 }}>Powered by</div>
                       <div style={{ fontSize: 20, fontWeight: 800, letterSpacing: '0.04em' }}>ICONYCS</div>
-                      <div style={{ fontSize: 11, opacity: 0.6 }}>Housing Analytics</div>
+                      <div style={{ fontSize: 11, opacity: 0.6 }}>Housing Intelligence</div>
                       <button onClick={handlePrint} className="no-print" style={{
                         marginTop: 14, padding: '8px 18px', background: 'rgba(255,255,255,0.15)',
                         border: '1px solid rgba(255,255,255,0.3)', borderRadius: 7,
@@ -1180,7 +1180,7 @@ export default function FairLendingPage() {
                     <div>
                       <h4 style={{ fontSize: 12, fontWeight: 700, color: C.navy, textTransform: 'uppercase', letterSpacing: '0.06em', margin: '0 0 10px' }}>Data Sources</h4>
                       <div style={{ fontSize: 12, color: C.textBody, lineHeight: 1.7 }}>
-                        <p style={{ margin: '0 0 8px' }}>ICONYCS Housing Analytics aggregates 130M+ residential property records from county assessor records, deed transfers, mortgage assignments, and USPS address files.</p>
+                        <p style={{ margin: '0 0 8px' }}>ICONYCS Housing Intelligence aggregates 130M+ residential property records from county assessor records, deed transfers, mortgage assignments, and USPS address files.</p>
                         <p style={{ margin: '0 0 8px' }}>Ethnic identification is sourced from direct voter registration records and proprietary consumer databases. All demographic data is independently sourced  -  not modeled.</p>
                         <p style={{ margin: 0 }}>LTV tiers follow FNMA standard tier definitions (â‰¤60%, 60-65%, 65-70%, 70-75%, 75-80%, 80-85%, 85-90%, 90-95%, 95-97%, &gt;97%).</p>
                       </div>

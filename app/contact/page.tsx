@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Contact Us',
-  description: 'Contact ICONYCS Housing Analytics. Schedule a call to discuss your property data and demographic analysis needs.',
+  description: 'Contact ICONYCS Housing Intelligence. Schedule a call to discuss your property data and demographic analysis needs.',
 };
 
 export default function ContactPage() {

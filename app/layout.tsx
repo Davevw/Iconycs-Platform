@@ -4,7 +4,7 @@ import './globals.css';
 export const metadata: Metadata = {
   metadataBase: new URL('https://iconycs.com'),
   title: {
-    default: 'ICONYCS  -  Housing Analytics & Homeowner Demographics',
+    default: 'ICONYCS  -  Housing Intelligence & Homeowner Demographics',
     template: '%s | ICONYCS',
   },
   description:
@@ -14,19 +14,19 @@ export const metadata: Metadata = {
     'home ownership data', 'demographic analysis', 'property records', 'housing market data',
     'socio-economic housing', 'ICONYCS', 'PDaaS', 'property data as a service',
   ],
-  authors: [{ name: 'ICONYCS Housing Analytics' }],
+  authors: [{ name: 'ICONYCS Housing Intelligence' }],
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: 'https://iconycs.com',
     siteName: 'ICONYCS',
-    title: 'ICONYCS  -  Housing Analytics & Homeowner Demographics',
+    title: 'ICONYCS  -  Housing Intelligence & Homeowner Demographics',
     description: '130M+ property records. 187M+ owner profiles. The socio-economics of home ownership.',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ICONYCS  -  Housing Analytics',
+    title: 'ICONYCS  -  Housing Intelligence',
     description: '130M+ properties. 187M+ owner profiles. The socio-economics of home ownership.',
   },
   robots: { index: true, follow: true },
@@ -50,7 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               '@context': 'https://schema.org',
               '@type': 'Organization',
               name: 'ICONYCS',
-              description: 'Housing Analytics and Homeowner Demographics',
+              description: 'Housing Intelligence and Homeowner Demographics',
               url: 'https://iconycs.com',
               address: {
                 '@type': 'PostalAddress',

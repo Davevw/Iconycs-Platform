@@ -191,7 +191,7 @@ export async function generateLinkedInPost(
   const response = await anthropic.messages.create({
     model: 'claude-sonnet-4-6',
     max_tokens: 1024,
-    system: `You write LinkedIn posts for ICONYCS Housing Analytics, published under the WRFCO "Home Ownership News" business page.
+    system: `You write LinkedIn posts for ICONYCS Housing Intelligence, published under the WRFCO "Home Ownership News" business page.
 
 Posts should be:
 - Professional but engaging

@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy | ICONYCS',
-  description: 'ICONYCS Housing Analytics Privacy Policy  -  how we collect, use, and protect your data.',
+  description: 'ICONYCS Housing Intelligence Privacy Policy  -  how we collect, use, and protect your data.',
 };
 
 const C = {
