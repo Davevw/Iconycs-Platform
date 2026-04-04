@@ -9,7 +9,7 @@ const connectionConfig = {
   account: process.env.SNOWFLAKE_ACCOUNT || 'xp62895.west-us-2.azure',
   username: process.env.SNOWFLAKE_USER || 'IconycsHA1234',
   password: process.env.SNOWFLAKE_PASSWORD || '!Dave0145',
-  warehouse: process.env.SNOWFLAKE_WAREHOUSE || 'QRY_WAREHOUSE',
+  warehouse: process.env.SNOWFLAKE_WAREHOUSE || 'COMPUTE_WH',
   database: process.env.SNOWFLAKE_DATABASE || 'PROPERTYANALYTICS',
   schema: process.env.SNOWFLAKE_SCHEMA || 'PUBLIC',
   role: process.env.SNOWFLAKE_ROLE || 'PUBLIC',
@@ -47,7 +47,7 @@ function runQuery(sql: string): Promise<{ success: boolean; data?: Record<string
         return;
       }
       // Always set warehouse explicitly
-      const wh = process.env.SNOWFLAKE_WAREHOUSE || 'QRY_WAREHOUSE';
+      const wh = process.env.SNOWFLAKE_WAREHOUSE || 'COMPUTE_WH';
       connection.execute({
         sqlText: `USE WAREHOUSE ${wh}`,
         complete: () => {
@@ -85,7 +85,7 @@ export async function testConnection(): Promise<{ success: boolean; message: str
     message: 'Connected successfully',
     details: {
       account: process.env.SNOWFLAKE_ACCOUNT || 'xp62895.west-us-2.azure',
-      warehouse: process.env.SNOWFLAKE_WAREHOUSE || 'QRY_WAREHOUSE',
+      warehouse: process.env.SNOWFLAKE_WAREHOUSE || 'COMPUTE_WH',
       database: process.env.SNOWFLAKE_DATABASE || 'PROPERTYANALYTICS',
       schema: process.env.SNOWFLAKE_SCHEMA || 'PUBLIC',
     },
@@ -101,7 +101,7 @@ export async function fetchSchema(tableName: string): Promise<{ success: boolean
     connection.connect((err) => {
       if (err) { resolve({ success: false, error: `Connection error: ${err.message}` }); return; }
       connection.execute({
-        sqlText: `USE WAREHOUSE ${process.env.SNOWFLAKE_WAREHOUSE || 'QRY_WAREHOUSE'}`,
+        sqlText: `USE WAREHOUSE ${process.env.SNOWFLAKE_WAREHOUSE || 'COMPUTE_WH'}`,
         complete: () => {
           connection.execute({
             sqlText: `DESCRIBE TABLE ${tableName}`,
