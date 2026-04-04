@@ -1290,6 +1290,7 @@ export default function ReportsPage() {
               <Link href="/api-docs" style={{ fontSize: 12, color: C.sage, textDecoration: 'none', padding: '5px 12px', borderRadius: 6, background: '#F0F7EE', fontWeight: 600 }}>API</Link>
               <Link href="/fair-lending" style={{ fontSize: 12, color: '#fff', textDecoration: 'none', padding: '5px 12px', borderRadius: 6, background: C.terra, fontWeight: 600 }}>Fair Lending</Link>
               <Link href="/pricing" style={{ fontSize: 12, color: C.terra, textDecoration: 'none', padding: '5px 12px', borderRadius: 6, background: '#FFF8F5', fontWeight: 600 }}>Pricing</Link>
+              <Link href="/agents" style={{ fontSize: 12, color: '#fff', textDecoration: 'none', padding: '5px 12px', borderRadius: 6, background: C.navy, fontWeight: 700 }}>Agents</Link>
               <Link href="/" style={{ fontSize: 12, color: C.textMuted, textDecoration: 'none', padding: '5px 12px', borderRadius: 6 }}>Home</Link>
               <Link href="/login" style={{ fontSize: 12, color: '#fff', textDecoration: 'none', padding: '5px 14px', borderRadius: 6, background: C.terra, fontWeight: 700 }}>Sign In</Link>
             </div>
