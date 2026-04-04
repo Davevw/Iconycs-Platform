@@ -214,17 +214,17 @@ export function queryTrends(filters: AnalyticsFilters): string {
   if (filters.state) conditions.push(`STATE = '${filters.state.toUpperCase()}'`);
   if (filters.city)  conditions.push(`CITY = '${filters.city.toUpperCase()}'`);
   if (filters.zip)   conditions.push(`ZIP = '${filters.zip}'`);
-  const timePeriodClause = buildTimePeriodClause(filters.time_period);
-  const where = `WHERE ${conditions.join(' AND ')} ${timePeriodClause}`;
+  const where = `WHERE ${conditions.join(' AND ')}`;
   return `
     SELECT
       LEFT(RECORDING_DATE, 4) AS RECORD_YEAR,
       COUNT(*) AS RECORD_COUNT
-    FROM VW_DASHBOARD_ZIP
+    FROM VW_RESIDENTIAL_PROP
     ${where}
     GROUP BY RECORD_YEAR
     HAVING RECORD_YEAR BETWEEN '1980' AND '${new Date().getFullYear()}'
     ORDER BY RECORD_YEAR ASC
+    LIMIT 50
   `.trim();
 }
 
