@@ -16,7 +16,7 @@ const connectionConfig = {
   warehouse: process.env.SNOWFLAKE_WAREHOUSE || 'QRY_WAREHOUSE',
   database: process.env.SNOWFLAKE_DATABASE || 'PROPERTYANALYTICS',
   schema: process.env.SNOWFLAKE_SCHEMA || 'PUBLIC',
-  role: process.env.SNOWFLAKE_ROLE || 'PUBLIC',
+  role: process.env.SNOWFLAKE_ROLE || 'SYSADMIN',
   clientSessionKeepAlive: true,
   clientSessionKeepAliveHeartbeatFrequency: 3600,
 };
