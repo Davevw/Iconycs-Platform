@@ -1939,7 +1939,7 @@ export default function ReportsPage() {
                 <span style={{ fontSize: 16 }}>📊</span>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.04em' }}>DEMOGRAPHICS DEEP DIVE</div>
-                  <div style={{ fontSize: 11, opacity: 0.7, marginTop: 1 }}>Gender · Marital Status · Education · Income · Wealth Score — Pro feature</div>
+                  <div style={{ fontSize: 11, opacity: 0.7, marginTop: 1 }}>Ethnicity · Gender · Marital Status · Education · Income · Wealth Score</div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <span style={{ fontSize: 10, background: `${C.terra}`, color: '#fff', borderRadius: 10, padding: '2px 8px', fontWeight: 700 }}>PRO</span>
