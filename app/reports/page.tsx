@@ -518,6 +518,14 @@ export default function ReportsPage() {
   const [ltvData,      setLtvData]        = useState<PanelData[]>([]);
   const [trendsData,   setTrendsData]     = useState<{year:string;count:number}[]>([]);
 
+  // Demographics Deep Dive
+  const [demoData,   setDemoData]   = useState<{
+    gender: PanelData[]; marital: PanelData[]; education: PanelData[];
+    income: PanelData[]; wealth: PanelData[]; ethnicity: PanelData[];
+  } | null>(null);
+  const [demoLoad,   setDemoLoad]   = useState<LoadState>({ loading: false, error: null });
+  const [showDemographics, setShowDemographics] = useState(false);
+
   // Load states
   const [natLoad,    setNatLoad]    = useState<LoadState>({ loading: true,  error: null });
   const [stateLoad,  setStateLoad]  = useState<LoadState>({ loading: false, error: null });
@@ -690,6 +698,38 @@ export default function ReportsPage() {
       }
     } catch (e: any) {
       setTrendsLoad({ loading: false, error: e.message ?? 'Network error' });
+    }
+  }, []);
+
+  // ── Fetch demographics ──
+  const fetchDemographics = useCallback(async (state?: string, county?: string, city?: string, zip?: string) => {
+    setDemoLoad({ loading: true, error: null });
+    try {
+      const params = new URLSearchParams();
+      if (state)  params.set('state', state);
+      if (county) params.set('county', county);
+      if (city)   params.set('city', city);
+      if (zip)    params.set('zip', zip ?? '');
+      const res = await fetch(`/api/snowflake/demographics?${params.toString()}`);
+      const json = await res.json();
+      if (json.success) {
+        const d = json.data;
+        const toPanel = (arr: {label:string;count:number}[]): PanelData[] =>
+          arr.map(r => ({ label: r.label ?? '—', count: Number(r.count ?? 0) }));
+        setDemoData({
+          gender:    toPanel(d.gender    ?? []),
+          marital:   toPanel(d.marital   ?? []),
+          education: toPanel(d.education ?? []),
+          income:    toPanel(d.income    ?? []),
+          wealth:    toPanel(d.wealth    ?? []),
+          ethnicity: toPanel(d.ethnicity ?? []),
+        });
+        setDemoLoad({ loading: false, error: null });
+      } else {
+        setDemoLoad({ loading: false, error: json.error ?? 'Failed to load demographics' });
+      }
+    } catch (e: any) {
+      setDemoLoad({ loading: false, error: e.message ?? 'Network error' });
     }
   }, []);
 
@@ -1021,6 +1061,10 @@ export default function ReportsPage() {
                 style={{ fontSize: 12, color: '#fff', background: C.terra, border: 'none', borderRadius: 6, padding: '6px 14px', cursor: 'pointer', fontFamily: C.font, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 5 }}>
                 ⬇ Download PDF
               </button>
+              <Link href={`/reports/cascade?${stateCode ? `state=${stateCode}` : ''}${selectedCounty ? `&county=${selectedCounty}` : ''}${drillCity ? `&city=${drillCity}` : ''}${drillZip ? `&zip=${drillZip}` : ''}`}
+                style={{ fontSize: 12, color: '#fff', background: C.navy, textDecoration: 'none', padding: '5px 14px', borderRadius: 6, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 5 }}>
+                🔀 Cascade Builder
+              </Link>
               <Link href="/dashboard" style={{ fontSize: 12, color: C.textMuted, textDecoration: 'none', padding: '5px 12px', borderRadius: 6, background: C.bgWarm }}>AI Query Lab</Link>
               <Link href="/" style={{ fontSize: 12, color: C.textMuted, textDecoration: 'none', padding: '5px 12px', borderRadius: 6 }}>Home</Link>
             </div>
@@ -1548,6 +1592,99 @@ export default function ReportsPage() {
                 )}
               </div>
             )}
+
+            {/* ── Demographics Deep Dive ── */}
+            <div style={{ marginTop: 8, background: C.bgCard, borderRadius: 12, border: `1px solid ${C.border}`, overflow: 'hidden' }}>
+              <div
+                onClick={() => {
+                  const next = !showDemographics;
+                  setShowDemographics(next);
+                  if (next && !demoData && !demoLoad.loading) {
+                    fetchDemographics(stateCode, selectedCounty ?? undefined, drillCity ?? undefined, drillZip ?? undefined);
+                  }
+                }}
+                style={{ padding: '12px 18px', background: C.navy, color: '#fff', display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer', userSelect: 'none' }}
+              >
+                <span style={{ fontSize: 16 }}>📊</span>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.04em' }}>DEMOGRAPHICS DEEP DIVE</div>
+                  <div style={{ fontSize: 11, opacity: 0.7, marginTop: 1 }}>Gender · Marital Status · Education · Income · Wealth Score — Pro feature</div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <span style={{ fontSize: 10, background: `${C.terra}`, color: '#fff', borderRadius: 10, padding: '2px 8px', fontWeight: 700 }}>PRO</span>
+                  <span style={{ fontSize: 14, opacity: 0.7 }}>{showDemographics ? '▲' : '▼'}</span>
+                </div>
+              </div>
+
+              {showDemographics && (
+                <div style={{ padding: 16, animation: 'fadeIn 0.3s ease' }}>
+                  {demoLoad.loading ? (
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
+                      {[1,2,3,4,5,6].map(i => <Skeleton key={i} h={140} />)}
+                    </div>
+                  ) : demoLoad.error ? (
+                    <ErrorMsg msg={demoLoad.error} onRetry={() => fetchDemographics(stateCode, selectedCounty ?? undefined, drillCity ?? undefined, drillZip ?? undefined)} />
+                  ) : demoData ? (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                      {/* Row 1: Gender + Marital + Education */}
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
+                        <FreqTable title="Gender" data={demoData.gender.map(r => ({ ...r, label: r.label === 'M' ? 'Male' : r.label === 'F' ? 'Female' : r.label }))} color={C.terra} />
+                        <FreqTable title="Marital Status" data={demoData.marital.map(r => ({ ...r, label: r.label === 'M' ? 'Married' : r.label === 'S' ? 'Single' : r.label }))} color={C.sage} />
+                        <FreqTable title="Education Level" data={demoData.education} color={C.gold} />
+                      </div>
+                      {/* Row 2: Income + Wealth */}
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                        <HBarChart title="Income Range" data={demoData.income} />
+                        {/* Wealth Score panel */}
+                        <div style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, overflow: 'hidden' }}>
+                          <div style={{ padding: '10px 16px', background: C.navy, color: '#fff', fontSize: 12, fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase' }}>Wealth Score (A–H)</div>
+                          <div style={{ padding: 14 }}>
+                            {(() => {
+                              const wTotal = demoData.wealth.reduce((s, w) => s + w.count, 0);
+                              const wScoreOrder = ['A','B','C','D','E','F','G','H'];
+                              const wColors = ['#1B2A4A','#2A4A7F','#4A7FB5','#5D7E52','#B8860B','#C4653A','#A85D8A','#8B0000'];
+                              const wDescriptions = ['Top 1%','Top 5%','Top 15%','Top 30%','Top 50%','Top 70%','Bottom 30%','Bottom 10%'];
+                              return wScoreOrder.map((score, si) => {
+                                const row = demoData.wealth.find(w => w.label === score);
+                                const count = row?.count ?? 0;
+                                const pct = wTotal > 0 ? (count / wTotal) * 100 : 0;
+                                return (
+                                  <div key={score} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
+                                    <div style={{ width: 24, height: 24, borderRadius: 4, background: wColors[si], display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 11, fontWeight: 800, flexShrink: 0 }}>{score}</div>
+                                    <div style={{ flex: 1 }}>
+                                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 2 }}>
+                                        <span style={{ fontSize: 11, color: C.textBody }}>{wDescriptions[si]}</span>
+                                        <span style={{ fontSize: 11, fontWeight: 700, color: wColors[si], fontFamily: C.fontMono }}>{pct.toFixed(1)}%</span>
+                                      </div>
+                                      <div style={{ height: 5, background: C.bgWarm, borderRadius: 3, overflow: 'hidden' }}>
+                                        <div style={{ width: `${pct}%`, height: '100%', background: wColors[si], borderRadius: 3, transition: 'width 0.6s ease' }} />
+                                      </div>
+                                    </div>
+                                  </div>
+                                );
+                              });
+                            })()}
+                          </div>
+                        </div>
+                      </div>
+                      {/* Social Housing Score promo */}
+                      <div style={{ padding: '14px 18px', background: `${C.navy}08`, border: `1px dashed ${C.navy}40`, borderRadius: 10, display: 'flex', alignItems: 'center', gap: 14 }}>
+                        <div style={{ fontSize: 28 }}>🏘️</div>
+                        <div style={{ flex: 1 }}>
+                          <div style={{ fontSize: 13, fontWeight: 700, color: C.navy }}>Social Housing Score</div>
+                          <div style={{ fontSize: 11, color: C.textMuted, marginTop: 2 }}>Composite diversity index combining ethnicity, income, LTV, and owner-occupancy. Available in Enterprise tier.</div>
+                        </div>
+                        <span style={{ fontSize: 11, background: C.navy, color: '#fff', borderRadius: 10, padding: '4px 12px', fontWeight: 700, whiteSpace: 'nowrap' }}>🔒 Enterprise</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div style={{ textAlign: 'center', padding: 24, color: C.textMuted, fontSize: 13 }}>
+                      Click to load demographic data for the selected geography.
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
 
             {/* ── Methodology Note ── */}
             <div style={{ marginTop: 8, padding: '12px 16px', background: C.bgWarm, borderRadius: 10, border: `1px solid ${C.border}`, fontSize: 11, color: C.textMuted, lineHeight: 1.7 }}>
