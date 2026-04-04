@@ -464,7 +464,7 @@ function ParcelModal({ filter, state, county, city, zip, onClose }: {
                 </div>
                 <div>
                   <div style={{ color: C.textBody }}>{r.ETHNICITY_DESC || 'Not Identified'}</div>
-                  <div style={{ fontSize: 9, color: C.textDim }}>{r.ETHNICITYCD ? 'ðŸŸ¢ Direct ID' : 'ðŸ”´ Area Est.'}</div>
+                  <div style={{ fontSize: 9, color: C.textDim }}>{r.ETHNICITYCD ? '[Green] Direct ID' : 'ðŸ”´ Area Est.'}</div>
                 </div>
                 <span style={{ textAlign: 'right', color: C.sage, fontFamily: C.fontMono, fontWeight: 600 }}>
                   {r.VALUE_MARKET ? '$' + Number(r.VALUE_MARKET).toLocaleString() : '"”'}
@@ -2009,7 +2009,7 @@ export default function ReportsPage() {
                           color={C.terra}
                         />
                         <div style={{ fontSize: 11, color: C.textMuted ?? '#888', marginTop: -8, paddingLeft: 4 }}>
-                          ðŸŸ¢ Direct Identified records only. BISG modeled estimates coming in next release.
+                          [Green] Direct Identified records only. BISG modeled estimates coming in next release.
                         </div>
                       </div>
                       {/* Row 1: Gender + Marital + Education */}
@@ -2085,7 +2085,7 @@ export default function ReportsPage() {
               <span style={{ fontWeight: 700, color: C.textBody }}>Data Methodology: </span>
               {METHODOLOGY_NOTE}
               <span style={{ display: 'block', marginTop: 6, fontSize: 10, color: C.textDim }}>
-                Confidence indicators: ðŸŸ¢ Direct Identified (individually sourced) · ðŸŸ¡ Household Modeled · ðŸ”´ Area Estimated
+                Confidence indicators: [Green] Direct Identified (individually sourced) · [Yellow] Household Modeled · ðŸ”´ Area Estimated
               </span>
             </div>
 
