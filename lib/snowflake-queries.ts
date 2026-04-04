@@ -236,11 +236,11 @@ export function queryTopLenders(filters: AnalyticsFilters): string {
 
 export function queryLTV(filters: AnalyticsFilters): string {
   const conditions: string[] = [];
-  if (filters.state)  conditions.push(`STATE = '${filters.state.toUpperCase()}'`);
-  if (filters.city)   conditions.push(`CITY = '${filters.city.toUpperCase()}'`);
-  if (filters.zip)    conditions.push(`ZIP = '${filters.zip}'`);
-  if (filters.ethnicity) conditions.push(`ETHNICITYCD = '${filters.ethnicity}'`);
+  if (filters.state)    conditions.push(`STATE = '${filters.state.toUpperCase()}'`);
+  if (filters.city)     conditions.push(`CITY = '${filters.city.toUpperCase()}'`);
+  if (filters.zip)      conditions.push(`ZIP = '${filters.zip}'`);
   if (filters.loan_type) conditions.push(`MTG1_LOAN_CATEGORY = '${filters.loan_type}'`);
+  // Note: VW_LTV_TIERS does not have ETHNICITYCD — skip that filter
   const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
   return `
     SELECT
