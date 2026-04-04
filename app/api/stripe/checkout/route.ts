@@ -4,7 +4,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2023-10
 
 export async function POST(request: Request) {
   try {
-    const { priceId, tier } = await request.json();
+    const { priceId, tier, email } = await request.json();
 
     if (!priceId) {
       return Response.json({ error: 'Missing priceId' }, { status: 400 });
@@ -18,7 +18,8 @@ export async function POST(request: Request) {
       payment_method_types: ['card'],
       mode,
       line_items: [{ price: priceId, quantity: 1 }],
-      success_url: `${process.env.NEXT_PUBLIC_URL}/reports?subscribed=true`,
+      customer_email: email || undefined,
+      success_url: `${process.env.NEXT_PUBLIC_URL}/reports?subscribed=true&tier=${tier || 'unknown'}`,
       cancel_url: `${process.env.NEXT_PUBLIC_URL}/pricing`,
       metadata: { tier: tier || 'unknown' },
     });
