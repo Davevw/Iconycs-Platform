@@ -1,7 +1,7 @@
 ﻿'use client';
 
 /**
- * ICONYCS Analytics Reports â€” Sprint 1
+ * ICONYCS Analytics Reports "” Sprint 1
  * Live Snowflake data, full drill-down, mortgage intelligence, export.
  */
 
@@ -304,7 +304,7 @@ function TrendChart({ title, data, loading = false, error = null, onRetry }: {
                 onMouseEnter={(e) => setTooltip({ i, x: e.clientX, y: e.clientY })}
                 onMouseLeave={() => setTooltip(null)} />
             ))}
-            {/* X labels â€” show every 5 years */}
+            {/* X labels "” show every 5 years */}
             {pts.filter((_, i) => i % 5 === 0 || i === pts.length - 1).map((p, i) => (
               <text key={i} x={p.x} y={H - 4} textAnchor="middle" fontSize={7} fill={C.textDim}>{p.year}</text>
             ))}
@@ -369,7 +369,7 @@ function ParcelModal({ filter, state, county, city, zip, onClose }: {
   };
 
   const ltvBadge = (val: number, loan: number): string => {
-    if (!val || !loan) return 'â€”';
+    if (!val || !loan) return '"”';
     const ltv = (loan / val) * 100;
     if (ltv <= 60)  return 'â‰¤60%';
     if (ltv <= 65)  return '60-65%';
@@ -438,7 +438,7 @@ function ParcelModal({ filter, state, county, city, zip, onClose }: {
         ) : (
           <div>
             <div style={{ padding: '8px 12px', background: '#EDF4EB', borderRadius: 8, fontSize: 12, color: C.sage, fontWeight: 600, marginBottom: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span>âœ“ Access granted â€” {data.length} records â€” Direct Identified Records</span>
+              <span>âœ“ Access granted "” {data.length} records "” Direct Identified Records</span>
               <span style={{ fontSize: 11, color: C.textMuted }}>{filter}</span>
             </div>
 
@@ -459,7 +459,7 @@ function ParcelModal({ filter, state, county, city, zip, onClose }: {
             {paged.map((r, i) => (
               <div key={i} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 80px 55px 55px 70px 70px', padding: '8px', borderBottom: `1px solid ${C.borderLight}`, fontSize: 11, alignItems: 'center', gap: 6 }}>
                 <div>
-                  <div style={{ color: C.text, fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r.ADDRESS || 'â€”'}</div>
+                  <div style={{ color: C.text, fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r.ADDRESS || '"”'}</div>
                   <div style={{ color: C.textMuted, fontSize: 10 }}>{r.CITY}, {r.STATE} {r.ZIP}</div>
                 </div>
                 <div>
@@ -467,12 +467,12 @@ function ParcelModal({ filter, state, county, city, zip, onClose }: {
                   <div style={{ fontSize: 9, color: C.textDim }}>{r.ETHNICITYCD ? 'ðŸŸ¢ Direct ID' : 'ðŸ”´ Area Est.'}</div>
                 </div>
                 <span style={{ textAlign: 'right', color: C.sage, fontFamily: C.fontMono, fontWeight: 600 }}>
-                  {r.VALUE_MARKET ? '$' + Number(r.VALUE_MARKET).toLocaleString() : 'â€”'}
+                  {r.VALUE_MARKET ? '$' + Number(r.VALUE_MARKET).toLocaleString() : '"”'}
                 </span>
-                <span style={{ textAlign: 'right', fontFamily: C.fontMono }}>{r.LIVING_SQFT ? Number(r.LIVING_SQFT).toLocaleString() : 'â€”'}</span>
-                <span style={{ textAlign: 'center' }}>{r.BEDROOMS ?? 'â€”'}</span>
+                <span style={{ textAlign: 'right', fontFamily: C.fontMono }}>{r.LIVING_SQFT ? Number(r.LIVING_SQFT).toLocaleString() : '"”'}</span>
+                <span style={{ textAlign: 'center' }}>{r.BEDROOMS ?? '"”'}</span>
                 <span style={{ textAlign: 'right', fontFamily: C.fontMono, fontSize: 10 }}>
-                  {r.MTG1_AMOUNT ? '$' + (Number(r.MTG1_AMOUNT) / 1000).toFixed(0) + 'K' : 'â€”'}
+                  {r.MTG1_AMOUNT ? '$' + (Number(r.MTG1_AMOUNT) / 1000).toFixed(0) + 'K' : '"”'}
                 </span>
                 <span style={{ textAlign: 'center' }}>
                   <span style={{ fontSize: 9, padding: '2px 5px', borderRadius: 4, background: C.bgWarm, fontFamily: C.fontMono, fontWeight: 700 }}>
@@ -484,15 +484,15 @@ function ParcelModal({ filter, state, county, city, zip, onClose }: {
 
             {/* Pagination */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 0 0', fontSize: 11, color: C.textMuted }}>
-              <span>Showing {page * PER_PAGE + 1}â€“{Math.min((page + 1) * PER_PAGE, sorted.length)} of {sorted.length} records</span>
+              <span>Showing {page * PER_PAGE + 1}"“{Math.min((page + 1) * PER_PAGE, sorted.length)} of {sorted.length} records</span>
               <div style={{ display: 'flex', gap: 8 }}>
                 <button disabled={page === 0} onClick={() => setPage(p => p - 1)}
                   style={{ padding: '4px 12px', borderRadius: 6, border: `1px solid ${C.border}`, background: page === 0 ? C.bgWarm : C.bgCard, color: page === 0 ? C.textDim : C.terra, cursor: page === 0 ? 'not-allowed' : 'pointer', fontSize: 11, fontFamily: C.font }}>
-                  â€¹ Prev
+                  "¹ Prev
                 </button>
                 <button disabled={page >= totalPages - 1} onClick={() => setPage(p => p + 1)}
                   style={{ padding: '4px 12px', borderRadius: 6, border: `1px solid ${C.border}`, background: page >= totalPages - 1 ? C.bgWarm : C.bgCard, color: page >= totalPages - 1 ? C.textDim : C.terra, cursor: page >= totalPages - 1 ? 'not-allowed' : 'pointer', fontSize: 11, fontFamily: C.font }}>
-                  Next â€º
+                  Next "º
                 </button>
               </div>
             </div>
@@ -624,7 +624,7 @@ export default function ReportsPage() {
   const [timePeriod, setTimePeriod] = useState<string>('all');
 
   // Tier gating
-  const [currentTier] = useState<'free' | 'pro' | 'enterprise' | 'data_partner'>('free'); // UI only â€” no auth yet
+  const [currentTier] = useState<'free' | 'pro' | 'enterprise' | 'data_partner'>('free'); // UI only "” no auth yet
   const [upgradeModal, setUpgradeModal] = useState<{ feature: string; minTier: string } | null>(null);
 
   // Modal
@@ -822,7 +822,7 @@ export default function ReportsPage() {
       const json = await res.json();
       if (json.success) {
         setLtvData((json.data ?? []).map((r: any) => ({
-          label: r.LTV_TIER ?? 'â€”',
+          label: r.LTV_TIER ?? '"”',
           count: Number(r.RECORD_COUNT ?? 0),
         })));
         setLtvLoad({ loading: false, error: null });
@@ -872,7 +872,7 @@ export default function ReportsPage() {
       if (json.success) {
         const d = json.data;
         const toPanel = (arr: {label:string;count:number}[]): PanelData[] =>
-          arr.map(r => ({ label: r.label ?? 'â€”', count: Number(r.count ?? 0) }));
+          arr.map(r => ({ label: r.label ?? '"”', count: Number(r.count ?? 0) }));
         setDemoData({
           gender:    toPanel(d.gender    ?? []),
           marital:   toPanel(d.marital   ?? []),
@@ -1034,7 +1034,7 @@ export default function ReportsPage() {
     // Prefer live breakdown data from the aggregated API queries
     if (ethnicityBreakdown.length > 0) {
       return ethnicityBreakdown.map(r => ({
-        label: String(r.LABEL ?? 'â€”'),
+        label: String(r.LABEL ?? '"”'),
         count: Number(r.RECORD_COUNT ?? 0),
       })).filter(d => d.count > 0);
     }
@@ -1067,7 +1067,7 @@ export default function ReportsPage() {
     // Prefer live breakdown data from the aggregated API queries
     if (loanBreakdown.length > 0) {
       return loanBreakdown.map(r => ({
-        label: String(r.LABEL ?? 'â€”'),
+        label: String(r.LABEL ?? '"”'),
         count: Number(r.RECORD_COUNT ?? 0),
       })).filter(d => d.count > 0);
     }
@@ -1101,7 +1101,7 @@ export default function ReportsPage() {
     // Prefer live breakdown data from the aggregated API queries
     if (propertyBreakdown.length > 0) {
       return propertyBreakdown.map(r => ({
-        label: String(r.LABEL ?? 'â€”'),
+        label: String(r.LABEL ?? '"”'),
         count: Number(r.RECORD_COUNT ?? 0),
       })).filter(d => d.count > 0);
     }
@@ -1130,10 +1130,10 @@ export default function ReportsPage() {
   const TIME_PERIODS = [
     { value: 'all',      label: 'All Time' },
     { value: '5yr',      label: 'Last 5 Years' },
-    { value: '2020-2024', label: '2020â€“2024' },
-    { value: '2015-2019', label: '2015â€“2019' },
-    { value: '2010-2014', label: '2010â€“2014' },
-    { value: '2005-2009', label: '2005â€“2009' },
+    { value: '2020-2024', label: '2020"“2024' },
+    { value: '2015-2019', label: '2015"“2019' },
+    { value: '2010-2014', label: '2010"“2014' },
+    { value: '2005-2009', label: '2005"“2009' },
   ];
 
   // â”€â”€â”€ Print / Export â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -1164,19 +1164,19 @@ export default function ReportsPage() {
       }))
     : [];
 
-  // â”€â”€â”€ City cards â€” live data preferred, GEO_DATA fallback â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // â”€â”€â”€ City cards "” live data preferred, GEO_DATA fallback â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const cityCards = cityData.length > 0
     ? cityData.slice(0, 20).map(r => ({
-        name: r.CITY ?? 'â€”',
+        name: r.CITY ?? '"”',
         props: Number(r.RECORD_COUNT ?? r.TOTAL_PROPERTIES ?? 0),
         avg: Number(r.AVG_VALUE ?? r.AVG_PROPERTY_VALUE ?? 0),
       }))
     : (stateCode && GEO_DATA[stateCode] ? GEO_DATA[stateCode].cities.slice(0, 20) : []);
 
-  // â”€â”€â”€ ZIP cards â€” live data preferred, GEO_DATA fallback â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // â”€â”€â”€ ZIP cards "” live data preferred, GEO_DATA fallback â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const zipCards = zipData.length > 0
     ? zipData.slice(0, 30).map(r => ({
-        zip: r.ZIP ?? 'â€”',
+        zip: r.ZIP ?? '"”',
         city: r.CITY ?? drillCity ?? '',
         props: Number(r.RECORD_COUNT ?? r.TOTAL_PROPERTIES ?? 0),
         avg: Number(r.AVG_VALUE ?? r.AVG_PROPERTY_VALUE ?? 0),
@@ -1188,7 +1188,7 @@ export default function ReportsPage() {
     selectedCounty,
     drillCity,
     drillZip,
-  ].filter(Boolean).join(' â€º ');
+  ].filter(Boolean).join(' "º ');
 
   return (
     <>
@@ -1243,7 +1243,7 @@ export default function ReportsPage() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
               <div style={{ fontSize: 24, fontWeight: 700, color: '#1B2A4A' }}>ICONYCS Housing Analytics</div>
-              <div style={{ fontSize: 14, color: '#78716C', marginTop: 4 }}>{drillLabel} â€” {TIME_PERIODS.find(t => t.value === timePeriod)?.label}</div>
+              <div style={{ fontSize: 14, color: '#78716C', marginTop: 4 }}>{drillLabel} "” {TIME_PERIODS.find(t => t.value === timePeriod)?.label}</div>
             </div>
             <div style={{ textAlign: 'right', fontSize: 11, color: '#78716C' }}>
               <div>Generated: {new Date().toLocaleDateString()}</div>
@@ -1304,7 +1304,7 @@ export default function ReportsPage() {
               <span style={{ fontSize: 13, color: C.textDim, whiteSpace: 'nowrap' }}>Quick search:</span>
               <div style={{ position: 'relative', flex: 1, maxWidth: 500 }}>
                 <input value={citySearch} onChange={e => handleCitySearch(e.target.value)}
-                  placeholder="Search any city â€” e.g. Watsonville, Monterey, Santa Cruz..."
+                  placeholder="Search any city "” e.g. Watsonville, Monterey, Santa Cruz..."
                   style={{ width: '100%', padding: '9px 14px 9px 36px', borderRadius: 8, border: `1.5px solid ${citySearch ? C.terra : C.border}`, fontSize: 13, fontFamily: C.font, outline: 'none', background: C.bgWarm }} />
                 <span style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', fontSize: 14, color: C.textDim }}>ðŸ”</span>
                 {citySearch && (
@@ -1330,7 +1330,7 @@ export default function ReportsPage() {
                         <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
                           <span style={{ fontSize: 12, color: C.text, fontFamily: C.fontMono }}>{r.props.toLocaleString()} props</span>
                           <span style={{ fontSize: 12, color: C.sage, fontFamily: C.fontMono, fontWeight: 600 }}>${(r.avg / 1000).toFixed(0)}K avg</span>
-                          <span style={{ fontSize: 11, color: C.terra, fontWeight: 600 }}>View â€º</span>
+                          <span style={{ fontSize: 11, color: C.terra, fontWeight: 600 }}>View "º</span>
                         </div>
                       </div>
                     ))}
@@ -1381,7 +1381,7 @@ export default function ReportsPage() {
                         <span style={{ fontSize: 12, color: isSel ? C.terra : C.textBody, fontWeight: isSel ? 600 : 400 }}>{s.name}</span>
                       </div>
                       <span style={{ fontSize: 10, color: C.textDim, fontFamily: C.fontMono }}>
-                        {propCount > 0 ? (propCount / 1e6).toFixed(1) + 'M' : 'â€¦'}
+                        {propCount > 0 ? (propCount / 1e6).toFixed(1) + 'M' : '"¦'}
                       </span>
                     </div>
                   );
@@ -1406,9 +1406,9 @@ export default function ReportsPage() {
                   <div style={{ marginTop: 6 }}><Skeleton w={280} h={14} /></div>
                 ) : (
                   <p style={{ fontSize: 12, color: C.textMuted, marginTop: 3 }}>
-                    {totalProps > 0 ? totalProps.toLocaleString() + ' properties' : 'â€”'} Â·
-                    Avg value {avgValue > 0 ? '$' + avgValue.toLocaleString() : 'â€”'} Â·
-                    {isAll ? ' 51 states' : ` ${selected.length} state${selected.length > 1 ? 's' : ''}`} Â·
+                    {totalProps > 0 ? totalProps.toLocaleString() + ' properties' : '"”'} ·
+                    Avg value {avgValue > 0 ? '$' + avgValue.toLocaleString() : '"”'} ·
+                    {isAll ? ' 51 states' : ` ${selected.length} state${selected.length > 1 ? 's' : ''}`} ·
                     {TIME_PERIODS.find(t => t.value === timePeriod)?.label}
                   </p>
                 )}
@@ -1436,12 +1436,12 @@ export default function ReportsPage() {
                 },
                 {
                   label: 'Est. Homeowners',
-                  value: overallLoading ? null : totalProps > 0 ? ((totalProps * 0.506) / 1e6).toFixed(1) + 'M' : 'â€”',
+                  value: overallLoading ? null : totalProps > 0 ? ((totalProps * 0.506) / 1e6).toFixed(1) + 'M' : '"”',
                   color: C.sage,
                 },
                 {
                   label: 'Avg Property Value',
-                  value: overallLoading ? null : avgValue > 0 ? '$' + avgValue.toLocaleString() : 'â€”',
+                  value: overallLoading ? null : avgValue > 0 ? '$' + avgValue.toLocaleString() : '"”',
                   color: C.gold,
                 },
                 {
@@ -1464,23 +1464,23 @@ export default function ReportsPage() {
             {/* â”€â”€ Free Tier Upgrade Banner â”€â”€ */}
             {currentTier === 'free' && (
               <div style={{ marginBottom: 16, padding: '14px 20px', background: `linear-gradient(135deg, ${C.terra} 0%, #D4754A 100%)`, borderRadius: 10, display: 'flex', alignItems: 'center', gap: 16, animation: 'fadeIn 0.4s ease' }}>
-                <div style={{ fontSize: 22 }}>ðŸš€</div>
+                <div style={{ fontSize: 22 }}>🚀</div>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 13, fontWeight: 700, color: '#fff' }}>Unlock the Full ICONYCS Platform</div>
                   <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.85)', marginTop: 2 }}>
-                    County/City/ZIP drill-down Â· Demographics Deep Dive Â· Cascade Report Builder Â· PDF Export Â· Social Housing Score
+                    County/City/ZIP drill-down · Demographics Deep Dive · Cascade Report Builder · PDF Export · Social Housing Score
                   </div>
                 </div>
                 <div style={{ display: 'flex', gap: 8 }}>
                   <button
-                    onClick={() => setUpgradeModal({ feature: 'Pro Analyst â€” Full Platform', minTier: 'pro' })}
+                    onClick={() => setUpgradeModal({ feature: 'Pro Analyst "” Full Platform', minTier: 'pro' })}
                     style={{ padding: '8px 18px', background: '#fff', color: C.terra, border: 'none', borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: C.font, whiteSpace: 'nowrap' }}>
-                    Pro â€” $49/mo
+                    Pro "” $49/mo
                   </button>
                   <button
-                    onClick={() => setUpgradeModal({ feature: 'Enterprise â€” Full Platform + Social Housing Score', minTier: 'enterprise' })}
+                    onClick={() => setUpgradeModal({ feature: 'Enterprise "” Full Platform + Social Housing Score', minTier: 'enterprise' })}
                     style={{ padding: '8px 18px', background: 'rgba(255,255,255,0.15)', color: '#fff', border: '1px solid rgba(255,255,255,0.4)', borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: C.font, whiteSpace: 'nowrap' }}>
-                    Enterprise â€” $199/mo
+                    Enterprise "” $199/mo
                   </button>
                 </div>
               </div>
@@ -1532,7 +1532,7 @@ export default function ReportsPage() {
 
             {/* â”€â”€ Freq Tables â”€â”€ */}
             <div className="card-grid-3" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, marginBottom: 6 }}>
-              <FreqTable title="Owner Ethnicity â€” Direct Identified Records" data={ethnicityData} color={C.sage}
+              <FreqTable title="Owner Ethnicity "” Direct Identified Records" data={ethnicityData} color={C.sage}
                 loading={overallLoading} error={natLoad.error} onRetry={fetchNational} />
               <FreqTable title="Property Type" data={propertyTypeData} color={C.terra}
                 loading={overallLoading} error={natLoad.error} onRetry={fetchNational} />
@@ -1545,7 +1545,7 @@ export default function ReportsPage() {
                 { label: 'Property Type Data', state: stateCode, city: drillCity ?? undefined },
                 { label: 'Loan Type Data', state: stateCode, city: drillCity ?? undefined },
               ].map((f, i) => (
-                <button key={i} onClick={() => setModal({ filter: `${geoLabel} â€” ${f.label}`, state: f.state, city: f.city })}
+                <button key={i} onClick={() => setModal({ filter: `${geoLabel} "” ${f.label}`, state: f.state, city: f.city })}
                   style={{ padding: '6px', borderRadius: 6, background: 'transparent', border: `1px dashed ${C.border}`, fontSize: 11, color: C.textDim, cursor: 'pointer', fontFamily: C.font }}>
                   View Underlying Parcels
                 </button>
@@ -1594,7 +1594,7 @@ export default function ReportsPage() {
                     <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 12 }}>
                       <span style={{ color: C.textBody }}>{d.label}</span>
                       <span style={{ fontFamily: C.fontMono, fontWeight: 600, color: C.chart[i % C.chart.length] }}>
-                        {d.count > 0 ? '$' + Math.round(avgValue * (i === 0 ? 0.72 : i === 1 ? 0.93 : i === 2 ? 0.87 : 0.68)).toLocaleString() : 'â€”'}
+                        {d.count > 0 ? '$' + Math.round(avgValue * (i === 0 ? 0.72 : i === 1 ? 0.93 : i === 2 ? 0.87 : 0.68)).toLocaleString() : '"”'}
                       </span>
                     </div>
                   ))}
@@ -1606,7 +1606,7 @@ export default function ReportsPage() {
             </div>
             <div className="card-grid-3" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, marginBottom: 16 }}>
               {['Loan Program Data', 'Lender Data', 'Loan Amount Data'].map((f, i) => (
-                <button key={i} onClick={() => setModal({ filter: `${geoLabel} â€” ${f}`, state: stateCode, city: drillCity ?? undefined })}
+                <button key={i} onClick={() => setModal({ filter: `${geoLabel} "” ${f}`, state: stateCode, city: drillCity ?? undefined })}
                   style={{ padding: '6px', borderRadius: 6, background: 'transparent', border: `1px dashed ${C.border}`, fontSize: 11, color: C.textDim, cursor: 'pointer', fontFamily: C.font }}>
                   View Underlying Parcels
                 </button>
@@ -1628,7 +1628,7 @@ export default function ReportsPage() {
                 <span style={{ fontSize: 16 }}>ðŸ˜ï¸</span>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.04em' }}>SOCIAL HOUSING SCORE</div>
-                  <div style={{ fontSize: 11, opacity: 0.7, marginTop: 1 }}>Diversity index: ethnicity Â· income Â· LTV Â· owner-occupancy</div>
+                  <div style={{ fontSize: 11, opacity: 0.7, marginTop: 1 }}>Diversity index: ethnicity · income · LTV · owner-occupancy</div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   {shsData && (
@@ -1682,7 +1682,7 @@ export default function ReportsPage() {
 
                       {/* Component breakdown */}
                       <div style={{ flex: 1 }}>
-                        <div style={{ fontSize: 12, color: C.textMuted, marginBottom: 12 }}>Score components (each weighted 0â€“25):</div>
+                        <div style={{ fontSize: 12, color: C.textMuted, marginBottom: 12 }}>Score components (each weighted 0"“25):</div>
                         {[
                           { label: 'Ethnic Diversity Index', key: 'ethDiversity', color: C.terra },
                           { label: 'Income Diversity',        key: 'incomeDiversity', color: C.sage },
@@ -1715,7 +1715,7 @@ export default function ReportsPage() {
             {/* â”€â”€ State Breakdown â”€â”€ */}
             <div style={{ marginBottom: 16 }}>
               <HBarChart
-                title={isAll ? 'All States â€” Property Count' : `${geoLabel} â€” State Breakdown`}
+                title={isAll ? 'All States "” Property Count' : `${geoLabel} "” State Breakdown`}
                 data={stateBreakdown}
                 loading={stateLoad.loading}
                 error={stateLoad.error}
@@ -1741,7 +1741,7 @@ export default function ReportsPage() {
                   {/* County */}
                   {selectedCounty && (
                     <>
-                      <span style={{ opacity: 0.4 }}>â€º</span>
+                      <span style={{ opacity: 0.4 }}>"º</span>
                       <button onClick={() => { setDrillCity(null); setDrillZip(null); }} style={{
                         background: (selectedCounty && !drillCity) ? 'rgba(255,255,255,0.2)' : 'transparent',
                         border: 'none', color: '#fff', padding: '4px 12px', borderRadius: 20,
@@ -1753,7 +1753,7 @@ export default function ReportsPage() {
                   {/* City */}
                   {drillCity && (
                     <>
-                      <span style={{ opacity: 0.4 }}>â€º</span>
+                      <span style={{ opacity: 0.4 }}>"º</span>
                       <button onClick={() => setDrillZip(null)} style={{
                         background: drillCity && !drillZip ? 'rgba(255,255,255,0.2)' : 'transparent',
                         border: 'none', color: '#fff', padding: '4px 12px', borderRadius: 20,
@@ -1765,7 +1765,7 @@ export default function ReportsPage() {
                   {/* ZIP */}
                   {drillZip && (
                     <>
-                      <span style={{ opacity: 0.4 }}>â€º</span>
+                      <span style={{ opacity: 0.4 }}>"º</span>
                       <span style={{ background: 'rgba(255,255,255,0.2)', padding: '4px 12px', borderRadius: 20, fontSize: 12, fontWeight: 700 }}>{drillZip}</span>
                     </>
                   )}
@@ -1804,9 +1804,9 @@ export default function ReportsPage() {
                                   </div>
                                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                     <span style={{ fontSize: 11, color: C.sage, fontFamily: C.fontMono, fontWeight: 600 }}>
-                                      {county.avg > 0 ? '$' + (county.avg / 1000).toFixed(0) + 'K avg' : 'â€”'}
+                                      {county.avg > 0 ? '$' + (county.avg / 1000).toFixed(0) + 'K avg' : '"”'}
                                     </span>
-                                    <span style={{ fontSize: 11, color: C.terra, fontWeight: 600 }}>Cities â€º</span>
+                                    <span style={{ fontSize: 11, color: C.terra, fontWeight: 600 }}>Cities "º</span>
                                   </div>
                                 </div>
                               </div>
@@ -1831,7 +1831,7 @@ export default function ReportsPage() {
                                     <div style={{ fontSize: 10, color: C.textDim, marginBottom: 4 }}>properties</div>
                                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                       <span style={{ fontSize: 11, color: C.sage, fontFamily: C.fontMono }}>${(city.avg / 1000).toFixed(0)}K avg</span>
-                                      <span style={{ fontSize: 11, color: C.terra }}>ZIPs â€º</span>
+                                      <span style={{ fontSize: 11, color: C.terra }}>ZIPs "º</span>
                                     </div>
                                   </div>
                                 </div>
@@ -1862,7 +1862,7 @@ export default function ReportsPage() {
                                   </div>
                                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                     <span style={{ fontSize: 11, color: C.sage, fontFamily: C.fontMono, fontWeight: 600 }}>${(city.avg / 1000).toFixed(0)}K avg</span>
-                                    <span style={{ fontSize: 11, color: C.terra, fontWeight: 600 }}>View ZIPs â€º</span>
+                                    <span style={{ fontSize: 11, color: C.terra, fontWeight: 600 }}>View ZIPs "º</span>
                                   </div>
                                 </div>
                               </div>
@@ -1871,14 +1871,14 @@ export default function ReportsPage() {
                         </div>
                       ) : (
                         <div style={{ padding: '20px', textAlign: 'center', color: C.textDim, fontSize: 13, background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}` }}>
-                          Loading county and city dataâ€¦
+                          Loading county and city data"¦
                         </div>
                       )
                     )}
                   </>
                 )}
 
-                {/* â”€â”€ Level: County selected â€” show cities in that county â”€â”€ */}
+                {/* â”€â”€ Level: County selected "” show cities in that county â”€â”€ */}
                 {selectedCounty && !drillCity && (
                   <>
                     {cityLoad.loading ? (
@@ -1902,7 +1902,7 @@ export default function ReportsPage() {
                               <div style={{ fontSize: 10, color: C.textDim, marginBottom: 6 }}>properties</div>
                               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <span style={{ fontSize: 11, color: C.sage, fontFamily: C.fontMono }}>${(city.avg / 1000).toFixed(0)}K avg</span>
-                                <span style={{ fontSize: 11, color: C.terra }}>ZIPs â€º</span>
+                                <span style={{ fontSize: 11, color: C.terra }}>ZIPs "º</span>
                               </div>
                             </div>
                           </div>
@@ -1916,14 +1916,14 @@ export default function ReportsPage() {
                   </>
                 )}
 
-                {/* â”€â”€ Level: City selected â€” show ZIPs â”€â”€ */}
+                {/* â”€â”€ Level: City selected "” show ZIPs â”€â”€ */}
                 {drillCity && !drillZip && (
                   <div style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, overflow: 'hidden', animation: 'fadeIn 0.4s ease' }}>
                     <div style={{ padding: '10px 16px', background: C.bgWarm, borderBottom: `1px solid ${C.border}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontSize: 13, fontWeight: 700, color: C.text }}>{drillCity} â€” ZIP Code Analysis</span>
+                      <span style={{ fontSize: 13, fontWeight: 700, color: C.text }}>{drillCity} "” ZIP Code Analysis</span>
                       <button onClick={() => setDrillCity(null)}
                         style={{ background: C.bgWarm, border: `1px solid ${C.border}`, borderRadius: 20, padding: '4px 14px', fontSize: 12, color: C.terra, cursor: 'pointer', fontFamily: C.font, fontWeight: 600 }}>
-                        â€¹ Back to Cities
+                        "¹ Back to Cities
                       </button>
                     </div>
                     {zipLoad.loading ? (
@@ -1951,7 +1951,7 @@ export default function ReportsPage() {
                                 <div style={{ fontSize: 9, color: C.textDim }}>avg value</div>
                               </div>
                             </div>
-                            <button onClick={e => { e.stopPropagation(); setModal({ filter: `ZIP ${z.zip} â€” ${z.city}`, state: stateCode, zip: z.zip, city: drillCity }); }}
+                            <button onClick={e => { e.stopPropagation(); setModal({ filter: `ZIP ${z.zip} "” ${z.city}`, state: stateCode, zip: z.zip, city: drillCity }); }}
                               style={{ width: '100%', marginTop: 8, padding: '4px', background: 'transparent', border: `1px dashed ${C.border}`, borderRadius: 4, fontSize: 10, color: C.textDim, cursor: 'pointer', fontFamily: C.font }}>
                               View Parcels
                             </button>
@@ -1979,7 +1979,7 @@ export default function ReportsPage() {
                 <span style={{ fontSize: 16 }}>ðŸ“Š</span>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.04em' }}>DEMOGRAPHICS DEEP DIVE</div>
-                  <div style={{ fontSize: 11, opacity: 0.7, marginTop: 1 }}>Ethnicity Â· Gender Â· Marital Status Â· Education Â· Income Â· Wealth Score</div>
+                  <div style={{ fontSize: 11, opacity: 0.7, marginTop: 1 }}>Ethnicity · Gender · Marital Status · Education · Income · Wealth Score</div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <span style={{ fontSize: 10, background: `${C.terra}`, color: '#fff', borderRadius: 10, padding: '2px 8px', fontWeight: 700 }}>PRO</span>
@@ -2000,7 +2000,7 @@ export default function ReportsPage() {
                       {/* Row 0: Ethnicity */}
                       <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 12 }}>
                         <FreqTable
-                          title="Owner Ethnicity â€” Direct Identified"
+                          title="Owner Ethnicity "” Direct Identified"
                           data={(ethnicityBreakdown ?? []).map((r: any) => ({
                             label: r.LABEL ?? r.label ?? 'Unknown',
                             count: Number(r.RECORD_COUNT ?? r.count ?? 0),
@@ -2031,7 +2031,7 @@ export default function ReportsPage() {
                         <HBarChart title="Income Range" data={demoData.income} />
                         {/* Wealth Score panel */}
                         <div style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, overflow: 'hidden' }}>
-                          <div style={{ padding: '10px 16px', background: C.navy, color: '#fff', fontSize: 12, fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase' }}>Wealth Score (Aâ€“H)</div>
+                          <div style={{ padding: '10px 16px', background: C.navy, color: '#fff', fontSize: 12, fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase' }}>Wealth Score (A"“H)</div>
                           <div style={{ padding: 14 }}>
                             {(() => {
                               const wTotal = demoData.wealth.reduce((s, w) => s + w.count, 0);
@@ -2085,7 +2085,7 @@ export default function ReportsPage() {
               <span style={{ fontWeight: 700, color: C.textBody }}>Data Methodology: </span>
               {METHODOLOGY_NOTE}
               <span style={{ display: 'block', marginTop: 6, fontSize: 10, color: C.textDim }}>
-                Confidence indicators: ðŸŸ¢ Direct Identified (individually sourced) Â· ðŸŸ¡ Household Modeled Â· ðŸ”´ Area Estimated
+                Confidence indicators: ðŸŸ¢ Direct Identified (individually sourced) · ðŸŸ¡ Household Modeled · ðŸ”´ Area Estimated
               </span>
             </div>
 
