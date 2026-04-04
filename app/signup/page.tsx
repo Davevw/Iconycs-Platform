@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -461,7 +461,9 @@ export default function SignupPage() {
           </div>
         </div>
 
-        <SignupForm />
+        <Suspense fallback={<div style={{ padding: '48px 32px', textAlign: 'center', color: C.textMuted, fontFamily: C.font }}>Loading…</div>}>
+          <SignupForm />
+        </Suspense>
       </div>
 
       <div style={{ marginTop: 24, fontSize: 11, color: C.textDim, textAlign: 'center' }}>
