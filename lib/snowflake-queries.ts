@@ -373,7 +373,7 @@ export function queryCascadeOwnership(filters: CascadeFilters): string {
   if (filters.zip)          conditions.push(`ZIP = '${filters.zip}'`);
   if (filters.ethnicity)    conditions.push(`ETHNICITYCD = '${filters.ethnicity}'`);
   if (filters.gender)       conditions.push(`GENDER = '${filters.gender}'`);
-  if (filters.marital_status) conditions.push(`MARITALSTAT = '${filters.marital_status}'`);
+  if (filters.marital_status) conditions.push(`MARRIEDCD = '${filters.marital_status}'`);
   if (filters.education)    conditions.push(`EDUCATION_LEVEL = '${filters.education}'`);
   if (filters.income_tier)  conditions.push(`INCOME_TIER = '${filters.income_tier}'`);
   const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
@@ -382,7 +382,7 @@ export function queryCascadeOwnership(filters: CascadeFilters): string {
       ETHNICITYCD,
       ETHNICITY_DESC,
       GENDER,
-      MARITALSTAT,
+      MARRIEDCD,
       EDUCATION_LEVEL,
       INCOME_TIER,
       WEALTH_SCORE,
@@ -390,7 +390,7 @@ export function queryCascadeOwnership(filters: CascadeFilters): string {
     FROM VW_CASCADE_OWNERSHIP
     ${where}
     GROUP BY
-      ETHNICITYCD, ETHNICITY_DESC, GENDER, MARITALSTAT,
+      ETHNICITYCD, ETHNICITY_DESC, GENDER, MARRIEDCD,
       EDUCATION_LEVEL, INCOME_TIER, WEALTH_SCORE
     ORDER BY RECORD_COUNT DESC
   `.trim();
@@ -434,7 +434,7 @@ export function queryDemographics(filters: CascadeFilters): string {
   return `
     SELECT
       n.GENDER,
-      n.MARITALSTAT,
+      n.MARRIEDCD,
       CASE n.EDUCATIONCD
         WHEN 'A' THEN 'High School'
         WHEN 'B' THEN 'College'
@@ -463,7 +463,7 @@ export function queryDemographics(filters: CascadeFilters): string {
     JOIN NARC3 n ON p.PID = n.PID
     ${where}
     GROUP BY
-      n.GENDER, n.MARITALSTAT, n.EDUCATIONCD, n.EHI_CODE, n.WEALTHSCR, n.ETHNICITYCD
+      n.GENDER, n.MARRIEDCD, n.EDUCATIONCD, n.EHI_CODE, n.WEALTHSCR, n.ETHNICITYCD
     ORDER BY RECORD_COUNT DESC
     LIMIT 500
   `.trim();
@@ -598,7 +598,7 @@ SELECT
     ELSE 'Not Identified'
   END AS ETHNICITY_DESC,
   n.GENDER,
-  n.MARITALSTAT,
+  n.MARRIEDCD,
   CASE n.EDUCATIONCD
     WHEN 'A' THEN 'High School'
     WHEN 'B' THEN 'College'
@@ -692,4 +692,5 @@ LEFT JOIN NARC3 n ON p.PID = n.PID
 WHERE PROP_LOANTOVAL IS NOT NULL AND PROP_LOANTOVAL != ''
 GROUP BY 1,2,3,4,5,6
 `.trim();
+
 
