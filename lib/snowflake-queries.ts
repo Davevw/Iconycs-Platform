@@ -443,11 +443,11 @@ export function queryDemographics(filters: CascadeFilters): string {
         ELSE 'Unknown'
       END AS EDUCATION_LEVEL,
       CASE
-        WHEN n.EHI <= 3 THEN '$10K-$30K'
-        WHEN n.EHI <= 5 THEN '$30K-$50K'
-        WHEN n.EHI <= 8 THEN '$50K-$100K'
-        WHEN n.EHI <= 12 THEN '$100K-$250K'
-        WHEN n.EHI <= 15 THEN '$250K-$500K'
+        WHEN n.EHI IN ('A','B') THEN '$10K-$30K'
+        WHEN n.EHI IN ('C','D') THEN '$30K-$50K'
+        WHEN n.EHI IN ('E') THEN '$50K-$100K'
+        WHEN n.EHI IN ('F','G') THEN '$100K-$250K'
+        WHEN n.EHI IN ('H') THEN '$250K+'
         ELSE '$500K+'
       END AS INCOME_TIER,
       n.WEALTHSCR AS WEALTH_SCORE,
@@ -607,11 +607,11 @@ SELECT
     ELSE 'Unknown'
   END AS EDUCATION_LEVEL,
   CASE
-    WHEN n.EHI <= 3 THEN '$10K-$30K'
-    WHEN n.EHI <= 5 THEN '$30K-$50K'
-    WHEN n.EHI <= 8 THEN '$50K-$100K'
-    WHEN n.EHI <= 12 THEN '$100K-$250K'
-    WHEN n.EHI <= 15 THEN '$250K-$500K'
+    WHEN n.EHI IN ('A','B') THEN '$10K-$30K'
+    WHEN n.EHI IN ('C','D') THEN '$30K-$50K'
+    WHEN n.EHI IN ('E') THEN '$50K-$100K'
+    WHEN n.EHI IN ('F','G') THEN '$100K-$250K'
+    WHEN n.EHI IN ('H') THEN '$250K+'
     ELSE '$500K+'
   END AS INCOME_TIER,
   n.WEALTHSCR AS WEALTH_SCORE,
