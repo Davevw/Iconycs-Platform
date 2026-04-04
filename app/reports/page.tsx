@@ -398,7 +398,7 @@ function ParcelModal({ filter, state, county, city, zip, onClose }: {
 
   const SortArrow = ({ col }: { col: string }) => (
     <span style={{ marginLeft: 4, opacity: sortCol === col ? 1 : 0.3 }}>
-      {sortCol === col ? (sortDir === 'asc' ? 'â†'' : 'â†"') : 'â†•'}
+      {sortCol === col ? (sortDir === 'asc' ? '↑' : '↓') : '↕'}
     </span>
   );
 
@@ -1281,7 +1281,7 @@ export default function ReportsPage() {
               </div>
               <button onClick={currentTier === 'free' ? () => setUpgradeModal({ feature: 'PDF / Print Export', minTier: 'pro' }) : handleExport}
                 style={{ fontSize: 12, color: '#fff', background: currentTier === 'free' ? C.textMuted : C.terra, border: 'none', borderRadius: 6, padding: '6px 14px', cursor: 'pointer', fontFamily: C.font, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 5 }}>
-                {currentTier === 'free' ? 'ðŸ"'' : 'â¬‡'} Download PDF
+                {currentTier === 'free' ? '🔒' : '⬇'} Download PDF
               </button>
               <Link href={`/reports/cascade?${stateCode ? `state=${stateCode}` : ''}${selectedCounty ? `&county=${selectedCounty}` : ''}${drillCity ? `&city=${drillCity}` : ''}${drillZip ? `&zip=${drillZip}` : ''}`}
                 style={{ fontSize: 12, color: '#fff', background: C.navy, textDecoration: 'none', padding: '5px 14px', borderRadius: 6, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 5 }}>
@@ -1305,7 +1305,7 @@ export default function ReportsPage() {
               <span style={{ fontSize: 13, color: C.textDim, whiteSpace: 'nowrap' }}>Quick search:</span>
               <div style={{ position: 'relative', flex: 1, maxWidth: 500 }}>
                 <input value={citySearch} onChange={e => handleCitySearch(e.target.value)}
-                  placeholder="Search any city "" e.g. Watsonville, Monterey, Santa Cruz..."
+                  placeholder="Search any city — e.g. Watsonville, Monterey, Santa Cruz..."
                   style={{ width: '100%', padding: '9px 14px 9px 36px', borderRadius: 8, border: `1.5px solid ${citySearch ? C.terra : C.border}`, fontSize: 13, fontFamily: C.font, outline: 'none', background: C.bgWarm }} />
                 <span style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', fontSize: 14, color: C.textDim }}>ðŸ"</span>
                 {citySearch && (
@@ -1533,7 +1533,7 @@ export default function ReportsPage() {
 
             {/* â"€â"€ Freq Tables â"€â"€ */}
             <div className="card-grid-3" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, marginBottom: 6 }}>
-              <FreqTable title="Owner Ethnicity "" Direct Identified Records" data={ethnicityData} color={C.sage}
+              <FreqTable title="Owner Ethnicity — Direct Identified Records" data={ethnicityData} color={C.sage}
                 loading={overallLoading} error={natLoad.error} onRetry={fetchNational} />
               <FreqTable title="Property Type" data={propertyTypeData} color={C.terra}
                 loading={overallLoading} error={natLoad.error} onRetry={fetchNational} />
@@ -2010,7 +2010,7 @@ export default function ReportsPage() {
                       {/* Row 0: Ethnicity */}
                       <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 12 }}>
                         <FreqTable
-                          title="Owner Ethnicity "" Direct Identified"
+                          title="Owner Ethnicity — Direct Identified"
                           data={(ethnicityBreakdown ?? []).map((r: any) => ({
                             label: r.LABEL ?? r.label ?? 'Unknown',
                             count: Number(r.RECORD_COUNT ?? r.count ?? 0),
