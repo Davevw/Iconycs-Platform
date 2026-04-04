@@ -491,6 +491,105 @@ function ParcelModal({ filter, state, county, city, zip, onClose }: {
   );
 }
 
+// ─── Upgrade Modal ─────────────────────────────────────────────────────────
+function UpgradeModal({
+  feature,
+  minTier,
+  onClose,
+}: {
+  feature: string;
+  minTier: string;
+  onClose: () => void;
+}) {
+  const tierColors: Record<string, { bg: string; color: string; name: string; price: string }> = {
+    pro:          { bg: '#C4653A', color: '#fff',    name: 'Pro Analyst',  price: '$49/mo' },
+    enterprise:   { bg: '#1B2A4A', color: '#fff',    name: 'Enterprise',   price: '$199/mo' },
+    data_partner: { bg: '#B8860B', color: '#1C1917', name: 'Data Partner', price: '$999/mo' },
+  };
+  const tier = tierColors[minTier] ?? tierColors.pro;
+  const tierFeatureMap: Record<string, string[]> = {
+    pro: [
+      'Full geography drill-down (county, city, ZIP)',
+      'All demographics dimensions',
+      'PDF / print export',
+      'Cascade Report Builder',
+      'Unlimited report views',
+    ],
+    enterprise: [
+      'Everything in Pro',
+      'Social Housing Score',
+      'Matrix Builder',
+      'API access',
+      'Custom data feeds',
+    ],
+    data_partner: [
+      'Everything in Enterprise',
+      'Snowflake direct access',
+      'Bulk data export',
+      'Custom views on demand',
+      'Dedicated data engineer',
+    ],
+  };
+
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.55)', zIndex: 300, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ background: '#fff', borderRadius: 16, padding: 32, width: 480, boxShadow: '0 20px 60px rgba(0,0,0,0.3)', animation: 'fadeIn 0.2s ease', position: 'relative' }}>
+        <button onClick={onClose} style={{ position: 'absolute', top: 16, right: 16, background: 'none', border: 'none', fontSize: 22, cursor: 'pointer', color: '#A8A29E', lineHeight: 1 }}>×</button>
+
+        {/* Tier badge */}
+        <div style={{ display: 'inline-block', background: tier.bg, color: tier.color, borderRadius: 8, padding: '4px 14px', fontSize: 12, fontWeight: 700, marginBottom: 16, letterSpacing: '0.05em' }}>
+          {tier.name} — {tier.price}
+        </div>
+
+        <div style={{ fontSize: 20, fontWeight: 700, color: '#1C1917', marginBottom: 8 }}>Upgrade to unlock this feature</div>
+        <div style={{ fontSize: 13, color: '#78716C', marginBottom: 20, lineHeight: 1.6 }}>
+          <strong>{feature}</strong> requires {tier.name} or higher.
+        </div>
+
+        <div style={{ background: '#FAFAF7', borderRadius: 10, padding: '14px 16px', marginBottom: 20 }}>
+          <div style={{ fontSize: 11, fontWeight: 700, color: '#1B2A4A', marginBottom: 10, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Included in {tier.name}</div>
+          {(tierFeatureMap[minTier] ?? []).map((f, i) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: '#3D3833', marginBottom: 6 }}>
+              <span style={{ color: '#5D7E52', fontWeight: 700 }}>✓</span> {f}
+            </div>
+          ))}
+        </div>
+
+        <div style={{ display: 'flex', gap: 10 }}>
+          <button
+            style={{ flex: 1, padding: '12px 20px', background: tier.bg, color: tier.color, border: 'none', borderRadius: 8, fontSize: 14, fontWeight: 700, cursor: 'pointer', fontFamily: "'Outfit', sans-serif" }}
+            onClick={onClose}
+          >
+            Coming Soon — Notify Me
+          </button>
+          <button onClick={onClose} style={{ padding: '12px 16px', background: 'transparent', border: '1px solid #E8E2D8', borderRadius: 8, fontSize: 13, color: '#78716C', cursor: 'pointer', fontFamily: "'Outfit', sans-serif" }}>
+            Maybe Later
+          </button>
+        </div>
+
+        <div style={{ marginTop: 16, textAlign: 'center', fontSize: 11, color: '#A8A29E' }}>
+          Payments via Stripe — coming in Sprint 3. Contact dave@wrfco.com for early access.
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Tier Badge ─────────────────────────────────────────────────────────────
+function TierBadge({ tier }: { tier: 'free' | 'pro' | 'enterprise' | 'data_partner' }) {
+  const config = {
+    free:         { label: 'Explore',     bg: '#F5F0E8', color: '#78716C', border: '#E8E2D8' },
+    pro:          { label: 'Pro Analyst', bg: '#C4653A', color: '#fff',    border: '#C4653A' },
+    enterprise:   { label: 'Enterprise',  bg: '#1B2A4A', color: '#fff',    border: '#1B2A4A' },
+    data_partner: { label: 'Data Partner',bg: '#B8860B', color: '#fff',    border: '#B8860B' },
+  }[tier];
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '4px 12px', borderRadius: 20, background: config.bg, color: config.color, border: `1px solid ${config.border}`, fontSize: 11, fontWeight: 700, userSelect: 'none' }}>
+      <span>⭐</span> {config.label}
+    </div>
+  );
+}
+
 // ─── Main Page ─────────────────────────────────────────────────────────────
 export default function ReportsPage() {
   // Geography selection
@@ -504,6 +603,10 @@ export default function ReportsPage() {
 
   // Time period
   const [timePeriod, setTimePeriod] = useState<string>('all');
+
+  // Tier gating
+  const [currentTier] = useState<'free' | 'pro' | 'enterprise' | 'data_partner'>('free'); // UI only — no auth yet
+  const [upgradeModal, setUpgradeModal] = useState<{ feature: string; minTier: string } | null>(null);
 
   // Modal
   const [modal, setModal] = useState<{ filter: string; state?: string; county?: string; city?: string; zip?: string } | null>(null);
@@ -1053,6 +1156,15 @@ export default function ReportsPage() {
           />
         )}
 
+        {/* Upgrade Modal */}
+        {upgradeModal && (
+          <UpgradeModal
+            feature={upgradeModal.feature}
+            minTier={upgradeModal.minTier}
+            onClose={() => setUpgradeModal(null)}
+          />
+        )}
+
         {/* ── Print-only header ── */}
         <div className="print-header" style={{ display: 'none', padding: '20px 40px', borderBottom: '2px solid #1B2A4A' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -1075,6 +1187,15 @@ export default function ReportsPage() {
             </Link>
             <span style={{ fontSize: 14, fontWeight: 600, color: C.terra }}>Analytics Reports</span>
             <div style={{ marginLeft: 'auto', display: 'flex', gap: 8, alignItems: 'center' }}>
+              {/* Tier Badge */}
+              <TierBadge tier={currentTier} />
+              {currentTier === 'free' && (
+                <button
+                  onClick={() => setUpgradeModal({ feature: 'Full Platform Access', minTier: 'pro' })}
+                  style={{ fontSize: 11, color: '#fff', background: C.terra, border: 'none', borderRadius: 6, padding: '4px 12px', cursor: 'pointer', fontFamily: C.font, fontWeight: 600 }}>
+                  Upgrade →
+                </button>
+              )}
               {/* Time Period Selector */}
               <div style={{ display: 'flex', gap: 4, background: C.bgWarm, borderRadius: 8, padding: 3 }}>
                 {TIME_PERIODS.map(tp => (
@@ -1084,9 +1205,9 @@ export default function ReportsPage() {
                   </button>
                 ))}
               </div>
-              <button onClick={handleExport}
-                style={{ fontSize: 12, color: '#fff', background: C.terra, border: 'none', borderRadius: 6, padding: '6px 14px', cursor: 'pointer', fontFamily: C.font, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 5 }}>
-                ⬇ Download PDF
+              <button onClick={currentTier === 'free' ? () => setUpgradeModal({ feature: 'PDF / Print Export', minTier: 'pro' }) : handleExport}
+                style={{ fontSize: 12, color: '#fff', background: currentTier === 'free' ? C.textMuted : C.terra, border: 'none', borderRadius: 6, padding: '6px 14px', cursor: 'pointer', fontFamily: C.font, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 5 }}>
+                {currentTier === 'free' ? '🔒' : '⬇'} Download PDF
               </button>
               <Link href={`/reports/cascade?${stateCode ? `state=${stateCode}` : ''}${selectedCounty ? `&county=${selectedCounty}` : ''}${drillCity ? `&city=${drillCity}` : ''}${drillZip ? `&zip=${drillZip}` : ''}`}
                 style={{ fontSize: 12, color: '#fff', background: C.navy, textDecoration: 'none', padding: '5px 14px', borderRadius: 6, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 5 }}>
@@ -1261,6 +1382,31 @@ export default function ReportsPage() {
                 </div>
               ))}
             </div>
+
+            {/* ── Free Tier Upgrade Banner ── */}
+            {currentTier === 'free' && (
+              <div style={{ marginBottom: 16, padding: '14px 20px', background: `linear-gradient(135deg, ${C.terra} 0%, #D4754A 100%)`, borderRadius: 10, display: 'flex', alignItems: 'center', gap: 16, animation: 'fadeIn 0.4s ease' }}>
+                <div style={{ fontSize: 22 }}>🚀</div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: '#fff' }}>Unlock the Full ICONYCS Platform</div>
+                  <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.85)', marginTop: 2 }}>
+                    County/City/ZIP drill-down · Demographics Deep Dive · Cascade Report Builder · PDF Export · Social Housing Score
+                  </div>
+                </div>
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <button
+                    onClick={() => setUpgradeModal({ feature: 'Pro Analyst — Full Platform', minTier: 'pro' })}
+                    style={{ padding: '8px 18px', background: '#fff', color: C.terra, border: 'none', borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: C.font, whiteSpace: 'nowrap' }}>
+                    Pro — $49/mo
+                  </button>
+                  <button
+                    onClick={() => setUpgradeModal({ feature: 'Enterprise — Full Platform + Social Housing Score', minTier: 'enterprise' })}
+                    style={{ padding: '8px 18px', background: 'rgba(255,255,255,0.15)', color: '#fff', border: '1px solid rgba(255,255,255,0.4)', borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: C.font, whiteSpace: 'nowrap' }}>
+                    Enterprise — $199/mo
+                  </button>
+                </div>
+              </div>
+            )}
 
             {/* ── Trend Chart + LTV side by side ── */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 16 }}>
