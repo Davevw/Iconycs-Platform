@@ -303,7 +303,7 @@ export function queryParcels(filters: GeoFilters): string {
         WHEN 'F' THEN 'African American'
         WHEN 'A' THEN 'Asian'
         ELSE 'Not Identified'
-      END AS ETHNICITY_DESC
+      END AS ETHNICITYCD
     FROM VW_RESIDENTIAL_PROP p
     LEFT JOIN NARC3 n ON p.PID = n.PID
     ${where}
@@ -380,7 +380,7 @@ export function queryCascadeOwnership(filters: CascadeFilters): string {
   return `
     SELECT
       ETHNICITYCD,
-      ETHNICITY_DESC,
+      ETHNICITYCD,
       GENDER,
       MARRIEDCD,
       EDUCATION_LEVEL,
@@ -390,7 +390,7 @@ export function queryCascadeOwnership(filters: CascadeFilters): string {
     FROM VW_CASCADE_OWNERSHIP
     ${where}
     GROUP BY
-      ETHNICITYCD, ETHNICITY_DESC, GENDER, MARRIEDCD,
+      ETHNICITYCD, ETHNICITYCD, GENDER, MARRIEDCD,
       EDUCATION_LEVEL, INCOME_TIER, WEALTH_SCORE
     ORDER BY RECORD_COUNT DESC
   `.trim();
@@ -443,11 +443,11 @@ export function queryDemographics(filters: CascadeFilters): string {
         ELSE 'Unknown'
       END AS EDUCATION_LEVEL,
       CASE
-        WHEN n.EHI_CODE <= 3 THEN '$10K-$30K'
-        WHEN n.EHI_CODE <= 5 THEN '$30K-$50K'
-        WHEN n.EHI_CODE <= 8 THEN '$50K-$100K'
-        WHEN n.EHI_CODE <= 12 THEN '$100K-$250K'
-        WHEN n.EHI_CODE <= 15 THEN '$250K-$500K'
+        WHEN n.EHI <= 3 THEN '$10K-$30K'
+        WHEN n.EHI <= 5 THEN '$30K-$50K'
+        WHEN n.EHI <= 8 THEN '$50K-$100K'
+        WHEN n.EHI <= 12 THEN '$100K-$250K'
+        WHEN n.EHI <= 15 THEN '$250K-$500K'
         ELSE '$500K+'
       END AS INCOME_TIER,
       n.WEALTHSCR AS WEALTH_SCORE,
@@ -457,13 +457,13 @@ export function queryDemographics(filters: CascadeFilters): string {
         WHEN 'F' THEN 'African American'
         WHEN 'A' THEN 'Asian'
         ELSE 'Not Identified'
-      END AS ETHNICITY_DESC,
+      END AS ETHNICITYCD,
       COUNT(*) AS RECORD_COUNT
     FROM VW_RESIDENTIAL_PROP p
     JOIN NARC3 n ON p.PID = n.PID
     ${where}
     GROUP BY
-      n.GENDER, n.MARRIEDCD, n.EDUCATIONCD, n.EHI_CODE, n.WEALTHSCR, n.ETHNICITYCD
+      n.GENDER, n.MARRIEDCD, n.EDUCATIONCD, n.EHI, n.WEALTHSCR, n.ETHNICITYCD
     ORDER BY RECORD_COUNT DESC
     LIMIT 500
   `.trim();
@@ -596,7 +596,7 @@ SELECT
     WHEN 'F' THEN 'African American'
     WHEN 'A' THEN 'Asian'
     ELSE 'Not Identified'
-  END AS ETHNICITY_DESC,
+  END AS ETHNICITYCD,
   n.GENDER,
   n.MARRIEDCD,
   CASE n.EDUCATIONCD
@@ -607,11 +607,11 @@ SELECT
     ELSE 'Unknown'
   END AS EDUCATION_LEVEL,
   CASE
-    WHEN n.EHI_CODE <= 3 THEN '$10K-$30K'
-    WHEN n.EHI_CODE <= 5 THEN '$30K-$50K'
-    WHEN n.EHI_CODE <= 8 THEN '$50K-$100K'
-    WHEN n.EHI_CODE <= 12 THEN '$100K-$250K'
-    WHEN n.EHI_CODE <= 15 THEN '$250K-$500K'
+    WHEN n.EHI <= 3 THEN '$10K-$30K'
+    WHEN n.EHI <= 5 THEN '$30K-$50K'
+    WHEN n.EHI <= 8 THEN '$50K-$100K'
+    WHEN n.EHI <= 12 THEN '$100K-$250K'
+    WHEN n.EHI <= 15 THEN '$250K-$500K'
     ELSE '$500K+'
   END AS INCOME_TIER,
   n.WEALTHSCR AS WEALTH_SCORE,
@@ -692,5 +692,6 @@ LEFT JOIN NARC3 n ON p.PID = n.PID
 WHERE PROP_LOANTOVAL IS NOT NULL AND PROP_LOANTOVAL != ''
 GROUP BY 1,2,3,4,5,6
 `.trim();
+
 
 
