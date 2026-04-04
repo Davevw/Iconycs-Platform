@@ -6,11 +6,12 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { executeQuery } from '@/lib/snowflake';
+import { executeQuery, executeQueryCached } from '@/lib/snowflake';
 import { queryState, queryStateBreakdown } from '@/lib/snowflake-queries';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
+export const maxDuration = 60; // 60 second timeout for Snowflake queries
 
 async function safeQuery(sql: string): Promise<any[]> {
   const r = await executeQuery(sql);
@@ -27,7 +28,7 @@ export async function GET(request: NextRequest) {
     if (state) {
       // Fetch state summary + dimension breakdowns in parallel
       const [result, ethnicityRows, propertyRows, loanRows] = await Promise.all([
-        executeQuery(sql),
+        executeQueryCached(sql),
         safeQuery(queryStateBreakdown(state, 'ETHNICITY')),
         safeQuery(queryStateBreakdown(state, 'PROPERTY_CATEGORY')),
         safeQuery(queryStateBreakdown(state, 'MTG1_LOAN_CATEGORY')),
@@ -40,7 +41,7 @@ export async function GET(request: NextRequest) {
         );
       }
 
-      return NextResponse.json({
+      const response = NextResponse.json({
         success: true,
         data: result.data ?? [],
         rowCount: result.rowCount,
@@ -49,9 +50,11 @@ export async function GET(request: NextRequest) {
         propertyBreakdown: propertyRows,
         loanBreakdown: loanRows,
       });
+      response.headers.set('Cache-Control', 's-maxage=300, stale-while-revalidate=600');
+      return response;
     } else {
       // National all-states list — no breakdown needed
-      const result = await executeQuery(sql);
+      const result = await executeQueryCached(sql);
 
       if (!result.success) {
         return NextResponse.json(
@@ -60,12 +63,14 @@ export async function GET(request: NextRequest) {
         );
       }
 
-      return NextResponse.json({
+      const response = NextResponse.json({
         success: true,
         data: result.data ?? [],
         rowCount: result.rowCount,
         executionTime: result.executionTime,
       });
+      response.headers.set('Cache-Control', 's-maxage=300, stale-while-revalidate=600');
+      return response;
     }
   } catch (err: any) {
     console.error('[/api/snowflake/state]', err);

@@ -9,6 +9,7 @@ import { queryCity } from '@/lib/snowflake-queries';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
+export const maxDuration = 60; // 60 second timeout for Snowflake queries
 
 export async function GET(request: NextRequest) {
   try {
@@ -27,12 +28,14 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       success: true,
       data: result.data ?? [],
       rowCount: result.rowCount,
       executionTime: result.executionTime,
     });
+    response.headers.set('Cache-Control', 's-maxage=600, stale-while-revalidate=1200');
+    return response;
   } catch (err: any) {
     console.error('[/api/snowflake/city]', err);
     return NextResponse.json(

@@ -10,6 +10,7 @@ import { queryParcels } from '@/lib/snowflake-queries';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
+export const maxDuration = 60; // 60 second timeout for Snowflake queries
 
 const ACCESS_CODE = 'Iconycs01';
 

@@ -77,6 +77,22 @@ export async function executeQuery(sql: string): Promise<{ success: boolean; dat
   return runQuery(sql);
 }
 
+// Simple in-memory query cache (5 min TTL)
+const queryCache = new Map<string, { data: Record<string, any>[]; ts: number }>();
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
+export async function executeQueryCached(sql: string): Promise<{ success: boolean; data?: Record<string, any>[]; columns?: string[]; rowCount?: number; error?: string; executionTime?: number; fromCache?: boolean }> {
+  const cached = queryCache.get(sql);
+  if (cached && Date.now() - cached.ts < CACHE_TTL) {
+    return { success: true, data: cached.data, rowCount: cached.data.length, fromCache: true };
+  }
+  const result = await executeQuery(sql);
+  if (result.success && result.data) {
+    queryCache.set(sql, { data: result.data, ts: Date.now() });
+  }
+  return result;
+}
+
 export async function testConnection(): Promise<{ success: boolean; message: string; details?: { account: string; warehouse: string; database: string; schema: string } }> {
   const result = await runQuery('SELECT CURRENT_TIMESTAMP() AS ts, CURRENT_DATABASE() AS db, CURRENT_SCHEMA() AS schema_name, CURRENT_WAREHOUSE() AS wh');
   if (!result.success) return { success: false, message: result.error || 'Failed' };

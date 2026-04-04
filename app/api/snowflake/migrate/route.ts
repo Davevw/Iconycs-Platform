@@ -15,6 +15,7 @@ import {
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
+export const maxDuration = 60; // 60 second timeout for Snowflake queries
 
 export async function POST(request: NextRequest) {
   const secret = request.headers.get('x-admin-secret');

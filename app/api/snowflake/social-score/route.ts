@@ -21,6 +21,7 @@ import type { GeoFilters } from '@/lib/snowflake-queries';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
+export const maxDuration = 60; // 60 second timeout for Snowflake queries
 
 // ─── Shannon entropy (0-1) ────────────────────────────────────────────────
 

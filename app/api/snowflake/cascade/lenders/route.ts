@@ -11,6 +11,7 @@ import type { CascadeFilters } from '@/lib/snowflake-queries';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
+export const maxDuration = 60; // 60 second timeout for Snowflake queries
 
 export async function GET(request: NextRequest) {
   try {
