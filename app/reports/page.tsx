@@ -618,6 +618,7 @@ export default function ReportsPage() {
   const [drillZip, setDrillZip]     = useState<string | null>(null);
   const [search, setSearch]         = useState('');
   const [citySearch, setCitySearch] = useState('');
+  const [countySearch, setCountySearch] = useState('');
   const [citySearchResults, setCitySearchResults] = useState<{state:string;stateName:string;city:string;props:number;avg:number}[]>([]);
 
   // Time period
@@ -1157,7 +1158,7 @@ export default function ReportsPage() {
 
   // â”€â”€â”€ County cards from live data with GEO_DATA fallback â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const countyCards = countyData.length > 0
-    ? countyData.slice(0, 12).map(r => ({
+    ? countyData.slice(0, 25).map(r => ({
         name: getCountyName(stateCode ?? '', String(r.CNTYCD ?? r.COUNTY ?? '')), rawFips: String(r.CNTYCD ?? ''),
         props: Number(r.RECORD_COUNT ?? r.TOTAL_PROPERTIES ?? 0),
         avg: Number(r.AVG_VALUE ?? r.AVG_PROPERTY_VALUE ?? 0),
@@ -1782,9 +1783,18 @@ export default function ReportsPage() {
                       <ErrorMsg msg={countyLoad.error} onRetry={() => stateCode && fetchCounty(stateCode)} />
                     ) : countyCards.length > 0 ? (
                       <>
-                        <div style={{ fontSize: 12, color: C.textMuted, marginBottom: 8 }}>Select a county to drill down to cities:</div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
+                          <div style={{ fontSize: 12, color: C.textMuted }}>Select a county to drill down to cities:</div>
+                          <input
+                            type="text"
+                            placeholder="Search county..."
+                            value={countySearch}
+                            onChange={e => setCountySearch(e.target.value)}
+                            style={{ padding: '6px 12px', borderRadius: 8, border: `1px solid ${C.border}`, fontSize: 12, fontFamily: C.font, outline: 'none', width: 160, background: C.bgCard, color: C.text }}
+                          />
+                        </div>
                         <div className="card-grid-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12 }}>
-                          {countyCards.map((county, i) => {
+                          {countyCards.filter(c => !countySearch || c.name.toLowerCase().includes(countySearch.toLowerCase())).map((county, i) => {
                             const maxProps = Math.max(...countyCards.map(c => c.props));
                             return (
                               <div key={i} onClick={() => setSelectedCounty(county.name)}
