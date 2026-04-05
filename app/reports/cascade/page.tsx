@@ -611,11 +611,15 @@ function CascadeInner() {
 
       {/* Header */}
       <div style={{ background: C.navy, color: '#fff', padding: '12px 24px', display: 'flex', alignItems: 'center', gap: 14 }}>
+        <Link href="/" style={{ color: '#fff', opacity: 0.6, fontSize: 12, textDecoration: 'none', fontWeight: 500 }}>
+          Home
+        </Link>
+        <div style={{ width: 1, height: 16, background: 'rgba(255,255,255,0.3)' }} />
         <Link href="/reports" style={{ color: '#fff', opacity: 0.7, fontSize: 12, textDecoration: 'none', fontWeight: 600 }}>
           Back to Reports
         </Link>
         <div style={{ width: 1, height: 16, background: 'rgba(255,255,255,0.3)' }} />
-        <div style={{ fontSize: 14, fontWeight: 700, letterSpacing: '0.05em' }}>CASCADE REPORT BUILDER</div>
+        <div style={{ fontSize: 14, fontWeight: 700, letterSpacing: '0.05em' }}>🏗️ CASCADE REPORT BUILDER</div>
         <div style={{ flex: 1 }} />
         {/* Breadcrumb */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, opacity: 0.85 }}>
@@ -774,7 +778,7 @@ function CascadeInner() {
           (e.currentTarget as HTMLDivElement).style.boxShadow = '0 4px 16px rgba(27,42,74,0.35)';
         }}
       >
-        ^ Back
+        Back to Reports
       </div>
     </div>
   );

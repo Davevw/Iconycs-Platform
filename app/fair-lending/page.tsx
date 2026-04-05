@@ -578,6 +578,10 @@ export default function FairLendingPage() {
                 fontSize: 12, color: C.terra, textDecoration: 'none',
                 padding: '5px 12px', borderRadius: 6, background: '#FFF8F5', fontWeight: 600,
               }}>Pricing</Link>
+              <Link href="/" style={{
+                fontSize: 12, color: C.textMuted, textDecoration: 'none',
+                padding: '5px 12px', borderRadius: 6, background: C.bgWarm,
+              }}>Back to Home</Link>
               {report && (
                 <button onClick={handlePrint} style={{
                   fontSize: 12, color: '#fff', background: C.navy,

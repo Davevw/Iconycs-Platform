@@ -238,7 +238,7 @@ export default function DashboardPage() {
           </div>
           <div style={{ background: C.bgCard, borderRadius: 12, border: `1px solid ${C.border}`, padding: 18 }}>
             <div style={{ fontSize: 13, fontWeight: 600, color: C.text, marginBottom: 12 }}>Pipeline</div>
-            {['1. Claude Opus 4.6  to  SQL', '2. Snowflake  to  Execute', '3. Claude Sonnet  to  Interpret', '4. Chart  to  Visualize'].map((s, i) => (
+            {['1. Claude Opus 4.6 — SQL', '2. Snowflake — Execute', '3. Claude Sonnet — Interpret', '4. Chart — Visualize'].map((s, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '5px 0', fontSize: 12, color: C.textBody }}>
                 <div style={{ width: 6, height: 6, borderRadius: '50%', background: [C.terra, C.sage, C.gold, C.navy][i] }} />{s}
               </div>

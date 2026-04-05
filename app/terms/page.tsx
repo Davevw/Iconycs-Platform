@@ -151,7 +151,7 @@ export default function TermsPage() {
 
           {/* Sections */}
           <div id="section-1">
-            <Section number="1" title="Acceptance of Terms">
+            <Section number="1" title="📋 Acceptance of Terms">
               By accessing or using the ICONYCS Housing Intelligence platform ("Service") operated by Western Realty Finance ("Company," "we," "us"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree, do not use the Service.
             </Section>
           </div>
@@ -163,7 +163,7 @@ export default function TermsPage() {
           </div>
 
           <div id="section-3">
-            <Section number="3" title="Data Use Policy">
+            <Section number="3" title="⚖️ Data Use Policy">
               <SubSection title="3.1 Permitted Uses">
                 You may use ICONYCS data for:
                 <BulletList items={[
@@ -198,7 +198,7 @@ export default function TermsPage() {
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 16, marginBottom: 24 }}>
                 {[
                   { name: 'Free Tier', price: 'No cost', badge: 'Explore', bg: C.bgWarm, color: C.textMuted, desc: 'National and state-level summary data. Limited to 3 report views per day.' },
-                  { name: 'Analyst Tier', price: '$49/month', badge: 'Analyst', bg: '#FFF0E9', color: C.terra, desc: 'Full geographic drill-down (national  to  state  to  county  to  city  to  ZIP). All demographic breakdowns. PDF export. Cascade report builder.' },
+                  { name: 'Analyst Tier', price: '$49/month', badge: 'Analyst', bg: '#FFF0E9', color: C.terra, desc: 'Full geographic drill-down (national, state, county, city, ZIP). All demographic breakdowns. PDF export. Cascade report builder.' },
                   { name: 'Professional Tier', price: '$199/month', badge: 'Pro', bg: '#EEF2F8', color: C.navy, desc: 'All Analyst features plus Social Housing Score, matrix reporting, time-series analysis, API access, custom data feeds.' },
                   { name: 'Enterprise Tier', price: '$999/month', badge: 'Enterprise', bg: '#1B2A4A', color: '#fff', desc: 'All Professional features plus Snowflake direct access, team seats (up to 5), custom views, priority support.' },
                 ].map((tier, i) => (
@@ -252,7 +252,7 @@ export default function TermsPage() {
           </div>
 
           <div id="section-7">
-            <Section number="7" title="Privacy">
+            <Section number="7" title="🔒 Privacy">
               We collect account information, usage data, and payment information. We do not sell your personal information.{' '}
               <Link href="/privacy" style={{ color: C.terra, textDecoration: 'underline' }}>See our Privacy Policy</Link>{' '}
               at iconycs.com/privacy for details.
@@ -272,7 +272,7 @@ export default function TermsPage() {
           </div>
 
           <div id="section-10">
-            <Section number="10" title="Contact">
+            <Section number="10" title="📬 Contact">
               <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 12, padding: '20px 24px' }}>
                 <div style={{ fontSize: 14, fontWeight: 700, color: C.navy, marginBottom: 12 }}>Western Realty Finance | ICONYCS Housing Intelligence</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>

@@ -30,6 +30,7 @@ export default function PartnersPage() {
               <Link key={item} href={`/${item.toLowerCase()}`} style={{ fontSize: 13, color: 'var(--text-body)', textDecoration: 'none', fontWeight: 500, padding: '8px 16px', borderRadius: '8px', transition: 'all 0.2s' }}>{item}</Link>
             ))}
             <Link href="/dashboard" style={{ padding: '10px 22px', borderRadius: 8, fontSize: 13, fontWeight: 600, background: '#C4653A', color: '#fff', textDecoration: 'none', boxShadow: '0 1px 2px rgba(196,101,58,0.3)' }}>Launch Dashboard</Link>
+            <Link href="/" style={{ fontSize: 13, color: '#6b6660', textDecoration: 'none', fontWeight: 500, padding: '8px 14px', borderRadius: '8px' }}>Home</Link>
           </div>
         </div>
       </nav>
@@ -37,7 +38,7 @@ export default function PartnersPage() {
       <section style={{ padding: '100px 32px 60px', maxWidth: 1200, margin: '0 auto' }}>
         <p style={{ fontSize: 13, fontWeight: 600, color: 'var(--accent)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 16 }}>Our Partners</p>
         <h1 style={{ fontSize: 48, fontWeight: 800, fontFamily: 'var(--font-display)', lineHeight: 1.15, marginBottom: 24 }}>
-          Industry-leading <span style={{ color: 'var(--accent)' }}>technology partners</span>
+          🤝 Industry-leading <span style={{ color: 'var(--accent)' }}>technology partners</span>
         </h1>
         <p style={{ fontSize: 18, color: 'var(--text-muted)', lineHeight: 1.8, maxWidth: 640 }}>
           We partner with the top providers in real estate technology to deliver comprehensive property
@@ -54,7 +55,7 @@ export default function PartnersPage() {
             }}>
               <h3 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>{p.name}</h3>
               <p style={{ fontSize: 14, color: 'var(--text-muted)', lineHeight: 1.6 }}>{p.desc}</p>
-              <span style={{ fontSize: 12, color: 'var(--accent)', marginTop: 12, display: 'inline-block' }}>Visit  to </span>
+              <span style={{ fontSize: 12, color: 'var(--accent)', marginTop: 12, display: 'inline-block' }}>Visit site</span>
             </a>
           ))}
         </div>

@@ -277,7 +277,7 @@ export default function UserDashboardPage() {
             {/* 2. Subscription Status */}
             <div style={{ background: C.bgCard, borderRadius: 14, border: `1px solid ${C.border}`, padding: 28 }}>
               <h2 style={{ fontSize: 16, fontWeight: 700, color: C.navy, fontFamily: C.fontSerif, margin: '0 0 18px' }}>
-                Subscription
+                💳 Subscription
               </h2>
 
               {tier === 'free' ? (
@@ -338,7 +338,7 @@ export default function UserDashboardPage() {
             {/* 4. Usage This Month */}
             <div style={{ background: C.bgCard, borderRadius: 14, border: `1px solid ${C.border}`, padding: 28 }}>
               <h2 style={{ fontSize: 16, fontWeight: 700, color: C.navy, fontFamily: C.fontSerif, margin: '0 0 18px' }}>
-                Usage This Month
+                📊 Usage This Month
               </h2>
               <UsageBar used={cfg.reportViews.used} limit={cfg.reportViews.limit} label="Report Views" />
               <UsageBar used={cfg.apiCalls.used} limit={cfg.apiCalls.limit} label="API Calls" />
@@ -356,7 +356,7 @@ export default function UserDashboardPage() {
             {/* 5. Recent Activity */}
             <div style={{ background: C.bgCard, borderRadius: 14, border: `1px solid ${C.border}`, padding: 28 }}>
               <h2 style={{ fontSize: 16, fontWeight: 700, color: C.navy, fontFamily: C.fontSerif, margin: '0 0 18px' }}>
-                Recent Activity
+                🕐 Recent Activity
               </h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
                 {RECENT_ACTIVITY.map((item, i) => (
@@ -387,7 +387,7 @@ export default function UserDashboardPage() {
             <div style={{ background: C.bgCard, borderRadius: 14, border: `1px solid ${C.border}`, overflow: 'hidden' }}>
               <div style={{ padding: '16px 20px', background: C.navy, color: '#fff' }}>
                 <h2 style={{ fontSize: 14, fontWeight: 700, margin: 0, letterSpacing: '0.04em' }}>
-                  FEATURE ACCESS
+                  🔓 FEATURE ACCESS
                 </h2>
                 <div style={{ fontSize: 12, color: '#A8B5CC', marginTop: 2 }}>
                   Your {cfg.label} plan includes:
@@ -456,7 +456,7 @@ export default function UserDashboardPage() {
                   >
                     <span style={{ fontSize: 18 }}>{link.icon}</span>
                     <span style={{ fontSize: 14, color: C.textBody, fontWeight: 500 }}>{link.label}</span>
-                    <span style={{ marginLeft: 'auto', fontSize: 14, color: C.textDim }}> to </span>
+                    <span style={{ marginLeft: 'auto', fontSize: 14, color: C.textDim }}>›</span>
                   </Link>
                 ))}
               </div>
@@ -480,7 +480,7 @@ export default function UserDashboardPage() {
                   borderRadius: 8, textDecoration: 'none', fontSize: 13,
                   fontWeight: 700, background: C.terra, color: '#fff',
                 }}>
-                  View Plans  to 
+                  View Plans
                 </Link>
               </div>
             )}

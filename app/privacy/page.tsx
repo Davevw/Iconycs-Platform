@@ -132,7 +132,7 @@ export default function PrivacyPage() {
           </div>
 
           {/* Section 1 */}
-          <Section number="1" title="Data We Collect">
+          <Section number="1" title="📋 Data We Collect">
             <p style={{ marginBottom: 16 }}>We collect the minimum information necessary to provide the ICONYCS platform. This includes:</p>
 
             <Callout icon="[user]" title="Account Information">
@@ -160,7 +160,7 @@ export default function PrivacyPage() {
           </Section>
 
           {/* Section 3 */}
-          <Section number="3" title="Data We Do NOT Sell">
+          <Section number="3" title="🔒 Data We Do NOT Sell">
             <div style={{ padding: '20px 24px', background: '#EDF6EA', border: `2px solid ${C.sage}`, borderRadius: 12, marginBottom: 16 }}>
               <div style={{ fontSize: 15, fontWeight: 700, color: C.sage, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 8 }}>
                 <span></span> We do not sell your personal information. Period.
@@ -262,7 +262,7 @@ export default function PrivacyPage() {
           </Section>
 
           {/* Section 10 */}
-          <Section number="10" title="Contact">
+          <Section number="10" title="📬 Contact">
             <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 12, padding: '20px 24px' }}>
               <div style={{ fontSize: 14, fontWeight: 700, color: C.navy, marginBottom: 12 }}>Privacy Questions &amp; Requests</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>

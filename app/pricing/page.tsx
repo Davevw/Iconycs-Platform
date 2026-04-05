@@ -50,7 +50,7 @@ const TIERS = [
     description: 'Single state, full drill-down. CA, FL, TX, NY: $2,500/mo. All other states: $1,500/mo.',
     features: [
       'One state  -  full drill-down',
-      'State  to  County  to  City  to  ZIP',
+      'State — County — City — ZIP',
       'All demographic breakdowns',
       'LTV tier analysis (FNMA tiers)',
       'Mortgage intelligence panel',
@@ -267,7 +267,7 @@ function EnterpriseGeoModal({ onClose }: { onClose: () => void }) {
               display: 'inline-block',
             }}
           >
-            Request a Demo  to 
+            Request a Demo
           </a>
         </div>
       </div>
@@ -464,7 +464,7 @@ function WaitlistModal({
                     opacity: loading ? 0.7 : 1,
                   }}
                 >
-                  {loading ? 'Submitting...' : "I'm In  to "}
+                  {loading ? 'Submitting...' : "I'm In"}
                 </button>
               </div>
             </form>
@@ -612,7 +612,7 @@ function TierCard({
               boxSizing: 'border-box',
             }}
           >
-            {tier.cta}  to 
+            {tier.cta}
           </Link>
         )}
       </div>
