@@ -64,7 +64,7 @@ export default function InvestorsPage() {
       </section>
 
       <footer style={{ padding: '32px', borderTop: '1px solid var(--border)', textAlign: 'center', fontSize: 12, color: 'var(--text-dim)' }}>
-        © {new Date().getFullYear()} ICONYCS. All Rights Reserved.
+        (c) {new Date().getFullYear()} ICONYCS. All Rights Reserved.
       </footer>
     </main>
   );

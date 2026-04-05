@@ -22,7 +22,7 @@ const C = {
 // --- Agent Data ---------------------------------------------------------------
 const AGENTS = [
   {
-    icon: '⚖️',
+    icon: '[scales]',
     name: 'Fair Lending Compliance Agent',
     price: '$5,000',
     period: '/month',
@@ -43,7 +43,7 @@ const AGENTS = [
     ctaStyle: 'primary',
   },
   {
-    icon: '📊',
+    icon: '[chart]',
     name: 'Market Intelligence Agent',
     price: '$3,000',
     period: '/month',
@@ -64,7 +64,7 @@ const AGENTS = [
     ctaStyle: 'primary',
   },
   {
-    icon: '🏠',
+    icon: '[house]',
     name: 'Acquisition Scout Agent',
     price: '$2,000',
     period: '/month',
@@ -270,7 +270,7 @@ export default function AgentsPage() {
                   <ul style={{ margin: 0, padding: 0, listStyle: 'none' }}>
                     {agent.useCases.map((uc) => (
                       <li key={uc} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, fontSize: 13, color: C.textBody, padding: '5px 0', borderBottom: `1px solid ${C.borderLight}` }}>
-                        <span style={{ color: C.sage, fontWeight: 700, marginTop: 1, flexShrink: 0 }}>✓</span>
+                        <span style={{ color: C.sage, fontWeight: 700, marginTop: 1, flexShrink: 0 }}>[check]</span>
                         {uc}
                       </li>
                     ))}
@@ -288,7 +288,7 @@ export default function AgentsPage() {
                     fontWeight: 700, fontSize: 14, textDecoration: 'none',
                     letterSpacing: '0.01em',
                   }}>
-                    {agent.ctaLabel} →
+                    {agent.ctaLabel} ->
                   </a>
                 </div>
               </div>
@@ -356,15 +356,15 @@ export default function AgentsPage() {
               background: C.terra, color: '#fff', fontWeight: 700, fontSize: 15,
               textDecoration: 'none', letterSpacing: '0.01em',
             }}>
-            Schedule Consultation →
+            Schedule Consultation ->
           </a>
 
           <div style={{ marginTop: 48, display: 'flex', gap: 32, justifyContent: 'center', flexWrap: 'wrap' }}>
             {[
-              { label: 'Compliance Workflow', icon: '⚖️' },
-              { label: 'Portfolio Analytics', icon: '📈' },
-              { label: 'Regulatory Reporting', icon: '📋' },
-              { label: 'Market Surveillance', icon: '🔍' },
+              { label: 'Compliance Workflow', icon: '[scales]' },
+              { label: 'Portfolio Analytics', icon: '[trending]' },
+              { label: 'Regulatory Reporting', icon: '' },
+              { label: 'Market Surveillance', icon: '[search]' },
             ].map((f) => (
               <div key={f.label} style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'rgba(255,255,255,0.6)', fontSize: 13 }}>
                 <span>{f.icon}</span>
@@ -390,7 +390,7 @@ export default function AgentsPage() {
               <a key={l.label} href={l.href} style={{ fontSize: 13, color: C.textMuted, textDecoration: 'none' }}>{l.label}</a>
             ))}
           </div>
-          <div style={{ fontSize: 12, color: C.textDim }}>© 2026 ICONYCS. All rights reserved.</div>
+          <div style={{ fontSize: 12, color: C.textDim }}>(c) 2026 ICONYCS. All rights reserved.</div>
         </div>
       </footer>
     </div>

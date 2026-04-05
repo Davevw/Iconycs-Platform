@@ -122,18 +122,18 @@ const FEATURES = [
 
 // -- Recent activity (placeholder) ---------------------------------------------
 const RECENT_ACTIVITY = [
-  { icon: '📊', label: 'California Housing Report', date: 'Apr 4, 2026' },
-  { icon: '⚖️', label: 'Fair Lending Report  -  Los Angeles', date: 'Apr 4, 2026' },
-  { icon: '🔌', label: 'API Query  -  /api/v1/national', date: 'Apr 4, 2026' },
+  { icon: '[chart]', label: 'California Housing Report', date: 'Apr 4, 2026' },
+  { icon: '[scales]', label: 'Fair Lending Report  -  Los Angeles', date: 'Apr 4, 2026' },
+  { icon: '', label: 'API Query  -  /api/v1/national', date: 'Apr 4, 2026' },
 ];
 
 // -- Quick links ----------------------------------------------------------------
 const QUICK_LINKS = [
-  { label: 'Analytics Reports', href: '/reports', icon: '📈', color: C.terra },
-  { label: 'Cascade Builder', href: '/reports/cascade', icon: '🔀', color: C.navy },
-  { label: 'Fair Lending', href: '/fair-lending', icon: '⚖️', color: C.sage },
-  { label: 'API Docs', href: '/api-docs', icon: '🔌', color: C.gold },
-  { label: 'Pricing', href: '/pricing', icon: '💳', color: C.textMuted },
+  { label: 'Analytics Reports', href: '/reports', icon: '[trending]', color: C.terra },
+  { label: 'Cascade Builder', href: '/reports/cascade', icon: '', color: C.navy },
+  { label: 'Fair Lending', href: '/fair-lending', icon: '[scales]', color: C.sage },
+  { label: 'API Docs', href: '/api-docs', icon: '', color: C.gold },
+  { label: 'Pricing', href: '/pricing', icon: '[card]', color: C.textMuted },
 ];
 
 // -- Helper: initials circle ----------------------------------------------------
@@ -227,7 +227,7 @@ export default function UserDashboardPage() {
           <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 10 }}>
             <Link href="/reports" style={{ fontSize: 13, color: C.textMuted, textDecoration: 'none', padding: '5px 12px', borderRadius: 6 }}>Reports</Link>
             <Link href="/pricing" style={{ fontSize: 13, color: C.terra, textDecoration: 'none', padding: '5px 12px', borderRadius: 6, background: C.terraSoft, fontWeight: 600 }}>Pricing</Link>
-            <Link href="/" style={{ fontSize: 13, color: C.textMuted, textDecoration: 'none', padding: '5px 12px', borderRadius: 6 }}>← Home</Link>
+            <Link href="/" style={{ fontSize: 13, color: C.textMuted, textDecoration: 'none', padding: '5px 12px', borderRadius: 6 }}><- Home</Link>
           </div>
         </div>
       </nav>
@@ -238,11 +238,11 @@ export default function UserDashboardPage() {
         color: '#fff', padding: '12px 24px', textAlign: 'center',
         fontSize: 13, lineHeight: 1.5,
       }}>
-        <span style={{ marginRight: 8 }}>👋</span>
+        <span style={{ marginRight: 8 }}></span>
         <strong>You&apos;re viewing a demo dashboard.</strong>
         {' '}Sign in or create an account to see your real data.{' '}
         <Link href="/pricing" style={{ color: '#F9C784', fontWeight: 700, textDecoration: 'underline' }}>
-          Get started →
+          Get started ->
         </Link>
       </div>
 
@@ -286,7 +286,7 @@ export default function UserDashboardPage() {
                   background: C.terraSoft, border: `1px solid ${C.terra}30`,
                   fontSize: 14, color: C.terraDark, marginBottom: 18, lineHeight: 1.6,
                 }}>
-                  💡 You&apos;re on the <strong>Free plan</strong>. Upgrade to unlock full access to drill-down reports,
+                  [idea] You&apos;re on the <strong>Free plan</strong>. Upgrade to unlock full access to drill-down reports,
                   the Cascade Builder, Fair Lending tools, and API access.
                 </div>
               ) : null}
@@ -307,7 +307,7 @@ export default function UserDashboardPage() {
               {tier !== 'free' && (
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 20 }}>
                   <span style={{ fontSize: 12, color: statusCfg.color, background: statusCfg.bg, padding: '3px 10px', borderRadius: 20, fontWeight: 700 }}>
-                    ● {statusCfg.label}
+                    * {statusCfg.label}
                   </span>
                   <span style={{ fontSize: 12, color: C.textMuted }}>Monthly billing cycle</span>
                 </div>
@@ -319,7 +319,7 @@ export default function UserDashboardPage() {
                   padding: '9px 20px', borderRadius: 8, textDecoration: 'none',
                   fontSize: 13, fontWeight: 700, background: C.terra, color: '#fff',
                 }}>
-                  {tier === 'free' ? '🚀 Upgrade Plan' : '⬆️ Change Plan'}
+                  {tier === 'free' ? '[rocket] Upgrade Plan' : ' Change Plan'}
                 </Link>
                 {tier !== 'free' && (
                   <button style={{
@@ -329,7 +329,7 @@ export default function UserDashboardPage() {
                     cursor: 'pointer', fontFamily: C.font,
                   }}
                     onClick={() => alert('Stripe customer portal coming soon.')}>
-                    💳 Manage Billing
+                    [card] Manage Billing
                   </button>
                 )}
               </div>
@@ -349,7 +349,7 @@ export default function UserDashboardPage() {
                 </span>
               </div>
               <div style={{ marginTop: 14, padding: '10px 14px', background: C.bgWarm, borderRadius: 8, fontSize: 11, color: C.textDim }}>
-                📅 Usage resets on May 1, 2026 * Placeholder values  -  live tracking coming soon
+                [calendar] Usage resets on May 1, 2026 * Placeholder values  -  live tracking coming soon
               </div>
             </div>
 
@@ -404,7 +404,7 @@ export default function UserDashboardPage() {
                       opacity: unlocked ? 1 : 0.55,
                     }}>
                       <span style={{ fontSize: 16, flexShrink: 0, marginTop: 1 }}>
-                        {unlocked ? '✅' : '🔒'}
+                        {unlocked ? '' : '[lock]'}
                       </span>
                       <div>
                         <div style={{ fontSize: 13, fontWeight: unlocked ? 600 : 400, color: unlocked ? C.text : C.textMuted }}>
@@ -430,7 +430,7 @@ export default function UserDashboardPage() {
                     borderRadius: 8, textDecoration: 'none', fontSize: 13,
                     fontWeight: 700, background: C.terra, color: '#fff',
                   }}>
-                    🚀 Unlock More Features
+                    [rocket] Unlock More Features
                   </Link>
                 </div>
               )}
@@ -456,7 +456,7 @@ export default function UserDashboardPage() {
                   >
                     <span style={{ fontSize: 18 }}>{link.icon}</span>
                     <span style={{ fontSize: 14, color: C.textBody, fontWeight: 500 }}>{link.label}</span>
-                    <span style={{ marginLeft: 'auto', fontSize: 14, color: C.textDim }}>→</span>
+                    <span style={{ marginLeft: 'auto', fontSize: 14, color: C.textDim }}>-></span>
                   </Link>
                 ))}
               </div>
@@ -468,7 +468,7 @@ export default function UserDashboardPage() {
                 background: `linear-gradient(135deg, ${C.navy} 0%, #243556 100%)`,
                 borderRadius: 14, padding: 24, color: '#fff',
               }}>
-                <div style={{ fontSize: 18, marginBottom: 8 }}>🚀</div>
+                <div style={{ fontSize: 18, marginBottom: 8 }}>[rocket]</div>
                 <div style={{ fontSize: 15, fontWeight: 700, marginBottom: 6, fontFamily: C.fontSerif }}>
                   Unlock the Full Platform
                 </div>
@@ -480,7 +480,7 @@ export default function UserDashboardPage() {
                   borderRadius: 8, textDecoration: 'none', fontSize: 13,
                   fontWeight: 700, background: C.terra, color: '#fff',
                 }}>
-                  View Plans →
+                  View Plans ->
                 </Link>
               </div>
             )}

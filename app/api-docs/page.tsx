@@ -57,7 +57,7 @@ const ENDPOINTS = [
   {
     method: 'GET',
     path: '/api/v1/ltv',
-    description: 'LTV tier distribution (FNMA buckets: ≤60%, 60-80%, 80-95%, 95-100%, 100%+)',
+    description: 'LTV tier distribution (FNMA buckets: <=60%, 60-80%, 80-95%, 95-100%, 100%+)',
     params: [
       { name: 'state', type: 'query', desc: '2-letter state code' },
       { name: 'city', type: 'query', desc: 'City name' },
@@ -262,16 +262,16 @@ export default function ApiDocsPage() {
           </p>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' as const }}>
             <div style={{ background: 'rgba(255,255,255,0.1)', borderRadius: 8, padding: '10px 18px', fontSize: 13 }}>
-              🏠 109M+ Properties
+              [house] 109M+ Properties
             </div>
             <div style={{ background: 'rgba(255,255,255,0.1)', borderRadius: 8, padding: '10px 18px', fontSize: 13 }}>
-              📍 National → ZIP Level
+              [pin] National -> ZIP Level
             </div>
             <div style={{ background: 'rgba(255,255,255,0.1)', borderRadius: 8, padding: '10px 18px', fontSize: 13 }}>
-              ⚡ 5-Min Cache
+               5-Min Cache
             </div>
             <div style={{ background: 'rgba(255,255,255,0.1)', borderRadius: 8, padding: '10px 18px', fontSize: 13 }}>
-              🔒 Key Auth
+              [lock] Key Auth
             </div>
           </div>
         </div>
@@ -283,13 +283,13 @@ export default function ApiDocsPage() {
         <aside style={{ position: 'sticky', top: 72 }}>
           <nav>
             {[
-              { href: '#access', label: '🔑 Early Access' },
-              { href: '#authentication', label: '🔐 Authentication' },
-              { href: '#endpoints', label: '📡 Endpoints' },
-              { href: '#examples', label: '💻 Code Examples' },
-              { href: '#response', label: '📦 Response Format' },
-              { href: '#rate-limits', label: '⚡ Rate Limits' },
-              { href: '#errors', label: '❌ Error Codes' },
+              { href: '#access', label: ' Early Access' },
+              { href: '#authentication', label: ' Authentication' },
+              { href: '#endpoints', label: '[satellite] Endpoints' },
+              { href: '#examples', label: '[laptop] Code Examples' },
+              { href: '#response', label: '[package] Response Format' },
+              { href: '#rate-limits', label: ' Rate Limits' },
+              { href: '#errors', label: ' Error Codes' },
             ].map(item => (
               <a key={item.href} href={item.href} style={{
                 display: 'block', padding: '8px 12px', fontSize: 13, color: C.textMuted,
@@ -313,7 +313,7 @@ export default function ApiDocsPage() {
               padding: '24px 28px',
             }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: 16 }}>
-                <span style={{ fontSize: 28 }}>🚀</span>
+                <span style={{ fontSize: 28 }}>[rocket]</span>
                 <div>
                   <h2 style={{ fontSize: 20, fontWeight: 700, color: C.terra, margin: '0 0 8px' }}>
                     Early Access  -  Professional & Enterprise
@@ -328,7 +328,7 @@ export default function ApiDocsPage() {
                       background: C.terra, color: '#fff', borderRadius: 8,
                       textDecoration: 'none', fontWeight: 700, fontSize: 14,
                     }}>
-                    Request API Access →
+                    Request API Access ->
                   </a>
                 </div>
               </div>
@@ -350,7 +350,7 @@ X-API-Key: ick_live_your_api_key_here`} />
               background: '#FEF9C3', border: '1px solid #FDE047',
               borderRadius: 8, fontSize: 13, color: '#713F12',
             }}>
-              ⚠️ Keep your API key confidential. Do not expose it in client-side JavaScript or public repositories.
+              [!] Keep your API key confidential. Do not expose it in client-side JavaScript or public repositories.
             </div>
           </section>
 
@@ -564,7 +564,7 @@ X-API-Key: ick_live_your_api_key_here`} />
 
       {/* Footer */}
       <footer style={{ borderTop: `1px solid ${C.border}`, padding: '24px', textAlign: 'center' as const, fontSize: 12, color: C.textMuted }}>
-        ICONYCS Data API v1.0 * © {new Date().getFullYear()} ICONYCS * <a href="mailto:info@iconycs.com" style={{ color: C.terra }}>info@iconycs.com</a>
+        ICONYCS Data API v1.0 * (c) {new Date().getFullYear()} ICONYCS * <a href="mailto:info@iconycs.com" style={{ color: C.terra }}>info@iconycs.com</a>
       </footer>
     </div>
   );

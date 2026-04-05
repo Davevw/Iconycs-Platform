@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Blog — Housing Intelligence | ICONYCS',
-  description: 'Data-driven housing market analysis, fair lending insights, and demographic research from ICONYCS — powered by 130M+ property records and Census ACS 2023.',
+  title: 'Blog -- Housing Intelligence | ICONYCS',
+  description: 'Data-driven housing market analysis, fair lending insights, and demographic research from ICONYCS -- powered by 130M+ property records and Census ACS 2023.',
 };
 
 interface Post {
@@ -30,15 +30,15 @@ const POSTS: Post[] = [
     excerpt: 'Across 109.8 million U.S. residential property records, direct ethnic identification data exposes a persistent and measurable homeownership gap that conventional surveys have historically understated.',
     body: `Across 109.8 million U.S. residential property records, direct ethnic identification data exposes a persistent and measurable homeownership gap that conventional surveys have historically understated.
 
-ICONYCS maintains direct-identified records on 1.98 million Hispanic homeowners, 1.12 million African American homeowners, and 449,000 Asian homeowners — drawn from voter registration files, deed transfer records, and proprietary consumer data, not modeled estimates. These figures represent the floor of minority homeownership, not a ceiling.
+ICONYCS maintains direct-identified records on 1.98 million Hispanic homeowners, 1.12 million African American homeowners, and 449,000 Asian homeowners -- drawn from voter registration files, deed transfer records, and proprietary consumer data, not modeled estimates. These figures represent the floor of minority homeownership, not a ceiling.
 
-The geographic picture sharpens when compared state by state. California's 9.7 million properties carry an average assessed value of $742,000, making it the nation's most expensive major housing market. Texas's 8.7 million properties average $295,000 — a 60% discount to California — while Florida's 7.9 million properties sit at $385,000. Despite lower price points, homeownership concentration among directly identified minority households is not proportionally higher in Texas or Florida, suggesting that price alone does not close the ownership gap.
+The geographic picture sharpens when compared state by state. California's 9.7 million properties carry an average assessed value of $742,000, making it the nation's most expensive major housing market. Texas's 8.7 million properties average $295,000 -- a 60% discount to California -- while Florida's 7.9 million properties sit at $385,000. Despite lower price points, homeownership concentration among directly identified minority households is not proportionally higher in Texas or Florida, suggesting that price alone does not close the ownership gap.
 
-When ICONYCS overlays Census ACS 2023 data — spanning 84,400 census tracts — the divergence becomes stark. In many markets, Census area demographics show minority populations representing 30–50% of residents, while direct property ownership records identify minority homeowners at 3–6% of total records. This is not primarily a data coverage problem; it reflects a structural reality: minority populations rent at higher rates, own in areas with lower record digitization, or have ownership records that predate digital matching.
+When ICONYCS overlays Census ACS 2023 data -- spanning 84,400 census tracts -- the divergence becomes stark. In many markets, Census area demographics show minority populations representing 30-50% of residents, while direct property ownership records identify minority homeowners at 3-6% of total records. This is not primarily a data coverage problem; it reflects a structural reality: minority populations rent at higher rates, own in areas with lower record digitization, or have ownership records that predate digital matching.
 
 Fair lending regulators increasingly require lenders to demonstrate affirmative outreach to underserved communities. ICONYCS data provides the geographic and demographic precision needed to identify those communities, model BISG-adjusted ownership probabilities, and produce audit-ready compliance documentation.
 
-The full demographic breakdown by state, county, city, and ZIP code is available through the ICONYCS Fair Lending Compliance Report — queryable in under 60 seconds.`,
+The full demographic breakdown by state, county, city, and ZIP code is available through the ICONYCS Fair Lending Compliance Report -- queryable in under 60 seconds.`,
   },
   {
     slug: 'fha-vs-conventional-20-years-housing-finance',
@@ -51,13 +51,13 @@ The full demographic breakdown by state, county, city, and ZIP code is available
     excerpt: 'With 45.5 million conventional loans, 6.3 million FHA loans, and 2.7 million VA loans in the ICONYCS database, two decades of mortgage data reveal durable geographic and demographic concentration patterns with direct fair lending implications.',
     body: `With 45.5 million conventional loans (42% of all properties), 6.3 million FHA loans (6%), and 2.7 million VA loans (3%) in the ICONYCS database, two decades of mortgage data reveal durable geographic and demographic concentration patterns with direct fair lending implications.
 
-Recording dates in the ICONYCS dataset go back to 2002, capturing the full arc of the housing crisis, recovery, and post-pandemic surge. FHA origination volume spiked sharply between 2008 and 2012 as conventional credit contracted — a pattern still visible in geographic heat maps of FHA concentration across Sun Belt metros and inland California markets.
+Recording dates in the ICONYCS dataset go back to 2002, capturing the full arc of the housing crisis, recovery, and post-pandemic surge. FHA origination volume spiked sharply between 2008 and 2012 as conventional credit contracted -- a pattern still visible in geographic heat maps of FHA concentration across Sun Belt metros and inland California markets.
 
-The national FHA+VA share averages 14.2% of all loan-bearing properties. Markets where this ratio exceeds 2x the national average — above 28% — are flagged in ICONYCS fair lending reports as potential redlining indicators, consistent with CFPB supervisory guidance. These high-FHA zones frequently overlap with census tracts where minority population share exceeds 40% per ACS 2023 data, creating a dual-layer compliance signal.
+The national FHA+VA share averages 14.2% of all loan-bearing properties. Markets where this ratio exceeds 2x the national average -- above 28% -- are flagged in ICONYCS fair lending reports as potential redlining indicators, consistent with CFPB supervisory guidance. These high-FHA zones frequently overlap with census tracts where minority population share exceeds 40% per ACS 2023 data, creating a dual-layer compliance signal.
 
 Conventional loan concentration ($45.5M records) skews heavily toward high-value coastal markets. California, New York, and Massachusetts account for a disproportionate share of conventional originations relative to their property counts, reflecting both income levels and conforming loan limit geography. Texas and Florida, despite large absolute volumes, show stronger FHA penetration in metro fringe and rural ZIP codes.
 
-VA loan geography tracks military installation proximity with high precision. Markets near major bases — San Diego, Norfolk, Fayetteville, Killeen — show VA shares of 15–25%, and these markets require separate fair lending analysis given the income and credit profile of VA borrowers.
+VA loan geography tracks military installation proximity with high precision. Markets near major bases -- San Diego, Norfolk, Fayetteville, Killeen -- show VA shares of 15-25%, and these markets require separate fair lending analysis given the income and credit profile of VA borrowers.
 
 For lenders subject to HMDA reporting, ICONYCS loan-type data provides a cross-reference baseline for validating submission accuracy, identifying underreported geographies, and benchmarking origination mix against peer institutions.`,
   },
@@ -72,13 +72,13 @@ For lenders subject to HMDA reporting, ICONYCS loan-type data provides a cross-r
     excerpt: 'California remains the largest and most expensive state housing market in the ICONYCS database. Nine-point-seven million properties at a $742,000 average value represent a market that is simultaneously the engine of national housing wealth and its primary affordability crisis.',
     body: `California remains the largest and most expensive state housing market in the ICONYCS database. Nine-point-seven million properties at a $742,000 average value represent a market that is simultaneously the engine of national housing wealth and its primary affordability crisis.
 
-The county breakdown illustrates the state's internal stratification. Los Angeles County anchors the market with approximately 2 million properties — a metropolitan base larger than most U.S. states. San Diego County contributes 794,000 properties at a market average above $800,000, driven by coastal premiums and limited inland development capacity. Orange County's 752,000 properties consistently rank among the highest-valued in the western United States, with median assessed values exceeding $900,000 in many ZIP codes.
+The county breakdown illustrates the state's internal stratification. Los Angeles County anchors the market with approximately 2 million properties -- a metropolitan base larger than most U.S. states. San Diego County contributes 794,000 properties at a market average above $800,000, driven by coastal premiums and limited inland development capacity. Orange County's 752,000 properties consistently rank among the highest-valued in the western United States, with median assessed values exceeding $900,000 in many ZIP codes.
 
-Owner-occupancy patterns in California diverge sharply from the national 50.6% baseline. Dense urban cores — Downtown LA, San Francisco, Oakland — show owner-occupancy rates below 35%, reflecting high institutional ownership, long-term rental stock, and rent-controlled units that never transact. Suburban and inland communities skew higher, sometimes above 65%, but these are increasingly occupied by homeowners who purchased before 2018 and cannot afford to move.
+Owner-occupancy patterns in California diverge sharply from the national 50.6% baseline. Dense urban cores -- Downtown LA, San Francisco, Oakland -- show owner-occupancy rates below 35%, reflecting high institutional ownership, long-term rental stock, and rent-controlled units that never transact. Suburban and inland communities skew higher, sometimes above 65%, but these are increasingly occupied by homeowners who purchased before 2018 and cannot afford to move.
 
-The demographic overlay amplifies the complexity. California's Hispanic population — the largest in any U.S. state by Census measure — is dramatically underrepresented in ICONYCS direct-identified ownership records relative to area demographics. This gap drives California's fair lending exposure: lenders operating in LA, Inland Empire, and Central Valley markets face elevated regulatory scrutiny under CRA assessment area rules.
+The demographic overlay amplifies the complexity. California's Hispanic population -- the largest in any U.S. state by Census measure -- is dramatically underrepresented in ICONYCS direct-identified ownership records relative to area demographics. This gap drives California's fair lending exposure: lenders operating in LA, Inland Empire, and Central Valley markets face elevated regulatory scrutiny under CRA assessment area rules.
 
-For mortgage lenders, investment analysts, and fair lending compliance teams, California's data richness in the ICONYCS platform — updated through 2021 recording vintages with Census ACS 2023 overlay on all 58 counties — provides a complete picture no public data source can match.`,
+For mortgage lenders, investment analysts, and fair lending compliance teams, California's data richness in the ICONYCS platform -- updated through 2021 recording vintages with Census ACS 2023 overlay on all 58 counties -- provides a complete picture no public data source can match.`,
   },
   {
     slug: 'census-acs-2023-property-records-housing-analysis',
@@ -87,13 +87,13 @@ For mortgage lenders, investment analysts, and fair lending compliance teams, Ca
     category: 'Research',
     categoryLabel: 'Research',
     link: '/fair-lending',
-    teaser: 'ICONYCS joins 109.8M property records with Census ACS 2023 estimates across 84,400 census tracts — the most comprehensive residential housing intelligence dataset available...',
-    excerpt: 'ICONYCS has joined its 109.8 million property records with Census ACS 2023 five-year estimates across 84,400 census tracts — creating the most comprehensive residential housing intelligence dataset commercially available.',
-    body: `ICONYCS has joined its 109.8 million property records with Census ACS 2023 five-year estimates across 84,400 census tracts — creating the most comprehensive residential housing intelligence dataset commercially available.
+    teaser: 'ICONYCS joins 109.8M property records with Census ACS 2023 estimates across 84,400 census tracts -- the most comprehensive residential housing intelligence dataset available...',
+    excerpt: 'ICONYCS has joined its 109.8 million property records with Census ACS 2023 five-year estimates across 84,400 census tracts -- creating the most comprehensive residential housing intelligence dataset commercially available.',
+    body: `ICONYCS has joined its 109.8 million property records with Census ACS 2023 five-year estimates across 84,400 census tracts -- creating the most comprehensive residential housing intelligence dataset commercially available.
 
 The methodology is straightforward in concept and rigorous in execution. Each ICONYCS property record is geocoded to its census tract. That tract is then linked to ACS 2023 five-year estimates for population, race, income, housing tenure, and home value. The result: every property query returns not just deed and mortgage data, but the demographic and economic context of the community in which it sits.
 
-This matters most for fair lending analysis. The "demographic gap" — the difference between Census-reported minority population share and ICONYCS direct-identified minority ownership — is the core metric driving regulatory scrutiny. When a census tract reports 45% Hispanic population and property ownership records show 4% direct-identified Hispanic homeowners, the gap is not primarily a data artifact. It reflects real disparities in homeownership access, tenure stability, and generational wealth accumulation. Regulators look at exactly this gap when evaluating CRA performance and HMDA disparate impact.
+This matters most for fair lending analysis. The "demographic gap" -- the difference between Census-reported minority population share and ICONYCS direct-identified minority ownership -- is the core metric driving regulatory scrutiny. When a census tract reports 45% Hispanic population and property ownership records show 4% direct-identified Hispanic homeowners, the gap is not primarily a data artifact. It reflects real disparities in homeownership access, tenure stability, and generational wealth accumulation. Regulators look at exactly this gap when evaluating CRA performance and HMDA disparate impact.
 
 BISG (Bayesian Improved Surname Geocoding) modeling addresses the identification gap by combining last name surname analysis with census tract geography to estimate race/ethnicity probabilities for unidentified records. ICONYCS offers BISG-enhanced demographic estimates in the Professional tier, increasing effective minority identification from 3.2% direct coverage to approximately 85% probabilistic coverage nationally.
 
@@ -255,7 +255,7 @@ export default function BlogPage() {
                   {/* Read more */}
                   <div style={{ marginTop: 'auto' }}>
                     <Link href={post.link} className="read-more">
-                      Read more →
+                      Read more ->
                     </Link>
                   </div>
                 </div>

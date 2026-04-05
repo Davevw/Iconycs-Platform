@@ -111,7 +111,7 @@ function Skeleton({ h = 18, w = '100%' }: { h?: number; w?: string | number }) {
 function ErrorMsg({ msg, onRetry }: { msg: string; onRetry?: () => void }) {
   return (
     <div style={{ padding: '10px 14px', background: '#FFF4F0', borderRadius: 8, border: `1px solid ${C.terra}30`, display: 'flex', gap: 10, alignItems: 'center' }}>
-      <span>⚠️</span>
+      <span>[!]</span>
       <span style={{ fontSize: 12, color: C.terra, flex: 1 }}>{msg}</span>
       {onRetry && (
         <button onClick={onRetry} style={{ fontSize: 11, color: C.terra, background: 'none', border: `1px solid ${C.terra}60`, borderRadius: 5, padding: '3px 8px', cursor: 'pointer', fontFamily: C.font, fontWeight: 600 }}>
@@ -185,7 +185,7 @@ function FreqTable({
                 {/* bar */}
                 <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: `${Math.max(2, pct)}%`, background: `${barColor}20`, pointerEvents: 'none' }} />
                 <span style={{ fontSize: 12, color: isActive ? barColor : C.textBody, fontWeight: isActive ? 700 : 400, position: 'relative', zIndex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                  {isActive && '● '}{row.label}
+                  {isActive && '* '}{row.label}
                 </span>
                 <span style={{ fontSize: 12, color: C.textMuted, textAlign: 'right', position: 'relative', zIndex: 1 }}>{fmt(row.count)}</span>
                 <span style={{ fontSize: 11, color: C.textDim, textAlign: 'right', position: 'relative', zIndex: 1 }}>{pct.toFixed(1)}%</span>
@@ -482,7 +482,7 @@ function PlaceholderCascade({ label, icon }: { label: string; icon: string }) {
         This cascade dimension requires Enterprise tier access. Includes detailed social and media signal data.
       </div>
       <div style={{ padding: '8px 20px', background: C.navy, color: '#fff', borderRadius: 20, fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>
-        🔒 Upgrade to Enterprise
+        [lock] Upgrade to Enterprise
       </div>
     </div>
   );
@@ -612,7 +612,7 @@ function CascadeInner() {
       {/* Header */}
       <div style={{ background: C.navy, color: '#fff', padding: '12px 24px', display: 'flex', alignItems: 'center', gap: 14 }}>
         <Link href="/reports" style={{ color: '#fff', opacity: 0.7, fontSize: 12, textDecoration: 'none', fontWeight: 600 }}>
-          ← Reports
+          <- Reports
         </Link>
         <div style={{ width: 1, height: 16, background: 'rgba(255,255,255,0.3)' }} />
         <div style={{ fontSize: 14, fontWeight: 700, letterSpacing: '0.05em' }}>CASCADE REPORT BUILDER</div>
@@ -621,7 +621,7 @@ function CascadeInner() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, opacity: 0.85 }}>
           {breadcrumb.map((crumb, i) => (
             <span key={i} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-              {i > 0 && <span style={{ opacity: 0.5 }}>›</span>}
+              {i > 0 && <span style={{ opacity: 0.5 }}></span>}
               <span style={{ fontWeight: i === breadcrumb.length - 1 ? 700 : 400 }}>{crumb}</span>
             </span>
           ))}
@@ -657,7 +657,7 @@ function CascadeInner() {
                   <div style={{ flex: 1 }}>
                     <div style={{ fontSize: 13, fontWeight: 700, color: isActive ? C.terra : C.navy, display: 'flex', alignItems: 'center', gap: 5 }}>
                       {sp.label}
-                      {isLocked && <span style={{ fontSize: 10 }}>🔒</span>}
+                      {isLocked && <span style={{ fontSize: 10 }}>[lock]</span>}
                     </div>
                     <div style={{ fontSize: 10, color: C.textMuted, marginTop: 2, lineHeight: 1.3 }}>{sp.description}</div>
                   </div>
@@ -665,7 +665,7 @@ function CascadeInner() {
                 {isActive && (
                   <div style={{ marginTop: 10, display: 'flex', flexDirection: 'column', gap: 2 }}>
                     {sp.dimensions.map(dim => (
-                      <div key={dim} style={{ fontSize: 10, color: C.terra, padding: '1px 0', paddingLeft: 26 }}>• {dim}</div>
+                      <div key={dim} style={{ fontSize: 10, color: C.terra, padding: '1px 0', paddingLeft: 26 }}>* {dim}</div>
                     ))}
                   </div>
                 )}
@@ -745,8 +745,8 @@ function CascadeInner() {
                 </div>
               </div>
             )}
-            {cascadeType === 'social' && <PlaceholderCascade label="Social Network" icon="🌐" />}
-            {cascadeType === 'media' && <PlaceholderCascade label="Social Media" icon="📱" />}
+            {cascadeType === 'social' && <PlaceholderCascade label="Social Network" icon="[globe]" />}
+            {cascadeType === 'media' && <PlaceholderCascade label="Social Media" icon="[phone]" />}
           </div>
         </div>
       </div>
@@ -774,7 +774,7 @@ function CascadeInner() {
           (e.currentTarget as HTMLDivElement).style.boxShadow = '0 4px 16px rgba(27,42,74,0.35)';
         }}
       >
-        ↑ Back
+        ^ Back
       </div>
     </div>
   );

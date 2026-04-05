@@ -54,14 +54,14 @@ export default function PartnersPage() {
             }}>
               <h3 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>{p.name}</h3>
               <p style={{ fontSize: 14, color: 'var(--text-muted)', lineHeight: 1.6 }}>{p.desc}</p>
-              <span style={{ fontSize: 12, color: 'var(--accent)', marginTop: 12, display: 'inline-block' }}>Visit →</span>
+              <span style={{ fontSize: 12, color: 'var(--accent)', marginTop: 12, display: 'inline-block' }}>Visit -></span>
             </a>
           ))}
         </div>
       </section>
 
       <footer style={{ padding: '32px', borderTop: '1px solid var(--border)', textAlign: 'center', fontSize: 12, color: 'var(--text-dim)' }}>
-        © {new Date().getFullYear()} ICONYCS. All Rights Reserved.
+        (c) {new Date().getFullYear()} ICONYCS. All Rights Reserved.
       </footer>
     </main>
   );

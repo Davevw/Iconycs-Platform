@@ -189,7 +189,7 @@ export default function LoginPage() {
                 marginBottom: 16,
               }}
             >
-              Ã¢Å“â€œ Password reset email sent. Check your inbox.
+              " Password reset email sent. Check your inbox.
             </div>
           )}
 
@@ -302,7 +302,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                placeholder="Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢"
+                placeholder=""
                 style={{
                   width: '100%',
                   padding: '10px 14px',

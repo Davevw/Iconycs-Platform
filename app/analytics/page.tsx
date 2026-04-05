@@ -132,7 +132,7 @@ export default function DashboardPage() {
               <div style={{ width: 6, height: 6, borderRadius: '50%', background: C.sage }} />
               <span style={{ fontSize: 11, fontWeight: 600, color: C.sage }}>Snowflake Live</span>
             </div>
-            <Link href="/" style={{ fontSize: 13, color: C.textMuted, textDecoration: 'none' }}>← Home</Link>
+            <Link href="/" style={{ fontSize: 13, color: C.textMuted, textDecoration: 'none' }}><- Home</Link>
           </div>
         </div>
       </nav>
@@ -142,10 +142,10 @@ export default function DashboardPage() {
           <div style={{ flex: 1, overflow: 'auto', padding: 20, display: 'flex', flexDirection: 'column', gap: 16 }}>
             {messages.length === 0 && (
               <div style={{ textAlign: 'center', padding: '60px 20px' }}>
-                <div style={{ fontSize: 44, marginBottom: 12 }}>🏠</div>
+                <div style={{ fontSize: 44, marginBottom: 12 }}>[house]</div>
                 <h2 style={{ fontSize: 20, fontWeight: 600, color: C.text, fontFamily: C.fontSerif, marginBottom: 8 }}>Ask anything about housing data</h2>
                 <p style={{ fontSize: 13, color: C.textMuted, maxWidth: 380, margin: '0 auto', lineHeight: 1.7 }}>
-                  Claude Opus 4.6 → Snowflake SQL → 130M+ records → Insights & Charts
+                  Claude Opus 4.6 -> Snowflake SQL -> 130M+ records -> Insights & Charts
                 </p>
               </div>
             )}
@@ -158,7 +158,7 @@ export default function DashboardPage() {
               if (msg.role === 'sql') return (
                 <div key={i} style={{ background: C.bg, borderRadius: 12, border: `1px solid ${C.border}`, overflow: 'hidden' }}>
                   <div style={{ padding: '10px 16px', borderBottom: `1px solid ${C.border}`, display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-                    <span style={{ fontSize: 12, fontWeight: 600, color: C.sage }}>✓ SQL Generated</span>
+                    <span style={{ fontSize: 12, fontWeight: 600, color: C.sage }}>[check] SQL Generated</span>
                     {msg.tables?.map((t: string) => <span key={t} style={{ fontSize: 10, padding: '2px 8px', borderRadius: 10, background: C.sageSoft, color: C.sage }}>{t}</span>)}
                     <span style={{ marginLeft: 'auto', fontSize: 11, color: msg.execution?.rowCount > 0 ? C.sage : C.gold }}>
                       {msg.execution?.connected ? (msg.execution.rowCount > 0 ? `${msg.execution.rowCount} rows * ${msg.execution.executionTime}ms` : 'Connected * AI-estimated') : 'Snowflake not configured'}
@@ -171,7 +171,7 @@ export default function DashboardPage() {
               if (msg.role === 'analysis') return (
                 <div key={i} style={{ background: C.bgCard, borderRadius: 12, border: `1px solid ${C.border}`, overflow: 'hidden' }}>
                   <div style={{ padding: '10px 16px', borderBottom: `1px solid ${C.border}` }}>
-                    <span style={{ fontSize: 12, fontWeight: 600, color: C.gold }}>📊 Analysis</span>
+                    <span style={{ fontSize: 12, fontWeight: 600, color: C.gold }}>[chart] Analysis</span>
                   </div>
                   <div style={{ padding: 16 }}>
                     <div style={{ fontSize: 14, color: C.textBody, lineHeight: 1.85, marginBottom: 16, whiteSpace: 'pre-wrap' }}>
@@ -196,7 +196,7 @@ export default function DashboardPage() {
                 </div>
               );
               if (msg.role === 'error') return (
-                <div key={i} style={{ padding: '12px 16px', borderRadius: 12, background: C.terraSoft, border: `1px solid ${C.terra}25`, color: C.terraDark, fontSize: 13 }}>⚠️ {msg.text}</div>
+                <div key={i} style={{ padding: '12px 16px', borderRadius: 12, background: C.terraSoft, border: `1px solid ${C.terra}25`, color: C.terraDark, fontSize: 13 }}>[!] {msg.text}</div>
               );
               return null;
             })}
@@ -229,7 +229,7 @@ export default function DashboardPage() {
           </div>
           <div style={{ background: C.bgCard, borderRadius: 12, border: `1px solid ${C.border}`, padding: 18 }}>
             <div style={{ fontSize: 13, fontWeight: 600, color: C.text, marginBottom: 12 }}>Pipeline</div>
-            {['1. Claude Opus 4.6 → SQL', '2. Snowflake → Execute', '3. Claude Sonnet → Interpret', '4. Chart → Visualize'].map((s, i) => (
+            {['1. Claude Opus 4.6 -> SQL', '2. Snowflake -> Execute', '3. Claude Sonnet -> Interpret', '4. Chart -> Visualize'].map((s, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '5px 0', fontSize: 12, color: C.textBody }}>
                 <div style={{ width: 6, height: 6, borderRadius: '50%', background: [C.terra, C.sage, C.gold, C.navy][i] }} />{s}
               </div>

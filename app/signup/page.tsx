@@ -152,7 +152,7 @@ function SignupForm() {
   if (success) {
     return (
       <div style={{ padding: '32px', textAlign: 'center' }}>
-        <div style={{ fontSize: 48, marginBottom: 16 }}>Ã¢Å“â€°Ã¯Â¸Â</div>
+        <div style={{ fontSize: 48, marginBottom: 16 }}>"deg</div>
         <h2 style={{ fontSize: 20, fontWeight: 700, color: C.text, marginBottom: 8 }}>
           Check your email
         </h2>

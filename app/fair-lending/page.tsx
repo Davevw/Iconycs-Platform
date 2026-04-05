@@ -255,7 +255,7 @@ function LtvBarChart({ rows }: { rows: { tier: string; count: number; pct: numbe
           <div key={i}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
               <span style={{ fontSize: 12, color: isHigh ? '#DC2626' : C.textBody, fontWeight: isHigh ? 700 : 400 }}>
-                {r.tier} {isHigh && <span style={{ fontSize: 10, color: '#DC2626' }}>⚠ High LTV</span>}
+                {r.tier} {isHigh && <span style={{ fontSize: 10, color: '#DC2626' }}>[!] High LTV</span>}
               </span>
               <span style={{ fontSize: 12, fontFamily: C.fontMono, fontWeight: 700, color: barColor }}>
                 {fmtPct(r.pct)} ({fmt(r.count)})
@@ -736,7 +736,7 @@ export default function FairLendingPage() {
 
             {error && (
               <div style={{ marginTop: 12, padding: '10px 14px', background: '#FEF2F2', borderRadius: 8, border: `1px solid #DC262620`, fontSize: 12, color: '#DC2626' }}>
-                ⚠ {error}
+                [!] {error}
               </div>
             )}
           </div>
@@ -947,7 +947,7 @@ export default function FairLendingPage() {
                       />
                     </div>
                     <div style={{ margin: '12px 20px 0', padding: '14px 16px', background: '#FEF2F2', borderRadius: 8, border: '1px solid #DC262630', fontSize: 12, color: C.textBody, lineHeight: 1.65 }}>
-                      <strong style={{ color: '#DC2626' }}>⚠ FAIR LENDING NOTE:</strong>{' '}
+                      <strong style={{ color: '#DC2626' }}>[!] FAIR LENDING NOTE:</strong>{' '}
                       The gap between ICONYCS Direct Identified records and Census area demographics indicates
                       significant unidentified homeowner population. A comprehensive fair lending analysis should
                       incorporate HMDA data to assess lending patterns by race/ethnicity.{' '}
@@ -1065,7 +1065,7 @@ export default function FairLendingPage() {
                     {' '}&nbsp;|&nbsp; National Average: {fmtPct(NATIONAL_AVG.nonOwnerOcc, 1)}
                     {report.nonOwnerOccPct > NATIONAL_AVG.nonOwnerOcc * 1.2 && (
                       <span style={{ color: '#DC2626', fontWeight: 700, marginLeft: 8 }}>
-                        ⚠ Significantly above national average  -  potential investor concentration flag
+                        [!] Significantly above national average  -  potential investor concentration flag
                       </span>
                     )}
                   </div>
@@ -1197,7 +1197,7 @@ export default function FairLendingPage() {
                     <div>
                       <h4 style={{ fontSize: 12, fontWeight: 700, color: C.navy, textTransform: 'uppercase', letterSpacing: '0.06em', margin: '0 0 10px' }}>Fair Housing Act Compliance</h4>
                       <div style={{ fontSize: 12, color: C.textBody, lineHeight: 1.7 }}>
-                        This report is prepared in furtherance of compliance with the Fair Housing Act (42 U.S.C. § 3601 et seq.),
+                        This report is prepared in furtherance of compliance with the Fair Housing Act (42 U.S.C. Section 3601 et seq.),
                         the Equal Credit Opportunity Act (ECOA), the Community Reinvestment Act (CRA), and HMDA reporting requirements.
                         Data presented is for analytical and compliance planning purposes only.
                       </div>
@@ -1215,7 +1215,7 @@ export default function FairLendingPage() {
                     padding: '14px 16px', background: '#FFF8E7', borderRadius: 8,
                     border: '1px solid #D9770630', fontSize: 12, color: C.textBody, lineHeight: 1.65,
                   }}>
-                    <strong style={{ color: '#D97706' }}>⚠ Legal Disclaimer:</strong> This report is for analytical purposes only and does not constitute legal advice.
+                    <strong style={{ color: '#D97706' }}>[!] Legal Disclaimer:</strong> This report is for analytical purposes only and does not constitute legal advice.
                     Users should engage qualified fair lending counsel before making compliance determinations.
                     ICONYCS makes no warranty as to the accuracy or completeness of the data for any specific compliance purpose.
                     Contact: <a href="mailto:info@iconycs.com" style={{ color: C.terra }}>info@iconycs.com</a>
@@ -1270,7 +1270,7 @@ export default function FairLendingPage() {
                       'Dedicated Compliance Support',
                     ].map((f, i) => (
                       <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, opacity: 0.9 }}>
-                        <span style={{ color: C.terra, fontWeight: 700, fontSize: 14 }}>✓</span> {f}
+                        <span style={{ color: C.terra, fontWeight: 700, fontSize: 14 }}>[check]</span> {f}
                       </div>
                     ))}
                   </div>

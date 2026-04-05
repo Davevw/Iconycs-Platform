@@ -103,7 +103,7 @@ export default function AboutPage() {
 
       {/* Footer */}
       <footer style={{ padding: '32px', borderTop: '1px solid var(--border)', textAlign: 'center', fontSize: 12, color: 'var(--text-dim)' }}>
-        © {new Date().getFullYear()} ICONYCS. All Rights Reserved. * Powered by Next.js * Claude AI * Snowflake
+        (c) {new Date().getFullYear()} ICONYCS. All Rights Reserved. * Powered by Next.js * Claude AI * Snowflake
       </footer>
     </main>
   );

@@ -159,7 +159,7 @@ function EnterpriseGeoModal({ onClose }: { onClose: () => void }) {
             }}
             aria-label="Close"
           >
-            âœ•
+            *
           </button>
         </div>
 
@@ -214,7 +214,7 @@ function EnterpriseGeoModal({ onClose }: { onClose: () => void }) {
                 'Team seats (unlimited)',
               ].map(item => (
                 <div key={item} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <span style={{ color: C.sage, fontWeight: 700, fontSize: 14, flexShrink: 0 }}>âœ“</span>
+                  <span style={{ color: C.sage, fontWeight: 700, fontSize: 14, flexShrink: 0 }}>"</span>
                   <span style={{ fontSize: 13, color: C.textBody, fontFamily: C.font }}>{item}</span>
                 </div>
               ))}
@@ -549,7 +549,7 @@ function TierCard({
           fontSize: 11, fontWeight: 700, letterSpacing: '0.08em',
           fontFamily: C.font, whiteSpace: 'nowrap',
         }}>
-          â­ MOST POPULAR
+           MOST POPULAR
         </div>
       )}
 
@@ -872,13 +872,13 @@ export default function PricingPage() {
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
             {['No contracts', 'Cancel anytime', '14-day free trial'].map(label => (
               <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: C.textMuted }}>
-                <span style={{ color: C.sage, fontWeight: 700 }}>âœ“</span> {label}
+                <span style={{ color: C.sage, fontWeight: 700 }}>"</span> {label}
               </div>
             ))}
           </div>
         </div>
 
-        {/* â”€â”€ Launch Promo Banners â”€â”€ */}
+        {/* "" Launch Promo Banners "" */}
         <div style={{ maxWidth: 1100, margin: '0 auto 40px', padding: '0 24px', display: 'flex', gap: 16, flexWrap: 'wrap', justifyContent: 'center' }}>
           <div style={{ flex: 1, minWidth: 280, background: 'linear-gradient(135deg, #C4653A 0%, #E8845C 100%)', borderRadius: 16, padding: '20px 28px', display: 'flex', alignItems: 'center', gap: 16, boxShadow: '0 8px 32px rgba(196,101,58,0.3)', position: 'relative', overflow: 'hidden' }}>
             <div style={{ position: 'absolute', top: -12, right: -12, width: 80, height: 80, background: 'rgba(255,255,255,0.2)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', border: '2px solid rgba(255,255,255,0.4)' }}>
@@ -979,7 +979,7 @@ export default function PricingPage() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                 {['Instant download', 'PDF + data export', 'Full demographics', 'No subscription needed'].map(f => (
                   <div key={f} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: C.textBody }}>
-                    <span style={{ color: C.sage, fontWeight: 700, fontSize: 14 }}>âœ“</span> {f}
+                    <span style={{ color: C.sage, fontWeight: 700, fontSize: 14 }}>"</span> {f}
                   </div>
                 ))}
               </div>
@@ -1028,7 +1028,7 @@ export default function PricingPage() {
                 },
                 {
                   q: 'What is the Social Housing Score?',
-                  a: "The Social Housing Scoreâ„¢ is ICONYCS's proprietary index combining ethnicity, wealth, income, education, and loan data into a single community risk/opportunity score.",
+                  a: "The Social Housing Score is ICONYCS's proprietary index combining ethnicity, wealth, income, education, and loan data into a single community risk/opportunity score.",
                 },
                 {
                   q: 'Is there an annual plan?',
@@ -1106,7 +1106,7 @@ export default function PricingPage() {
           fontSize: 12, color: C.textDim,
           fontFamily: C.font,
         }}>
-          Â© {new Date().getFullYear()} ICONYCS Housing Intelligence * All prices in USD *{' '}
+          (c) {new Date().getFullYear()} ICONYCS Housing Intelligence * All prices in USD *{' '}
           <Link href="/" style={{ color: C.textDim, textDecoration: 'none' }}>Home</Link>
           {' * '}
           <Link href="/reports" style={{ color: C.textDim, textDecoration: 'none' }}>Analytics</Link>

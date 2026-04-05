@@ -105,7 +105,7 @@ export default function PrivacyPage() {
             <span style={{ fontSize: 13, color: C.textMuted }}>Privacy Policy</span>
             <div style={{ marginLeft: 'auto' }}>
               <Link href="/reports" style={{ fontSize: 12, color: C.terra, textDecoration: 'none', fontWeight: 600 }}>
-                ← Back to Reports
+                <- Back to Reports
               </Link>
             </div>
           </div>
@@ -134,15 +134,15 @@ export default function PrivacyPage() {
           <Section number="1" title="Data We Collect">
             <p style={{ marginBottom: 16 }}>We collect the minimum information necessary to provide the ICONYCS platform. This includes:</p>
 
-            <Callout icon="👤" title="Account Information">
+            <Callout icon="[user]" title="Account Information">
               When you create an account or join our waitlist, we collect your name, email address, company name, and selected subscription tier. This is used to manage your access and communicate with you about the service.
             </Callout>
 
-            <Callout icon="📊" title="Usage Data">
+            <Callout icon="[chart]" title="Usage Data">
               We automatically collect information about how you use the platform  -  including pages viewed, report queries run, geographic selections made, and session timestamps. This data is aggregated and used to improve the service. We do not profile individual users for advertising purposes.
             </Callout>
 
-            <Callout icon="💳" title="Payment Information">
+            <Callout icon="[card]" title="Payment Information">
               Payment is processed through Stripe. ICONYCS does not store your credit card numbers, CVV, or full payment details. We retain only transaction records (amount, date, subscription tier) necessary for billing and accounting.
             </Callout>
           </Section>
@@ -162,7 +162,7 @@ export default function PrivacyPage() {
           <Section number="3" title="Data We Do NOT Sell">
             <div style={{ padding: '20px 24px', background: '#EDF6EA', border: `2px solid ${C.sage}`, borderRadius: 12, marginBottom: 16 }}>
               <div style={{ fontSize: 15, fontWeight: 700, color: C.sage, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 8 }}>
-                <span>✅</span> We do not sell your personal information. Period.
+                <span></span> We do not sell your personal information. Period.
               </div>
               <div style={{ fontSize: 13, color: C.textBody, lineHeight: 1.7 }}>
                 ICONYCS does not sell, rent, trade, or otherwise transfer your personal information to third parties for their marketing or commercial use. We are not an advertising business and have no financial incentive to monetize your personal data.
@@ -186,25 +186,25 @@ export default function PrivacyPage() {
                   name: 'Snowflake',
                   role: 'Data Warehouse',
                   desc: 'Hosts and processes all property analytics data. Enterprise-grade security with SOC 2 Type II certification.',
-                  icon: '❄️',
+                  icon: '',
                 },
                 {
                   name: 'Stripe',
                   role: 'Payment Processing',
                   desc: 'Handles all subscription billing and payment card data. PCI DSS Level 1 certified.',
-                  icon: '💳',
+                  icon: '[card]',
                 },
                 {
                   name: 'Vercel',
                   role: 'Hosting & Delivery',
                   desc: 'Hosts the ICONYCS web platform and API layer. SOC 2 compliant edge network.',
-                  icon: '▲',
+                  icon: '',
                 },
                 {
                   name: 'Supabase',
                   role: 'Authentication & Database',
                   desc: 'Manages user accounts, authentication, and application data. SOC 2 Type II certified.',
-                  icon: '🔐',
+                  icon: '',
                 },
               ].map((service, i) => (
                 <div key={i} style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 10, padding: '16px' }}>
@@ -295,7 +295,7 @@ export default function PrivacyPage() {
             ))}
           </div>
           <div style={{ marginTop: 16, textAlign: 'center', fontSize: 11, color: C.textDim }}>
-            © {new Date().getFullYear()} Western Realty Finance / ICONYCS. All rights reserved.
+            (c) {new Date().getFullYear()} Western Realty Finance / ICONYCS. All rights reserved.
           </div>
         </div>
       </div>
