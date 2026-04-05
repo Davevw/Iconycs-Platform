@@ -497,10 +497,10 @@ export function querySocialHousingScore(filters: GeoFilters): string {
   return `
     SELECT
       SUM(RECORD_COUNT) AS TOTAL_RECORDS,
-      -- Ethnic diversity (Shannon entropy component)
-      SUM(CASE WHEN ETHNICITYCD = 'Y' THEN RECORD_COUNT ELSE 0 END) AS HISPANIC_COUNT,
-      SUM(CASE WHEN ETHNICITYCD = 'F' THEN RECORD_COUNT ELSE 0 END) AS BLACK_COUNT,
-      SUM(CASE WHEN ETHNICITYCD = 'A' THEN RECORD_COUNT ELSE 0 END) AS ASIAN_COUNT,
+      -- Ethnicity not in VW_CASCADE_PROPERTY -- default to 0 (Census overlay planned)
+      0 AS HISPANIC_COUNT,
+      0 AS BLACK_COUNT,
+      0 AS ASIAN_COUNT,
       -- LTV distribution
       SUM(CASE WHEN LTV_TIER = '0-60%' THEN RECORD_COUNT ELSE 0 END) AS LTV_LOW,
       SUM(CASE WHEN LTV_TIER IN ('60-70%','70-80%') THEN RECORD_COUNT ELSE 0 END) AS LTV_MID,
