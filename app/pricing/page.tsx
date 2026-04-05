@@ -230,7 +230,7 @@ function EnterpriseGeoModal({ onClose }: { onClose: () => void }) {
             borderRadius: 9,
             display: 'flex', alignItems: 'center', gap: 8,
           }}>
-            <span style={{ fontSize: 15 }}>ðŸ“¬</span>
+            <span style={{ fontSize: 15 }}></span>
             <span style={{ fontSize: 13, color: C.textMuted, fontFamily: C.font }}>
               <strong style={{ color: C.textBody }}>info@iconycs.com</strong>
               {' * '}
@@ -471,7 +471,7 @@ function WaitlistModal({
           </>
         ) : (
           <div style={{ textAlign: 'center', padding: '16px 0' }}>
-            <div style={{ fontSize: 48, marginBottom: 16 }}>ðŸŽ‰</div>
+            <div style={{ fontSize: 48, marginBottom: 16 }}></div>
             <h2 style={{
               fontSize: 24, fontWeight: 700, color: C.text,
               fontFamily: C.fontSerif, margin: '0 0 12px',
@@ -750,7 +750,7 @@ function EnterpriseCard({ onViewPricing }: { onViewPricing: () => void }) {
             letterSpacing: '0.04em',
           }}
         >
-          ðŸ—º View Geographic Pricing
+           View Geographic Pricing
         </button>
       </div>
     </div>
@@ -849,7 +849,7 @@ export default function PricingPage() {
             fontSize: 12, fontWeight: 600, color: C.terra,
             marginBottom: 24, letterSpacing: '0.06em',
           }}>
-            ðŸš€ NOW IN EARLY ACCESS
+             NOW IN EARLY ACCESS
           </div>
           <h1
             className="hero-title"
