@@ -234,7 +234,7 @@ function ChartDemo() {
       </div>
 
       <div style={{ padding: '14px 32px', borderTop: `1px solid ${C.borderLight}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: C.bgAccent }}>
-        <span style={{ fontSize: 11, color: C.textDim }}>Interactive sample from 109M+ property records</span>
+        <span style={{ fontSize: 11, color: C.textDim }}>Interactive sample from 109M+ residential properties</span>
         <Link href="/dashboard" style={{ fontSize: 12, color: C.terra, fontWeight: 600, textDecoration: 'none' }}>Open AI Query Lab →</Link>
       </div>
     </Card>
@@ -382,7 +382,7 @@ export default function Homepage() {
               </h1>
 
               <p className="fu fu1" style={{ fontSize: 17, color: C.textBody, lineHeight: 1.85, marginBottom: 20, maxWidth: 480, fontWeight: 400 }}>
-                109 million property records. 258 million owner profiles. AI-powered analytics by ethnicity, income, education, marital status, and more — from ZIP code to national.
+                109 million residential properties. 258 million owner profiles. AI-powered analytics by ethnicity, income, education, marital status, and more — from ZIP code to national.
               </p>
 
               <blockquote className="fu fu2" style={{
