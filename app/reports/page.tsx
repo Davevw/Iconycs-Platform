@@ -64,6 +64,17 @@ interface StateRow   { [key: string]: any; }
 interface LoadState  { loading: boolean; error: string | null; }
 /** Row returned by the breakdown queries: { LABEL, RECORD_COUNT } */
 interface BreakdownRow { LABEL: string; RECORD_COUNT: number | string; }
+/** Census ACS aggregated data for a county */
+interface CensusData {
+  totalPop: number;
+  pctWhite: number;
+  pctHispanic: number;
+  pctBlack: number;
+  pctAsian: number;
+  medianIncome: number;
+  ownerOccRate: number;
+  medianHomeValue: number;
+}
 
 // """ Skeleton shimmer """"""""""""""""""""""""""""""""""""""""""""""""""""""
 function Skeleton({ w = '100%', h = 16 }: { w?: string | number; h?: number }) {
@@ -614,6 +625,7 @@ export default function ReportsPage() {
   // Geography selection
   const [selected, setSelected]     = useState<string[]>(['ALL']);
   const [selectedCounty, setSelectedCounty] = useState<string | null>(null);
+  const [selectedCountyFips, setSelectedCountyFips] = useState<string | null>(null);
   const [drillCity, setDrillCity]   = useState<string | null>(null);
   const [drillZip, setDrillZip]     = useState<string | null>(null);
   const [search, setSearch]         = useState('');
@@ -623,6 +635,10 @@ export default function ReportsPage() {
 
   // Time period
   const [timePeriod, setTimePeriod] = useState<string>('all');
+
+  // Census demographics
+  const [censusData, setCensusData] = useState<CensusData | null>(null);
+  const [censusLoad, setCensusLoad] = useState<LoadState>({ loading: false, error: null });
 
   // Tier gating
   const [currentTier] = useState<'free' | 'pro' | 'enterprise' | 'data_partner'>('free'); // UI only "" no auth yet
@@ -891,6 +907,42 @@ export default function ReportsPage() {
     }
   }, []);
 
+  // "" Fetch Census ACS demographics ""
+  const fetchCensus = useCallback(async (state: string, countyFips: string) => {
+    setCensusLoad({ loading: true, error: null });
+    try {
+      const res = await fetch(`/api/snowflake/census?state=${state}&county=${countyFips}`);
+      const json = await res.json();
+      if (json.success && json.data && json.data.length > 0) {
+        const rows = json.data as any[];
+        const totalPop    = rows.reduce((s: number, r: any) => s + Number(r.TOTAL_POPULATION ?? 0), 0);
+        const whiteTot    = rows.reduce((s: number, r: any) => s + Number(r.WHITE_ALONE       ?? 0), 0);
+        const blackTot    = rows.reduce((s: number, r: any) => s + Number(r.BLACK_ALONE       ?? 0), 0);
+        const asianTot    = rows.reduce((s: number, r: any) => s + Number(r.ASIAN_ALONE       ?? 0), 0);
+        const pctWhite    = totalPop > 0 ? (whiteTot / totalPop) * 100 : 0;
+        const pctBlack    = totalPop > 0 ? (blackTot / totalPop) * 100 : 0;
+        const pctAsian    = totalPop > 0 ? (asianTot / totalPop) * 100 : 0;
+        const pctHispanic = Math.max(0, 100 - pctWhite - pctBlack - pctAsian);
+        const validInc    = rows.filter((r: any) => Number(r.MEDIAN_HOUSEHOLD_INCOME ?? 0) > 0);
+        const medianIncome = validInc.length > 0
+          ? validInc.reduce((s: number, r: any) => s + Number(r.MEDIAN_HOUSEHOLD_INCOME), 0) / validInc.length : 0;
+        const validHV     = rows.filter((r: any) => Number(r.MEDIAN_HOME_VALUE ?? 0) > 0);
+        const medianHomeValue = validHV.length > 0
+          ? validHV.reduce((s: number, r: any) => s + Number(r.MEDIAN_HOME_VALUE), 0) / validHV.length : 0;
+        const totalHousing = rows.reduce((s: number, r: any) => s + Number(r.TOTAL_HOUSING_UNITS ?? 0), 0);
+        const ownerOcc     = rows.reduce((s: number, r: any) => s + Number(r.OWNER_OCCUPIED     ?? 0), 0);
+        const ownerOccRate = totalHousing > 0 ? (ownerOcc / totalHousing) * 100 : 0;
+        setCensusData({ totalPop, pctWhite, pctHispanic, pctBlack, pctAsian, medianIncome, ownerOccRate, medianHomeValue });
+        setCensusLoad({ loading: false, error: null });
+      } else {
+        setCensusData(null);
+        setCensusLoad({ loading: false, error: json.error ?? 'No census data for this area' });
+      }
+    } catch (e: any) {
+      setCensusLoad({ loading: false, error: e.message ?? 'Network error' });
+    }
+  }, []);
+
   // "" Fetch Social Housing Score ""
   const fetchSocialScore = useCallback(async (state?: string, county?: string, city?: string, zip?: string) => {
     setShsLoad({ loading: true, error: null });
@@ -912,6 +964,17 @@ export default function ReportsPage() {
       setShsLoad({ loading: false, error: e.message ?? 'Network error' });
     }
   }, []);
+
+  // "" Fetch census when county FIPS selected ""
+  useEffect(() => {
+    if (!isAll && stateCode && selectedCountyFips) {
+      fetchCensus(stateCode, selectedCountyFips);
+    } else {
+      setCensusData(null);
+      setCensusLoad({ loading: false, error: null });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stateCode, selectedCountyFips, isAll]);
 
   // "" Initial load ""
   useEffect(() => {
@@ -985,6 +1048,7 @@ export default function ReportsPage() {
     if (code === 'ALL') {
       setSelected(['ALL']);
       setSelectedCounty(null);
+      setSelectedCountyFips(null);
       setDrillCity(null);
       setDrillZip(null);
       return;
@@ -998,6 +1062,7 @@ export default function ReportsPage() {
       return [...without, code];
     });
     setSelectedCounty(null);
+    setSelectedCountyFips(null);
     setDrillCity(null);
     setDrillZip(null);
   };
@@ -1802,7 +1867,7 @@ export default function ReportsPage() {
                           {countyCards.filter(c => !countySearch || c.name.toLowerCase().includes(countySearch.toLowerCase())).map((county, i) => {
                             const maxProps = Math.max(...countyCards.map(c => c.props));
                             return (
-                              <div key={i} onClick={() => setSelectedCounty(county.name)}
+                              <div key={i} onClick={() => { setSelectedCounty(county.name); setSelectedCountyFips(county.rawFips); }}
                                 style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, overflow: 'hidden', cursor: 'pointer', transition: 'border-color 0.2s', animation: 'fadeIn 0.4s ease' }}
                                 onMouseEnter={e => (e.currentTarget.style.borderColor = C.terra)}
                                 onMouseLeave={e => (e.currentTarget.style.borderColor = C.border)}>
@@ -1976,6 +2041,67 @@ export default function ReportsPage() {
                     )}
                   </div>
                 )}
+              </div>
+            )}
+
+            {/* "" Census Demographics Sidebar Panel "" */}
+            {!isAll && stateCode && selectedCountyFips && (
+              <div style={{ marginTop: 8, marginBottom: 16, background: '#112240', borderRadius: 12, border: '1px solid #1e3a5f', overflow: 'hidden', animation: 'fadeIn 0.4s ease' }}>
+                <div style={{ padding: '12px 18px', background: '#0d1b2e', display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <span style={{ fontSize: 16 }}>📊</span>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: '#fff', letterSpacing: '0.04em' }}>Census Demographics</div>
+                    <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.55)', marginTop: 1 }}>
+                      {selectedCounty ? selectedCounty + ' County' : stateCode}
+                      {' — '}
+                      {ALL_STATES.find(s => s.code === stateCode)?.name ?? stateCode}
+                    </div>
+                  </div>
+                  <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)' }}>ACS 5-Year</span>
+                </div>
+
+                {censusLoad.loading ? (
+                  <div style={{ padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+                    {[1,2,3,4,5,6,7,8].map(i => (
+                      <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div style={{ height: 12, width: '45%', borderRadius: 4, background: 'rgba(255,255,255,0.1)', animation: 'shimmer 1.4s infinite', backgroundSize: '200% 100%' }} />
+                        <div style={{ height: 12, width: '30%', borderRadius: 4, background: 'rgba(255,255,255,0.08)', animation: 'shimmer 1.4s infinite', backgroundSize: '200% 100%' }} />
+                      </div>
+                    ))}
+                  </div>
+                ) : censusLoad.error ? (
+                  <div style={{ padding: '14px 18px' }}>
+                    <div style={{ fontSize: 12, color: 'rgba(255,180,100,0.9)', background: 'rgba(255,100,50,0.1)', borderRadius: 8, padding: '10px 14px', border: '1px solid rgba(255,100,50,0.2)' }}>
+                      {censusLoad.error}
+                    </div>
+                  </div>
+                ) : censusData ? (
+                  <div style={{ padding: '14px 18px' }}>
+                    {/* Stat rows */}
+                    {[
+                      { label: 'Total Population',           value: censusData.totalPop.toLocaleString() },
+                      { label: '% White (non-Hispanic)',     value: censusData.pctWhite.toFixed(1) + '%' },
+                      { label: '% Hispanic',                 value: censusData.pctHispanic.toFixed(1) + '%' },
+                      { label: '% African American',         value: censusData.pctBlack.toFixed(1) + '%' },
+                      { label: '% Asian',                    value: censusData.pctAsian.toFixed(1) + '%' },
+                      { label: 'Median Household Income',    value: censusData.medianIncome > 0 ? '$' + Math.round(censusData.medianIncome).toLocaleString() : 'N/A' },
+                      { label: 'Owner Occupied Rate',        value: censusData.ownerOccRate.toFixed(1) + '%' },
+                      { label: 'Median Home Value',          value: censusData.medianHomeValue > 0 ? '$' + Math.round(censusData.medianHomeValue).toLocaleString() : 'N/A' },
+                    ].map((row, i) => (
+                      <div key={i} style={{
+                        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                        padding: '8px 0',
+                        borderBottom: i < 7 ? '1px solid rgba(255,255,255,0.07)' : 'none',
+                      }}>
+                        <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', fontFamily: C.font }}>{row.label}</span>
+                        <span style={{ fontSize: 13, fontWeight: 700, color: '#fff', fontFamily: C.fontMono }}>{row.value}</span>
+                      </div>
+                    ))}
+                    <div style={{ marginTop: 12, fontSize: 10, color: 'rgba(255,255,255,0.3)', textAlign: 'right' }}>
+                      Source: U.S. Census Bureau ACS 5-Year
+                    </div>
+                  </div>
+                ) : null}
               </div>
             )}
 
