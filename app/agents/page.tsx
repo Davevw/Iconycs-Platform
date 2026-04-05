@@ -22,8 +22,8 @@ const C = {
 // --- Agent Data ---------------------------------------------------------------
 const AGENTS = [
   {
-    icon: '[scales]',
-    name: 'Fair Lending Compliance Agent',
+    icon: '⚖️',
+    name: '⚖️ Fair Lending Compliance Agent',
     price: '$5,000',
     period: '/month',
     description:

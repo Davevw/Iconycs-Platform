@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     default: 'ICONYCS | 109M Properties. Every U.S. Neighborhood. Real Data.',
     template: '%s | ICONYCS',
   },
-  description: 'AI-powered housing analytics platform. 109M+ residential properties, 258M+ homeowner profiles, and census-tract demographics across all 50 states -- built for capital markets.',
+  description: 'AI-powered housing analytics platform. 109M+ residential properties, 158M+ homehomeowner profiles, and census-tract demographics across all 50 states -- built for capital markets.',
   keywords: [
     'housing analytics', 'homeowner demographics', 'property data', 'real estate analytics',
     'home ownership data', 'demographic analysis', 'property records', 'housing market data',
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'ICONYCS | 109M Properties. Every U.S. Neighborhood. Real Data.',
-    description: 'AI-powered housing analytics. 109M+ residential properties, 258M+ homeowner profiles, census-tract demographics -- built for capital markets.',
+    description: 'AI-powered housing analytics. 109M+ residential properties, 158M+ homehomeowner profiles, census-tract demographics -- built for capital markets.',
   },
   robots: { index: true, follow: true },
 };

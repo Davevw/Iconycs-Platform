@@ -123,16 +123,18 @@ export default function DashboardPage() {
       <nav style={{ background: C.bgCard, borderBottom: `1px solid ${C.border}`, position: 'sticky', top: 0, zIndex: 50 }}>
         <div style={{ maxWidth: 1400, margin: '0 auto', padding: '0 24px', display: 'flex', alignItems: 'center', height: 56, gap: 24 }}>
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
-            
-            <span style={{ fontSize: 19, fontWeight: 700, color: C.text }}>ICONYCS</span>
+            <div>
+              <span style={{ fontSize: 19, fontWeight: 800, color: C.navy, letterSpacing: '-0.02em' }}>ICONYCS</span>
+              <div style={{ fontSize: 9, fontWeight: 600, color: C.terra, letterSpacing: '0.08em', textTransform: 'uppercase' as const, marginTop: -2 }}>Housing Intelligence</div>
+            </div>
           </Link>
-          <span style={{ fontSize: 14, fontWeight: 600, color: C.terra }}>AI Query Lab</span>
+          <span style={{ fontSize: 14, fontWeight: 600, color: C.terra }}>🔬 AI Query Lab</span>
           <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 12 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '4px 10px', borderRadius: 12, background: C.sageSoft }}>
               <div style={{ width: 6, height: 6, borderRadius: '50%', background: C.sage }} />
               <span style={{ fontSize: 11, fontWeight: 600, color: C.sage }}>Snowflake Live</span>
             </div>
-            <Link href="/" style={{ fontSize: 13, color: C.textMuted, textDecoration: 'none' }}>Home</Link>
+            <Link href="/" style={{ fontSize: 13, color: C.textMuted, textDecoration: 'none' }}>Back to Home</Link>
           </div>
         </div>
       </nav>
@@ -141,11 +143,18 @@ export default function DashboardPage() {
         <div style={{ display: 'flex', flexDirection: 'column', background: C.bgCard, borderRadius: 14, border: `1px solid ${C.border}`, overflow: 'hidden' }}>
           <div style={{ flex: 1, overflow: 'auto', padding: 20, display: 'flex', flexDirection: 'column', gap: 16 }}>
             {messages.length === 0 && (
-              <div style={{ textAlign: 'center', padding: '60px 20px' }}>
-                <div style={{ fontSize: 44, marginBottom: 12 }}>[house]</div>
+              <div style={{ textAlign: 'center', padding: '40px 20px' }}>
+                <div style={{ marginBottom: 20 }}>
+                  <div style={{ fontSize: 32, fontWeight: 800, color: C.navy, letterSpacing: '-0.02em', marginBottom: 4 }}>ICONYCS</div>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: C.terra, letterSpacing: '0.08em', textTransform: 'uppercase' as const, marginBottom: 12 }}>Housing Intelligence</div>
+                  <p style={{ fontSize: 15, color: C.textBody, fontWeight: 500, maxWidth: 400, margin: '0 auto 20px' }}>
+                    Ask anything about 109M+ properties across all 50 states.
+                  </p>
+                </div>
+                <div style={{ fontSize: 44, marginBottom: 12 }}>🏠</div>
                 <h2 style={{ fontSize: 20, fontWeight: 600, color: C.text, fontFamily: C.fontSerif, marginBottom: 8 }}>Ask anything about housing data</h2>
                 <p style={{ fontSize: 13, color: C.textMuted, maxWidth: 380, margin: '0 auto', lineHeight: 1.7 }}>
-                  Claude Opus 4.6  to  Snowflake SQL  to  130M+ records  to  Insights & Charts
+                  Claude Opus 4.6 to Snowflake SQL to 130M+ records to Insights &amp; Charts
                 </p>
               </div>
             )}
