@@ -4,11 +4,10 @@ import './globals.css';
 export const metadata: Metadata = {
   metadataBase: new URL('https://iconycs.com'),
   title: {
-    default: 'ICONYCS  -  Housing Intelligence & Homeowner Demographics',
+    default: 'ICONYCS - Housing Intelligence',
     template: '%s | ICONYCS',
   },
-  description:
-    'ICONYCS combines 130M+ property records with 187M+ owner demographic profiles. Analytics by ethnicity, income, education, marital status, and more. The socio-economics of home ownership.',
+  description: 'Fair lending analysis. Demographic intelligence. 109M+ property records across all 50 states. See the data behind homeownership.',
   keywords: [
     'housing analytics', 'homeowner demographics', 'property data', 'real estate analytics',
     'home ownership data', 'demographic analysis', 'property records', 'housing market data',
@@ -20,14 +19,14 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://iconycs.com',
     siteName: 'ICONYCS',
-    title: 'ICONYCS  -  Housing Intelligence & Homeowner Demographics',
-    description: '109M+ property records. 73.6M+ homeowner profiles. Housing Intelligence for lenders, researchers, and policymakers.',
+    title: 'ICONYCS - Housing Intelligence',
+    description: 'Fair lending. Demographic intelligence. 109M+ property records across all 50 states.',
     images: [{ url: 'https://vdgxbfumlysatthimpcb.supabase.co/storage/v1/object/public/public/og-image.png', width: 1536, height: 1024, alt: 'ICONYCS Housing Intelligence - 109M+ Property Records' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'ICONYCS  -  Housing Intelligence',
-    description: '130M+ properties. 187M+ owner profiles. The socio-economics of home ownership.',
+    description: 'Fair lending. Demographic intelligence. 109M+ property records across all 50 states.',
   },
   robots: { index: true, follow: true },
 };
