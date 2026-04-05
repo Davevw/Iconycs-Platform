@@ -272,7 +272,7 @@ function LtvBarChart({ rows }: { rows: { tier: string; count: number; pct: numbe
         );
       })}
       <div style={{ marginTop: 8, fontSize: 11, color: C.textMuted, fontStyle: 'italic' }}>
-        * LTV tiers follow FNMA standard buckets. High-LTV (â‰¥80%) loans carry elevated default risk.
+        * LTV tiers follow FNMA standard buckets. High-LTV (80%) loans carry elevated default risk.
       </div>
     </div>
   );
@@ -586,7 +586,7 @@ export default function FairLendingPage() {
                   cursor: 'pointer', fontFamily: C.font, fontWeight: 600,
                   display: 'flex', alignItems: 'center', gap: 5,
                 }}>
-                  â¬‡ Download PDF Report
+                   Download PDF Report
                 </button>
               )}
             </div>
@@ -725,7 +725,7 @@ export default function FairLendingPage() {
                     Fetching Data...
                   </>
                 ) : (
-                  'âš¡ Generate Compliance Report'
+                  'Generate Compliance Report'
                 )}
               </button>
               {state && !loading && (
@@ -749,9 +749,9 @@ export default function FairLendingPage() {
             </div>
           )}
 
-          {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+          {/* 
                THE REPORT
-          â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
+           */}
           {report && !loading && (
             <div className="report-wrapper" style={{ position: 'relative', animation: 'fadeIn 0.5s ease' }}>
 
@@ -821,16 +821,16 @@ export default function FairLendingPage() {
                         color: '#fff', fontSize: 12, fontWeight: 600, cursor: 'pointer',
                         fontFamily: C.font, display: 'flex', alignItems: 'center', gap: 6,
                       }}>
-                        â¬‡ Download PDF
+                         Download PDF
                       </button>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+              {/* 
                   SECTION 1: MARKET OVERVIEW
-              â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
+               */}
               <div className="report-section" style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, marginBottom: 16, overflow: 'hidden' }}>
                 <SectionHeader num="1" title="Market Overview" subtitle="Total properties and homeownership base" />
                 <div style={{ padding: '20px 24px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
@@ -851,9 +851,9 @@ export default function FairLendingPage() {
                 </div>
               </div>
 
-              {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+              {/* 
                   SECTION 2: DEMOGRAPHIC PROFILE  -  HOMEOWNERSHIP
-              â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
+               */}
               <div className="report-section" style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, marginBottom: 16, overflow: 'hidden' }}>
                 <SectionHeader num="2" title="Demographic Profile  -  Homeownership" subtitle="Direct identified ethnic records vs. national averages" />
                 <div style={{ padding: '0 0 0' }}>
@@ -968,9 +968,9 @@ export default function FairLendingPage() {
                 )}
               </div>
 
-              {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+              {/* 
                   SECTION 3: MORTGAGE LENDING PROFILE
-              â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
+               */}
               <div className="report-section" style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, marginBottom: 16, overflow: 'hidden' }}>
                 <SectionHeader num="3" title="Mortgage Lending Profile" subtitle="Loan program distribution and key metrics" />
                 {report.loanRows.length > 0 ? (
@@ -995,9 +995,9 @@ export default function FairLendingPage() {
                 </div>
               </div>
 
-              {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+              {/* 
                   SECTION 4: LTV DISTRIBUTION (FNMA TIERS)
-              â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
+               */}
               <div className="report-section" style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, marginBottom: 16, overflow: 'hidden' }}>
                 <SectionHeader num="4" title="LTV Distribution  -  FNMA Tiers" subtitle="Loan-to-value concentration by standard tier buckets" />
                 {report.ltvRows.length > 0 ? (
@@ -1025,9 +1025,9 @@ export default function FairLendingPage() {
                 )}
               </div>
 
-              {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+              {/* 
                   SECTION 5: OCCUPANCY STATUS
-              â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
+               */}
               <div className="report-section" style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, marginBottom: 16, overflow: 'hidden' }}>
                 <SectionHeader num="5" title="Occupancy Status" subtitle="Owner-occupied vs. non-owner-occupied split" />
                 <div style={{ padding: '20px 24px' }}>
@@ -1073,9 +1073,9 @@ export default function FairLendingPage() {
                 </div>
               </div>
 
-              {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+              {/* 
                   SECTION 6: FAIR LENDING RISK INDICATORS
-              â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
+               */}
               <div className="report-section" style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, marginBottom: 16, overflow: 'hidden' }}>
                 <SectionHeader num="6" title="Fair Lending Risk Indicators" subtitle="Traffic-light scoring for compliance review" />
                 <div style={{ padding: '20px 24px', display: 'flex', flexDirection: 'column', gap: 14 }}>
@@ -1170,9 +1170,9 @@ export default function FairLendingPage() {
                 </div>
               </div>
 
-              {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+              {/* 
                   SECTION 7: METHODOLOGY & DISCLAIMERS
-              â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
+               */}
               <div className="report-section" style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, marginBottom: 16, overflow: 'hidden' }}>
                 <SectionHeader num="7" title="Methodology & Disclaimers" />
                 <div style={{ padding: '20px 24px' }}>
@@ -1182,7 +1182,7 @@ export default function FairLendingPage() {
                       <div style={{ fontSize: 12, color: C.textBody, lineHeight: 1.7 }}>
                         <p style={{ margin: '0 0 8px' }}>ICONYCS Housing Intelligence aggregates 130M+ residential property records from county assessor records, deed transfers, mortgage assignments, and USPS address files.</p>
                         <p style={{ margin: '0 0 8px' }}>Ethnic identification is sourced from direct voter registration records and proprietary consumer databases. All demographic data is independently sourced  -  not modeled.</p>
-                        <p style={{ margin: 0 }}>LTV tiers follow FNMA standard tier definitions (â‰¤60%, 60-65%, 65-70%, 70-75%, 75-80%, 80-85%, 85-90%, 90-95%, 95-97%, &gt;97%).</p>
+                        <p style={{ margin: 0 }}>LTV tiers follow FNMA standard tier definitions (60%, 60-65%, 65-70%, 70-75%, 75-80%, 80-85%, 85-90%, 90-95%, 95-97%, &gt;97%).</p>
                       </div>
                     </div>
                     <div>
@@ -1224,9 +1224,9 @@ export default function FairLendingPage() {
                 </div>
               </div>
 
-              {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+              {/* 
                   SECTION 8: CALL TO ACTION
-              â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
+               */}
               <div className="report-section no-print" style={{
                 background: `linear-gradient(135deg, ${C.navy} 0%, #2A3F6A 100%)`,
                 borderRadius: 12, padding: '28px 32px', marginBottom: 16, color: '#fff',
@@ -1249,7 +1249,7 @@ export default function FairLendingPage() {
                         borderRadius: 8, textDecoration: 'none', fontSize: 14, fontWeight: 700,
                         display: 'inline-flex', alignItems: 'center', gap: 6,
                       }}>
-                        Request Enterprise Demo â†’
+                        Request Enterprise Demo ’
                       </a>
                       <Link href="/pricing" style={{
                         padding: '12px 24px', background: 'rgba(255,255,255,0.15)',
