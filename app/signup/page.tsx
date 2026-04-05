@@ -190,7 +190,7 @@ function SignupForm() {
           textAlign: 'center',
         }}
       >
-        Create Account
+        🏠 Create Account
       </h1>
       <p style={{ fontSize: 13, color: C.textMuted, textAlign: 'center', marginBottom: 24 }}>
         Get access to 130M+ residential property records.

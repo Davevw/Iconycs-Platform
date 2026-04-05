@@ -155,7 +155,7 @@ export default function LoginPage() {
               textAlign: 'center',
             }}
           >
-            Sign In
+            👋 Sign In
           </h1>
           <p style={{ fontSize: 13, color: C.textMuted, textAlign: 'center', marginBottom: 24 }}>
             Welcome back. Access your analytics dashboard.

@@ -104,9 +104,10 @@ export default function PrivacyPage() {
             </Link>
             <span style={{ fontSize: 13, color: C.textMuted }}>Privacy Policy</span>
             <div style={{ marginLeft: 'auto' }}>
-              <Link href="/reports" style={{ fontSize: 12, color: C.terra, textDecoration: 'none', fontWeight: 600 }}>
-                Back to Reports
-              </Link>
+              <div style={{ display: 'flex', gap: 12 }}>
+                <Link href="/" style={{ fontSize: 12, color: C.textMuted, textDecoration: 'none', fontWeight: 500 }}>Back to Home</Link>
+                <Link href="/reports" style={{ fontSize: 12, color: C.terra, textDecoration: 'none', fontWeight: 600 }}>Reports</Link>
+              </div>
             </div>
           </div>
         </nav>
@@ -120,7 +121,7 @@ export default function PrivacyPage() {
               Legal
             </div>
             <h1 style={{ fontSize: 36, fontWeight: 700, color: C.text, fontFamily: C.fontSerif, lineHeight: 1.2, marginBottom: 12 }}>
-              Privacy Policy
+              🔒 Privacy Policy
             </h1>
             <p style={{ fontSize: 14, color: C.textMuted }}>
               <strong>Effective Date:</strong> April 2026 &nbsp;*&nbsp; <strong>Governing Law:</strong> California

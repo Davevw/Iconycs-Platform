@@ -248,7 +248,7 @@ const PIPELINE = [
   { label: 'Data Sources', icon: '◉', color: C.chart[3], items: ['Snowflake DB', 'Census Bureau', 'Property Records', 'Infutor Demographics'] },
   { label: 'Property Elements', icon: '⌂', color: C.terra, items: ['Value & Financing', 'Location & Type', 'Beds / Bath / SqFt', 'Mortgage Data'] },
   { label: 'AI Dashboard', icon: '◈', color: C.sage, items: ['Valuation', 'Trends & Economics', 'Insurance & Risk', 'Match & Append'] },
-  { label: 'Homeowner Profiles', icon: '◎', color: C.gold, items: ['Ethnicity & Race', 'Income & Wealth', 'Education Level', 'Family & Network'] },
+  { label: 'Owner-Occupied Homeowners', icon: '◎', color: C.gold, items: ['Ethnicity & Race', 'Income & Wealth', 'Education Level', 'Family & Network'] },
   { label: 'Distribution', icon: '◆', color: C.chart[4], items: ['Reports & Dashboards', 'LinkedIn Publishing', 'News & Media', 'API Data Feeds'] },
 ];
 
@@ -382,7 +382,7 @@ export default function Homepage() {
               </h1>
 
               <p className="fu fu1" style={{ fontSize: 17, color: C.textBody, lineHeight: 1.85, marginBottom: 20, maxWidth: 480, fontWeight: 400 }}>
-                109 million residential properties. 158M+ homeowner profiles. AI-powered analytics by ethnicity, income, education, marital status, and more — from ZIP code to national.
+                109 million residential properties. 73.6M+ owner-occupied homeowners. AI-powered analytics by ethnicity, income, education, marital status, and more — from ZIP code to national.
               </p>
 
               <blockquote className="fu fu2" style={{
@@ -420,7 +420,7 @@ export default function Homepage() {
             boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
           }}>
             <Stat value="109M+" label="🏠 Property Records" color={C.terra} />
-            <Stat value="158M+" label="🔑 Homeowner Profiles" color={C.sage} />
+            <Stat value="73.6M+" label="🔑 Owner-Occupied Homeowners" color={C.sage} />
             <Stat value="3,143" label="📍 Markets Tracked" color={C.gold} />
             <Stat value="30+" label="🗺️ Years Experience" color={C.navyLight} />
           </div>

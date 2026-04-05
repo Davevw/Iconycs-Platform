@@ -7,10 +7,10 @@ export const metadata: Metadata = {
 };
 
 const PARTNERS = [
-  { name: 'Attom Data', url: 'https://www.attomdata.com/', desc: 'Comprehensive property data and real estate analytics' },
-  { name: 'CoreLogic', url: 'https://www.corelogic.com/', desc: 'Property insights, analytics, and data-enabled solutions' },
-  { name: 'Veros Real Estate Solutions', url: 'https://www.veros.com/', desc: 'AVM technology and real estate valuation' },
-  { name: 'Black Knight', url: 'https://www.blackknightinc.com/', desc: 'Mortgage and real estate technology, data, and analytics' },
+  { name: '📊 Attom Data', url: 'https://www.attomdata.com/', desc: 'Comprehensive property data and real estate analytics' },
+  { name: '🏠 CoreLogic', url: 'https://www.corelogic.com/', desc: 'Property insights, analytics, and data-enabled solutions' },
+  { name: '📈 Veros Real Estate Solutions', url: 'https://www.veros.com/', desc: 'AVM technology and real estate valuation' },
+  { name: '⚙️ Black Knight', url: 'https://www.blackknightinc.com/', desc: 'Mortgage and real estate technology, data, and analytics' },
 ];
 
 export default function PartnersPage() {

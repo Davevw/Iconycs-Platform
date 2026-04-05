@@ -230,8 +230,9 @@ export default function ApiDocsPage() {
               <div style={{ fontSize: 9, fontWeight: 600, color: '#78716C', letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: -2 }}>Housing Intelligence</div>
             </div>
           </Link>
-          <span style={{ fontSize: 13, color: C.textMuted }}>Developer Docs</span>
+          <span style={{ fontSize: 13, color: C.textMuted }}>🔗 Developer Docs</span>
           <div style={{ marginLeft: 'auto', display: 'flex', gap: 12, alignItems: 'center' }}>
+            <Link href="/" style={{ fontSize: 12, color: C.textMuted, textDecoration: 'none' }}>Back to Home</Link>
             <Link href="/reports" style={{ fontSize: 12, color: C.textMuted, textDecoration: 'none' }}>Reports</Link>
             <Link href="/pricing" style={{ fontSize: 12, color: C.terra, textDecoration: 'none', fontWeight: 600 }}>Pricing</Link>
             <a href="mailto:info@iconycs.com"
@@ -254,7 +255,7 @@ export default function ApiDocsPage() {
             EARLY ACCESS
           </div>
           <h1 style={{ fontSize: 42, fontWeight: 700, margin: '0 0 16px', lineHeight: 1.15 }}>
-            ICONYCS Data API
+            🔗 ICONYCS Data API
             <span style={{ display: 'block', fontSize: 28, fontWeight: 400, opacity: 0.7, marginTop: 6 }}>v1.0</span>
           </h1>
           <p style={{ fontSize: 18, opacity: 0.8, maxWidth: 600, lineHeight: 1.6, margin: '0 0 32px' }}>
@@ -328,7 +329,7 @@ export default function ApiDocsPage() {
                       background: C.terra, color: '#fff', borderRadius: 8,
                       textDecoration: 'none', fontWeight: 700, fontSize: 14,
                     }}>
-                    Request API Access  to 
+                    Request API Access
                   </a>
                 </div>
               </div>
@@ -337,7 +338,7 @@ export default function ApiDocsPage() {
 
           {/* Authentication */}
           <section id="authentication" style={{ marginBottom: 48 }}>
-            <h2 style={{ fontSize: 24, fontWeight: 700, margin: '0 0 16px', color: C.text }}>Authentication</h2>
+            <h2 style={{ fontSize: 24, fontWeight: 700, margin: '0 0 16px', color: C.text }}>🔑 Authentication</h2>
             <p style={{ color: C.textBody, lineHeight: 1.7, marginBottom: 20 }}>
               All API requests require an API key passed in the <code style={{ fontFamily: C.fontMono, background: C.bgWarm, padding: '2px 6px', borderRadius: 4, fontSize: 13 }}>X-API-Key</code> request header.
               Keys are issued to Professional and Enterprise subscribers.
@@ -362,7 +363,7 @@ X-API-Key: ick_live_your_api_key_here`} />
 
           {/* Endpoints */}
           <section id="endpoints" style={{ marginBottom: 48 }}>
-            <h2 style={{ fontSize: 24, fontWeight: 700, margin: '0 0 20px', color: C.text }}>Endpoints</h2>
+            <h2 style={{ fontSize: 24, fontWeight: 700, margin: '0 0 20px', color: C.text }}>🔗 Endpoints</h2>
             <div style={{ border: `1px solid ${C.border}`, borderRadius: 12, overflow: 'hidden' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse' as const }}>
                 <thead>
@@ -422,7 +423,7 @@ X-API-Key: ick_live_your_api_key_here`} />
 
           {/* Response Format */}
           <section id="response" style={{ marginBottom: 48 }}>
-            <h2 style={{ fontSize: 24, fontWeight: 700, margin: '0 0 16px', color: C.text }}>Response Format</h2>
+            <h2 style={{ fontSize: 24, fontWeight: 700, margin: '0 0 16px', color: C.text }}>📦 Response Format</h2>
             <p style={{ color: C.textBody, lineHeight: 1.7, marginBottom: 20 }}>
               All responses return JSON with a consistent envelope. Every response includes:
             </p>

@@ -103,11 +103,11 @@ With 84,400 tracts covered and ACS 2023 data representing the most current five-
   },
 ];
 
-const CATEGORY_STYLES: Record<string, { bg: string; color: string }> = {
-  Demographics: { bg: 'rgba(99,102,241,0.12)', color: '#4f46e5' },
-  Finance:      { bg: 'rgba(16,185,129,0.12)', color: '#059669' },
-  Market:       { bg: 'rgba(245,158,11,0.14)', color: '#b45309' },
-  Research:     { bg: 'rgba(139,92,246,0.12)', color: '#7c3aed' },
+const CATEGORY_STYLES: Record<string, { bg: string; color: string; emoji: string }> = {
+  Demographics: { bg: 'rgba(99,102,241,0.12)', color: '#4f46e5', emoji: '👥' },
+  Finance:      { bg: 'rgba(16,185,129,0.12)', color: '#059669', emoji: '⚖️' },
+  Market:       { bg: 'rgba(245,158,11,0.14)', color: '#b45309', emoji: '🏠' },
+  Research:     { bg: 'rgba(139,92,246,0.12)', color: '#7c3aed', emoji: '📊' },
 };
 
 export default function BlogPage() {
@@ -189,6 +189,7 @@ export default function BlogPage() {
               background: '#C4653A', color: '#fff', textDecoration: 'none',
               boxShadow: '0 1px 3px rgba(196,101,58,0.35)',
             }}>Launch Dashboard</Link>
+            <Link href="/" style={{ fontSize: 13, color: '#6b6660', textDecoration: 'none', fontWeight: 500, padding: '8px 14px', borderRadius: '8px' }}>Home</Link>
           </div>
         </div>
       </nav>
@@ -208,7 +209,7 @@ export default function BlogPage() {
           <h1 style={{
             fontSize: 44, fontWeight: 800, color: '#1a1714',
             letterSpacing: '-0.03em', lineHeight: 1.15, marginBottom: 20,
-          }}>Housing Intelligence Blog</h1>
+          }}>📰 Housing Intelligence Blog</h1>
           <p style={{
             fontSize: 17, color: '#7a6f66', lineHeight: 1.7, maxWidth: 560, margin: '0 auto',
           }}>
@@ -232,7 +233,7 @@ export default function BlogPage() {
                       color: catStyle.color, background: catStyle.bg,
                       padding: '3px 10px', borderRadius: 20,
                       letterSpacing: '0.04em',
-                    }}>{post.categoryLabel}</span>
+                    }}>{catStyle.emoji} {post.categoryLabel}</span>
                     <span style={{ fontSize: 12, color: '#a89e95' }}>{post.date}</span>
                   </div>
 
@@ -255,7 +256,7 @@ export default function BlogPage() {
                   {/* Read more */}
                   <div style={{ marginTop: 'auto' }}>
                     <Link href={post.link} className="read-more">
-                      Read more  to 
+                      Read more
                     </Link>
                   </div>
                 </div>

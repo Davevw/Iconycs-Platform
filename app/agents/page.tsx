@@ -43,8 +43,8 @@ const AGENTS = [
     ctaStyle: 'primary',
   },
   {
-    icon: '[chart]',
-    name: 'Market Intelligence Agent',
+    icon: '📡',
+    name: '📡 Market Intelligence Agent',
     price: '$3,000',
     period: '/month',
     description:
@@ -64,8 +64,8 @@ const AGENTS = [
     ctaStyle: 'primary',
   },
   {
-    icon: '[house]',
-    name: 'Acquisition Scout Agent',
+    icon: '🔍',
+    name: '🔍 Acquisition Scout Agent',
     price: '$2,000',
     period: '/month',
     description:
@@ -108,6 +108,7 @@ export default function AgentsPage() {
             <Link href="/pricing" style={{ fontSize: 12, color: C.terra, textDecoration: 'none', padding: '5px 12px', borderRadius: 6, background: '#FFF8F5', fontWeight: 600 }}>Pricing</Link>
             <Link href="/agents" style={{ fontSize: 12, color: '#fff', textDecoration: 'none', padding: '5px 12px', borderRadius: 6, background: C.navy, fontWeight: 700 }}>Agents</Link>
             <Link href="/login" style={{ fontSize: 12, color: '#fff', textDecoration: 'none', padding: '5px 14px', borderRadius: 6, background: C.terra, fontWeight: 700 }}>Sign In</Link>
+            <Link href="/" style={{ fontSize: 12, color: C.textMuted, textDecoration: 'none', padding: '5px 12px', borderRadius: 6 }}>Home</Link>
           </div>
         </div>
       </nav>
@@ -208,7 +209,7 @@ export default function AgentsPage() {
         <div style={{ maxWidth: 1160, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 48 }}>
             <h2 style={{ fontFamily: C.fontSerif, fontSize: 30, fontWeight: 700, color: C.navy, margin: '0 0 12px', letterSpacing: '-0.01em' }}>
-              Available Agents
+              🤖 Available Agents
             </h2>
             <p style={{ fontSize: 15, color: C.textMuted, maxWidth: 480, margin: '0 auto' }}>
               Each agent connects directly to your ICONYCS data subscription and runs continuously on your behalf.
@@ -288,7 +289,7 @@ export default function AgentsPage() {
                     fontWeight: 700, fontSize: 14, textDecoration: 'none',
                     letterSpacing: '0.01em',
                   }}>
-                    {agent.ctaLabel}  to 
+                    {agent.ctaLabel}
                   </a>
                 </div>
               </div>
@@ -301,7 +302,7 @@ export default function AgentsPage() {
       <section style={{ background: C.bgCard, padding: '72px 20px', borderTop: `1px solid ${C.border}` }}>
         <div style={{ maxWidth: 900, margin: '0 auto', textAlign: 'center' }}>
           <h2 style={{ fontFamily: C.fontSerif, fontSize: 28, fontWeight: 700, color: C.navy, margin: '0 0 12px' }}>
-            How Agent Deployment Works
+            🚀 How Agent Deployment Works
           </h2>
           <p style={{ fontSize: 15, color: C.textMuted, marginBottom: 48 }}>
             From inquiry to live monitoring in under 48 hours.
@@ -356,7 +357,7 @@ export default function AgentsPage() {
               background: C.terra, color: '#fff', fontWeight: 700, fontSize: 15,
               textDecoration: 'none', letterSpacing: '0.01em',
             }}>
-            Schedule Consultation  to 
+            Schedule Consultation
           </a>
 
           <div style={{ marginTop: 48, display: 'flex', gap: 32, justifyContent: 'center', flexWrap: 'wrap' }}>
