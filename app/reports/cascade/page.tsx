@@ -612,7 +612,7 @@ function CascadeInner() {
       {/* Header */}
       <div style={{ background: C.navy, color: '#fff', padding: '12px 24px', display: 'flex', alignItems: 'center', gap: 14 }}>
         <Link href="/reports" style={{ color: '#fff', opacity: 0.7, fontSize: 12, textDecoration: 'none', fontWeight: 600 }}>
-          <- Reports
+          Back to Reports
         </Link>
         <div style={{ width: 1, height: 16, background: 'rgba(255,255,255,0.3)' }} />
         <div style={{ fontSize: 14, fontWeight: 700, letterSpacing: '0.05em' }}>CASCADE REPORT BUILDER</div>
