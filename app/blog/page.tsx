@@ -2,19 +2,20 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Blog  -  Housing Market Insights | ICONYCS',
-  description: 'Data-driven housing market analysis, fair lending insights, and demographic research from ICONYCS — powered by 109.8M property records and Census ACS 2023.',
+  title: 'Blog — Housing Intelligence | ICONYCS',
+  description: 'Data-driven housing market analysis, fair lending insights, and demographic research from ICONYCS — powered by 130M+ property records and Census ACS 2023.',
 };
 
 interface Post {
   slug: string;
   title: string;
   date: string;
-  category: string;
+  category: 'Demographics' | 'Finance' | 'Market' | 'Research';
+  categoryLabel: string;
   excerpt: string;
+  teaser: string;
   body: string;
   link: string;
-  linkLabel: string;
 }
 
 const POSTS: Post[] = [
@@ -23,8 +24,9 @@ const POSTS: Post[] = [
     title: 'The Homeownership Demographic Gap: What 109M Property Records Reveal',
     date: 'Apr 4, 2026',
     category: 'Demographics',
+    categoryLabel: 'Demographics',
     link: '/fair-lending',
-    linkLabel: 'Run a Fair Lending Report →',
+    teaser: 'Across 109.8M U.S. residential property records, direct ethnic identification exposes a persistent homeownership gap...',
     excerpt: 'Across 109.8 million U.S. residential property records, direct ethnic identification data exposes a persistent and measurable homeownership gap that conventional surveys have historically understated.',
     body: `Across 109.8 million U.S. residential property records, direct ethnic identification data exposes a persistent and measurable homeownership gap that conventional surveys have historically understated.
 
@@ -43,8 +45,9 @@ The full demographic breakdown by state, county, city, and ZIP code is available
     title: 'FHA vs. Conventional Loans: 20 Years of Housing Finance Data',
     date: 'Apr 2, 2026',
     category: 'Finance',
+    categoryLabel: 'Market',
     link: '/fair-lending',
-    linkLabel: 'Analyze Loan Concentration →',
+    teaser: 'With 45.5M conventional loans and 6.3M FHA loans in the ICONYCS database, two decades of mortgage data reveal durable geographic concentration patterns...',
     excerpt: 'With 45.5 million conventional loans, 6.3 million FHA loans, and 2.7 million VA loans in the ICONYCS database, two decades of mortgage data reveal durable geographic and demographic concentration patterns with direct fair lending implications.',
     body: `With 45.5 million conventional loans (42% of all properties), 6.3 million FHA loans (6%), and 2.7 million VA loans (3%) in the ICONYCS database, two decades of mortgage data reveal durable geographic and demographic concentration patterns with direct fair lending implications.
 
@@ -62,9 +65,10 @@ For lenders subject to HMDA reporting, ICONYCS loan-type data provides a cross-r
     slug: 'california-housing-market-97m-properties',
     title: 'California Housing Market: 9.7 Million Properties, $742K Average',
     date: 'Mar 28, 2026',
-    category: 'Market Update',
+    category: 'Market',
+    categoryLabel: 'Market',
     link: '/reports',
-    linkLabel: 'View Analytics Reports →',
+    teaser: 'California\'s 9.7M properties at a $742K average value are simultaneously the engine of national housing wealth and its primary affordability crisis...',
     excerpt: 'California remains the largest and most expensive state housing market in the ICONYCS database. Nine-point-seven million properties at a $742,000 average value represent a market that is simultaneously the engine of national housing wealth and its primary affordability crisis.',
     body: `California remains the largest and most expensive state housing market in the ICONYCS database. Nine-point-seven million properties at a $742,000 average value represent a market that is simultaneously the engine of national housing wealth and its primary affordability crisis.
 
@@ -81,8 +85,9 @@ For mortgage lenders, investment analysts, and fair lending compliance teams, Ca
     title: 'Census ACS 2023 Meets Property Records: A New Standard for Housing Analysis',
     date: 'Mar 21, 2026',
     category: 'Research',
+    categoryLabel: 'Research',
     link: '/fair-lending',
-    linkLabel: 'See the Census Overlay in Action →',
+    teaser: 'ICONYCS joins 109.8M property records with Census ACS 2023 estimates across 84,400 census tracts — the most comprehensive residential housing intelligence dataset available...',
     excerpt: 'ICONYCS has joined its 109.8 million property records with Census ACS 2023 five-year estimates across 84,400 census tracts — creating the most comprehensive residential housing intelligence dataset commercially available.',
     body: `ICONYCS has joined its 109.8 million property records with Census ACS 2023 five-year estimates across 84,400 census tracts — creating the most comprehensive residential housing intelligence dataset commercially available.
 
@@ -98,81 +103,173 @@ With 84,400 tracts covered and ACS 2023 data representing the most current five-
   },
 ];
 
+const CATEGORY_STYLES: Record<string, { bg: string; color: string }> = {
+  Demographics: { bg: 'rgba(99,102,241,0.12)', color: '#4f46e5' },
+  Finance:      { bg: 'rgba(16,185,129,0.12)', color: '#059669' },
+  Market:       { bg: 'rgba(245,158,11,0.14)', color: '#b45309' },
+  Research:     { bg: 'rgba(139,92,246,0.12)', color: '#7c3aed' },
+};
+
 export default function BlogPage() {
   return (
-    <main style={{ paddingTop: 72 }}>
-      <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, background: 'rgba(250,250,247,0.92)', backdropFilter: 'blur(20px)', borderBottom: '1px solid var(--border)' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 72 }}>
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
-            <span style={{ fontSize: 25, fontWeight: 700, color: 'var(--text)' }}>ICONYCS</span>
+    <main style={{ paddingTop: 72, fontFamily: 'var(--font-sans, system-ui, sans-serif)' }}>
+      <style>{`
+        .blog-card {
+          background: #ffffff;
+          border: 1px solid #e8e4df;
+          border-radius: 14px;
+          overflow: hidden;
+          transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+          display: flex;
+          flex-direction: column;
+        }
+        .blog-card:hover {
+          border-color: #C4653A;
+          box-shadow: 0 4px 24px rgba(196,101,58,0.12);
+          transform: translateY(-2px);
+        }
+        .blog-card:hover .read-more {
+          color: #a3522d;
+        }
+        .read-more {
+          font-size: 13px;
+          font-weight: 600;
+          color: #C4653A;
+          text-decoration: none;
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
+          transition: color 0.2s;
+        }
+        .blog-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 24px;
+        }
+        @media (max-width: 720px) {
+          .blog-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+        .nav-link {
+          font-size: 13px;
+          color: #6b6660;
+          text-decoration: none;
+          font-weight: 500;
+          padding: 8px 14px;
+          border-radius: 8px;
+          transition: background 0.15s, color 0.15s;
+        }
+        .nav-link:hover {
+          background: rgba(196,101,58,0.08);
+          color: #C4653A;
+        }
+      `}</style>
+
+      {/* Nav */}
+      <nav style={{
+        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
+        background: 'rgba(250,249,246,0.94)', backdropFilter: 'blur(20px)',
+        borderBottom: '1px solid #e8e4df',
+      }}>
+        <div style={{
+          maxWidth: 1200, margin: '0 auto', padding: '0 32px',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 72,
+        }}>
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
+            <span style={{ fontSize: 20, fontWeight: 800, color: '#1a1714', letterSpacing: '-0.02em' }}>ICONYCS</span>
+            <span style={{ fontSize: 12, fontWeight: 500, color: '#9a8f86', letterSpacing: '0.02em', marginTop: 2 }}>Housing Intelligence</span>
           </Link>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             {['About', 'Analytics', 'MarketPlace', 'Partners', 'Blog'].map(item => (
-              <Link key={item} href={`/${item.toLowerCase()}`} style={{ fontSize: 13, color: 'var(--text-body)', textDecoration: 'none', fontWeight: 500, padding: '8px 16px', borderRadius: '8px', transition: 'all 0.2s' }}>{item}</Link>
+              <Link key={item} href={`/${item.toLowerCase()}`} className="nav-link">{item}</Link>
             ))}
-            <Link href="/dashboard" style={{ padding: '10px 22px', borderRadius: 8, fontSize: 13, fontWeight: 600, background: '#C4653A', color: '#fff', textDecoration: 'none', boxShadow: '0 1px 2px rgba(196,101,58,0.3)' }}>Launch Dashboard</Link>
+            <Link href="/dashboard" style={{
+              marginLeft: 8, padding: '9px 20px', borderRadius: 8, fontSize: 13, fontWeight: 600,
+              background: '#C4653A', color: '#fff', textDecoration: 'none',
+              boxShadow: '0 1px 3px rgba(196,101,58,0.35)',
+            }}>Launch Dashboard</Link>
           </div>
         </div>
       </nav>
 
-      <section style={{ padding: '100px 32px 60px', maxWidth: 1200, margin: '0 auto' }}>
-        <p style={{ fontSize: 13, fontWeight: 600, color: 'var(--accent)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 16 }}>News &amp; Insights</p>
-        <h1 style={{ fontSize: 48, fontWeight: 800, fontFamily: 'var(--font-display)', marginBottom: 24 }}>Housing Market Blog</h1>
-        <p style={{ fontSize: 18, color: 'var(--text-muted)', lineHeight: 1.8, maxWidth: 600 }}>
-          Data-driven analysis from the ICONYCS platform — 109.8M property records, Census ACS 2023, and 20 years of mortgage data.
-        </p>
-      </section>
-
-      <section style={{ padding: '0 32px 100px', maxWidth: 1200, margin: '0 auto' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
-          {POSTS.map(post => (
-            <article key={post.slug} style={{
-              borderRadius: 16, background: 'var(--bg-card)',
-              border: '1px solid var(--border)', overflow: 'hidden',
-            }}>
-              {/* Header */}
-              <div style={{ padding: '28px 32px 20px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
-                  <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--accent)', padding: '3px 10px', borderRadius: 20, background: 'rgba(0,212,126,0.12)' }}>{post.category}</span>
-                  <span style={{ fontSize: 13, color: 'var(--text-dim)' }}>{post.date}</span>
-                </div>
-                <h2 style={{ fontSize: 24, fontWeight: 700, marginBottom: 12, lineHeight: 1.3 }}>{post.title}</h2>
-                <p style={{ fontSize: 15, color: 'var(--text-muted)', lineHeight: 1.7, margin: 0, fontStyle: 'italic' }}>{post.excerpt}</p>
-              </div>
-
-              {/* Body */}
-              <div style={{ padding: '0 32px 24px' }}>
-                {post.body.split('\n\n').map((paragraph, i) => (
-                  <p key={i} style={{
-                    fontSize: 14,
-                    color: 'var(--text-body)',
-                    lineHeight: 1.8,
-                    margin: '0 0 16px',
-                  }}>
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-
-              {/* Footer CTA */}
-              <div style={{ padding: '16px 32px 24px', borderTop: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
-                <Link href={post.link} style={{
-                  fontSize: 14, color: '#C4653A', fontWeight: 600,
-                  textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 4,
-                }}>
-                  {post.linkLabel}
-                </Link>
-                <span style={{ fontSize: 12, color: 'var(--text-dim)' }}>
-                  Source: ICONYCS Snowflake — 109.8M property records
-                </span>
-              </div>
-            </article>
-          ))}
+      {/* Hero */}
+      <section style={{
+        background: 'linear-gradient(135deg, #fdf6ef 0%, #faf3ec 40%, #f5ede3 100%)',
+        borderBottom: '1px solid #ede6dc',
+        padding: '72px 32px 64px',
+      }}>
+        <div style={{ maxWidth: 760, margin: '0 auto', textAlign: 'center' }}>
+          <p style={{
+            fontSize: 11, fontWeight: 700, color: '#C4653A',
+            letterSpacing: '0.14em', textTransform: 'uppercase',
+            marginBottom: 18,
+          }}>News &amp; Insights</p>
+          <h1 style={{
+            fontSize: 44, fontWeight: 800, color: '#1a1714',
+            letterSpacing: '-0.03em', lineHeight: 1.15, marginBottom: 20,
+          }}>Housing Intelligence Blog</h1>
+          <p style={{
+            fontSize: 17, color: '#7a6f66', lineHeight: 1.7, maxWidth: 560, margin: '0 auto',
+          }}>
+            Data-driven analysis from 130M+ property records. Research, market updates, and demographic trends.
+          </p>
         </div>
       </section>
 
-      <footer style={{ padding: '32px', borderTop: '1px solid var(--border)', textAlign: 'center', fontSize: 12, color: 'var(--text-dim)' }}>
-        &copy; {new Date().getFullYear()} ICONYCS. All Rights Reserved.
+      {/* Cards Grid */}
+      <section style={{ padding: '56px 32px 96px', maxWidth: 1200, margin: '0 auto' }}>
+        <div className="blog-grid">
+          {POSTS.map(post => {
+            const catStyle = CATEGORY_STYLES[post.category] ?? CATEGORY_STYLES['Research'];
+            return (
+              <article key={post.slug} className="blog-card">
+                <div style={{ padding: '24px 26px 20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                  {/* Meta row */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
+                    <span style={{
+                      fontSize: 11, fontWeight: 700,
+                      color: catStyle.color, background: catStyle.bg,
+                      padding: '3px 10px', borderRadius: 20,
+                      letterSpacing: '0.04em',
+                    }}>{post.categoryLabel}</span>
+                    <span style={{ fontSize: 12, color: '#a89e95' }}>{post.date}</span>
+                  </div>
+
+                  {/* Headline */}
+                  <h2 style={{
+                    fontSize: 18, fontWeight: 700, color: '#1a1714',
+                    lineHeight: 1.35, marginBottom: 12, margin: '0 0 12px',
+                  }}>{post.title}</h2>
+
+                  {/* Teaser */}
+                  <p style={{
+                    fontSize: 14, color: '#7a6f66', lineHeight: 1.65,
+                    margin: '0 0 20px', flex: 1,
+                    display: '-webkit-box',
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: 'vertical',
+                    overflow: 'hidden',
+                  }}>{post.teaser}</p>
+
+                  {/* Read more */}
+                  <div style={{ marginTop: 'auto' }}>
+                    <Link href={post.link} className="read-more">
+                      Read more →
+                    </Link>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <footer style={{
+        padding: '28px 32px', borderTop: '1px solid #e8e4df',
+        textAlign: 'center', fontSize: 12, color: '#b0a89e',
+      }}>
+        &copy; {new Date().getFullYear()} ICONYCS Housing Intelligence. All Rights Reserved.
       </footer>
     </main>
   );
