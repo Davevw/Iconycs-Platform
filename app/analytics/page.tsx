@@ -132,7 +132,7 @@ export default function DashboardPage() {
               <div style={{ width: 6, height: 6, borderRadius: '50%', background: C.sage }} />
               <span style={{ fontSize: 11, fontWeight: 600, color: C.sage }}>Snowflake Live</span>
             </div>
-            <Link href="/" style={{ fontSize: 13, color: C.textMuted, textDecoration: 'none' }}><- Home</Link>
+            <Link href="/" style={{ fontSize: 13, color: C.textMuted, textDecoration: 'none' }}>Home</Link>
           </div>
         </div>
       </nav>

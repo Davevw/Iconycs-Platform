@@ -98,7 +98,7 @@ export default function TermsPage() {
             <span style={{ fontSize: 13, color: C.textMuted }}>Terms of Service</span>
             <div style={{ marginLeft: 'auto' }}>
               <Link href="/reports" style={{ fontSize: 12, color: C.terra, textDecoration: 'none', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 4 }}>
-                <- Back to Reports
+                Back to Reports
               </Link>
             </div>
           </div>

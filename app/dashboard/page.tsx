@@ -227,7 +227,7 @@ export default function UserDashboardPage() {
           <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 10 }}>
             <Link href="/reports" style={{ fontSize: 13, color: C.textMuted, textDecoration: 'none', padding: '5px 12px', borderRadius: 6 }}>Reports</Link>
             <Link href="/pricing" style={{ fontSize: 13, color: C.terra, textDecoration: 'none', padding: '5px 12px', borderRadius: 6, background: C.terraSoft, fontWeight: 600 }}>Pricing</Link>
-            <Link href="/" style={{ fontSize: 13, color: C.textMuted, textDecoration: 'none', padding: '5px 12px', borderRadius: 6 }}><- Home</Link>
+            <Link href="/" style={{ fontSize: 13, color: C.textMuted, textDecoration: 'none', padding: '5px 12px', borderRadius: 6 }}>Home</Link>
           </div>
         </div>
       </nav>

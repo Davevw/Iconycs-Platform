@@ -105,7 +105,7 @@ export default function PrivacyPage() {
             <span style={{ fontSize: 13, color: C.textMuted }}>Privacy Policy</span>
             <div style={{ marginLeft: 'auto' }}>
               <Link href="/reports" style={{ fontSize: 12, color: C.terra, textDecoration: 'none', fontWeight: 600 }}>
-                <- Back to Reports
+                Back to Reports
               </Link>
             </div>
           </div>
