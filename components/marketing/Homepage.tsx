@@ -234,7 +234,7 @@ function ChartDemo() {
       </div>
 
       <div style={{ padding: '14px 32px', borderTop: `1px solid ${C.borderLight}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: C.bgAccent }}>
-        <span style={{ fontSize: 11, color: C.textDim }}>Interactive sample from 130M+ property records</span>
+        <span style={{ fontSize: 11, color: C.textDim }}>Interactive sample from 109M+ property records</span>
         <Link href="/dashboard" style={{ fontSize: 12, color: C.terra, fontWeight: 600, textDecoration: 'none' }}>Open AI Query Lab →</Link>
       </div>
     </Card>
@@ -248,7 +248,7 @@ const PIPELINE = [
   { label: 'Data Sources', icon: '◉', color: C.chart[3], items: ['Snowflake DB', 'Census Bureau', 'Property Records', 'Infutor Demographics'] },
   { label: 'Property Elements', icon: '⌂', color: C.terra, items: ['Value & Financing', 'Location & Type', 'Beds / Bath / SqFt', 'Mortgage Data'] },
   { label: 'AI Dashboard', icon: '◈', color: C.sage, items: ['Valuation', 'Trends & Economics', 'Insurance & Risk', 'Match & Append'] },
-  { label: 'Owner-Occupied Homes', icon: '◎', color: C.gold, items: ['Ethnicity & Race', 'Income & Wealth', 'Education Level', 'Family & Network'] },
+  { label: 'Owner Profiles', icon: '◎', color: C.gold, items: ['Ethnicity & Race', 'Income & Wealth', 'Education Level', 'Family & Network'] },
   { label: 'Distribution', icon: '◆', color: C.chart[4], items: ['Reports & Dashboards', 'LinkedIn Publishing', 'News & Media', 'API Data Feeds'] },
 ];
 
@@ -382,7 +382,7 @@ export default function Homepage() {
               </h1>
 
               <p className="fu fu1" style={{ fontSize: 17, color: C.textBody, lineHeight: 1.85, marginBottom: 20, maxWidth: 480, fontWeight: 400 }}>
-                130 million property records. 73.6 million owner-occupied homes. AI-powered analytics by ethnicity, income, education, marital status, and more — from ZIP code to national.
+                109 million property records. 258 million owner profiles. AI-powered analytics by ethnicity, income, education, marital status, and more — from ZIP code to national.
               </p>
 
               <blockquote className="fu fu2" style={{
@@ -419,8 +419,8 @@ export default function Homepage() {
             background: C.bgCard, borderRadius: C.rl, border: `1px solid ${C.border}`,
             boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
           }}>
-            <Stat value="130M+" label="🏠 Property Records" color={C.terra} />
-            <Stat value="73.6M+" label="🔑 Owner-Occupied Homes" color={C.sage} />
+            <Stat value="109M+" label="🏠 Property Records" color={C.terra} />
+            <Stat value="258M+" label="🔑 Owner Profiles" color={C.sage} />
             <Stat value="3,143" label="📍 Markets Tracked" color={C.gold} />
             <Stat value="30+" label="🗺️ Years Experience" color={C.navyLight} />
           </div>
@@ -535,7 +535,7 @@ export default function Homepage() {
                 Like having an analyst at your fingertips <em style={{ color: C.terra }}>24/7</em>
               </h2>
               <p style={{ fontSize: 16, color: C.textBody, lineHeight: 1.85, marginBottom: 32 }}>
-                Ask questions in plain English. Claude Opus 4.6 generates SQL, queries 130M+ records on Snowflake, and returns business-ready visualizations — in seconds.
+                Ask questions in plain English. Claude Opus 4.6 generates SQL, queries 109M+ records on Snowflake, and returns business-ready visualizations — in seconds.
               </p>
               {[
                 { label: 'Natural Language Queries', desc: 'Ask anything about housing demographics — get instant, data-backed answers' },
