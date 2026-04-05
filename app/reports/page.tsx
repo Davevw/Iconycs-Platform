@@ -1695,7 +1695,7 @@ export default function ReportsPage() {
                 }}
                 style={{ padding: '12px 18px', background: `linear-gradient(135deg, ${C.navy} 0%, #2A3F6A 100%)`, color: '#fff', display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer', userSelect: 'none' }}
               >
-                <span style={{ fontSize: 16 }}>deg"</span>
+                <span style={{ fontSize: 16 }}>SHS</span>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.04em' }}>SOCIAL HOUSING SCORE</div>
                   <div style={{ fontSize: 11, opacity: 0.7, marginTop: 1 }}>Diversity index: ethnicity * income * LTV * owner-occupancy</div>
@@ -2203,7 +2203,7 @@ export default function ReportsPage() {
                       </div>
                       {/* Social Housing Score promo */}
                       <div style={{ padding: '14px 18px', background: `${C.navy}08`, border: `1px dashed ${C.navy}40`, borderRadius: 10, display: 'flex', alignItems: 'center', gap: 14 }}>
-                        <div style={{ fontSize: 28 }}>deg"</div>
+                        <div style={{ fontSize: 28 }}>SHS</div>
                         <div style={{ flex: 1 }}>
                           <div style={{ fontSize: 13, fontWeight: 700, color: C.navy }}>Social Housing Score</div>
                           <div style={{ fontSize: 11, color: C.textMuted, marginTop: 2 }}>Composite diversity index combining ethnicity, income, LTV, and owner-occupancy. Available in Enterprise tier.</div>
