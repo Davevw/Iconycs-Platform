@@ -24,7 +24,7 @@ export async function GET() {
       executeQueryCached(queryNational()),
       safeQuery(queryNationalBreakdown('ETHNICITY')),
       safeQuery(queryNationalBreakdown('PROPERTY_CATEGORY')),
-      safeQuery(queryNationalBreakdown('MTG1_LOAN_CATEGORY')),
+      safeQuery(`SELECT "PROP_MTGLOANCD" AS LABEL, SUM("Property Count") AS RECORD_COUNT FROM DASHBOARD_2 WHERE "PROP_MTGLOANCD" IS NOT NULL AND "PROP_MTGLOANCD" != 'No Data / No Loan' GROUP BY 1 ORDER BY 2 DESC LIMIT 8`),
     ]);
 
     if (!totalsResult.success) {
