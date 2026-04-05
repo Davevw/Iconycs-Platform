@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     siteName: 'ICONYCS',
     title: 'ICONYCS  -  Housing Intelligence & Homeowner Demographics',
     description: '109M+ property records. 73.6M+ homeowner profiles. Housing Intelligence for lenders, researchers, and policymakers.',
-    images: [{ url: '/og-image.png', width: 1536, height: 1024, alt: 'ICONYCS Housing Intelligence - 109M+ Property Records' }],
+    images: [{ url: 'https://vdgxbfumlysatthimpcb.supabase.co/storage/v1/object/public/public/og-image.png', width: 1536, height: 1024, alt: 'ICONYCS Housing Intelligence - 109M+ Property Records' }],
   },
   twitter: {
     card: 'summary_large_image',
