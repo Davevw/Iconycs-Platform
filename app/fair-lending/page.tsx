@@ -146,8 +146,8 @@ function trafficBg(light: TrafficLight): string {
 }
 
 function trafficDot(light: TrafficLight): string {
-  if (light === 'green')  return 'ðŸŸ¢';
-  if (light === 'yellow') return 'ðŸŸ¡';
+  if (light === 'green')  return '●';
+  if (light === 'yellow') return '●';
   return 'ðŸ”´';
 }
 
@@ -990,7 +990,7 @@ export default function FairLendingPage() {
                   </div>
                 )}
                 <div style={{ padding: '10px 20px 14px', fontSize: 11, color: C.textDim, lineHeight: 1.65 }}>
-                  Avg Loan Amount estimated from property value Ã— LTV proxy. Rate data has ~9.5% coverage in ICONYCS records.
+                  Avg Loan Amount estimated from property value x LTV proxy. Rate data has ~9.5% coverage in ICONYCS records.
                   LTV figures are approximated from FNMA tier distributions.
                 </div>
               </div>
@@ -1092,7 +1092,7 @@ export default function FairLendingPage() {
                         ? 'Coverage 3-10%  -  marginal for standalone analysis.'
                         : 'Coverage below 3%  -  HMDA supplement strongly recommended.'
                     }
-                    note={`${fmtPct(report.demoCoveragePct, 1)} of records have direct ethnic identification. Threshold: ðŸ”´ <3% | ðŸŸ¡ 3-10% | ðŸŸ¢ >10%. Limited demographic data  -  HMDA supplement recommended for full fair lending analysis.`}
+                    note={`${fmtPct(report.demoCoveragePct, 1)} of records have direct ethnic identification. Threshold: ðŸ”´ <3% | Yellow 3-10% | Green >10%. Limited demographic data  -  HMDA supplement recommended for full fair lending analysis.`}
                   />
 
                   <RiskCard
@@ -1104,10 +1104,10 @@ export default function FairLendingPage() {
                       loanConcentrationLight(report.fhaVaPct) === 'green'
                         ? 'FHA+VA concentration is within normal range relative to national average.'
                         : loanConcentrationLight(report.fhaVaPct) === 'yellow'
-                        ? 'FHA+VA concentration is 1.5-2Ã— national average  -  warrants further review.'
-                        : 'FHA+VA concentration exceeds 2Ã— national average  -  potential redlining indicator.'
+                        ? 'FHA+VA concentration is 1.5-2x national average  -  warrants further review.'
+                        : 'FHA+VA concentration exceeds 2x national average  -  potential redlining indicator.'
                     }
-                    note={`Geography FHA+VA: ${fmtPct(report.fhaVaPct, 1)} vs. National Average: ${fmtPct(NATIONAL_AVG.fhaVaPct, 1)}. Ratio: ${(report.fhaVaPct / NATIONAL_AVG.fhaVaPct).toFixed(2)}Ã—. Higher FHA/VA concentration in minority-populated areas is a recognized HMDA fair lending risk indicator. Threshold: ðŸ”´ >2Ã— | ðŸŸ¡ 1.5-2Ã— | ðŸŸ¢ <1.5Ã—`}
+                    note={`Geography FHA+VA: ${fmtPct(report.fhaVaPct, 1)} vs. National Average: ${fmtPct(NATIONAL_AVG.fhaVaPct, 1)}. Ratio: ${(report.fhaVaPct / NATIONAL_AVG.fhaVaPct).toFixed(2)}x. Higher FHA/VA concentration in minority-populated areas is a recognized HMDA fair lending risk indicator. Threshold: ðŸ”´ >2x | Yellow 1.5-2x | Green <1.5x`}
                   />
 
                   <RiskCard
@@ -1122,7 +1122,7 @@ export default function FairLendingPage() {
                         ? 'High-LTV concentration (40-60%) merits monitoring.'
                         : 'High-LTV concentration exceeds 60%  -  elevated credit risk concentration.'
                     }
-                    note={`${fmtPct(report.highLtvSharePct, 1)} of loans are in high-LTV tiers (>80% LTV). Concentrated high-LTV lending in protected-class geographies is a key CFPB and OCC supervisory focus. Threshold: ðŸ”´ >60% | ðŸŸ¡ 40-60% | ðŸŸ¢ <40%`}
+                    note={`${fmtPct(report.highLtvSharePct, 1)} of loans are in high-LTV tiers (>80% LTV). Concentrated high-LTV lending in protected-class geographies is a key CFPB and OCC supervisory focus. Threshold: ðŸ”´ >60% | Yellow 40-60% | Green <40%`}
                   />
 
                   {/* Indicator 4: Demographic Coverage Gap - Census vs Direct Identified */}
@@ -1146,7 +1146,7 @@ export default function FairLendingPage() {
                             ? 'Coverage gap 10-20%  -  moderate unidentified population; HMDA supplement recommended.'
                             : 'Coverage gap >20%  -  large unidentified population; HMDA data strongly required for full fair lending analysis.'
                         }
-                        note={`Census area minority population:  | ICONYCS directly identified minority:  | Gap: . A large gap indicates homeowners whose race/ethnicity is unidentified in direct records. Threshold: ðŸ”´ Gap >20% | ðŸŸ¡ Gap 10-20% | ðŸŸ¢ Gap <10%.`}
+                        note={`Census area minority population:  | ICONYCS directly identified minority:  | Gap: . A large gap indicates homeowners whose race/ethnicity is unidentified in direct records. Threshold: ðŸ”´ Gap >20% | Caution Gap 10-20% | OK Gap <10%.`}
                       />
                     );
                   })() : (
@@ -1206,8 +1206,8 @@ export default function FairLendingPage() {
                     <div>
                       <h4 style={{ fontSize: 12, fontWeight: 700, color: C.navy, textTransform: 'uppercase', letterSpacing: '0.06em', margin: '0 0 10px' }}>Confidence Indicators</h4>
                       <div style={{ fontSize: 12, color: C.textBody, lineHeight: 1.7 }}>
-                        <div style={{ marginBottom: 4 }}>ðŸŸ¢ <strong>Direct Identified</strong>  -  individually sourced from voter/consumer records</div>
-                        <div style={{ marginBottom: 4 }}>ðŸŸ¡ <strong>Household Modeled</strong>  -  inferred from household composition</div>
+                        <div style={{ marginBottom: 4 }}>OK <strong>Direct Identified</strong>  -  individually sourced from voter/consumer records</div>
+                        <div style={{ marginBottom: 4 }}>Caution <strong>Household Modeled</strong>  -  inferred from household composition</div>
                         <div>ðŸ”´ <strong>Area Estimated</strong>  -  geographic proxy (census tract-level)</div>
                       </div>
                     </div>
