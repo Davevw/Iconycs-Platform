@@ -11,10 +11,6 @@ const PARTNERS = [
   { name: 'CoreLogic', url: 'https://www.corelogic.com/', desc: 'Property insights, analytics, and data-enabled solutions' },
   { name: 'Veros Real Estate Solutions', url: 'https://www.veros.com/', desc: 'AVM technology and real estate valuation' },
   { name: 'Black Knight', url: 'https://www.blackknightinc.com/', desc: 'Mortgage and real estate technology, data, and analytics' },
-  { name: 'AVMetrics', url: 'https://www.avmetrics.net/', desc: 'Independent AVM testing and quality assurance' },
-  { name: 'Infutor Demographics', url: 'https://infutor.com/', desc: 'Consumer identity and demographic data solutions' },
-  { name: 'NTERSOL Technology', url: 'https://www.ntersol.com/', desc: 'Custom software development and technology solutions' },
-  { name: 'VonExpy SofTech', url: 'http://vonexpy.com/', desc: 'Appraisal management systems' },
 ];
 
 export default function PartnersPage() {
