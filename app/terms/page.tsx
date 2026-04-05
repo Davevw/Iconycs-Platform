@@ -197,7 +197,7 @@ export default function TermsPage() {
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 16, marginBottom: 24 }}>
                 {[
                   { name: 'Free Tier', price: 'No cost', badge: 'Explore', bg: C.bgWarm, color: C.textMuted, desc: 'National and state-level summary data. Limited to 3 report views per day.' },
-                  { name: 'Analyst Tier', price: '$49/month', badge: 'Analyst', bg: '#FFF0E9', color: C.terra, desc: 'Full geographic drill-down (national -> state -> county -> city -> ZIP). All demographic breakdowns. PDF export. Cascade report builder.' },
+                  { name: 'Analyst Tier', price: '$49/month', badge: 'Analyst', bg: '#FFF0E9', color: C.terra, desc: 'Full geographic drill-down (national  to  state  to  county  to  city  to  ZIP). All demographic breakdowns. PDF export. Cascade report builder.' },
                   { name: 'Professional Tier', price: '$199/month', badge: 'Pro', bg: '#EEF2F8', color: C.navy, desc: 'All Analyst features plus Social Housing Score, matrix reporting, time-series analysis, API access, custom data feeds.' },
                   { name: 'Enterprise Tier', price: '$999/month', badge: 'Enterprise', bg: '#1B2A4A', color: '#fff', desc: 'All Professional features plus Snowflake direct access, team seats (up to 5), custom views, priority support.' },
                 ].map((tier, i) => (

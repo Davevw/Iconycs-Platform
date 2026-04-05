@@ -265,7 +265,7 @@ export default function ApiDocsPage() {
               [house] 109M+ Properties
             </div>
             <div style={{ background: 'rgba(255,255,255,0.1)', borderRadius: 8, padding: '10px 18px', fontSize: 13 }}>
-              [pin] National -> ZIP Level
+              [pin] National  to  ZIP Level
             </div>
             <div style={{ background: 'rgba(255,255,255,0.1)', borderRadius: 8, padding: '10px 18px', fontSize: 13 }}>
                5-Min Cache
@@ -328,7 +328,7 @@ export default function ApiDocsPage() {
                       background: C.terra, color: '#fff', borderRadius: 8,
                       textDecoration: 'none', fontWeight: 700, fontSize: 14,
                     }}>
-                    Request API Access ->
+                    Request API Access  to 
                   </a>
                 </div>
               </div>

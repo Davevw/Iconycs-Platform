@@ -288,7 +288,7 @@ export default function AgentsPage() {
                     fontWeight: 700, fontSize: 14, textDecoration: 'none',
                     letterSpacing: '0.01em',
                   }}>
-                    {agent.ctaLabel} ->
+                    {agent.ctaLabel}  to 
                   </a>
                 </div>
               </div>
@@ -356,7 +356,7 @@ export default function AgentsPage() {
               background: C.terra, color: '#fff', fontWeight: 700, fontSize: 15,
               textDecoration: 'none', letterSpacing: '0.01em',
             }}>
-            Schedule Consultation ->
+            Schedule Consultation  to 
           </a>
 
           <div style={{ marginTop: 48, display: 'flex', gap: 32, justifyContent: 'center', flexWrap: 'wrap' }}>

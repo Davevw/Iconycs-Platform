@@ -50,7 +50,7 @@ const TIERS = [
     description: 'Single state, full drill-down. CA, FL, TX, NY: $2,500/mo. All other states: $1,500/mo.',
     features: [
       'One state  -  full drill-down',
-      'State -> County -> City -> ZIP',
+      'State  to  County  to  City  to  ZIP',
       'All demographic breakdowns',
       'LTV tier analysis (FNMA tiers)',
       'Mortgage intelligence panel',
@@ -267,7 +267,7 @@ function EnterpriseGeoModal({ onClose }: { onClose: () => void }) {
               display: 'inline-block',
             }}
           >
-            Request a Demo ->
+            Request a Demo  to 
           </a>
         </div>
       </div>
@@ -464,7 +464,7 @@ function WaitlistModal({
                     opacity: loading ? 0.7 : 1,
                   }}
                 >
-                  {loading ? 'Submitting...' : "I'm In ->"}
+                  {loading ? 'Submitting...' : "I'm In  to "}
                 </button>
               </div>
             </form>
@@ -612,7 +612,7 @@ function TierCard({
               boxSizing: 'border-box',
             }}
           >
-            {tier.cta} ->
+            {tier.cta}  to 
           </Link>
         )}
       </div>
@@ -992,7 +992,7 @@ export default function PricingPage() {
                   color: '#fff', cursor: 'pointer', whiteSpace: 'nowrap',
                 }}
               >
-                Get Early Access ->
+                Get Early Access  to 
               </button>
             </div>
           </div>
@@ -1080,7 +1080,7 @@ export default function PricingPage() {
                   textDecoration: 'none', display: 'inline-block',
                 }}
               >
-                Start Free ->
+                Start Free  to 
               </Link>
               <button
                 onClick={() => setWaitlistTier(TIERS[2])}

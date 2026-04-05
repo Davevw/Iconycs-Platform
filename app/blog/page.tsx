@@ -255,7 +255,7 @@ export default function BlogPage() {
                   {/* Read more */}
                   <div style={{ marginTop: 'auto' }}>
                     <Link href={post.link} className="read-more">
-                      Read more ->
+                      Read more  to 
                     </Link>
                   </div>
                 </div>

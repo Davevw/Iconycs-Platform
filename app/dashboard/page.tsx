@@ -242,7 +242,7 @@ export default function UserDashboardPage() {
         <strong>You&apos;re viewing a demo dashboard.</strong>
         {' '}Sign in or create an account to see your real data.{' '}
         <Link href="/pricing" style={{ color: '#F9C784', fontWeight: 700, textDecoration: 'underline' }}>
-          Get started ->
+          Get started  to 
         </Link>
       </div>
 
@@ -456,7 +456,7 @@ export default function UserDashboardPage() {
                   >
                     <span style={{ fontSize: 18 }}>{link.icon}</span>
                     <span style={{ fontSize: 14, color: C.textBody, fontWeight: 500 }}>{link.label}</span>
-                    <span style={{ marginLeft: 'auto', fontSize: 14, color: C.textDim }}>-></span>
+                    <span style={{ marginLeft: 'auto', fontSize: 14, color: C.textDim }}> to </span>
                   </Link>
                 ))}
               </div>
@@ -480,7 +480,7 @@ export default function UserDashboardPage() {
                   borderRadius: 8, textDecoration: 'none', fontSize: 13,
                   fontWeight: 700, background: C.terra, color: '#fff',
                 }}>
-                  View Plans ->
+                  View Plans  to 
                 </Link>
               </div>
             )}
