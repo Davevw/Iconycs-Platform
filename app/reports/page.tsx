@@ -1885,7 +1885,7 @@ export default function ReportsPage() {
                                     <span style={{ fontSize: 11, color: C.sage, fontFamily: C.fontMono, fontWeight: 600 }}>
                                       {county.avg > 0 ? '$' + (county.avg / 1000).toFixed(0) + 'K avg' : ''}
                                     </span>
-                                    <span style={{ fontSize: 11, color: C.terra, fontWeight: 600 }}>Cities "</span>
+                                    <span style={{ fontSize: 11, color: C.terra, fontWeight: 600 }}>Cities</span>
                                   </div>
                                 </div>
                               </div>
@@ -2002,7 +2002,7 @@ export default function ReportsPage() {
                       <span style={{ fontSize: 13, fontWeight: 700, color: C.text }}>{drillCity} ZIP Code Analysis</span>
                       <button onClick={() => setDrillCity(null)}
                         style={{ background: C.bgWarm, border: `1px solid ${C.border}`, borderRadius: 20, padding: '4px 14px', fontSize: 12, color: C.terra, cursor: 'pointer', fontFamily: C.font, fontWeight: 600 }}>
-                        " Back to Cities
+                        Back to Cities
                       </button>
                     </div>
                     {zipLoad.loading ? (
