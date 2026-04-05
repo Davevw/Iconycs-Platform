@@ -527,17 +527,17 @@ function UpgradeModal({
   minTier: string;
   onClose: () => void;
 }) {
-  const tiers: Record<string, { bg: string; color: string; name: string; price: string }> = {
-    pro:          { bg: '#C4653A', color: '#fff',    name: 'Analyst',      price: '$49/mo' },
-    enterprise:   { bg: '#1B2A4A', color: '#fff',    name: 'Professional', price: '$199/mo' },
-    data_partner: { bg: '#B8860B', color: '#1C1917', name: 'Enterprise',   price: '$999/mo' },
+  const tiers: Record<string, { bg: string; color: string; name: string }> = {
+    pro:          { bg: '#C4653A', color: '#fff',    name: 'Analyst' },
+    enterprise:   { bg: '#1B2A4A', color: '#fff',    name: 'Professional' },
+    data_partner: { bg: '#B8860B', color: '#1C1917', name: 'Enterprise' },
   };
   const tier = tiers[minTier] ?? tiers.pro;
 
   const allTiers = [
-    { key: 'pro',          name: 'Analyst',      price: '$49/mo',  features: ['State/County/City/ZIP drill-down', 'All demographics breakdowns', 'PDF export', 'Cascade Builder', 'Unlimited views'] },
-    { key: 'enterprise',   name: 'Professional', price: '$199/mo', features: ['Everything in Analyst', 'Social Housing Score', 'Matrix Builder', 'API access', 'Custom data feeds'] },
-    { key: 'data_partner', name: 'Enterprise',   price: '$999/mo', features: ['Everything in Professional', 'Snowflake direct connect', 'Team seats (5)', 'Bulk export', 'Priority support'] },
+    { key: 'pro',          name: 'Analyst',      features: ['State/County/City/ZIP drill-down', 'All demographics breakdowns', 'PDF export', 'Cascade Builder', 'Unlimited views'] },
+    { key: 'enterprise',   name: 'Professional', features: ['Everything in Analyst', 'Social Housing Score', 'Matrix Builder', 'API access', 'Custom data feeds'] },
+    { key: 'data_partner', name: 'Enterprise',   features: ['Everything in Professional', 'Snowflake direct connect', 'Team seats (5)', 'Bulk export', 'Priority support'] },
   ];
 
   return (
@@ -562,7 +562,6 @@ function UpgradeModal({
                 )}
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center', padding: '12px 16px', background: isRecommended ? tierStyle.bg : '#FAFAF7' }}>
                   <div style={{ fontSize: 14, fontWeight: 700, color: isRecommended ? tierStyle.color : '#1C1917' }}>{t.name}</div>
-                  <div style={{ fontSize: 18, fontWeight: 300, color: isRecommended ? tierStyle.color : tierStyle.bg, fontFamily: "'Source Serif 4', Georgia, serif" }}>{t.price}</div>
                 </div>
                 <div style={{ padding: '10px 16px', background: '#fff' }}>
                   {t.features.map((f, fi) => (
@@ -1546,7 +1545,7 @@ export default function ReportsPage() {
                   <button
                     onClick={() => setUpgradeModal({ feature: 'Pro Analyst - Full Platform', minTier: 'pro' })}
                     style={{ padding: '8px 18px', background: '#fff', color: C.terra, border: 'none', borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: 'pointer', fontFamily: C.font, whiteSpace: 'nowrap' }}>
-                    Pro - $1,500/mo
+                    Upgrade to Pro
                   </button>
                   <button
                     onClick={() => setUpgradeModal({ feature: 'Enterprise - Full Platform', minTier: 'enterprise' })}

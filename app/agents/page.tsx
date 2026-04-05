@@ -24,8 +24,6 @@ const AGENTS = [
   {
     icon: '⚖️',
     name: '⚖️ Fair Lending Compliance Agent',
-    price: '$5,000',
-    period: '/month',
     description:
       'Continuously monitors your lending portfolio against ICONYCS demographic data. Auto-generates monthly CFPB/OCC-ready fair lending reports. Flags geographic disparities. Drafts regulatory responses.',
     useCases: [
@@ -45,8 +43,6 @@ const AGENTS = [
   {
     icon: '📡',
     name: '📡 Market Intelligence Agent',
-    price: '$3,000',
-    period: '/month',
     description:
       'Watches your target markets 24/7. Alerts when demographic shifts exceed thresholds. Auto-generates weekly market briefings. Tracks competitor lending patterns.',
     useCases: [
@@ -66,8 +62,6 @@ const AGENTS = [
   {
     icon: '🔍',
     name: '🔍 Acquisition Scout Agent',
-    price: '$2,000',
-    period: '/month',
     description:
       'Monitors property transfers in your target markets. Scores acquisition opportunities by demographic fit and LTV profile. Auto-generates acquisition memos with ICONYCS data.',
     useCases: [
@@ -253,11 +247,6 @@ export default function AgentsPage() {
                     {agent.name}
                   </h3>
 
-                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 2, marginBottom: 16 }}>
-                    <span style={{ fontSize: 28, fontWeight: 800, color: C.terra, fontFamily: C.fontMono }}>{agent.price}</span>
-                    <span style={{ fontSize: 13, color: C.textMuted }}>{agent.period}</span>
-                  </div>
-
                   <p style={{ fontSize: 14, color: C.textBody, lineHeight: 1.65, margin: '0 0 20px' }}>
                     {agent.description}
                   </p>
@@ -349,7 +338,7 @@ export default function AgentsPage() {
             Need a bespoke AI agent for your specific workflow? Our team builds custom agents on the ICONYCS data platform.
           </p>
           <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)', marginBottom: 36, fontFamily: C.fontMono }}>
-            Typical engagement: $25,000-$75,000 setup + $2,000-$5,000/month hosting
+            Bespoke pricing available upon consultation.
           </p>
           <a href="mailto:info@iconycs.com?subject=Custom Agent Consultation"
             style={{

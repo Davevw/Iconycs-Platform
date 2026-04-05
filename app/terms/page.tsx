@@ -197,22 +197,21 @@ export default function TermsPage() {
             <Section number="4" title="Subscription Tiers & Payment">
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 16, marginBottom: 24 }}>
                 {[
-                  { name: 'Free Tier', price: 'No cost', badge: 'Explore', bg: C.bgWarm, color: C.textMuted, desc: 'National and state-level summary data. Limited to 3 report views per day.' },
-                  { name: 'Analyst Tier', price: '$49/month', badge: 'Analyst', bg: '#FFF0E9', color: C.terra, desc: 'Full geographic drill-down (national, state, county, city, ZIP). All demographic breakdowns. PDF export. Cascade report builder.' },
-                  { name: 'Professional Tier', price: '$199/month', badge: 'Pro', bg: '#EEF2F8', color: C.navy, desc: 'All Analyst features plus Social Housing Score, matrix reporting, time-series analysis, API access, custom data feeds.' },
-                  { name: 'Enterprise Tier', price: '$999/month', badge: 'Enterprise', bg: '#1B2A4A', color: '#fff', desc: 'All Professional features plus Snowflake direct access, team seats (up to 5), custom views, priority support.' },
+                  { name: 'Free Tier', badge: 'Explore', bg: C.bgWarm, color: C.textMuted, desc: 'National and state-level summary data. Limited to 3 report views per day.' },
+                  { name: 'Analyst Tier', badge: 'Analyst', bg: '#FFF0E9', color: C.terra, desc: 'Full geographic drill-down (national, state, county, city, ZIP). All demographic breakdowns. PDF export. Cascade report builder.' },
+                  { name: 'Professional Tier', badge: 'Pro', bg: '#EEF2F8', color: C.navy, desc: 'All Analyst features plus Social Housing Score, matrix reporting, time-series analysis, API access, custom data feeds.' },
+                  { name: 'Enterprise Tier', badge: 'Enterprise', bg: '#1B2A4A', color: '#fff', desc: 'All Professional features plus Snowflake direct access, team seats (up to 5), custom views, priority support.' },
                 ].map((tier, i) => (
                   <div key={i} style={{ background: tier.bg, borderRadius: 10, padding: '16px', border: `1px solid ${C.border}` }}>
                     <div style={{ fontSize: 11, fontWeight: 700, color: tier.color, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: 4 }}>{tier.badge}</div>
                     <div style={{ fontSize: 15, fontWeight: 700, color: i === 3 ? '#fff' : C.text, marginBottom: 4 }}>{tier.name}</div>
-                    <div style={{ fontSize: 16, fontWeight: 300, color: tier.color, fontFamily: C.fontSerif, marginBottom: 10 }}>{tier.price}</div>
                     <div style={{ fontSize: 12, color: i === 3 ? 'rgba(255,255,255,0.75)' : C.textMuted, lineHeight: 1.7 }}>{tier.desc}</div>
                   </div>
                 ))}
               </div>
 
-              <SubSection title="4.5 Pay-Per-Report  -  $9.99/report">
-                Single report download at any tier level. No subscription required.
+              <SubSection title="4.5 Pay-Per-Report">
+                Single report download at any tier level. No subscription required. See pricing page for current rates.
               </SubSection>
 
               <SubSection title="4.6 Payment Terms">

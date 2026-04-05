@@ -26,7 +26,6 @@ const TIERS = [
   {
     id: 'free',
     label: 'Free',
-    price: '$0/mo',
     description: 'National & state-level data, 3 views/day',
     color: C.textMuted,
     border: C.border,
@@ -35,7 +34,6 @@ const TIERS = [
   {
     id: 'analyst',
     label: 'Analyst',
-    price: '$98/mo',
     description: 'Full drill-down for one state',
     color: C.terra,
     border: C.terra,
@@ -44,7 +42,6 @@ const TIERS = [
   {
     id: 'professional',
     label: 'Professional',
-    price: '$249/mo',
     description: 'Multi-state + Demographics + API access',
     color: C.navy,
     border: C.navy,
@@ -350,9 +347,6 @@ function SignupForm() {
                 >
                   <div style={{ fontSize: 13, fontWeight: 700, color: isSelected ? tier.color : C.text }}>
                     {tier.label}
-                  </div>
-                  <div style={{ fontSize: 11, fontWeight: 600, color: isSelected ? tier.color : C.textMuted }}>
-                    {tier.price}
                   </div>
                   <div style={{ fontSize: 10, color: C.textDim, marginTop: 2, lineHeight: 1.4 }}>
                     {tier.description}

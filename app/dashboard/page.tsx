@@ -43,7 +43,6 @@ const TIER_CONFIG = {
     label: 'FREE',
     color: C.textMuted,
     bg: C.bgWarm,
-    price: '$0',
     planName: 'Free Plan',
     reportViews: { used: 3, limit: 10 },
     apiCalls: { used: 0, limit: 0 },
@@ -53,7 +52,6 @@ const TIER_CONFIG = {
     label: 'ANALYST',
     color: C.sage,
     bg: C.sageSoft,
-    price: '$49/mo',
     planName: 'Analyst Plan',
     reportViews: { used: 18, limit: 100 },
     apiCalls: { used: 0, limit: 0 },
@@ -63,7 +61,6 @@ const TIER_CONFIG = {
     label: 'PROFESSIONAL',
     color: C.terra,
     bg: C.terraSoft,
-    price: '$149/mo',
     planName: 'Professional Plan',
     reportViews: { used: 42, limit: 500 },
     apiCalls: { used: 128, limit: 1000 },
@@ -297,10 +294,7 @@ export default function UserDashboardPage() {
                   <div style={{ fontSize: 18, fontWeight: 700, color: C.text }}>{cfg.planName}</div>
                 </div>
                 <div style={{ marginLeft: 'auto', textAlign: 'right' }}>
-                  <div style={{ fontSize: 24, fontWeight: 800, color: C.navy, fontFamily: C.fontMono }}>{cfg.price}</div>
-                  {tier !== 'free' && tier !== 'enterprise' && (
-                    <div style={{ fontSize: 12, color: C.textMuted }}>billed monthly</div>
-                  )}
+                  <Link href="/pricing" style={{ fontSize: 13, color: C.terra, fontWeight: 600, textDecoration: 'none' }}>View Plans</Link>
                 </div>
               </div>
 
@@ -473,7 +467,7 @@ export default function UserDashboardPage() {
                   Unlock the Full Platform
                 </div>
                 <div style={{ fontSize: 13, color: '#A8B5CC', marginBottom: 16, lineHeight: 1.6 }}>
-                  Get county drill-down, fair lending analysis, API access and more starting at $49/mo.
+                  Get county drill-down, fair lending analysis, API access and more. See our pricing page for details.
                 </div>
                 <Link href="/pricing" style={{
                   display: 'block', textAlign: 'center', padding: '10px 16px',

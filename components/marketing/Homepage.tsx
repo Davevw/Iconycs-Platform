@@ -260,19 +260,16 @@ const TIERS = [
     tier: 'Tier I', title: 'Financial Services', color: C.terra, status: 'Primary',
     clients: ['Banks & Mortgage Lenders', 'Credit Unions', 'National Real Estate Firms', 'Loan Servicers', 'Insurance & Risk Advisors', 'Pension Funds', 'Equity Investors'],
     desc: 'Portfolio analysis by owner demographics. Fair lending compliance. Socially responsible marketing strategies.',
-    price: '$12K – $30K /year',
   },
   {
     tier: 'Tier II', title: 'Government & Academic', color: C.sage, status: 'Growing',
     clients: ['Federal Government (VA, HUD)', 'State Housing Agencies', 'Universities & Researchers', 'News Media & Reporters', 'Regulatory Agencies', 'Housing Non-profits'],
     desc: 'Market monitoring for policy and compliance. Research datasets. High-impact media analytics.',
-    price: '$2.5K – $10K per engagement',
   },
   {
     tier: 'Tier III', title: 'Investment Advisory', color: C.gold, status: 'Expanding',
     clients: ['Home Builders & Developers', 'Home Investors', 'RE Investment Groups', 'Development Advisors', 'Strategic Marketers'],
     desc: 'Market composition for targeted investment. Homeowner profile data feeds. Area demographic intelligence.',
-    price: '$10K+ data purchases',
   },
 ];
 
@@ -516,8 +513,7 @@ export default function Homepage() {
                   ))}
                 </div>
                 <div style={{ padding: '14px 28px', background: `${t.color}06`, borderTop: `1px solid ${C.borderLight}` }}>
-                  <span style={{ fontSize: 11, color: C.textDim }}>Typical: </span>
-                  <span style={{ fontSize: 13, fontWeight: 600, color: t.color }}>{t.price}</span>
+                  <Link href="/pricing" style={{ fontSize: 12, color: t.color, fontWeight: 600, textDecoration: 'none' }}>View Pricing →</Link>
                 </div>
               </Card>
             ))}
