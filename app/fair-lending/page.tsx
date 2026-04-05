@@ -600,7 +600,7 @@ export default function FairLendingPage() {
               fontSize: 32, fontWeight: 700, color: C.navy,
               fontFamily: C.fontSerif, margin: '0 0 8px',
             }}>
-              Fair Lending Compliance Report
+              ⚖️ Fair Lending Compliance Report
             </h1>
             <p style={{ fontSize: 14, color: C.textMuted, margin: 0, lineHeight: 1.6 }}>
               Professional-grade fair lending analysis for banks, mortgage lenders, and regulatory compliance.

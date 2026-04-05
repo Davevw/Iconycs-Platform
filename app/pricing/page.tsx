@@ -43,7 +43,7 @@ const TIERS = [
   },
   {
     id: 'analyst',
-    name: 'ANALYST',
+    name: '📊 ANALYST',
     subtitle: 'Single State',
     price: '$1,500',
     period: '/month',
@@ -66,7 +66,7 @@ const TIERS = [
   },
   {
     id: 'professional',
-    name: 'PROFESSIONAL',
+    name: '🚀 PROFESSIONAL',
     subtitle: '5-25 States',
     price: '$10,000',
     period: '/month',
@@ -87,7 +87,7 @@ const TIERS = [
   },
   {
     id: 'enterprise',
-    name: 'ENTERPRISE',
+    name: '🏛️ ENTERPRISE',
     subtitle: 'Enterprise Solutions',
     price: 'Custom',
     period: 'pricing',
@@ -764,7 +764,7 @@ export default function PricingPage() {
 
   const payPerReportTier = {
     id: 'pay_per_report',
-    name: 'PAY-PER-REPORT',
+    name: '📄 PAY-PER-REPORT',
     price: '$500',
   };
 

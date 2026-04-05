@@ -419,10 +419,10 @@ export default function Homepage() {
             background: C.bgCard, borderRadius: C.rl, border: `1px solid ${C.border}`,
             boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
           }}>
-            <Stat value="130M+" label="Property Records" color={C.terra} />
-            <Stat value="73.6M+" label="Owner-Occupied Homes" color={C.sage} />
-            <Stat value="3,143" label="Markets Tracked" color={C.gold} />
-            <Stat value="30+" label="Years Experience" color={C.navyLight} />
+            <Stat value="130M+" label="🏠 Property Records" color={C.terra} />
+            <Stat value="73.6M+" label="🔑 Owner-Occupied Homes" color={C.sage} />
+            <Stat value="3,143" label="📍 Markets Tracked" color={C.gold} />
+            <Stat value="30+" label="🗺️ Years Experience" color={C.navyLight} />
           </div>
         </div>
       </section>

@@ -1436,22 +1436,22 @@ export default function ReportsPage() {
             <div className="stat-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, marginBottom: 16 }}>
               {[
                 {
-                  label: 'Total Properties',
+                  label: '🏠 Property Overview',
                   value: overallLoading ? null : totalProps >= 1e9 ? (totalProps / 1e9).toFixed(1) + 'B' : totalProps >= 1e6 ? (totalProps / 1e6).toFixed(1) + 'M' : totalProps.toLocaleString(),
                   color: C.terra,
                 },
                 {
-                  label: 'Est. Homeowners',
+                  label: '🔑 Ownership',
                   value: overallLoading ? null : totalProps > 0 ? ((totalProps * 0.506) / 1e6).toFixed(1) + 'M' : '""',
                   color: C.sage,
                 },
                 {
-                  label: 'Avg Property Value',
+                  label: '⚖️ Fair Lending',
                   value: overallLoading ? null : avgValue > 0 ? '$' + avgValue.toLocaleString() : '""',
                   color: C.gold,
                 },
                 {
-                  label: 'States in Analysis',
+                  label: '👥 Demographics',
                   value: isAll ? '51' : String(selected.length),
                   color: C.navy,
                 },
