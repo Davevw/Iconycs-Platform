@@ -145,10 +145,9 @@ function trafficBg(light: TrafficLight): string {
   return light === 'green' ? '#F0FDF4' : light === 'yellow' ? '#FFFBEB' : '#FEF2F2';
 }
 
-function trafficDot(light: TrafficLight): string {
-  if (light === 'green')  return '●';
-  if (light === 'yellow') return '●';
-  return 'ðŸ”´';
+function trafficDot(light: TrafficLight): React.ReactNode {
+  const bg = light === 'green' ? '#22c55e' : light === 'yellow' ? '#eab308' : '#ef4444';
+  return <div style={{ width: 16, height: 16, borderRadius: '50%', background: bg, display: 'inline-block', verticalAlign: 'middle', flexShrink: 0 }} />;
 }
 
 // --- Risk indicator calculators ----------------------------------------------
@@ -256,7 +255,7 @@ function LtvBarChart({ rows }: { rows: { tier: string; count: number; pct: numbe
           <div key={i}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
               <span style={{ fontSize: 12, color: isHigh ? '#DC2626' : C.textBody, fontWeight: isHigh ? 700 : 400 }}>
-                {r.tier} {isHigh && <span style={{ fontSize: 10, color: '#DC2626' }}>âš  High LTV</span>}
+                {r.tier} {isHigh && <span style={{ fontSize: 10, color: '#DC2626' }}>⚠ High LTV</span>}
               </span>
               <span style={{ fontSize: 12, fontFamily: C.fontMono, fontWeight: 700, color: barColor }}>
                 {fmtPct(r.pct)} ({fmt(r.count)})
@@ -295,7 +294,7 @@ function RiskCard({
         padding: '10px 16px', background: trafficColor(light),
         display: 'flex', alignItems: 'center', gap: 10,
       }}>
-        <span style={{ fontSize: 20, lineHeight: 1 }}>{trafficDot(light)}</span>
+        <span style={{ lineHeight: 1, display: 'flex', alignItems: 'center' }}>{trafficDot(light)}</span>
         <div style={{ flex: 1, color: '#fff' }}>
           <div style={{ fontSize: 12, fontWeight: 700, opacity: 0.7 }}>INDICATOR {num}</div>
           <div style={{ fontSize: 14, fontWeight: 700 }}>{title}</div>
@@ -737,7 +736,7 @@ export default function FairLendingPage() {
 
             {error && (
               <div style={{ marginTop: 12, padding: '10px 14px', background: '#FEF2F2', borderRadius: 8, border: `1px solid #DC262620`, fontSize: 12, color: '#DC2626' }}>
-                âš  {error}
+                ⚠ {error}
               </div>
             )}
           </div>
@@ -749,7 +748,7 @@ export default function FairLendingPage() {
             </div>
           )}
 
-          {/* 
+          {/*
                THE REPORT
            */}
           {report && !loading && (
@@ -828,7 +827,7 @@ export default function FairLendingPage() {
                 </div>
               </div>
 
-              {/* 
+              {/*
                   SECTION 1: MARKET OVERVIEW
                */}
               <div className="report-section" style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, marginBottom: 16, overflow: 'hidden' }}>
@@ -851,7 +850,7 @@ export default function FairLendingPage() {
                 </div>
               </div>
 
-              {/* 
+              {/*
                   SECTION 2: DEMOGRAPHIC PROFILE  -  HOMEOWNERSHIP
                */}
               <div className="report-section" style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, marginBottom: 16, overflow: 'hidden' }}>
@@ -948,7 +947,7 @@ export default function FairLendingPage() {
                       />
                     </div>
                     <div style={{ margin: '12px 20px 0', padding: '14px 16px', background: '#FEF2F2', borderRadius: 8, border: '1px solid #DC262630', fontSize: 12, color: C.textBody, lineHeight: 1.65 }}>
-                      <strong style={{ color: '#DC2626' }}>âš  FAIR LENDING NOTE:</strong>{' '}
+                      <strong style={{ color: '#DC2626' }}>⚠ FAIR LENDING NOTE:</strong>{' '}
                       The gap between ICONYCS Direct Identified records and Census area demographics indicates
                       significant unidentified homeowner population. A comprehensive fair lending analysis should
                       incorporate HMDA data to assess lending patterns by race/ethnicity.{' '}
@@ -968,7 +967,7 @@ export default function FairLendingPage() {
                 )}
               </div>
 
-              {/* 
+              {/*
                   SECTION 3: MORTGAGE LENDING PROFILE
                */}
               <div className="report-section" style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, marginBottom: 16, overflow: 'hidden' }}>
@@ -995,7 +994,7 @@ export default function FairLendingPage() {
                 </div>
               </div>
 
-              {/* 
+              {/*
                   SECTION 4: LTV DISTRIBUTION (FNMA TIERS)
                */}
               <div className="report-section" style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, marginBottom: 16, overflow: 'hidden' }}>
@@ -1010,7 +1009,7 @@ export default function FairLendingPage() {
                       borderRadius: 8,
                       border: `1px solid ${report.highLtvPct > 60 ? '#DC262620' : report.highLtvPct > 40 ? '#D9770620' : '#16A34A20'}`,
                     }}>
-                      <span style={{ fontSize: 12, fontWeight: 700, color: report.highLtvPct > 60 ? '#DC2626' : report.highLtvPct > 40 ? '#D97706' : '#16A34A' }}>
+                      <span style={{ fontSize: 12, fontWeight: 700, color: report.highLtvPct > 60 ? '#DC2626' : report.highLtvPct > 40 ? '#D97706' : '#16A34A', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
                         {trafficDot(ltvRiskLight(report.highLtvPct))} High-LTV (&gt;80%) Properties: {fmtPct(report.highLtvPct)}
                       </span>
                       <span style={{ fontSize: 11, color: C.textMuted, marginLeft: 12 }}>
@@ -1025,7 +1024,7 @@ export default function FairLendingPage() {
                 )}
               </div>
 
-              {/* 
+              {/*
                   SECTION 5: OCCUPANCY STATUS
                */}
               <div className="report-section" style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, marginBottom: 16, overflow: 'hidden' }}>
@@ -1066,14 +1065,14 @@ export default function FairLendingPage() {
                     {' '}&nbsp;|&nbsp; National Average: {fmtPct(NATIONAL_AVG.nonOwnerOcc, 1)}
                     {report.nonOwnerOccPct > NATIONAL_AVG.nonOwnerOcc * 1.2 && (
                       <span style={{ color: '#DC2626', fontWeight: 700, marginLeft: 8 }}>
-                        âš  Significantly above national average  -  potential investor concentration flag
+                        ⚠ Significantly above national average  -  potential investor concentration flag
                       </span>
                     )}
                   </div>
                 </div>
               </div>
 
-              {/* 
+              {/*
                   SECTION 6: FAIR LENDING RISK INDICATORS
                */}
               <div className="report-section" style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, marginBottom: 16, overflow: 'hidden' }}>
@@ -1092,7 +1091,7 @@ export default function FairLendingPage() {
                         ? 'Coverage 3-10%  -  marginal for standalone analysis.'
                         : 'Coverage below 3%  -  HMDA supplement strongly recommended.'
                     }
-                    note={`${fmtPct(report.demoCoveragePct, 1)} of records have direct ethnic identification. Threshold: ðŸ”´ <3% | Yellow 3-10% | Green >10%. Limited demographic data  -  HMDA supplement recommended for full fair lending analysis.`}
+                    note={`${fmtPct(report.demoCoveragePct, 1)} of records have direct ethnic identification. Threshold: Red: <3% | Yellow: 3-10% | Green: >10%. Limited demographic data  -  HMDA supplement recommended for full fair lending analysis.`}
                   />
 
                   <RiskCard
@@ -1107,7 +1106,7 @@ export default function FairLendingPage() {
                         ? 'FHA+VA concentration is 1.5-2x national average  -  warrants further review.'
                         : 'FHA+VA concentration exceeds 2x national average  -  potential redlining indicator.'
                     }
-                    note={`Geography FHA+VA: ${fmtPct(report.fhaVaPct, 1)} vs. National Average: ${fmtPct(NATIONAL_AVG.fhaVaPct, 1)}. Ratio: ${(report.fhaVaPct / NATIONAL_AVG.fhaVaPct).toFixed(2)}x. Higher FHA/VA concentration in minority-populated areas is a recognized HMDA fair lending risk indicator. Threshold: ðŸ”´ >2x | Yellow 1.5-2x | Green <1.5x`}
+                    note={`Geography FHA+VA: ${fmtPct(report.fhaVaPct, 1)} vs. National Average: ${fmtPct(NATIONAL_AVG.fhaVaPct, 1)}. Ratio: ${(report.fhaVaPct / NATIONAL_AVG.fhaVaPct).toFixed(2)}x. Higher FHA/VA concentration in minority-populated areas is a recognized HMDA fair lending risk indicator. Threshold: Red: >2x | Yellow: 1.5-2x | Green: <1.5x`}
                   />
 
                   <RiskCard
@@ -1122,7 +1121,7 @@ export default function FairLendingPage() {
                         ? 'High-LTV concentration (40-60%) merits monitoring.'
                         : 'High-LTV concentration exceeds 60%  -  elevated credit risk concentration.'
                     }
-                    note={`${fmtPct(report.highLtvSharePct, 1)} of loans are in high-LTV tiers (>80% LTV). Concentrated high-LTV lending in protected-class geographies is a key CFPB and OCC supervisory focus. Threshold: ðŸ”´ >60% | Yellow 40-60% | Green <40%`}
+                    note={`${fmtPct(report.highLtvSharePct, 1)} of loans are in high-LTV tiers (>80% LTV). Concentrated high-LTV lending in protected-class geographies is a key CFPB and OCC supervisory focus. Threshold: Red: >60% | Yellow: 40-60% | Green: <40%`}
                   />
 
                   {/* Indicator 4: Demographic Coverage Gap - Census vs Direct Identified */}
@@ -1146,13 +1145,13 @@ export default function FairLendingPage() {
                             ? 'Coverage gap 10-20%  -  moderate unidentified population; HMDA supplement recommended.'
                             : 'Coverage gap >20%  -  large unidentified population; HMDA data strongly required for full fair lending analysis.'
                         }
-                        note={`Census area minority population:  | ICONYCS directly identified minority:  | Gap: . A large gap indicates homeowners whose race/ethnicity is unidentified in direct records. Threshold: ðŸ”´ Gap >20% | Caution Gap 10-20% | OK Gap <10%.`}
+                        note={`Census area minority population: ${fmtPct(100 - (report.censusData?.PCT_WHITE ?? 0), 1)} | ICONYCS directly identified minority: ${fmtPct(report.ethnicityRows.filter(r => !['Not Identified','Unknown','White'].includes(r.label)).reduce((s,r) => s+r.pct, 0), 1)} | Gap: ${fmtPct(Math.abs((100-(report.censusData?.PCT_WHITE??0)) - report.ethnicityRows.filter(r=>!['Not Identified','Unknown','White'].includes(r.label)).reduce((s,r)=>s+r.pct,0)), 1)}. A large gap indicates homeowners whose race/ethnicity is unidentified in direct records. Threshold: Red: Gap >20% | Yellow: Gap 10-20% | Green: Gap <10%.`}
                       />
                     );
                   })() : (
                     <div style={{ background: '#F8F9FC', border: `1.5px dashed ${C.border}`, borderRadius: 10, overflow: 'hidden' }}>
                       <div style={{ padding: '10px 16px', background: C.bgWarm, display: 'flex', alignItems: 'center', gap: 10 }}>
-                        <span style={{ fontSize: 20 }}>ðŸ”µ</span>
+                        <div style={{ width: 20, height: 20, borderRadius: '50%', background: '#3b82f6', display: 'inline-block', flexShrink: 0 }} />
                         <div style={{ flex: 1 }}>
                           <div style={{ fontSize: 12, fontWeight: 700, opacity: 0.6 }}>INDICATOR 4</div>
                           <div style={{ fontSize: 14, fontWeight: 700, color: C.navy }}>Demographic Data Coverage Gap  -  Census vs Direct Identified</div>
@@ -1170,7 +1169,7 @@ export default function FairLendingPage() {
                 </div>
               </div>
 
-              {/* 
+              {/*
                   SECTION 7: METHODOLOGY & DISCLAIMERS
                */}
               <div className="report-section" style={{ background: C.bgCard, borderRadius: 10, border: `1px solid ${C.border}`, marginBottom: 16, overflow: 'hidden' }}>
@@ -1198,7 +1197,7 @@ export default function FairLendingPage() {
                     <div>
                       <h4 style={{ fontSize: 12, fontWeight: 700, color: C.navy, textTransform: 'uppercase', letterSpacing: '0.06em', margin: '0 0 10px' }}>Fair Housing Act Compliance</h4>
                       <div style={{ fontSize: 12, color: C.textBody, lineHeight: 1.7 }}>
-                        This report is prepared in furtherance of compliance with the Fair Housing Act (42 U.S.C. Â§ 3601 et seq.),
+                        This report is prepared in furtherance of compliance with the Fair Housing Act (42 U.S.C. § 3601 et seq.),
                         the Equal Credit Opportunity Act (ECOA), the Community Reinvestment Act (CRA), and HMDA reporting requirements.
                         Data presented is for analytical and compliance planning purposes only.
                       </div>
@@ -1206,9 +1205,9 @@ export default function FairLendingPage() {
                     <div>
                       <h4 style={{ fontSize: 12, fontWeight: 700, color: C.navy, textTransform: 'uppercase', letterSpacing: '0.06em', margin: '0 0 10px' }}>Confidence Indicators</h4>
                       <div style={{ fontSize: 12, color: C.textBody, lineHeight: 1.7 }}>
-                        <div style={{ marginBottom: 4 }}>OK <strong>Direct Identified</strong>  -  individually sourced from voter/consumer records</div>
-                        <div style={{ marginBottom: 4 }}>Caution <strong>Household Modeled</strong>  -  inferred from household composition</div>
-                        <div>ðŸ”´ <strong>Area Estimated</strong>  -  geographic proxy (census tract-level)</div>
+                        <div style={{ marginBottom: 4, display: 'flex', alignItems: 'center', gap: 6 }}><div style={{ width: 12, height: 12, borderRadius: '50%', background: '#22c55e', display: 'inline-block', flexShrink: 0 }} /> <strong>Direct Identified</strong>  -  individually sourced from voter/consumer records</div>
+                        <div style={{ marginBottom: 4, display: 'flex', alignItems: 'center', gap: 6 }}><div style={{ width: 12, height: 12, borderRadius: '50%', background: '#eab308', display: 'inline-block', flexShrink: 0 }} /> <strong>Household Modeled</strong>  -  inferred from household composition</div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}><div style={{ width: 12, height: 12, borderRadius: '50%', background: '#ef4444', display: 'inline-block', flexShrink: 0 }} /> <strong>Area Estimated</strong>  -  geographic proxy (census tract-level)</div>
                       </div>
                     </div>
                   </div>
@@ -1216,7 +1215,7 @@ export default function FairLendingPage() {
                     padding: '14px 16px', background: '#FFF8E7', borderRadius: 8,
                     border: '1px solid #D9770630', fontSize: 12, color: C.textBody, lineHeight: 1.65,
                   }}>
-                    <strong style={{ color: '#D97706' }}>âš  Legal Disclaimer:</strong> This report is for analytical purposes only and does not constitute legal advice.
+                    <strong style={{ color: '#D97706' }}>⚠ Legal Disclaimer:</strong> This report is for analytical purposes only and does not constitute legal advice.
                     Users should engage qualified fair lending counsel before making compliance determinations.
                     ICONYCS makes no warranty as to the accuracy or completeness of the data for any specific compliance purpose.
                     Contact: <a href="mailto:info@iconycs.com" style={{ color: C.terra }}>info@iconycs.com</a>
@@ -1224,7 +1223,7 @@ export default function FairLendingPage() {
                 </div>
               </div>
 
-              {/* 
+              {/*
                   SECTION 8: CALL TO ACTION
                */}
               <div className="report-section no-print" style={{
@@ -1249,7 +1248,7 @@ export default function FairLendingPage() {
                         borderRadius: 8, textDecoration: 'none', fontSize: 14, fontWeight: 700,
                         display: 'inline-flex', alignItems: 'center', gap: 6,
                       }}>
-                        Request Enterprise Demo ’
+                        Request Enterprise Demo '
                       </a>
                       <Link href="/pricing" style={{
                         padding: '12px 24px', background: 'rgba(255,255,255,0.15)',
@@ -1271,7 +1270,7 @@ export default function FairLendingPage() {
                       'Dedicated Compliance Support',
                     ].map((f, i) => (
                       <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, opacity: 0.9 }}>
-                        <span style={{ color: C.terra, fontWeight: 700, fontSize: 14 }}>âœ“</span> {f}
+                        <span style={{ color: C.terra, fontWeight: 700, fontSize: 14 }}>✓</span> {f}
                       </div>
                     ))}
                   </div>
