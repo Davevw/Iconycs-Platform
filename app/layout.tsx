@@ -4,14 +4,15 @@ import './globals.css';
 export const metadata: Metadata = {
   metadataBase: new URL('https://iconycs.com'),
   title: {
-    default: 'ICONYCS - Housing Intelligence',
+    default: 'ICONYCS | 109M Properties. Every U.S. Neighborhood. Real Data.',
     template: '%s | ICONYCS',
   },
-  description: 'Fair lending analysis. Demographic intelligence. 109M+ property records across all 50 states. See the data behind homeownership.',
+  description: 'AI-powered housing analytics platform. 109M+ property records, 73.6M+ homeowner profiles, and census-tract demographics across all 50 states -- built for capital markets.',
   keywords: [
     'housing analytics', 'homeowner demographics', 'property data', 'real estate analytics',
     'home ownership data', 'demographic analysis', 'property records', 'housing market data',
-    'socio-economic housing', 'ICONYCS', 'PDaaS', 'property data as a service',
+    'capital markets housing data', 'ICONYCS', 'PDaaS', 'property data as a service',
+    'census tract analytics', 'fair lending analytics',
   ],
   authors: [{ name: 'ICONYCS Housing Intelligence' }],
   openGraph: {
@@ -19,14 +20,14 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://iconycs.com',
     siteName: 'ICONYCS',
-    title: 'ICONYCS - Housing Intelligence',
-    description: 'Fair lending. Demographic intelligence. 109M+ property records across all 50 states.',
-    images: [{ url: 'https://vdgxbfumlysatthimpcb.supabase.co/storage/v1/object/public/public/og-image.png', width: 1536, height: 1024, alt: 'ICONYCS Housing Intelligence - 109M+ Property Records' }],
+    title: 'ICONYCS | 109M Properties. Every U.S. Neighborhood. Real Data.',
+    description: 'AI-powered housing analytics platform. Census, demographics, and ownership data at the census-tract level -- built for capital markets.',
+    images: [{ url: 'https://vdgxbfumlysatthimpcb.supabase.co/storage/v1/object/public/public/og-image.png', width: 1536, height: 1024, alt: 'ICONYCS - 109M+ U.S. Property Records, Housing Intelligence Platform' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ICONYCS  -  Housing Intelligence',
-    description: 'Fair lending. Demographic intelligence. 109M+ property records across all 50 states.',
+    title: 'ICONYCS | 109M Properties. Every U.S. Neighborhood. Real Data.',
+    description: 'AI-powered housing analytics. 109M+ property records, 73.6M+ homeowner profiles, census-tract demographics -- built for capital markets.',
   },
   robots: { index: true, follow: true },
 };
