@@ -2269,8 +2269,17 @@ export default function ReportsPage() {
               )}
             </div>
 
+            {/* Fair Housing Disclaimer */}
+            <div style={{ marginTop: 12, padding: '10px 16px', background: '#F0F4FF', borderRadius: 8, border: '1px solid #C7D7F8', fontSize: 11, color: '#1B3A7A', lineHeight: 1.6, display: 'flex', gap: 8, alignItems: 'flex-start' }}>
+              <span style={{ fontWeight: 700, flexShrink: 0 }}>Fair Housing Notice:</span>
+              <span>
+                Demographic data (race/ethnicity, income, tenure) is sourced from U.S. Census Bureau ACS 5-Year Estimates and is provided for informational purposes only. This data is not used in any lending or credit decision and must not be used as such.{' '}
+                <Link href="/fair-housing" style={{ color: '#1B3A7A', fontWeight: 600 }}>Fair Housing Policy</Link>
+              </span>
+            </div>
+
             {/* Methodology Note */}
-            <div style={{ marginTop: 8, padding: '12px 16px', background: C.bgWarm, borderRadius: 10, border: `1px solid ${C.border}`, fontSize: 11, color: C.textMuted, lineHeight: 1.7 }}>
+            <div style={{ marginTop: 8, padding: '12px 16px', background: C.bgWarm, borderRadius: 8, border: `1px solid ${C.border}`, fontSize: 11, color: C.textMuted, lineHeight: 1.7 }}>
               <span style={{ fontWeight: 700, color: C.textBody }}>Data Methodology: </span>
               {METHODOLOGY_NOTE}
               <span style={{ display: 'block', marginTop: 6, fontSize: 10, color: C.textDim }}>
@@ -2289,6 +2298,8 @@ export default function ReportsPage() {
                 <Link href="/terms" style={{ fontSize: 11, color: C.textMuted, textDecoration: 'none' }}>Terms of Service</Link>
                 <span style={{ color: C.border }}>|</span>
                 <Link href="/privacy" style={{ fontSize: 11, color: C.textMuted, textDecoration: 'none' }}>Privacy Policy</Link>
+                <span style={{ color: C.border }}>|</span>
+                <Link href="/fair-housing" style={{ fontSize: 11, color: C.textMuted, textDecoration: 'none' }}>Fair Housing Policy</Link>
                 <span style={{ color: C.border }}>|</span>
                 <a href="mailto:info@iconycs.com" style={{ fontSize: 11, color: C.textMuted, textDecoration: 'none' }}>Contact</a>
               </div>
