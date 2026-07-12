@@ -600,7 +600,7 @@ function TierCard({
           </Link>
         ) : (
           <Link
-            href={`/signup?tier=${tier.id}`}
+            href="/login"
             style={{
               display: 'block', textAlign: 'center',
               width: '100%', padding: '11px 0', borderRadius: 8,

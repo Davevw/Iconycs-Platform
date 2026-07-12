@@ -1,394 +1,191 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import Link from 'next/link';
-import { createClient } from '@/lib/supabase';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const C = {
   bg: '#FAFAF7',
-  bgCard: '#FFFFFF',
   bgWarm: '#F5F0E8',
+  bgCard: '#FFFFFF',
   border: '#E8E2D8',
   text: '#1C1917',
   textBody: '#3D3833',
   textMuted: '#78716C',
   textDim: '#A8A29E',
   terra: '#C4653A',
+  terraSoft: '#FFF0E9',
+  terraDark: '#9A4420',
   sage: '#5D7E52',
   navy: '#1B2A4A',
   font: "'Outfit', sans-serif",
   fontSerif: "'Source Serif 4', Georgia, serif",
 };
 
-export default function LoginPage() {
+function GateForm() {
   const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const searchParams = useSearchParams();
+  const nextPath = searchParams.get('next') || '/reports';
+  const [passcode, setPasscode] = useState('');
   const [loading, setLoading] = useState(false);
-  const [oauthLoading, setOauthLoading] = useState(false);
   const [error, setError] = useState('');
-  const [forgotSent, setForgotSent] = useState(false);
 
-  const handleSignIn = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
     try {
-      const supabase = createClient();
-      const { error: signInError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
+      const res = await fetch('/api/gate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ passcode }),
       });
-      if (signInError) {
-        setError(signInError.message);
+      if (res.ok) {
+        router.push(nextPath);
+        router.refresh();
       } else {
-        router.push('/reports');
-      }
-    } catch (err: any) {
-      setError('An unexpected error occurred. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleGoogleSignIn = async () => {
-    setOauthLoading(true);
-    setError('');
-    try {
-      const supabase = createClient();
-      const { error: oauthError } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
-        },
-      });
-      if (oauthError) setError(oauthError.message);
-    } catch (err: any) {
-      setError('Failed to initiate Google sign-in.');
-      setOauthLoading(false);
-    }
-  };
-
-  const handleForgotPassword = async () => {
-    if (!email) {
-      setError('Enter your email address above, then click Forgot Password.');
-      return;
-    }
-    setLoading(true);
-    setError('');
-    try {
-      const supabase = createClient();
-      const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/auth/callback?next=/reset-password`,
-      });
-      if (resetError) {
-        setError(resetError.message);
-      } else {
-        setForgotSent(true);
+        const data = await res.json().catch(() => ({}));
+        setError(data?.error || 'Incorrect passcode.');
+        setLoading(false);
       }
     } catch {
-      setError('Failed to send reset email. Please try again.');
-    } finally {
+      setError('Something went wrong. Please try again.');
       setLoading(false);
     }
   };
 
   return (
-    <div
-      style={{
-        minHeight: '100vh',
-        background: C.bg,
-        fontFamily: C.font,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '24px 16px',
-      }}
-    >
-      {/* Card */}
-      <div
-        style={{
-          background: C.bgCard,
-          borderRadius: 16,
-          border: `1px solid ${C.border}`,
-          boxShadow: '0 8px 32px rgba(28,25,23,0.08)',
-          width: '100%',
-          maxWidth: 420,
-          overflow: 'hidden',
-        }}
-      >
-        {/* Header */}
-        <div
-          style={{
-            background: C.navy,
-            padding: '28px 32px 24px',
-            textAlign: 'center',
-          }}
-        >
-                    <Link href="/" style={{ textDecoration: 'none' }}>
-            <div>
-              <div
-                style={{
-                  fontSize: 26,
-                  fontWeight: 800,
-                  color: '#FFFFFF',
-                  letterSpacing: '0.06em',
-                  fontFamily: C.fontSerif,
-                }}
-              >
-                ICONYCS
-              </div>
-              <div style={{ fontSize: 9, fontWeight: 600, color: 'rgba(255,255,255,0.65)', letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 2 }}>Housing Intelligence</div>
+    <div style={{ minHeight: '100vh', background: C.bg, fontFamily: C.font, display: 'flex' }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400;1,8..60,600&display=swap');
+        @media (max-width: 900px) { .icx-split { flex-direction: column !important; } .icx-left, .icx-right { flex: 1 1 auto !important; } }
+      `}</style>
+
+      {/* ══ SIDE-BY-SIDE: banner+text LEFT, passcode RIGHT (full height) ══ */}
+      <div className="icx-split" style={{ display: 'flex', width: '100%', minHeight: '100vh', alignItems: 'stretch' }}>
+
+        {/* ══ LEFT — banner header above descriptive features & benefits ══ */}
+        <div className="icx-left" style={{ flex: '1 1 56%', display: 'flex', flexDirection: 'column', background: C.bg }}>
+
+          {/* banner image — top of LEFT panel only */}
+          <div style={{ width: '100%', lineHeight: 0 }}>
+            <img
+              src="/brand/gateway-hero.jpg"
+              alt="ICONYCS Housing Intelligence — Every home tells a story. We help you read it."
+              style={{ width: '100%', height: 'auto', display: 'block' }}
+            />
+          </div>
+
+          {/* descriptive text below banner */}
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '40px 56px' }}>
+          <div style={{ maxWidth: 560 }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 9, background: C.terraSoft, border: `1px solid ${C.terra}22`, borderRadius: 999, padding: '7px 18px', marginBottom: 22 }}>
+              <span style={{ width: 7, height: 7, borderRadius: 999, background: C.terra }} />
+              <span style={{ fontSize: 11.5, fontWeight: 700, color: C.terraDark, letterSpacing: '0.09em', textTransform: 'uppercase' }}>
+                The Socio-Economics of Home Ownership
+              </span>
             </div>
-          </Link>
+
+            <p style={{ fontSize: 15.5, color: C.textBody, lineHeight: 1.8, marginBottom: 18 }}>
+              ICONYCS is a housing-intelligence platform that turns raw property and ownership data into clear, decision-grade insight. We unify 109 million residential property records with 73.6M+ owner-occupied homeowner profiles, then layer in AI-powered analytics across ethnicity, income, education, marital status, and household composition — resolvable from a single ZIP code all the way up to the national picture.
+            </p>
+
+            <p style={{ fontSize: 15.5, color: C.textBody, lineHeight: 1.8, marginBottom: 24 }}>
+              For lenders, investors, researchers, and policymakers, that means sharper fair-lending analysis, smarter market and portfolio targeting, and a true socio-economic view of who owns homes and how neighborhoods are changing. ICONYCS connects the data points others miss — so you can act with confidence when the housing market shifts.
+            </p>
+
+            <blockquote style={{ fontSize: 16, color: C.textMuted, fontStyle: 'italic', fontFamily: C.fontSerif, borderLeft: `3px solid ${C.terra}40`, paddingLeft: 20, margin: 0 }}>
+              &ldquo;When Housing Markets Shift, Iconycs Knows.&rdquo;
+            </blockquote>
+          </div>
+          </div>
         </div>
 
-        <div style={{ padding: '28px 32px' }}>
-          <h1
-            style={{
-              fontSize: 20,
-              fontWeight: 700,
-              color: C.text,
-              marginBottom: 6,
-              textAlign: 'center',
-            }}
-          >
-            👋 Sign In
-          </h1>
-          <p style={{ fontSize: 13, color: C.textMuted, textAlign: 'center', marginBottom: 24 }}>
-            Welcome back. Access your analytics dashboard.
+        {/* ══ RIGHT PANEL — passcode gate (unchanged) ══ */}
+        <div className="icx-right" style={{ flex: '1 1 44%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '48px 24px', background: C.bgCard, borderLeft: `1px solid ${C.border}` }}>
+        <div style={{ width: '100%', maxWidth: 380 }}>
+          <div style={{ textAlign: 'center', marginBottom: 26 }}>
+            <div style={{ fontSize: 24, fontWeight: 800, color: C.navy, letterSpacing: '0.04em', fontFamily: C.fontSerif }}>ICONYCS</div>
+            <div style={{ fontSize: 9, fontWeight: 600, color: C.textDim, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 2 }}>Housing Intelligence</div>
+          </div>
+          <h2 style={{ fontSize: 22, fontWeight: 700, color: C.text, marginBottom: 6, fontFamily: C.fontSerif, textAlign: 'center' }}>
+            Private Access
+          </h2>
+          <p style={{ fontSize: 13.5, color: C.textMuted, marginBottom: 26, textAlign: 'center', lineHeight: 1.6 }}>
+            Enter your access passcode to continue.
           </p>
 
           {error && (
-            <div
-              style={{
-                background: '#FFF4F0',
-                border: `1px solid ${C.terra}40`,
-                borderRadius: 8,
-                padding: '10px 14px',
-                fontSize: 13,
-                color: C.terra,
-                marginBottom: 16,
-              }}
-            >
+            <div style={{ background: '#FFF4F0', border: `1px solid ${C.terra}40`, borderRadius: 8, padding: '10px 14px', fontSize: 13, color: C.terra, marginBottom: 16, textAlign: 'center' }}>
               {error}
             </div>
           )}
 
-          {forgotSent && (
-            <div
-              style={{
-                background: '#F0F7EE',
-                border: `1px solid ${C.sage}40`,
-                borderRadius: 8,
-                padding: '10px 14px',
-                fontSize: 13,
-                color: C.sage,
-                marginBottom: 16,
-              }}
-            >
-              " Password reset email sent. Check your inbox.
-            </div>
-          )}
-
-          {/* Google OAuth Button */}
-          <button
-            onClick={handleGoogleSignIn}
-            disabled={oauthLoading}
-            style={{
-              width: '100%',
-              padding: '11px 16px',
-              borderRadius: 8,
-              border: `1.5px solid ${C.border}`,
-              background: C.bgCard,
-              color: C.textBody,
-              fontSize: 14,
-              fontWeight: 600,
-              cursor: oauthLoading ? 'not-allowed' : 'pointer',
-              fontFamily: C.font,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 10,
-              marginBottom: 20,
-              opacity: oauthLoading ? 0.7 : 1,
-              transition: 'border-color 0.15s',
-            }}
-            onMouseEnter={(e) => {
-              if (!oauthLoading) (e.currentTarget.style.borderColor = C.terra);
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget.style.borderColor = C.border);
-            }}
-          >
-            {/* Google icon */}
-            <svg width="18" height="18" viewBox="0 0 48 48">
-              <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z" />
-              <path fill="#FF3D00" d="m6.306 14.691 6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z" />
-              <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z" />
-              <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z" />
-            </svg>
-            {oauthLoading ? 'Redirecting...' : 'Sign in with Google'}
-          </button>
-
-          {/* Divider */}
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 12,
-              marginBottom: 20,
-            }}
-          >
-            <div style={{ flex: 1, height: 1, background: C.border }} />
-            <span style={{ fontSize: 12, color: C.textDim }}>or</span>
-            <div style={{ flex: 1, height: 1, background: C.border }} />
-          </div>
-
-          {/* Email/Password form */}
-          <form onSubmit={handleSignIn}>
-            <div style={{ marginBottom: 14 }}>
-              <label
-                style={{
-                  display: 'block',
-                  fontSize: 12,
-                  fontWeight: 600,
-                  color: C.textBody,
-                  marginBottom: 6,
-                }}
-              >
-                Email
-              </label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                placeholder="you@example.com"
-                style={{
-                  width: '100%',
-                  padding: '10px 14px',
-                  borderRadius: 8,
-                  border: `1.5px solid ${C.border}`,
-                  fontSize: 14,
-                  fontFamily: C.font,
-                  color: C.text,
-                  background: C.bgWarm,
-                  outline: 'none',
-                  boxSizing: 'border-box',
-                  transition: 'border-color 0.15s',
-                }}
-                onFocus={(e) => (e.currentTarget.style.borderColor = C.terra)}
-                onBlur={(e) => (e.currentTarget.style.borderColor = C.border)}
-              />
-            </div>
-
-            <div style={{ marginBottom: 8 }}>
-              <label
-                style={{
-                  display: 'block',
-                  fontSize: 12,
-                  fontWeight: 600,
-                  color: C.textBody,
-                  marginBottom: 6,
-                }}
-              >
-                Password
-              </label>
+          <form onSubmit={handleSubmit}>
+            <div style={{ marginBottom: 18 }}>
+              <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: C.textBody, marginBottom: 6 }}>Passcode</label>
               <input
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={passcode}
+                onChange={(e) => setPasscode(e.target.value)}
                 required
-                placeholder=""
+                autoFocus
+                autoComplete="off"
+                placeholder="Enter passcode"
                 style={{
-                  width: '100%',
-                  padding: '10px 14px',
-                  borderRadius: 8,
-                  border: `1.5px solid ${C.border}`,
-                  fontSize: 14,
-                  fontFamily: C.font,
-                  color: C.text,
-                  background: C.bgWarm,
-                  outline: 'none',
-                  boxSizing: 'border-box',
-                  transition: 'border-color 0.15s',
+                  width: '100%', padding: '12px 14px', borderRadius: 8,
+                  border: `1.5px solid ${C.border}`, fontSize: 15, fontFamily: C.font,
+                  color: C.text, background: C.bgWarm, outline: 'none', boxSizing: 'border-box',
+                  letterSpacing: '0.08em', transition: 'border-color 0.15s',
                 }}
                 onFocus={(e) => (e.currentTarget.style.borderColor = C.terra)}
                 onBlur={(e) => (e.currentTarget.style.borderColor = C.border)}
               />
-            </div>
-
-            {/* Forgot password */}
-            <div style={{ textAlign: 'right', marginBottom: 20 }}>
-              <button
-                type="button"
-                onClick={handleForgotPassword}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  color: C.terra,
-                  fontSize: 12,
-                  cursor: 'pointer',
-                  fontFamily: C.font,
-                  padding: 0,
-                  textDecoration: 'underline',
-                }}
-              >
-                Forgot password?
-              </button>
             </div>
 
             <button
               type="submit"
               disabled={loading}
               style={{
-                width: '100%',
-                padding: '12px 0',
-                borderRadius: 8,
-                background: loading ? C.textDim : C.terra,
-                color: '#fff',
-                border: 'none',
-                fontSize: 15,
-                fontWeight: 700,
-                cursor: loading ? 'not-allowed' : 'pointer',
-                fontFamily: C.font,
-                transition: 'background 0.15s',
+                width: '100%', padding: '12px 0', borderRadius: 8,
+                background: loading ? C.textDim : C.terra, color: '#fff', border: 'none',
+                fontSize: 15, fontWeight: 700, cursor: loading ? 'not-allowed' : 'pointer',
+                fontFamily: C.font, transition: 'background 0.15s',
+                boxShadow: loading ? 'none' : '0 1px 2px rgba(196,101,58,0.3), 0 4px 12px rgba(196,101,58,0.15)',
               }}
             >
-              {loading ? 'Signing in...' : 'Sign In'}
+              {loading ? 'Verifying...' : 'Enter'}
             </button>
           </form>
 
-          {/* Sign up link */}
-          <div style={{ textAlign: 'center', marginTop: 20, fontSize: 13, color: C.textMuted }}>
-            Don&apos;t have an account?{' '}
-            <Link
-              href="/signup"
-              style={{ color: C.terra, fontWeight: 600, textDecoration: 'none' }}
-            >
-              Sign up
-            </Link>
+          <div style={{ marginTop: 24, fontSize: 12, color: C.textDim, textAlign: 'center', lineHeight: 1.6 }}>
+            Access is by invitation only.<br />Contact the site owner for a passcode.
+          </div>
+
+          <div style={{ marginTop: 24, fontSize: 11, color: C.textDim, textAlign: 'center' }}>
+            <Link href="/terms" style={{ color: C.textDim, textDecoration: 'none' }}>Terms</Link>
+            {'  ·  '}
+            <Link href="/privacy" style={{ color: C.textDim, textDecoration: 'none' }}>Privacy</Link>
+            {'  ·  '}
+            <span style={{ color: C.textDim }}>iconycs.com</span>
           </div>
         </div>
-      </div>
-
-      {/* Footer */}
-      <div style={{ marginTop: 24, fontSize: 11, color: C.textDim, textAlign: 'center' }}>
-        <Link href="/terms" style={{ color: C.textDim, textDecoration: 'none' }}>
-          Terms of Service
-        </Link>
-        {' * '}
-        <Link href="/privacy" style={{ color: C.textDim, textDecoration: 'none' }}>
-          Privacy Policy
-        </Link>
-        {' * '}
-        <Link href="/" style={{ color: C.textDim, textDecoration: 'none' }}>
-          iconycs.com
-        </Link>
+        </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div style={{ minHeight: '100vh', background: C.bg, fontFamily: C.font, display: 'flex', alignItems: 'center', justifyContent: 'center', color: C.textMuted }}>
+          Loading...
+        </div>
+      }
+    >
+      <GateForm />
+    </Suspense>
   );
 }
