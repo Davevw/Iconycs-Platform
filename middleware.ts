@@ -120,10 +120,32 @@ export async function middleware(request: NextRequest) {
 
   // Already in? Bounce away from the gateway page.
   if (valid && pathname === '/login') {
+    await writeGateAudit(request, {
+      eventType: 'view',
+      outcome: 'allowed',
+      statusCode: 307,
+      path: pathname,
+      method: request.method,
+      passcodeLabel: sub,
+      sessionId: sid,
+      reason: 'authenticated_login_redirect',
+    });
+
     const dest = request.nextUrl.clone();
     dest.pathname = '/reports';
     dest.search = '';
     return NextResponse.redirect(dest);
+  }
+
+  if (!valid && pathname === '/login') {
+    await writeGateAudit(request, {
+      eventType: 'attempt',
+      outcome: 'blocked',
+      statusCode: 200,
+      path: pathname,
+      method: request.method,
+      reason: token ? 'invalid_or_expired_session_login_page' : 'login_page_loaded',
+    });
   }
 
   if (isPublic) return NextResponse.next();
