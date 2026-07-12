@@ -128,8 +128,13 @@ async function writeLegacyLoginAudit(
         Prefer: 'return=minimal',
       },
       body: JSON.stringify({
-        passphrase_used: payload.passcodeLabel || 'unlabeled',
-        role_granted: `iron_gate:${payload.eventType}:${payload.path || '/'}`,
+        passphrase_used: [
+          'iron_gate',
+          payload.eventType,
+          payload.passcodeLabel || 'unlabeled',
+          payload.path || '/',
+        ].join(':').slice(0, 255),
+        role_granted: payload.outcome === 'success' || payload.outcome === 'allowed' ? 'analyst' : 'denied',
         ip_address: payload.ip_hash,
         user_agent: payload.user_agent_hash,
         success: payload.outcome === 'success' || payload.outcome === 'allowed',
