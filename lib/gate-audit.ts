@@ -130,7 +130,11 @@ export async function writeGateAudit(request: AuditRequest, event: GateAuditEven
 
     if (!res.ok) {
       console.warn('iconycs_gate_audit_persist_failed', res.status, body);
+      await writeLegacyLoginAudit(supabaseUrl, serviceKey, payload);
+      return;
     }
+
+    await writeLegacyLoginAudit(supabaseUrl, serviceKey, payload);
   } catch (error) {
     console.warn('iconycs_gate_audit_persist_error', error);
   }
