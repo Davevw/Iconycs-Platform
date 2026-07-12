@@ -14,8 +14,16 @@ CREATE TABLE IF NOT EXISTS iconycs_gate_audit (
   reason TEXT,
   ip_hash TEXT,
   user_agent_hash TEXT,
+  city TEXT,
+  region TEXT,
+  referrer TEXT,
   country TEXT
 );
+
+ALTER TABLE iconycs_gate_audit
+  ADD COLUMN IF NOT EXISTS city TEXT,
+  ADD COLUMN IF NOT EXISTS region TEXT,
+  ADD COLUMN IF NOT EXISTS referrer TEXT;
 
 CREATE INDEX IF NOT EXISTS iconycs_gate_audit_occurred_at_idx
   ON iconycs_gate_audit (occurred_at DESC);

@@ -20,7 +20,10 @@ type AuditPayload = GateAuditEvent & {
   app: 'iconycs';
   ip_hash: string | null;
   user_agent_hash: string | null;
+  city: string | null;
+  region: string | null;
   country: string | null;
+  referrer: string | null;
 };
 
 function firstHeader(headers: Headers, names: string[]): string {
@@ -45,6 +48,15 @@ async function hashPrivate(value: string): Promise<string | null> {
   return sha256(`${salt}:${value}`);
 }
 
+function decodeHeader(value: string): string {
+  if (!value) return '';
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+}
+
 async function buildPayload(request: AuditRequest, event: GateAuditEvent): Promise<AuditPayload> {
   const ip = firstHeader(request.headers, [
     'x-forwarded-for',
@@ -53,7 +65,10 @@ async function buildPayload(request: AuditRequest, event: GateAuditEvent): Promi
     'cf-connecting-ip',
   ]);
   const userAgent = request.headers.get('user-agent') || '';
+  const city = decodeHeader(firstHeader(request.headers, ['x-vercel-ip-city']));
+  const region = firstHeader(request.headers, ['x-vercel-ip-country-region']);
   const country = firstHeader(request.headers, ['x-vercel-ip-country', 'cf-ipcountry']);
+  const referrer = request.headers.get('referer') || 'direct';
 
   return {
     ...event,
@@ -63,7 +78,10 @@ async function buildPayload(request: AuditRequest, event: GateAuditEvent): Promi
     app: 'iconycs',
     ip_hash: await hashPrivate(ip),
     user_agent_hash: await hashPrivate(userAgent),
+    city: city || null,
+    region: region || null,
     country: country || null,
+    referrer,
   };
 }
 
@@ -96,17 +114,22 @@ export async function writeGateAudit(request: AuditRequest, event: GateAuditEven
         reason: payload.reason || null,
         ip_hash: payload.ip_hash,
         user_agent_hash: payload.user_agent_hash,
+        city: payload.city,
+        region: payload.region,
+        referrer: payload.referrer,
         country: payload.country,
       }),
     });
 
-    if (res.status === 404) {
+    const body = res.ok ? '' : await res.text();
+
+    if (res.status === 404 || (res.status === 400 && body.includes('column'))) {
       await writeLegacyLoginAudit(supabaseUrl, serviceKey, payload);
       return;
     }
 
     if (!res.ok) {
-      console.warn('iconycs_gate_audit_persist_failed', res.status, await res.text());
+      console.warn('iconycs_gate_audit_persist_failed', res.status, body);
     }
   } catch (error) {
     console.warn('iconycs_gate_audit_persist_error', error);
@@ -138,7 +161,10 @@ async function writeLegacyLoginAudit(
         ip_address: payload.ip_hash,
         user_agent: payload.user_agent_hash,
         success: payload.outcome === 'success' || payload.outcome === 'allowed',
+        city: payload.city,
+        region: payload.region,
         country: payload.country,
+        referrer: payload.referrer,
       }),
     });
 
