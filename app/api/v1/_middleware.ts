@@ -20,8 +20,13 @@ export function applyHeaders(res: NextResponse): NextResponse {
 }
 
 export function checkApiKey(request: NextRequest): NextResponse | null {
-  const key = request.headers.get('X-API-Key');
-  if (!key || key.trim() === '') {
+  const key = request.headers.get('X-API-Key')?.trim() || '';
+  const allowedKeys = (process.env.ICONYCS_API_KEYS || process.env.ICONYCS_API_KEY || '')
+    .split(',')
+    .map((value) => value.trim())
+    .filter(Boolean);
+
+  if (!key || !allowedKeys.includes(key)) {
     const res = NextResponse.json(
       {
         version: '1.0',

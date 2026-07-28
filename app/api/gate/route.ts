@@ -4,8 +4,71 @@ import { writeGateAudit } from '@/lib/gate-audit';
 
 export const runtime = 'nodejs';
 
+type GateBucket = {
+  count: number;
+  resetAt: number;
+};
+
+const GATE_WINDOW_MS = 10 * 60 * 1000;
+const GATE_MAX_FAILURES = 6;
+const gateBuckets = new Map<string, GateBucket>();
+
+function firstHeader(request: NextRequest, names: string[]): string {
+  for (const name of names) {
+    const value = request.headers.get(name);
+    if (value) return value.split(',')[0]?.trim() || value.trim();
+  }
+  return '';
+}
+
+function gateRateKey(request: NextRequest): string {
+  return firstHeader(request, [
+    'x-forwarded-for',
+    'x-real-ip',
+    'x-vercel-forwarded-for',
+    'cf-connecting-ip',
+  ]) || 'unknown';
+}
+
+function getBucket(key: string, now = Date.now()): GateBucket {
+  const existing = gateBuckets.get(key);
+  if (existing && existing.resetAt > now) return existing;
+  const fresh = { count: 0, resetAt: now + GATE_WINDOW_MS };
+  gateBuckets.set(key, fresh);
+  return fresh;
+}
+
+function isRateLimited(key: string): boolean {
+  return getBucket(key).count >= GATE_MAX_FAILURES;
+}
+
+function recordFailure(key: string): void {
+  getBucket(key).count += 1;
+}
+
+function clearFailures(key: string): void {
+  gateBuckets.delete(key);
+}
+
 // POST /api/gate  { passcode }  -> sets signed session cookie
 export async function POST(request: NextRequest) {
+  const rateKey = gateRateKey(request);
+
+  if (isRateLimited(rateKey)) {
+    await writeGateAudit(request, {
+      eventType: 'attempt',
+      outcome: 'failure',
+      statusCode: 429,
+      path: '/api/gate',
+      method: 'POST',
+      reason: 'rate_limited',
+    });
+    return NextResponse.json(
+      { ok: false, error: 'Too many attempts. Try again later.' },
+      { status: 429, headers: { 'Retry-After': String(GATE_WINDOW_MS / 1000) } }
+    );
+  }
+
   let passcode = '';
   try {
     const body = await request.json();
@@ -19,11 +82,13 @@ export async function POST(request: NextRequest) {
       method: 'POST',
       reason: 'bad_request',
     });
+    recordFailure(rateKey);
     return NextResponse.json({ ok: false, error: 'Bad request' }, { status: 400 });
   }
 
   const match = identifyPasscode(passcode);
   if (!match.valid) {
+    recordFailure(rateKey);
     await writeGateAudit(request, {
       eventType: 'attempt',
       outcome: 'failure',
@@ -36,6 +101,7 @@ export async function POST(request: NextRequest) {
   }
 
   const sessionId = createSessionId();
+  clearFailures(rateKey);
   await writeGateAudit(request, {
     eventType: 'entry',
     outcome: 'success',

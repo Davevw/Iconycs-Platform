@@ -34,6 +34,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (question.length > 500) {
+      return NextResponse.json(
+        { error: 'Question is too long.' },
+        { status: 400, headers: corsHeaders }
+      );
+    }
+
     // Phase 1: Generate SQL via Claude Opus 4.6
     const sqlResult = await generateSQL(question);
 

@@ -8,6 +8,19 @@ const SESSION_HOURS = 12;   // absolute cap since first entry
 const IDLE_MINUTES = 5;     // sliding inactivity cap
 
 const PUBLIC_PATHS = ['/login', '/api/gate'];
+const SCANNER_PATH_PATTERNS = [
+  /^\/(?:wp-admin|wp-content|wp-includes)(?:\/|$)/i,
+  /^\/xmlrpc\.php$/i,
+  /^\/wp-login\.php$/i,
+  /^\/administrator(?:\/|$)/i,
+  /^\/phpmyadmin(?:\/|$)/i,
+  /^\/\.env$/i,
+  /^\/.*\.php$/i,
+];
+
+function isScannerPath(pathname: string): boolean {
+  return SCANNER_PATH_PATTERNS.some((pattern) => pattern.test(pathname));
+}
 
 function b64urlToBytes(s: string): Uint8Array {
   const pad = s.length % 4 === 0 ? '' : '='.repeat(4 - (s.length % 4));
@@ -110,6 +123,21 @@ async function mintToken(iat: number, secret: string, subject?: string, sessionI
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const secret = process.env.ICONYCS_SESSION_SECRET || '';
+
+  if (isScannerPath(pathname)) {
+    await writeGateAudit(request, {
+      eventType: 'blocked',
+      outcome: 'blocked',
+      statusCode: 404,
+      path: pathname,
+      method: request.method,
+      reason: 'scanner_path_blocked',
+    });
+    return new NextResponse(null, {
+      status: 404,
+      headers: { 'X-Robots-Tag': 'noindex, nofollow, noarchive' },
+    });
+  }
 
   const isPublic = PUBLIC_PATHS.some(
     (p) => pathname === p || pathname.startsWith(`${p}/`)

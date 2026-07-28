@@ -13,6 +13,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { generateLinkedInPost } from '@/lib/claude';
 
+function requireAdminSecret(request: NextRequest): NextResponse | null {
+  const expected = process.env.ICONYCS_INTERNAL_API_SECRET || process.env.ADMIN_MIGRATE_SECRET;
+  const provided = request.headers.get('x-admin-secret');
+  if (!expected || provided !== expected) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+  return null;
+}
+
 // LinkedIn API helper
 async function publishToLinkedIn(content: string): Promise<{ success: boolean; postId?: string; error?: string }> {
   const accessToken = process.env.LINKEDIN_ACCESS_TOKEN;
@@ -58,6 +67,9 @@ async function publishToLinkedIn(content: string): Promise<{ success: boolean; p
 }
 
 export async function POST(request: NextRequest) {
+  const unauthorized = requireAdminSecret(request);
+  if (unauthorized) return unauthorized;
+
   try {
     const { action, topic, content, data } = await request.json();
 
