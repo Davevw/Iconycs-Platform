@@ -105,8 +105,11 @@ function GateForm() {
         <div className="icx-right" style={{ flex: '1 1 44%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '48px 24px', background: C.bgCard, borderLeft: `1px solid ${C.border}` }}>
         <div style={{ width: '100%', maxWidth: 380 }}>
           <div style={{ textAlign: 'center', marginBottom: 26 }}>
-            <div style={{ fontSize: 24, fontWeight: 800, color: C.navy, letterSpacing: '0.04em', fontFamily: C.fontSerif }}>ICONYCS</div>
-            <div style={{ fontSize: 9, fontWeight: 600, color: C.textDim, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 2 }}>Housing Intelligence</div>
+            <img
+              src="/brand/iconycs-logo-horizontal.png"
+              alt="ICONYCS Housing Analytics"
+              style={{ height: 44, width: 'auto', margin: '0 auto', display: 'block' }}
+            />
           </div>
           <h2 style={{ fontSize: 22, fontWeight: 700, color: C.text, marginBottom: 6, fontFamily: C.fontSerif, textAlign: 'center' }}>
             Private Access

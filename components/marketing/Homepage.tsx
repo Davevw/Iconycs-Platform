@@ -324,12 +324,12 @@ export default function Homepage() {
         transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
       }}>
         <div style={{ maxWidth: 1180, margin: '0 auto', padding: '0 40px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 72 }}>
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-            
-            <div>
-              <div style={{ fontSize: 21, fontWeight: 700, color: C.text, letterSpacing: '-0.01em' }}>ICONYCS</div>
-              <div style={{ fontSize: 11, color: C.textDim, letterSpacing: '0.14em', textTransform: 'uppercase', marginTop: -1 }}>Housing Intelligence</div>
-            </div>
+          <Link href="/" style={{ display: 'flex', alignItems: 'center' }}>
+            <img
+              src="/brand/iconycs-logo-horizontal.png"
+              alt="ICONYCS Housing Analytics"
+              style={{ height: 36, width: 'auto', display: 'block' }}
+            />
           </Link>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
             {['About', 'Analytics', 'MarketPlace', 'Partners', 'Blog'].map(item => (
@@ -642,9 +642,12 @@ export default function Homepage() {
       <footer style={{ padding: '56px 40px 40px', borderTop: `1px solid ${C.border}` }}>
         <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
-              
-              <span style={{ fontWeight: 700, fontSize: 20, color: C.text }}>ICONYCS</span>
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: 14 }}>
+              <img
+                src="/brand/iconycs-logo-horizontal.png"
+                alt="ICONYCS Housing Analytics"
+                style={{ height: 30, width: 'auto', display: 'block' }}
+              />
             </div>
             <p style={{ fontSize: 13, color: C.textMuted, maxWidth: 260, lineHeight: 1.7 }}>
               Housing Intelligence.
