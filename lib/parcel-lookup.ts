@@ -136,7 +136,10 @@ export async function lookupParcel(input: ParcelQuery): Promise<ParcelResult> {
     if (zip) where.push(`v.ZIP = ${q(zip)}`);
     if (state) where.push(`v.STATE = ${q(state)}`);
     if (city && !zip) where.push(`v.CITY = ${q(city)}`);
-    const unit = (input.unit?.trim() || parsed.unit || '').toUpperCase().replace(/^#/, '');
+    const unit = (input.unit?.trim() || parsed.unit || '')
+      .toUpperCase()
+      .replace(/^(APT|UNIT|STE|SUITE|BLDG|LOT|TRLR|SPC|#)\.?\s*/, '')
+      .replace(/^#/, '');
     if (unit) where.push(`UPPER(v.APTNBR) = ${q(unit)}`);
     if (parsed.strtype) soft.push(`v.STRTYPE = ${q(parsed.strtype)}`);
     if (parsed.predir) soft.push(`v.PREDIR = ${q(parsed.predir)}`);
