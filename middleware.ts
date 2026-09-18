@@ -143,6 +143,14 @@ export async function middleware(request: NextRequest) {
     (p) => pathname === p || pathname.startsWith(`${p}/`)
   );
 
+  // Machine clients of the v1 API (e.g. Solis parcel lookup, 2026-09-18) authenticate with
+  // X-API-Key, not the browser gate cookie. Let them through to the route, which enforces
+  // the key itself (app/api/v1/_middleware.ts checkApiKey). Requests without the header
+  // still hit the normal gate and get 401.
+  if (pathname.startsWith('/api/v1/') && request.headers.get('x-api-key')) {
+    return NextResponse.next();
+  }
+
   const token = request.cookies.get(GATE_COOKIE)?.value;
   const { valid, iat, sub, sid } = await verifyToken(token, secret);
 
