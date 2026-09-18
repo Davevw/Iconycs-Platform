@@ -14,6 +14,8 @@ import { executeQuery } from '@/lib/snowflake';
 
 export interface ParcelQuery {
   address?: string;
+  /** Condo/apartment unit, e.g. "206" or "D". Matched against APTNBR; also accepted inline ("… Unit 206"). */
+  unit?: string;
   city?: string;
   state?: string;
   zip?: string;
@@ -46,7 +48,7 @@ const DIRS = new Set(['N', 'S', 'E', 'W', 'NE', 'NW', 'SE', 'SW', 'NORTH', 'SOUT
 const DIR_ABBR: Record<string, string> = { NORTH: 'N', SOUTH: 'S', EAST: 'E', WEST: 'W' };
 
 /** Very small US address parser: "2402 Windsor Ln", "4325 E Sleighbell Dr", "123 N Main St Apt 4". */
-function parseAddress(raw: string): { house: string; street: string; strtype?: string; predir?: string } | null {
+function parseAddress(raw: string): { house: string; street: string; strtype?: string; predir?: string; unit?: string } | null {
   const tokens = raw
     .toUpperCase()
     .replace(/[.,#]/g, ' ')
@@ -56,8 +58,12 @@ function parseAddress(raw: string): { house: string; street: string; strtype?: s
   const house = tokens.shift()!;
   if (!/^\d+[A-Z]?$/.test(house)) return null;
   // strip unit designators
+  let unit: string | undefined;
   const unitIdx = tokens.findIndex((t) => /^(APT|UNIT|STE|SUITE|BLDG|LOT|TRLR|SPC)$/.test(t));
-  if (unitIdx >= 0) tokens.splice(unitIdx);
+  if (unitIdx >= 0) {
+    unit = tokens[unitIdx + 1];
+    tokens.splice(unitIdx);
+  }
   let predir: string | undefined;
   if (tokens.length > 1 && DIRS.has(tokens[0])) predir = DIR_ABBR[tokens[0]] ?? tokens.shift()!;
   if (predir && DIR_ABBR[tokens[0]]) tokens.shift();
@@ -71,7 +77,7 @@ function parseAddress(raw: string): { house: string; street: string; strtype?: s
   if (tokens.length > 1 && DIRS.has(tokens[tokens.length - 1])) tokens.pop();
   const street = tokens.join(' ');
   if (!street) return null;
-  return { house, street, ...(strtype ? { strtype } : {}), ...(predir ? { predir } : {}) };
+  return { house, street, ...(strtype ? { strtype } : {}), ...(predir ? { predir } : {}), ...(unit ? { unit } : {}) };
 }
 
 const q = (s: string) => `'${s.replace(/'/g, "''")}'`;
@@ -130,6 +136,8 @@ export async function lookupParcel(input: ParcelQuery): Promise<ParcelResult> {
     if (zip) where.push(`v.ZIP = ${q(zip)}`);
     if (state) where.push(`v.STATE = ${q(state)}`);
     if (city && !zip) where.push(`v.CITY = ${q(city)}`);
+    const unit = (input.unit?.trim() || parsed.unit || '').toUpperCase().replace(/^#/, '');
+    if (unit) where.push(`UPPER(v.APTNBR) = ${q(unit)}`);
     if (parsed.strtype) soft.push(`v.STRTYPE = ${q(parsed.strtype)}`);
     if (parsed.predir) soft.push(`v.PREDIR = ${q(parsed.predir)}`);
   } else {

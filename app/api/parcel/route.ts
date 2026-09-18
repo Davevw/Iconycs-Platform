@@ -16,6 +16,7 @@ export async function GET(request: NextRequest) {
   try {
     const data = await lookupParcel({
       address: sp.get('address') ?? undefined,
+      unit: sp.get('unit') ?? undefined,
       apn: sp.get('apn') ?? undefined,
       state: sp.get('state') ?? undefined,
       city: sp.get('city') ?? undefined,

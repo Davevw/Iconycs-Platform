@@ -101,6 +101,7 @@ export default function ParcelPage() {
   const [mode, setMode] = useState<'address' | 'apn'>('address');
   const [address, setAddress] = useState('');
   const [zip, setZip] = useState('');
+  const [unit, setUnit] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
   const [apn, setApn] = useState('');
@@ -113,7 +114,7 @@ export default function ParcelPage() {
     setBusy(true); setError(null); setResult(null);
     const qs = new URLSearchParams();
     if (mode === 'apn') { qs.set('apn', apn); qs.set('state', state); }
-    else { qs.set('address', address); if (zip) qs.set('zip', zip); if (city) qs.set('city', city); if (state) qs.set('state', state); }
+    else { qs.set('address', address); if (zip) qs.set('zip', zip); if (unit) qs.set('unit', unit); if (city) qs.set('city', city); if (state) qs.set('state', state); }
     try {
       const r = await fetch(`/api/parcel?${qs}`, { cache: 'no-store' });
       const j = await r.json();
@@ -154,8 +155,9 @@ export default function ParcelPage() {
             ))}
           </div>
           {mode === 'address' ? (
-            <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 16 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: 16 }}>
               <div><label style={labelStyle} htmlFor="address">Street address</label><input id="address" style={inputStyle} value={address} onChange={(e) => setAddress(e.target.value)} placeholder="4325 E Sleighbell Dr" required /></div>
+              <div><label style={labelStyle} htmlFor="unit">Unit <span style={{ fontWeight: 400, opacity: 0.7 }}>(condo/apt)</span></label><input id="unit" style={inputStyle} value={unit} onChange={(e) => setUnit(e.target.value)} placeholder="206" /></div>
               <div><label style={labelStyle} htmlFor="zip">ZIP</label><input id="zip" style={inputStyle} value={zip} onChange={(e) => setZip(e.target.value)} placeholder="85297" inputMode="numeric" /></div>
               <div><label style={labelStyle} htmlFor="city">City (if no ZIP)</label><input id="city" style={inputStyle} value={city} onChange={(e) => setCity(e.target.value)} placeholder="Gilbert" /></div>
               <div><label style={labelStyle} htmlFor="state">State</label><input id="state" style={inputStyle} value={state} onChange={(e) => setState(e.target.value.toUpperCase())} placeholder="AZ" maxLength={2} /></div>

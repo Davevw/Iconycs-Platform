@@ -8,6 +8,7 @@
  *
  *   ?address=2402 Windsor Ln&city=Pasadena&state=TX      (city optional if zip given)
  *   ?address=2402 Windsor Ln&zip=77506
+ *   ?address=6829 E Osborn Rd&unit=D&zip=85251                (condo unit → APTNBR)
  *   ?apn=080-509-000-0008&state=TX                        (APN formats repeat across states)
  *
  * Assessor/recorder fields ONLY — no owner names, phones, HHID or household demographics.
@@ -33,6 +34,7 @@ export async function GET(request: NextRequest) {
   try {
     const data = await lookupParcel({
       address: sp.get('address') ?? undefined,
+      unit: sp.get('unit') ?? undefined,
       apn: sp.get('apn') ?? undefined,
       state: sp.get('state') ?? undefined,
       city: sp.get('city') ?? undefined,
