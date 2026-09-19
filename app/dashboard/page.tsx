@@ -119,9 +119,9 @@ const FEATURES = [
 
 // -- Recent activity (placeholder) ---------------------------------------------
 const RECENT_ACTIVITY = [
-  { icon: '[chart]', label: 'California Housing Report', date: 'Apr 4, 2026' },
-  { icon: '[scales]', label: 'Fair Lending Report  -  Los Angeles', date: 'Apr 4, 2026' },
-  { icon: '', label: 'API Query  -  /api/v1/national', date: 'Apr 4, 2026' },
+  { icon: '[chart]', label: 'California Housing Report', date: 'Jun 2, 2026' },
+  { icon: '[scales]', label: 'Fair Lending Report  -  Los Angeles', date: 'Jun 2, 2026' },
+  { icon: '', label: 'API Query  -  /api/v1/national', date: 'Jun 2, 2026' },
 ];
 
 // -- Quick links ----------------------------------------------------------------
@@ -344,7 +344,7 @@ export default function UserDashboardPage() {
                 </span>
               </div>
               <div style={{ marginTop: 14, padding: '10px 14px', background: C.bgWarm, borderRadius: 8, fontSize: 11, color: C.textDim }}>
-                [calendar] Usage resets on May 1, 2026 * Placeholder values  -  live tracking coming soon
+                [calendar] Usage resets on Jul 1, 2026 * Placeholder values  -  live tracking coming soon
               </div>
             </div>
 

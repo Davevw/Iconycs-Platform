@@ -11,7 +11,13 @@
  *   ?address=6829 E Osborn Rd&unit=D&zip=85251                (condo unit → APTNBR)
  *   ?apn=080-509-000-0008&state=TX                        (APN formats repeat across states)
  *
- * Assessor/recorder fields ONLY — no owner names, phones, HHID or household demographics.
+ * Assessor/recorder fields ONLY by default — no owner names, phones, HHID or household
+ * demographics.
+ *
+ * ?household=1 (David, 2026-09-19, TEST FEATURE for a future security/audit use case — NOT a
+ * shipped product surface): additionally returns owner FNAME/LNAME + MARRIEDCD/EDUCATIONCD/
+ * EHI/ETHNICITYCD from NARC3. Solis only ever sends this flag from its PDF-export code path
+ * (parcelExport.ts); it must never be requested for on-screen rendering.
  */
 
 import { NextRequest, NextResponse } from 'next/server';
@@ -39,6 +45,7 @@ export async function GET(request: NextRequest) {
       state: sp.get('state') ?? undefined,
       city: sp.get('city') ?? undefined,
       zip: sp.get('zip') ?? undefined,
+      household: sp.get('household') === '1',
     });
     const res = NextResponse.json(data);
     // Parcel results are per-lookup and must not be edge-cached across users.

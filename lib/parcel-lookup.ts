@@ -5,9 +5,16 @@
  *   - app/api/v1/parcel/route.ts  (X-API-Key clients, e.g. Solis parcel lookup)
  *   - app/parcel/page.tsx + app/api/parcel/route.ts (Iconycs internal tool behind the site gate)
  *
- * Returns assessor/recorder fields ONLY: situs, characteristics, valuation/tax, sale history,
- * mortgage liens. Owner names, phones, HHID and household demographics are deliberately
- * excluded — this is a property record, not a people record.
+ * Default behavior: returns assessor/recorder fields ONLY — situs, characteristics,
+ * valuation/tax, sale history, mortgage liens. Owner names, phones, HHID and household
+ * demographics are excluded by default — this is a property record, not a people record.
+ *
+ * Opt-in household join (David, 2026-09-19, TEST FEATURE — audit/security-research use only,
+ * not a shipped Solis product surface): pass `household: true` to additionally LEFT JOIN NARC3
+ * (Infutor consumer file) by PID and return FNAME/LNAME (owner) plus MARRIEDCD, EDUCATIONCD, EHI,
+ * ETHNICITYCD. Off by default on every existing call site. Callers are responsible for NOT
+ * exposing this on any live web-app screen — today it is wired only into the PDF export path
+ * (see solis/src/lib/parcelExport.ts), never into the on-screen ParcelCard.
  */
 
 import { executeQuery } from '@/lib/snowflake';
@@ -20,6 +27,8 @@ export interface ParcelQuery {
   state?: string;
   zip?: string;
   apn?: string;
+  /** TEST FEATURE, off by default — see header comment. Joins NARC3 for owner name + core demographics. */
+  household?: boolean;
 }
 
 export type ParcelRecord = Record<string, unknown>;
@@ -101,6 +110,10 @@ const SELECT = `
 // APN lives on PROP, not the view; join once by PID for the APN column + APN lookups.
 const FROM = `FROM VW_RESIDENTIAL_PROP v LEFT JOIN PROP p ON p.PID = v.PID`;
 
+// Opt-in household fields (NARC3, joined by PID). Not part of the default SELECT/FROM above.
+const HOUSEHOLD_SELECT = `, n.FNAME, n.LNAME, n.MARRIEDCD, n.EDUCATIONCD, n.EHI, n.ETHNICITYCD`;
+const HOUSEHOLD_JOIN = ` LEFT JOIN NARC3 n ON n.PID = v.PID`;
+
 
 export const PARCEL_SOURCE = {
   name: 'Iconycs licensed property dataset (county assessor + recorder files)',
@@ -148,8 +161,10 @@ export async function lookupParcel(input: ParcelQuery): Promise<ParcelResult> {
   }
 
   const t0 = Date.now();
+  const select = input.household ? `${SELECT}${HOUSEHOLD_SELECT}` : SELECT;
+  const from = input.household ? `${FROM}${HOUSEHOLD_JOIN}` : FROM;
   const run = (conds: string[]) =>
-    executeQuery(`SELECT v.PID, p.PROP_APN AS APN, ${SELECT} ${FROM} WHERE ${conds.join(' AND ')} LIMIT 5`);
+    executeQuery(`SELECT v.PID, p.PROP_APN AS APN, ${select} ${from} WHERE ${conds.join(' AND ')} LIMIT 5`);
 
   let result = await run([...where, ...soft]);
   if (result.success && (result.data?.length ?? 0) === 0 && soft.length) {

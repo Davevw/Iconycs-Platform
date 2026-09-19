@@ -34,7 +34,7 @@ export default function FairHousingPage() {
           Fair Housing &amp; Equal Credit Opportunity Policy
         </h1>
         <p style={{ fontSize: 14, color: C.textMuted, marginBottom: 40 }}>
-          Last Updated: April 2026 &nbsp;|&nbsp; ICONYCS Housing Intelligence
+          Last Updated: June 2026 &nbsp;|&nbsp; ICONYCS Housing Intelligence
         </p>
 
         <hr style={{ border: 'none', borderTop: `1px solid ${C.border}`, marginBottom: 40 }} />

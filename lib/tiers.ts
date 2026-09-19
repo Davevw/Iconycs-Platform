@@ -104,6 +104,21 @@ export function ehiCodeToIncomeTier(code: number): string {
   return '$500K+';
 }
 
+// NARC3.EHI is a letter code (A-H), not the numeric EHI_CODE above. Mirrors the CASE mapping
+// already used in lib/snowflake-queries.ts queryDemographics/CREATE_CASCADE_OWNERSHIP_VIEW_SQL.
+const EHI_LETTER_TIER: Record<string, string> = {
+  A: '$10K-$30K', B: '$10K-$30K',
+  C: '$30K-$50K', D: '$30K-$50K',
+  E: '$50K-$100K',
+  F: '$100K-$250K', G: '$100K-$250K',
+  H: '$250K+',
+};
+
+export function ehiLetterToIncomeTier(code: string | null | undefined): string {
+  if (!code) return 'Unknown';
+  return EHI_LETTER_TIER[code.toUpperCase()] ?? 'Unknown';
+}
+
 // --- Credit Score Tiers ----------------------------------------------------
 
 export const CREDIT_SCORE_TIERS: TierRange[] = [
@@ -156,6 +171,23 @@ export const EDUCATION_CODES: EducationCode[] = [
 
 export function educationLabel(code: string): string {
   return EDUCATION_CODES.find(e => e.code === code)?.label ?? 'Unknown';
+}
+
+// --- Marital Status Codes (MARRIEDCD) --------------------------------------
+// Mirrors the mapping already used in app/reports/page.tsx (Cascade Ownership FreqTable).
+
+export const MARITAL_LABELS: Record<string, string> = {
+  M: 'Married',
+  S: 'Single',
+  A: 'Married (Inferred)',
+  B: 'Single (Inferred)',
+  Y: 'Married',
+  N: 'Single',
+};
+
+export function maritalLabel(code: string | null | undefined): string {
+  if (!code) return 'Unknown';
+  return MARITAL_LABELS[code] ?? 'Unknown';
 }
 
 // --- Wealth Score Tiers (WEALTHSCR A-H) ------------------------------------

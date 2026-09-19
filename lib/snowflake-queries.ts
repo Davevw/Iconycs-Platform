@@ -382,31 +382,31 @@ export function queryCascadeProperty(filters: CascadeFilters): string {
 
 export function queryCascadeOwnership(filters: CascadeFilters): string {
   const conditions: string[] = [];
-  if (filters.state)        conditions.push(`STATE = '${filters.state.toUpperCase()}'`);
-  if (filters.county)       conditions.push(`COUNTY = '${filters.county.toUpperCase()}'`);
-  if (filters.city)         conditions.push(`CITY = '${filters.city.toUpperCase()}'`);
-  if (filters.zip)          conditions.push(`ZIP = '${filters.zip}'`);
-  if (filters.ethnicity)    conditions.push(`ETHNICITYCD = '${filters.ethnicity}'`);
-  if (filters.gender)       conditions.push(`GENDER = '${filters.gender}'`);
-  if (filters.marital_status) conditions.push(`MARRIEDCD = '${filters.marital_status}'`);
-  if (filters.education)    conditions.push(`EDUCATION_LEVEL = '${filters.education}'`);
-  if (filters.income_tier)  conditions.push(`INCOME_TIER = '${filters.income_tier}'`);
+  if (filters.state)          conditions.push(`STATE = '${filters.state.toUpperCase()}'`);
+  if (filters.county)         conditions.push(`COUNTY = '${filters.county.toUpperCase()}'`);
+  if (filters.city)           conditions.push(`CITY = '${filters.city.toUpperCase()}'`);
+  if (filters.zip)            conditions.push(`ZIP = '${filters.zip}'`);
+  if (filters.ethnicity)      conditions.push(`ETHNICITYCD = '${filters.ethnicity}'`);
+  if (filters.gender)         conditions.push(`GENDER = '${filters.gender}'`);
+  if (filters.marital_status) conditions.push(`MARITAL_STATUS = '${filters.marital_status}'`);
+  if (filters.education)      conditions.push(`EDUCATION_LEVEL = '${filters.education}'`);
+  if (filters.income_tier)    conditions.push(`INCOME_CODE = '${filters.income_tier}'`);
   const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
   return `
     SELECT
       ETHNICITYCD,
-      ETHNICITYCD,
+      ETHNICITY_DESC,
       GENDER,
-      MARRIEDCD,
+      MARITAL_STATUS,
       EDUCATION_LEVEL,
-      INCOME_TIER,
+      INCOME_CODE,
       WEALTH_SCORE,
       SUM(RECORD_COUNT) AS RECORD_COUNT
     FROM VW_CASCADE_OWNERSHIP
     ${where}
     GROUP BY
-      ETHNICITYCD, ETHNICITYCD, GENDER, MARRIEDCD,
-      EDUCATION_LEVEL, INCOME_TIER, WEALTH_SCORE
+      ETHNICITYCD, ETHNICITY_DESC, GENDER, MARITAL_STATUS,
+      EDUCATION_LEVEL, INCOME_CODE, WEALTH_SCORE
     ORDER BY RECORD_COUNT DESC
   `.trim();
 }
