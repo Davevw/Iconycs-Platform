@@ -111,7 +111,12 @@ const SELECT = `
 const FROM = `FROM VW_RESIDENTIAL_PROP v LEFT JOIN PROP p ON p.PID = v.PID`;
 
 // Opt-in household fields (NARC3, joined by PID). Not part of the default SELECT/FROM above.
-const HOUSEHOLD_SELECT = `, n.FNAME, n.LNAME, n.MARRIEDCD, n.EDUCATIONCD, n.EHI, n.ETHNICITYCD`;
+// David, 2026-09-19 16:25: "Look for that data in this record and certainly put those data elements
+// on the report output" — widened from 6 columns to the full Household Demographic Data block
+// (NARC3 layout fields 43–62) plus the Zip-level Geographic Demographics that describe the
+// neighborhood (fields 89–105). Still opt-in only; phones/DNC and lifestyle bundles are
+// deliberately excluded (not relevant to a property record and a heavier privacy footprint).
+const HOUSEHOLD_SELECT = `, n.FNAME, n.LNAME, n.GENDER, n.AGE, n.HHNBR, n.LOR, n.HOMEOWNERCD, n.VACANT, n.DWELLTYPE, n.MRKTHOMEVAL, n.EHI, n.WEALTHSCR, n.MARRIEDCD, n.SGLPARENT, n.HHNBRSR, n.EDUCATIONCD, n.ETHNICITYCD, n.CHILD, n.CHILDAGECD, n.CHILDNBRCD, n.VEHLUX, n.VEHSUV, n.VEHTRK, n.CREDITCARD, n.CHARITYDNR, n.PCTW, n.PCTB, n.PCTH, n.PCTA, n.PCTSPE, n.PCTSPS, n.PCTSPA, n.SFDU, n.MFDU, n.MHV, n.MEDSCHL, n.PCTOCCW, n.PCTOCCB, n.PCTOCCO, n.DEMOLVL`;
 const HOUSEHOLD_JOIN = ` LEFT JOIN NARC3 n ON n.PID = v.PID`;
 
 
