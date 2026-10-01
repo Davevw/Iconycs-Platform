@@ -5,10 +5,29 @@
 
 import snowflake from 'snowflake-sdk';
 
+/**
+ * Auth (2026-10-01): Snowflake's Aug–Oct 2026 enforcement phase disallows single-factor
+ * passwords for programmatic logins ("MFA authentication is required, but none of your current
+ * MFA methods are supported for programmatic authentication"). The app now authenticates as the
+ * dedicated TYPE=SERVICE user ICONYCS_SVC with an RSA key pair (SNOWFLAKE_JWT). Set
+ * SNOWFLAKE_PRIVATE_KEY to the PKCS#8 PEM (newlines may be literal backslash-n). Password auth remains
+ * only as a fallback when no private key is configured, for local dev against a PERSON user.
+ */
+function privateKeyFromEnv(): string | undefined {
+  const raw = process.env.SNOWFLAKE_PRIVATE_KEY;
+  if (!raw) return undefined;
+  // Vercel stores multi-line secrets fine, but some tooling flattens them to literal "\n".
+  return raw.includes('-----BEGIN') && !raw.includes('\n') ? raw.replace(/\\n/g, '\n') : raw;
+}
+
+const privateKey = privateKeyFromEnv();
+
 const connectionConfig = {
   account: process.env.SNOWFLAKE_ACCOUNT!,
   username: process.env.SNOWFLAKE_USER!,
-  password: process.env.SNOWFLAKE_PASSWORD!,
+  ...(privateKey
+    ? { authenticator: 'SNOWFLAKE_JWT', privateKey }
+    : { password: process.env.SNOWFLAKE_PASSWORD! }),
   warehouse: 'QRY_WAREHOUSE',
   database: process.env.SNOWFLAKE_DATABASE || 'PROPERTYANALYTICS',
   schema: process.env.SNOWFLAKE_SCHEMA || 'PUBLIC',
