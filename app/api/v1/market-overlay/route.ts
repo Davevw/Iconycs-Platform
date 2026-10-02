@@ -7,8 +7,12 @@
  * construction, the ICONYCS feed is recorded sales and assessor rolls).
  *
  * One call, every state, aggregates only:
- *   records, avgValue, avgMortgage, ownerOccupiedPct, totalLiens,
+ *   records, avgValue, ownerOccupiedPct, totalLiens,
  *   highLtvPct (liens at >=80% LTV), veryHighLtvPct (>=90%), ltvTiers[]
+ *
+ * avgMortgage is deliberately NOT returned: VW_DASHBOARD_STATE.AVG_MORTGAGE carries raw
+ * MTG1_AMOUNT outliers (cells averaging > $1B — source-file garbage) that pull TX to $3.3M.
+ * AVG_VALUE is clean (trimmed vs. raw differ by 0.2%).
  *
  * Three full scans of the state rollups (~45s + 20s + 7s cold). The caller caches the
  * whole payload for 7 days; nobody should call this on a page load.
@@ -31,7 +35,6 @@ export interface StateMarketOverlay {
   state: string;
   records: number;
   avgValue: number | null;
-  avgMortgage: number | null;
   ownerOccupiedPct: number | null;
   totalLiens: number | null;
   highLtvPct: number | null;
@@ -74,7 +77,6 @@ export async function GET(request: NextRequest) {
         state: st,
         records: Number(row.RECORDS ?? 0),
         avgValue: num(row.AVG_VALUE),
-        avgMortgage: num(row.AVG_MORTGAGE),
         ownerOccupiedPct: null,
         totalLiens: null,
         highLtvPct: null,
