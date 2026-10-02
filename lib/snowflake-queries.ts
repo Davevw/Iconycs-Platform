@@ -841,3 +841,39 @@ export function queryMarketContextLtv(zips: string[]): string {
     GROUP BY ZIP, LTV_TIER
   `.trim();
 }
+
+// --- Market overlay (all states in one pass) ---------------------------------
+// Built 2026-10-01 for ReGround Flyover's "Housing Market" map view (David, 18:23:
+// "an overlay ... where we can show national housing data along with the plotted
+// project data"). State-level aggregates only; three scans, no WHERE, so the
+// endpoint is one call and the caller caches it.
+
+export function queryMarketOverlayStates(): string {
+  return `
+    SELECT GEO_VALUE AS STATE, SUM(RECORD_COUNT) AS RECORDS,
+      SUM(RECORD_COUNT * AVG_VALUE) / NULLIF(SUM(CASE WHEN AVG_VALUE IS NOT NULL THEN RECORD_COUNT END), 0) AS AVG_VALUE,
+      SUM(RECORD_COUNT * AVG_MORTGAGE) / NULLIF(SUM(CASE WHEN AVG_MORTGAGE IS NOT NULL THEN RECORD_COUNT END), 0) AS AVG_MORTGAGE
+    FROM VW_DASHBOARD_STATE
+    GROUP BY GEO_VALUE
+  `.trim();
+}
+
+export function queryMarketOverlayOccupancy(): string {
+  return `
+    SELECT STATE, SUM(RECORD_COUNT) AS RECORDS,
+      SUM(CASE WHEN OCCUPANCY = 'O' THEN RECORD_COUNT END) AS OWNER_OCC,
+      SUM(CASE WHEN OCCUPANCY IN ('A','T') THEN RECORD_COUNT END) AS NON_OWNER_OCC,
+      SUM(TOTAL_LIENS) AS TOTAL_LIENS
+    FROM VW_CASCADE_PROPERTY
+    GROUP BY STATE
+  `.trim();
+}
+
+export function queryMarketOverlayLtv(): string {
+  return `
+    SELECT STATE, LTV_TIER, SUM(RECORD_COUNT) AS RECORDS
+    FROM VW_LTV_TIERS
+    WHERE LTV_TIER IS NOT NULL
+    GROUP BY STATE, LTV_TIER
+  `.trim();
+}
