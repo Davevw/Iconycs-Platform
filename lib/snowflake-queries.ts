@@ -876,3 +876,49 @@ export function queryMarketOverlayLtv(): string {
     GROUP BY STATE, LTV_TIER
   `.trim();
 }
+
+// --- Market overlay, county grain, one state at a time ------------------------
+// Built 2026-10-02 for ReGround Flyover's county drill-down (click a state on the
+// Housing Market map -> county-level shading for that state only). Same shape as
+// the national state-level overlay above, scoped by STATE so this never scans the
+// whole country. CNTYCD is the 3-digit county FIPS (left-padded).
+
+function stateGuard(state: string): string {
+  const s = state.toUpperCase().replace(/[^A-Z]/g, '');
+  if (s.length !== 2) throw new Error('queryMarketOverlayCounty* requires a 2-letter state code');
+  return s;
+}
+
+export function queryMarketOverlayCounties(state: string): string {
+  const st = stateGuard(state);
+  return `
+    SELECT CNTYCD, SUM(RECORD_COUNT) AS RECORDS,
+      SUM(RECORD_COUNT * AVG_VALUE) / NULLIF(SUM(CASE WHEN AVG_VALUE IS NOT NULL THEN RECORD_COUNT END), 0) AS AVG_VALUE
+    FROM VW_DASHBOARD_COUNTY
+    WHERE STATE = '${st}'
+    GROUP BY CNTYCD
+  `.trim();
+}
+
+export function queryMarketOverlayCountyOccupancy(state: string): string {
+  const st = stateGuard(state);
+  return `
+    SELECT COUNTY AS CNTYCD, SUM(RECORD_COUNT) AS RECORDS,
+      SUM(CASE WHEN OCCUPANCY = 'O' THEN RECORD_COUNT END) AS OWNER_OCC,
+      SUM(CASE WHEN OCCUPANCY IN ('A','T') THEN RECORD_COUNT END) AS NON_OWNER_OCC,
+      SUM(TOTAL_LIENS) AS TOTAL_LIENS
+    FROM VW_CASCADE_PROPERTY
+    WHERE STATE = '${st}'
+    GROUP BY COUNTY
+  `.trim();
+}
+
+export function queryMarketOverlayCountyLtv(state: string): string {
+  const st = stateGuard(state);
+  return `
+    SELECT COUNTY AS CNTYCD, LTV_TIER, SUM(RECORD_COUNT) AS RECORDS
+    FROM VW_CASCADE_PROPERTY
+    WHERE STATE = '${st}' AND LTV_TIER IS NOT NULL AND LTV_TIER != 'Unknown'
+    GROUP BY COUNTY, LTV_TIER
+  `.trim();
+}
