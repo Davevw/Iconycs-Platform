@@ -3,7 +3,8 @@
  * All Snowflake queries live here  -  never inline SQL in components or routes.
  * 
  * Views available:
- *   VW_DASHBOARD_NATIONAL  -  national aggregates
+ *   VW_DASHBOARD_NATIONAL  -  DOES NOT EXIST in Snowflake (never created; 2026-10-01 audit).
+ *                             National figures aggregate VW_DASHBOARD_STATE instead.
  *   VW_DASHBOARD_STATE     -  by STATE
  *   VW_DASHBOARD_COUNTY    -  by STATE, COUNTY
  *   VW_DASHBOARD_CITY      -  by STATE, CITY
@@ -52,12 +53,13 @@ function buildTimePeriodClause(time_period?: string, field = 'RECORDING_DATE'): 
 // --- National -------------------------------------------------------------
 
 export function queryNational(): string {
+  // Record-weighted means over the state rollup (AVG of AVGs over-weights sparse cells).
   return `
     SELECT
       SUM(RECORD_COUNT) AS TOTAL_PROPERTIES,
-      AVG(AVG_VALUE) AS AVG_VALUE,
-      AVG(AVG_MORTGAGE) AS AVG_MORTGAGE
-    FROM VW_DASHBOARD_NATIONAL
+      SUM(RECORD_COUNT * AVG_VALUE) / NULLIF(SUM(CASE WHEN AVG_VALUE IS NOT NULL THEN RECORD_COUNT END), 0) AS AVG_VALUE,
+      SUM(RECORD_COUNT * AVG_MORTGAGE) / NULLIF(SUM(CASE WHEN AVG_MORTGAGE IS NOT NULL THEN RECORD_COUNT END), 0) AS AVG_MORTGAGE
+    FROM VW_DASHBOARD_STATE
   `.trim();
 }
 
@@ -66,7 +68,7 @@ export function queryNationalBreakdown(dimension: 'ETHNICITY' | 'PROPERTY_CATEGO
     SELECT
       ${dimension} AS LABEL,
       SUM(RECORD_COUNT) AS RECORD_COUNT
-    FROM VW_DASHBOARD_NATIONAL
+    FROM VW_DASHBOARD_STATE
     WHERE ${dimension} IS NOT NULL AND ${dimension} != 'Unknown'
     GROUP BY ${dimension}
     ORDER BY RECORD_COUNT DESC
@@ -715,8 +717,8 @@ INSERT INTO LOOKUP_VALUE_RANGES
 export function queryOccupancy(filters: GeoFilters): string {
   const conditions: string[] = [];
   if (filters.state) conditions.push(`GEO_VALUE = '${filters.state.toUpperCase()}'`);
-  // VW_DASHBOARD_STATE/NATIONAL both have OCCUPANCY_STATUS column
-  const view = filters.state ? 'VW_DASHBOARD_STATE' : 'VW_DASHBOARD_NATIONAL';
+  // National = VW_DASHBOARD_STATE with no GEO_VALUE filter (VW_DASHBOARD_NATIONAL does not exist).
+  const view = 'VW_DASHBOARD_STATE';
   const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
   return `
     SELECT
@@ -762,3 +764,80 @@ GROUP BY 1,2,3,4,5,6
 
 
 
+
+// --- Market Context (ReGround Flyover, 2026-10-01) ---------------------------
+// One compact, aggregate-only snapshot per ZIP for the ReGround "Market" block.
+// Aggregates only: nothing here descends to a parcel or a household.
+
+function zipList(zips: string[]): string {
+  const clean = Array.from(new Set(zips.map(z => z.trim()).filter(z => /^\d{5}$/.test(z))));
+  return clean.length ? clean.map(z => `'${z}'`).join(',') : `''`;
+}
+
+export function queryMarketContextZip(zips: string[]): string {
+  return `
+    SELECT
+      ZIP,
+      MAX(STATE) AS STATE,
+      MAX(CITY)  AS CITY,
+      SUM(RECORD_COUNT) AS RECORD_COUNT,
+      SUM(RECORD_COUNT * AVG_VALUE) / NULLIF(SUM(CASE WHEN AVG_VALUE IS NOT NULL THEN RECORD_COUNT END), 0) AS AVG_VALUE,
+      SUM(RECORD_COUNT * AVG_MORTGAGE) / NULLIF(SUM(CASE WHEN AVG_MORTGAGE IS NOT NULL THEN RECORD_COUNT END), 0) AS AVG_MORTGAGE,
+      SUM(RECORD_COUNT * AVG_SQFT) / NULLIF(SUM(CASE WHEN AVG_SQFT IS NOT NULL THEN RECORD_COUNT END), 0) AS AVG_SQFT,
+      SUM(CASE WHEN HOMEOWNER_STATUS = 'Homeowner' THEN RECORD_COUNT END) AS OWNER_COUNT,
+      SUM(CASE WHEN HOMEOWNER_STATUS = 'Renter'    THEN RECORD_COUNT END) AS RENTER_COUNT
+    FROM VW_DASHBOARD_ZIP
+    WHERE ZIP IN (${zipList(zips)})
+    GROUP BY ZIP
+  `.trim();
+}
+
+export function queryMarketContextMix(
+  zips: string[],
+  dimension: 'PROPERTY_CATEGORY' | 'INCOME_TIER' | 'ETHNICITY' | 'MTG1_LOAN_CATEGORY',
+): string {
+  return `
+    SELECT ZIP, ${dimension} AS LABEL, SUM(RECORD_COUNT) AS RECORD_COUNT
+    FROM VW_DASHBOARD_ZIP
+    WHERE ZIP IN (${zipList(zips)}) AND ${dimension} IS NOT NULL
+    GROUP BY ZIP, ${dimension}
+  `.trim();
+}
+
+// Assessor occupancy flags (O owner, A absentee owner, T tenant, S situs-from-sale) are a
+// property attribute; HOMEOWNER_STATUS on the dashboard views is a household label and reads
+// ~99% "Homeowner" everywhere, so occupancy comes from here instead.
+export function queryMarketContextOccupancy(zips: string[]): string {
+  return `
+    SELECT ZIP,
+           SUM(RECORD_COUNT) AS RECORD_COUNT,
+           SUM(CASE WHEN OCCUPANCY = 'O' THEN RECORD_COUNT END) AS OWNER_OCC,
+           SUM(CASE WHEN OCCUPANCY IN ('A','T') THEN RECORD_COUNT END) AS NON_OWNER_OCC,
+           SUM(TOTAL_LIENS) AS TOTAL_LIENS
+    FROM VW_CASCADE_PROPERTY
+    WHERE ZIP IN (${zipList(zips)})
+    GROUP BY ZIP
+  `.trim();
+}
+
+export function queryMarketContextCascadeMix(
+  zips: string[],
+  dimension: 'OWNERSHIP_DURATION' | 'MARKET_VALUE_TIER',
+): string {
+  return `
+    SELECT ZIP, ${dimension} AS LABEL, SUM(RECORD_COUNT) AS RECORD_COUNT
+    FROM VW_CASCADE_PROPERTY
+    WHERE ZIP IN (${zipList(zips)}) AND ${dimension} IS NOT NULL AND ${dimension} != 'Unknown'
+    GROUP BY ZIP, ${dimension}
+  `.trim();
+}
+
+export function queryMarketContextLtv(zips: string[]): string {
+  return `
+    SELECT ZIP, LTV_TIER, SUM(RECORD_COUNT) AS RECORD_COUNT,
+           SUM(RECORD_COUNT * AVG_LOAN_AMOUNT) / NULLIF(SUM(RECORD_COUNT), 0) AS AVG_LOAN_AMOUNT
+    FROM VW_LTV_TIERS
+    WHERE ZIP IN (${zipList(zips)}) AND LTV_TIER IS NOT NULL
+    GROUP BY ZIP, LTV_TIER
+  `.trim();
+}
